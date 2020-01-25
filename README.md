@@ -1,1 +1,1 @@
-University Discourse
+University Discourse : Rate my courses!
