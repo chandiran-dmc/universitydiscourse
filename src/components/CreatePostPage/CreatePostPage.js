@@ -16,6 +16,9 @@
 import React, { Component } from 'react'
 
 export default class CreatePostPage extends Component {
+
+    
+
     render() {
         return (
             <div>
