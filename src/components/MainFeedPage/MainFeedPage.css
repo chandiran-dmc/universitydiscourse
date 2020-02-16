@@ -5,12 +5,12 @@
 
 .ActionBarButtonOdd {
     background-color: #F2B705;
-    /*border-color: transparent;*/
+    border-color: transparent;
 }
 
 .ActionBarButtonEven {
     background-color: #F2C94C;
-    /*border-color: transparent;*/
+    border-color: transparent;
 }
 
 .ActionBarButtonsContainer {

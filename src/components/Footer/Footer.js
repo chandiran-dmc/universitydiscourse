@@ -9,10 +9,11 @@
  */
 
 import React, { Component } from 'react'
-import './TopBar.css';
+import './Footer.css';
+import TopBar from '../TopBar';
 import logo from '../../image1.png';
 
-export default class TopBar extends Component {
+export default class Footer extends Component {
 
     constructor(props) {
         super(props);
