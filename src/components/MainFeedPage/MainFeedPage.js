@@ -12,12 +12,26 @@
  */
 
 import React, { Component } from 'react'
+import TopBar from '../TopBar';
+import ActionBar from './ActionBar';
+import './MainFeedPage.css'
 
 export default class MainFeedPage extends Component {
     render() {
         return (
             <div>
-                
+                <TopBar />
+                <div className="MainFeedPage">
+                    <div className="ActionBarContainer">
+                        <ActionBar />
+                    </div>
+                    <div className="PostsContainer">
+
+                    </div>
+                    <div className="FollowingTagsContainer">
+
+                    </div>
+                </div>
             </div>
         )
     }
