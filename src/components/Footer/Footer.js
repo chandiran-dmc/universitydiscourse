@@ -8,11 +8,12 @@
  * Please look at the UI mockup for image explanation
  */
 
-import React, { Component } from 'react';
-import './TopBar.css';
-import logo from '../../images/image1.png';
+import React, { Component } from 'react'
+import './Footer.css';
+import TopBar from '../TopBar';
+import logo from '../../image1.png';
 
-export default class TopBar extends Component {
+export default class Footer extends Component {
 
     constructor(props) {
         super(props);
