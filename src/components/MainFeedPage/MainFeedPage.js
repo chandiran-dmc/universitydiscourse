@@ -17,13 +17,22 @@ import ActionBar from './ActionBar';
 import './MainFeedPage.css'
 
 export default class MainFeedPage extends Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    onClickCreate() {
+        alert('hi');
+    }
+
     render() {
         return (
             <div>
                 <TopBar />
                 <div className="MainFeedPage">
                     <div className="ActionBarContainer">
-                        <ActionBar />
+                        <ActionBar onClickCreate={this.onClickCreate}/>
                     </div>
                     <div className="PostsContainer">
 

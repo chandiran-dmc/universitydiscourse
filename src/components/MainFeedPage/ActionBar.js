@@ -11,17 +11,25 @@
  * Please look at the UI mockup for image explanation
  */
 
- import React, { Component } from 'react'
- import createPostButton from '../../images/createPostButton.svg'
+ import React, { Component } from 'react';
  
  export default class ActionBar extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            onClickCreate: this.props.onClickCreate
+        };
+    }
+    
      render() {
          return (
              <div className="ActionBarButtonsContainer">
                  <button 
                     className="ActionBarButtonOdd"
                     id="CreatePostButton"
-                    type="button" >
+                    type="button"
+                    onClick={() => {this.state.onClickCreate()}} >
                     MAKE A POST
                  </button>
                  <button 

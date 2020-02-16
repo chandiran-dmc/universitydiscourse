@@ -8,7 +8,7 @@
  * Please look at the UI mockup for image explanation
  */
 
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import './TopBar.css';
 import logo from '../../image1.png';
 
