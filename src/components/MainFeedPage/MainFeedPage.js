@@ -15,7 +15,7 @@ import React, { Component } from 'react'
 import TopBar from '../TopBar';
 import ActionBar from './ActionBar';
 import './MainFeedPage.css'
-import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button';
 
 export default class MainFeedPage extends Component {
 
