@@ -13,6 +13,7 @@ import './Footer.css';
 import logo from '../../images/image1.png';
 import logoName from '../../images/ImageName.png';
 
+
 export default class Footer extends Component {
 
      render() {
@@ -46,6 +47,7 @@ export default class Footer extends Component {
                 
                         
                 
+
             </div>
         )
     }

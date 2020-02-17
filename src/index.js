@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import MainFeedPage from './components/MainFeedPage';
-import Footer from './components/Footer';
+import LoginPage from './components/LoginPage/LoginPage';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<Footer />, document.getElementById('root'));
+ReactDOM.render(<LoginPage />, document.getElementById('root'));
+
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

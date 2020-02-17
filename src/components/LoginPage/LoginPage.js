@@ -12,12 +12,12 @@
  */
 
 import React, { Component } from 'react'
-import TopBar from '../TopBar';
-import Footer from '../Footer';
-import ActionBar from './ActionBar';
-import './MainFeedPage.css'
+import TopBar from '../TopBar/TopBar';
+import Footer from '../Footer/Footer';
+import logo from '../../images/image1.png';
+import './LoginPage.css'
 
-export default class MainFeedPage extends Component {
+export default class LoginPage extends Component {
 
     onClickCreate() {
         alert('hi');
@@ -28,16 +28,22 @@ export default class MainFeedPage extends Component {
             <div>
                 <TopBar />
                 <Footer />
-                <div className="MainFeedPage">
-                    <div className="ActionBarContainer">
-                        <ActionBar onClickCreate={this.onClickCreate}/>
-                    </div>
-                    <div className="PostsContainer">
+                <div className="LoginPage">
+                <form>
+                <div className="Form">
+                <img 
+                        className="LoginLogo"
+                        src={logo}
+                        alt="logo"
+                    />
+                <h1 className="LoginText">Login</h1>
+                    <input type="text"/>
+                    <br />
+                    <input type="text"/>
+                </div>
+                </form>
+                
 
-                    </div>
-                    <div className="FollowingTagsContainer">
-
-                    </div>
                     
                 </div>
             </div>

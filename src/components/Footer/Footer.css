@@ -11,6 +11,7 @@
 .lowerFooter {
     bottom: 0;
     height: 30px;
+
     position: fixed;
     width: 100%;
     overflow: auto;
@@ -65,3 +66,4 @@
     
  }
  
+
