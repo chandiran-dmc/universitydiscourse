@@ -15,7 +15,6 @@ import React, { Component } from 'react'
 import TopBar from '../TopBar/TopBar';
 import Footer from '../Footer/Footer';
 import logo from '../../images/image1.png';
-import logoName from '../../images/ImageName.png';
 import './LoginPage.css'
 
 export default class LoginPage extends Component {
@@ -36,12 +35,7 @@ export default class LoginPage extends Component {
                         className="LoginLogo"
                         src={logo}
                         alt="logo"
-                    /> <br />
-                    <img 
-                        className="LogoName2"
-                        src={logoName}
-                        alt="logoName"
-                />
+                    />
                 <h1 className="LoginText">Login</h1>
                     <input type="text"/>
                     <br />
