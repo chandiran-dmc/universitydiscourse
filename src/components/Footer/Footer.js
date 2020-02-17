@@ -1,74 +1,54 @@
 /**
- * This is a react component for the top bar which consists of
- * - a search field
- * - a search button
- * - a profile image button (depending user state)
- * - logo button
+ * This is a react component for the footer which consists of
+ * - the logo, with the name
+ * - the objective
+ * - explore links
+ * - contact information
  * 
  * Please look at the UI mockup for image explanation
  */
 
 import React, { Component } from 'react'
 import './Footer.css';
-import TopBar from '../TopBar';
-import logo from '../../image1.png';
+import logo from '../../images/image1.png';
+import logoName from '../../images/ImageName.png';
 
 export default class Footer extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            value: ''
-        };
-
-        // Binding is required so that the function can access the context
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSearch = this.handleSearch.bind(this);
-    }
-
-    // save the value of input whenever a user enters sth
-    handleChange(event) {
-        this.setState(
-            {
-                value: event.target.value
-            }
-        );
-    }
-
-    // user clicked on search
-    // TODO: route to search page
-    handleSearch(event) {
-        // This is to stop the default behavior, 
-        // which in this case is stopping form from reloading itself
-        event.preventDefault();
-        alert('Searching for ' + this.state.value);
-    }
-
-    // The input form value is controlled by react = controlled components
-    render() {
+     render() {
         return (
-            <div className="TopBar">
-                <form 
-                    onSubmit={this.handleSearch}>
-                    <img 
+            <div className="Footer">
+                <img 
                         className="Logo"
                         src={logo}
                         alt="logo"
-                    />
-                    <input 
-                        className="SearchText"
-                        type="text" 
-                        value={this.state.value}
-                        placeholder="Search.."
-                        onChange={this.handleChange} 
-                    />
-                    <input 
-                        className="SearchButton"
-                        type="submit" 
-                        value="" 
-                    />
-                </form>
+                />
+                <img 
+                        className="LogoName"
+                        src={logoName}
+                        alt="logoName"
+                />
+                <div
+                       className="lowerFooter"
+                />
+                <p className="Info">
+                    University discourse intends to assists students
+                </p>
+                <p className="Info2">
+                    in finding solutions to their academic concerns 
+                </p>
+                
+                <p className="Info3">
+                    Explore Links 
+                </p>
+                <p className="Info4">
+                    Contact 
+                </p>
+                
+                        
+                
             </div>
         )
     }
+
 }
