@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import LoginPage from './components/LoginPage/LoginPage';
+import RecoverAccount from './components/RecoverAccount/RecoverAccount';
 import * as serviceWorker from './serviceWorker';
 
-ReactDOM.render(<LoginPage />, document.getElementById('root'));
+ReactDOM.render(<RecoverAccount />, document.getElementById('root'));
 
 
 // If you want your app to work offline and load faster, you can change

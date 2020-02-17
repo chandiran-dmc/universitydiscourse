@@ -15,7 +15,7 @@ import React, { Component } from 'react'
 import TopBar from '../TopBar/TopBar';
 import Footer from '../Footer/Footer';
 import logo from '../../images/image1.png';
-import './RegisterPage.css'
+import './RecoverAccount.css'
 
 export default class RegisterPage extends Component {
 
@@ -36,14 +36,14 @@ export default class RegisterPage extends Component {
                         src={logo}
                         alt="logo"
                     />
-                <h1 className="LoginText">Register</h1>
+                <h1 className="LoginText">Recover Your Account</h1>
                     <input type="text"
                     placeholder="the_jane@gmail.com"/>
                     <br />
                     <input 
-                        className="NEXTButton"
+                        className="EMAILMEButton"
                         type="submit" 
-                        value="NEXT" 
+                        value="EMAIL" 
                     />
                 </div>
                 </form>

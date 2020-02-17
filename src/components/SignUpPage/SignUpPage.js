@@ -15,9 +15,9 @@ import React, { Component } from 'react'
 import TopBar from '../TopBar/TopBar';
 import Footer from '../Footer/Footer';
 import logo from '../../images/image1.png';
-import './RegisterPage.css'
+import './SignUpPage.css'
 
-export default class RegisterPage extends Component {
+export default class SignUpPage extends Component {
 
     onClickCreate() {
         alert('hi');
@@ -36,14 +36,17 @@ export default class RegisterPage extends Component {
                         src={logo}
                         alt="logo"
                     />
-                <h1 className="LoginText">Register</h1>
+                <h1 className="LoginText">SignUp</h1>
                     <input type="text"
-                    placeholder="the_jane@gmail.com"/>
+                    placeholder = "Choose a username"/>
+                    <br />
+                    <input type="text"
+                    placeholder = "Password"/>
                     <br />
                     <input 
-                        className="NEXTButton"
+                        className="SIGNUPButton"
                         type="submit" 
-                        value="NEXT" 
+                        value="SIGN UP" 
                     />
                 </div>
                 </form>

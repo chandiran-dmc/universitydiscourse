@@ -45,7 +45,12 @@ export default class LoginPage extends Component {
                 <h1 className="LoginText">Login</h1>
                     <input type="text"/>
                     <br />
-                    <input type="text"/>
+                    <input type="text"/> <br />
+                    <input 
+                        className="LOGINButton"
+                        type="submit" 
+                        value="LOG IN" 
+                    />
                 </div>
                 </form>
                 
