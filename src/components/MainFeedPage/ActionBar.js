@@ -20,7 +20,7 @@ import { Redirect } from 'react-router-dom';
         super(props);
         this.state = {
             toCreatePostPage: false,
-            type: null
+            type: ""
         };
     }
     
@@ -28,7 +28,12 @@ import { Redirect } from 'react-router-dom';
 
         // redirect to create post page
         if (this.state.toCreatePostPage) {
-            return <Redirect to="/createpost" type={this.props.type}/>;
+            let referral = {
+                pathname: "/createpost",
+                state: { type: this.state.type}
+            };
+
+            return <Redirect to={referral}/>;
         }
 
          return (
@@ -47,7 +52,8 @@ import { Redirect } from 'react-router-dom';
                         {
                             toCreatePostPage: true, 
                             type: "text"
-                        })}} >
+                        })}
+                    } >
                     TEXT
                  </button>
                  <button 

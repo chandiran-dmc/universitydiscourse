@@ -22,13 +22,14 @@ export default class CreatePostPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            type: this.props.type,
+            type: props,
             value: ''
         };
         console.log(this.state.type);
         this.handleChange = this.handleChange.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
     }
+
     handleSearch(event) {
         // This is to stop the default behavior, 
         // which in this case is stopping form from reloading itself
@@ -49,7 +50,7 @@ export default class CreatePostPage extends Component {
     
 
     render() {
-        if(this.state.type == "text") {
+        if(this.state.type === "text") {
         return (
             <div>
                 <TopBar />
