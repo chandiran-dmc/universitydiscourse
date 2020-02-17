@@ -1,18 +1,26 @@
 import React from 'react';
-import logo from './image1.png';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import CreatePostPage from './components/CreatePostPage';
+import MainFeedPage from './components/MainFeedPage';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Welcome to university discourse! The website is currently under development!
-        </p>
-      </header>
-    </div>
-  );
+export default function App() {
+    return (
+      
+      <Router>
+        <Switch>
+          <Route path="/createpost">
+            <CreatePostPage />
+          </Route>
+          <Route path="/">
+            <MainFeedPage />
+          </Route>
+
+        </Switch>
+      </Router>
+    );
 }
-
-export default App;

@@ -12,24 +12,31 @@
  */
 
  import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
  
  export default class ActionBar extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            onClickCreate: this.props.onClickCreate
+            toCreatePostPage: false
         };
     }
     
      render() {
+
+        // redirect to create post page
+        if (this.state.toCreatePostPage) {
+            return <Redirect to="/createpost"/>;
+        }
+
          return (
              <div className="ActionBarButtonsContainer">
                  <button 
                     className="ActionBarButtonOdd"
                     id="CreatePostButton"
                     type="button"
-                    onClick={() => {this.state.onClickCreate()}} >
+                    onClick={() => {this.setState({toCreatePostPage: true})}} >
                     MAKE A POST
                  </button>
                  <button 
