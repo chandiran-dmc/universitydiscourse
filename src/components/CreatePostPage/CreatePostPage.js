@@ -22,8 +22,10 @@ export default class CreatePostPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            type: this.props.type,
             value: ''
         };
+        console.log(this.state.type);
         this.handleChange = this.handleChange.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
     }
@@ -47,6 +49,7 @@ export default class CreatePostPage extends Component {
     
 
     render() {
+        if(this.state.type == "text") {
         return (
             <div>
                 <TopBar />
@@ -80,7 +83,7 @@ export default class CreatePostPage extends Component {
                     /> 
                     </label>
                     <p>
-                        
+
                     </p>
                     
                     <input 
@@ -98,5 +101,6 @@ export default class CreatePostPage extends Component {
                 
             </div>
         )
+        }
     }
 }
