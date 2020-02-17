@@ -18,10 +18,6 @@ import './MainFeedPage.css'
 
 export default class MainFeedPage extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div>

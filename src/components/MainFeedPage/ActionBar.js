@@ -13,8 +13,27 @@
 
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
- 
- export default class ActionBar extends Component {
+import CreateIcon from '../../customeIcons/createPostIcon';
+import CalIcon from '../../customeIcons/calIcon';
+import ImageIcon from '../../customeIcons/imageIcon';
+import DocIcon from '../../customeIcons/docIcon';
+import LinkIcon from '../../customeIcons/linkIcon';
+import TextIcon from '../../customeIcons/textIcon';
+import { Button, Box } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: "#F2B705"
+        },
+        secondary: {
+            main: "#F2C94C"
+        }
+    }
+});
+
+export default class ActionBar extends Component {
 
     constructor(props) {
         super(props);
@@ -24,7 +43,7 @@ import { Redirect } from 'react-router-dom';
         };
     }
     
-     render() {
+    render() {
 
         // redirect to create post page
         if (this.state.toCreatePostPage) {
@@ -36,72 +55,90 @@ import { Redirect } from 'react-router-dom';
             return <Redirect to={referral}/>;
         }
 
-         return (
-             <div className="ActionBarButtonsContainer">
-                 <button 
-                    className="ActionBarButtonOdd"
-                    id="CreatePostButton"
-                    type="button" >
-                    MAKE A POST
-                 </button>
-                 <button 
-                    className="ActionBarButtonEven"
-                    id="FilterTextButton"
-                    type="button"
-                    onClick={() => {this.setState(
-                        {
-                            toCreatePostPage: true, 
-                            type: "text"
-                        })}
-                    } >
-                    TEXT
-                 </button>
-                 <button 
-                    className="ActionBarButtonOdd"
-                    id="FilterImageButton"
-                    type="button"
-                    onClick={() => {this.setState(
-                        {
-                            toCreatePostPage: true, 
-                            type: "image"
-                        })}} >
-                    IMAGE
-                 </button>
-                 <button 
-                    className="ActionBarButtonEven"
-                    id="FilterDocumentButton"
-                    type="button"
-                    onClick={() => {this.setState(
-                        {
-                            toCreatePostPage: true, 
-                            type: "document"
-                        })}} >
-                    DOCUMENT
-                 </button>
-                 <button 
-                    className="ActionBarButtonOdd"
-                    id="FilterCalendarButton"
-                    type="button"
-                    onClick={() => {this.setState(
-                        {
-                            toCreatePostPage: true, 
-                            type: "calendar"
-                        })}} >
-                    CALENDAR
-                 </button>
-                 <button 
-                    className="ActionBarButtonEven"
-                    id="FilterLinkButton"
-                    type="button"
-                    onClick={() => {this.setState(
-                        {
-                            toCreatePostPage: true, 
-                            type: "link"
-                        })}} >
-                    LINK
-                 </button>
-             </div>
-         )
-     }
- }
+        return (
+            <Box 
+                boxShadow={3}
+                margin={1}
+                width="50%"
+                padding={2} >
+                <ThemeProvider theme={theme}>
+                    <Button
+                        color="primary"
+                        variant="contained"
+                        startIcon={<CreateIcon />}
+                        disableElevation
+                        type="button" >
+                        MAKE A POST
+                    </Button>
+                    <Button 
+                        color="secondary"
+                        variant="contained"
+                        startIcon={<TextIcon />}
+                        disableElevation
+                        type="button"
+                        onClick={() => {this.setState(
+                            {
+                                toCreatePostPage: true, 
+                                type: "text"
+                            })}
+                        } >
+                        TEXT
+                    </Button>
+                    <Button 
+                        color="primary"
+                        variant="contained"
+                        startIcon={<ImageIcon />}
+                        disableElevation
+                        type="button"
+                        onClick={() => {this.setState(
+                            {
+                                toCreatePostPage: true, 
+                                type: "image"
+                            })}} >
+                        IMAGE
+                    </Button>
+                    <Button 
+                        color="secondary"
+                        variant="contained"
+                        startIcon={<DocIcon />}
+                        disableElevation
+                        type="button"
+                        onClick={() => {this.setState(
+                            {
+                                toCreatePostPage: true, 
+                                type: "document"
+                            })}} >
+                        DOCUMENT
+                    </Button>
+                    <Button 
+                        color="primary"
+                        variant="contained"
+                        startIcon={<CalIcon />}
+                        disableElevation
+                        type="button"
+                        onClick={() => {this.setState(
+                            {
+                                toCreatePostPage: true, 
+                                type: "calendar"
+                            })}} >
+                        CALENDAR
+                    </Button>
+                    <Button 
+                        color="secondary"
+                        variant="contained"
+                        startIcon={<LinkIcon />}
+                        disableElevation
+                        type="button"
+                        onClick={() => {this.setState(
+                            {
+                                toCreatePostPage: true, 
+                                type: "link"
+                            })}} >
+                        LINK
+                    </Button>
+                </ThemeProvider>
+            </Box>
+        )
+    }
+}
  
