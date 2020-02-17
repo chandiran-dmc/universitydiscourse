@@ -53,20 +53,36 @@ export default class CreatePostPage extends Component {
                 <div className="CreatePostPage">
                     <form
                         onSubmit={this.handleSearch}>
-                     <input
+                    <label>
+                        Post Title:
+                        <p></p>
+                        <input
                         className = "Heading"
                         type="text"
                         value={this.state.value}
                         placeholder="Post Title..."
                         onChange={this.handleChange}
                     />
-                    <input
+
+                     
+                    </label>
+                    <label>
+                    <p></p>
+                        Post Content:
+                    <p></p>
+
+                        <input
                         className = "TextBox"
                         type="text"
                         value={this.state.value}
                         placeholder="Content..."
                         onChange={this.handleChange}
                     /> 
+                    </label>
+                    <p>
+                        
+                    </p>
+                    
                     <input 
                         className="SubmitButton"
                         type="submit" 
