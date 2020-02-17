@@ -11,7 +11,7 @@
  * Please look at the UI mockup for image explanation
  */
 
- import React, { Component } from 'react';
+import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
  
  export default class ActionBar extends Component {
