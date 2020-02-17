@@ -22,17 +22,13 @@ export default class MainFeedPage extends Component {
         super(props);
     }
 
-    onClickCreate() {
-        alert('hi');
-    }
-
     render() {
         return (
             <div>
                 <TopBar />
                 <div className="MainFeedPage">
                     <div className="ActionBarContainer">
-                        <ActionBar onClickCreate={this.onClickCreate}/>
+                        <ActionBar />
                     </div>
                     <div className="PostsContainer">
 

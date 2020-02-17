@@ -12,54 +12,86 @@
  */
 
  import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
  
  export default class ActionBar extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            onClickCreate: this.props.onClickCreate
+            toCreatePostPage: false,
+            type: null
         };
     }
     
      render() {
+
+        // redirect to create post page
+        if (this.state.toCreatePostPage) {
+            return <Redirect to="/createpost" type={this.props.type}/>;
+        }
+
          return (
              <div className="ActionBarButtonsContainer">
                  <button 
                     className="ActionBarButtonOdd"
                     id="CreatePostButton"
-                    type="button"
-                    onClick={() => {this.state.onClickCreate()}} >
+                    type="button" >
                     MAKE A POST
                  </button>
                  <button 
                     className="ActionBarButtonEven"
                     id="FilterTextButton"
-                    type="button" >
+                    type="button"
+                    onClick={() => {this.setState(
+                        {
+                            toCreatePostPage: true, 
+                            type: "text"
+                        })}} >
                     TEXT
                  </button>
                  <button 
                     className="ActionBarButtonOdd"
                     id="FilterImageButton"
-                    type="button" >
+                    type="button"
+                    onClick={() => {this.setState(
+                        {
+                            toCreatePostPage: true, 
+                            type: "image"
+                        })}} >
                     IMAGE
                  </button>
                  <button 
                     className="ActionBarButtonEven"
                     id="FilterDocumentButton"
-                    type="button" >
+                    type="button"
+                    onClick={() => {this.setState(
+                        {
+                            toCreatePostPage: true, 
+                            type: "document"
+                        })}} >
                     DOCUMENT
                  </button>
                  <button 
                     className="ActionBarButtonOdd"
                     id="FilterCalendarButton"
-                    type="button" >
+                    type="button"
+                    onClick={() => {this.setState(
+                        {
+                            toCreatePostPage: true, 
+                            type: "calendar"
+                        })}} >
                     CALENDAR
                  </button>
                  <button 
                     className="ActionBarButtonEven"
                     id="FilterLinkButton"
-                    type="button" >
+                    type="button"
+                    onClick={() => {this.setState(
+                        {
+                            toCreatePostPage: true, 
+                            type: "link"
+                        })}} >
                     LINK
                  </button>
              </div>
