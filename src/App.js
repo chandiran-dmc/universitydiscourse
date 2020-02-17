@@ -10,13 +10,13 @@ import MainFeedPage from './components/MainFeedPage';
 
 export default function App() {
     return (
-      
+
       <Router>
         <Switch>
           <Route path="/createpost">
             <CreatePostPage />
           </Route>
-          <Route path="/">
+          <Route exact path="/">
             <MainFeedPage />
           </Route>
 
