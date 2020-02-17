@@ -10,8 +10,7 @@
 
 import React, { Component } from 'react'
 import './Footer.css';
-import TopBar from '../TopBar';
-import logo from '../../image1.png';
+import logo from '../../images/image1.png';
 
 export default class Footer extends Component {
 
@@ -47,25 +46,13 @@ export default class Footer extends Component {
     // The input form value is controlled by react = controlled components
     render() {
         return (
-            <div className="TopBar">
+            <div className="Footer">
                 <form 
                     onSubmit={this.handleSearch}>
                     <img 
                         className="Logo"
                         src={logo}
                         alt="logo"
-                    />
-                    <input 
-                        className="SearchText"
-                        type="text" 
-                        value={this.state.value}
-                        placeholder="Search.."
-                        onChange={this.handleChange} 
-                    />
-                    <input 
-                        className="SearchButton"
-                        type="submit" 
-                        value="" 
                     />
                 </form>
             </div>

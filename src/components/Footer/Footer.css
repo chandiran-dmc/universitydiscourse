@@ -1,7 +1,9 @@
 /* use top:0 and position:fixed to fix at top */
-.TopBar {
-    top: 0;
+.Footer {
+    left: 0;
+    bottom: 0;
     position: fixed;
+    height: 200px;
     width: 100%;
     overflow: auto;
     background-color: #023373;
@@ -10,24 +12,4 @@
 .Logo {
     max-width: 3%;
     height: auto;
-}
-
-.SearchText {
-    background-color: #011C40;
-    padding: 12px 20px 8px 10px;
-    border-radius: 5px;
-    border: none;
-    color: white;
-    font-size: 16px;
-    margin-left: 10px;
-    margin-right: 10px;
-}
-
-.SearchButton {
-    background-size: contain;
-    background-color: transparent;
-    background-image: url('../../images/search.png');
-    background-repeat: no-repeat;
-    border: none;
-    cursor: pointer;
 }
