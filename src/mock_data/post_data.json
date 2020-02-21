@@ -1,0 +1,26 @@
+[
+    {
+        "title" : "how is the class?",
+        "author" : "yolo6969",
+        "type" : "text",
+        "tag" : "cs307"
+    },
+    {
+        "title" : "how is the class?",
+        "author" : "grr",
+        "type" : "text",
+        "tag" : "cs252"
+    },
+    {
+        "title" : "how is the class?",
+        "author" : "tmaster",
+        "type" : "text",
+        "tag" : "cs240"
+    },
+    {
+        "title" : "how is the class?",
+        "author" : "hulkbuster",
+        "type" : "text",
+        "tag" : "cs180"
+    }
+]
