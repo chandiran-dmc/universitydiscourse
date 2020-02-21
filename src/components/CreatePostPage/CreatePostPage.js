@@ -22,10 +22,10 @@ export default class CreatePostPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            type: this.props,
+            type: this.props.location.state.postType,
             value: ''
         };
-        console.log(this.state.type);
+
         this.handleChange = this.handleChange.bind(this);
         this.handleSearch = this.handleSearch.bind(this);
     }
@@ -46,6 +46,8 @@ export default class CreatePostPage extends Component {
     }
 
     render() {
+
+        console.log("CreatePostPage >> Creating post of type : " + this.state.type);
 
         if(this.state.type === "text") {
             return (

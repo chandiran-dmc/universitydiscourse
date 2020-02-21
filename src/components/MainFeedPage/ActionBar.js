@@ -54,12 +54,11 @@ export default class ActionBar extends Component {
         // redirect to create post page
         if (this.state.toCreatePostPage === true) {
 
-            console.log(this.state.postType);
+            console.log("ActionBar >> create a post of type : " + this.state.postType);
 
-            return <Redirect to={{
+            return <Redirect exact from="/" push to={{
                 pathname: "/createpost",
-                state: { type: this.state.postType },
-                push: true
+                state: { postType: this.state.postType }
             }}/>;
         }
 
@@ -79,7 +78,7 @@ export default class ActionBar extends Component {
                         startIcon={<TextIcon />}
                         disableElevation
                         type="button"
-                        onClick={this.handleCreatePost} >
+                        onClick={() => {this.handleCreatePost("text")}} >
                         TEXT
                     </Button>
                     <Button 
@@ -88,7 +87,7 @@ export default class ActionBar extends Component {
                         startIcon={<ImageIcon />}
                         disableElevation
                         type="button"
-                        onClick={this.handleCreatePost} >
+                        onClick={() => {this.handleCreatePost("image")}} >
                         IMAGE
                     </Button>
                     <Button 
@@ -97,7 +96,7 @@ export default class ActionBar extends Component {
                         startIcon={<DocIcon />}
                         disableElevation
                         type="button"
-                        onClick={this.handleCreatePost} >
+                        onClick={() => {this.handleCreatePost("document")}} >
                         DOCUMENT
                     </Button>
                     <Button 
@@ -106,7 +105,7 @@ export default class ActionBar extends Component {
                         startIcon={<CalIcon />}
                         disableElevation
                         type="button"
-                        onClick={this.handleCreatePost} >
+                        onClick={() => {this.handleCreatePost("calendar")}} >
                         CALENDAR
                     </Button>
                     <Button 
@@ -115,7 +114,7 @@ export default class ActionBar extends Component {
                         startIcon={<LinkIcon />}
                         disableElevation
                         type="button"
-                        onClick={this.handleCreatePost} >
+                        onClick={() => {this.handleCreatePost("link")}} >
                         LINK
                     </Button>
                 </ThemeProvider>
