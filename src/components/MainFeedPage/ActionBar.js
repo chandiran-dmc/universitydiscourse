@@ -13,7 +13,6 @@
 
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import CreateIcon from '../../customeIcons/createPostIcon';
 import CalIcon from '../../customeIcons/calIcon';
 import ImageIcon from '../../customeIcons/imageIcon';
 import DocIcon from '../../customeIcons/docIcon';
@@ -39,20 +38,29 @@ export default class ActionBar extends Component {
         super(props);
         this.state = {
             toCreatePostPage: false,
-            type: ""
+            postType: ""
         };
     }
-    
+
+    handleCreatePost = (type) => {
+        this.setState({
+            toCreatePostPage: true,
+            postType: type
+        });
+    }
+
     render() {
 
         // redirect to create post page
-        if (this.state.toCreatePostPage) {
-            let referral = {
-                pathname: "/createpost",
-                state: { type: this.state.type}
-            };
+        if (this.state.toCreatePostPage === true) {
 
-            return <Redirect to={referral}/>;
+            console.log(this.state.postType);
+
+            return <Redirect to={{
+                pathname: "/createpost",
+                state: { type: this.state.postType },
+                push: true
+            }}/>;
         }
 
         return (
@@ -62,26 +70,16 @@ export default class ActionBar extends Component {
                 width="50%"
                 padding={2} >
                 <ThemeProvider theme={theme}>
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        startIcon={<CreateIcon />}
-                        disableElevation
-                        type="button" >
+                    <p>
                         MAKE A POST
-                    </Button>
+                    </p>
                     <Button 
                         color="secondary"
                         variant="contained"
                         startIcon={<TextIcon />}
                         disableElevation
                         type="button"
-                        onClick={() => {this.setState(
-                            {
-                                toCreatePostPage: true, 
-                                type: "text"
-                            })}
-                        } >
+                        onClick={this.handleCreatePost} >
                         TEXT
                     </Button>
                     <Button 
@@ -90,11 +88,7 @@ export default class ActionBar extends Component {
                         startIcon={<ImageIcon />}
                         disableElevation
                         type="button"
-                        onClick={() => {this.setState(
-                            {
-                                toCreatePostPage: true, 
-                                type: "image"
-                            })}} >
+                        onClick={this.handleCreatePost} >
                         IMAGE
                     </Button>
                     <Button 
@@ -103,11 +97,7 @@ export default class ActionBar extends Component {
                         startIcon={<DocIcon />}
                         disableElevation
                         type="button"
-                        onClick={() => {this.setState(
-                            {
-                                toCreatePostPage: true, 
-                                type: "document"
-                            })}} >
+                        onClick={this.handleCreatePost} >
                         DOCUMENT
                     </Button>
                     <Button 
@@ -116,11 +106,7 @@ export default class ActionBar extends Component {
                         startIcon={<CalIcon />}
                         disableElevation
                         type="button"
-                        onClick={() => {this.setState(
-                            {
-                                toCreatePostPage: true, 
-                                type: "calendar"
-                            })}} >
+                        onClick={this.handleCreatePost} >
                         CALENDAR
                     </Button>
                     <Button 
@@ -129,11 +115,7 @@ export default class ActionBar extends Component {
                         startIcon={<LinkIcon />}
                         disableElevation
                         type="button"
-                        onClick={() => {this.setState(
-                            {
-                                toCreatePostPage: true, 
-                                type: "link"
-                            })}} >
+                        onClick={this.handleCreatePost} >
                         LINK
                     </Button>
                 </ThemeProvider>
@@ -141,4 +123,3 @@ export default class ActionBar extends Component {
         )
     }
 }
- 

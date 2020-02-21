@@ -22,7 +22,7 @@ export default class CreatePostPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            type: props,
+            type: this.props,
             value: ''
         };
         console.log(this.state.type);
@@ -37,8 +37,6 @@ export default class CreatePostPage extends Component {
         alert('Searching for ' + this.state.value);
     }
     
-    
-
     handleChange(event) {
         this.setState(
             {
@@ -47,61 +45,60 @@ export default class CreatePostPage extends Component {
         );
     }
 
-    
-
     render() {
+
         if(this.state.type === "text") {
-        return (
-            <div>
-                <TopBar />
-                <div className="CreatePostPage">
-                    <form
-                        onSubmit={this.handleSearch}>
-                    <label>
-                        Post Title:
+            return (
+                <div>
+                    <TopBar />
+                    <div className="CreatePostPage">
+                        <form
+                            onSubmit={this.handleSearch}>
+                        <label>
+                            Post Title:
+                            <p></p>
+                            <input
+                            className = "Heading"
+                            type="text"
+                            value={this.state.value}
+                            placeholder="Post Title..."
+                            onChange={this.handleChange}
+                        />
+
+                        
+                        </label>
+                        <label>
                         <p></p>
-                        <input
-                        className = "Heading"
-                        type="text"
-                        value={this.state.value}
-                        placeholder="Post Title..."
-                        onChange={this.handleChange}
-                    />
+                            Post Content:
+                        <p></p>
 
-                     
-                    </label>
-                    <label>
-                    <p></p>
-                        Post Content:
-                    <p></p>
+                            <input
+                            className = "TextBox"
+                            type="text"
+                            value={this.state.value}
+                            placeholder="Content..."
+                            onChange={this.handleChange}
+                        /> 
+                        </label>
+                        <p>
 
-                        <input
-                        className = "TextBox"
-                        type="text"
-                        value={this.state.value}
-                        placeholder="Content..."
-                        onChange={this.handleChange}
-                    /> 
-                    </label>
-                    <p>
+                        </p>
+                        
+                        <input 
+                            className="SubmitButton"
+                            type="submit" 
+                            value="Make Post" 
+                        />
 
-                    </p>
+
+                        </form>
+
+
+                    </div>
+
                     
-                    <input 
-                        className="SubmitButton"
-                        type="submit" 
-                        value="Make Post" 
-                    />
-
-
-                    </form>
-
-
                 </div>
-
-                
-            </div>
-        )
+            );
         }
     }
 }
