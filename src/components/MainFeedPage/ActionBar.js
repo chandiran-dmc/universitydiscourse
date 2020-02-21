@@ -18,8 +18,7 @@ import ImageIcon from '../../customeIcons/imageIcon';
 import DocIcon from '../../customeIcons/docIcon';
 import LinkIcon from '../../customeIcons/linkIcon';
 import TextIcon from '../../customeIcons/textIcon';
-import { Button, Box } from '@material-ui/core';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { Button, Box, createMuiTheme, ThemeProvider } from '@material-ui/core';
 
 const theme = createMuiTheme({
     palette: {

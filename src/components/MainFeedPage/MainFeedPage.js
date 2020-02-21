@@ -15,6 +15,7 @@ import React, { Component } from 'react'
 import TopBar from '../TopBar';
 import ActionBar from './ActionBar';
 import Post from './../Post';
+import FollowingTags from './FollowingTags';
 import './MainFeedPage.css'
 
 export default class MainFeedPage extends Component {
@@ -22,8 +23,21 @@ export default class MainFeedPage extends Component {
     render() {
 
         /**
-         * TODO: get all the posts here before 
+         * TODO: get all the posts here before return
          */
+        let samplePost = {
+            title: "hello", 
+            content: "hello world", 
+            user: "grr",
+            time: 1582313744816,
+            tags: ["cs240", "cs250"],
+            comments: ["hello", "this is good"],
+            type: "text",
+            count: "10"
+        };
+        let sampleTags = [
+            "cs307", "com217", "econ517"
+        ];
 
 
         return (
@@ -34,21 +48,13 @@ export default class MainFeedPage extends Component {
                         <ActionBar />
                     </div>
                     <div className="PostsContainer">
-                        <Post 
-                            title="hello" 
-                            content="hello world" 
-                            user="grr" 
-                            time="123151231"
-                            tags={["cs240", "cs250"]}
-                            comments={["hello"]}
-                            type="text"
-                            count="10" />
+                        <Post data={samplePost}/>
                     </div>
                     <div className="FollowingTagsContainer">
-
+                        <FollowingTags tags={sampleTags}/>
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 }
