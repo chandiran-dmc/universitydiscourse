@@ -4,7 +4,9 @@
  */
 
 import React, { Component } from 'react';
-import { Box, createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { Grid, Paper, IconButton, createMuiTheme, ThemeProvider, Typography } from '@material-ui/core';
+import MenuIcon from '../../customeIcons/menuIcon';
+
 
 const theme = createMuiTheme({
     palette: {
@@ -26,8 +28,8 @@ export default class FollowingTags extends Component {
         };
     }
 
-    handleRemoveTag = () => {
-
+    handleRemoveTag = (tagName) => {
+        alert('Remove tag ' + tagName + ' ?')
     }
 
     renderTags = () => {
@@ -36,7 +38,28 @@ export default class FollowingTags extends Component {
         for (let i = 0; i < this.state.tags.length; i++) {
             tags[i] = (
                 <div>
-                    <p>{this.state.tags[i]}</p>
+                    <Grid item >
+                        <Grid 
+                            container
+                            direction="row"
+                            justify="space-between"
+                            alignItems="center" >
+                            <Grid item >
+                                <Typography variant="button">
+                                    {this.state.tags[i]}
+                                </Typography>
+                            </Grid>
+                            <Grid item >
+                                <IconButton 
+                                    disableElevation
+                                    type="button"
+                                    onClick={() => {this.handleRemoveTag(this.state.tags[i])}} >
+                                    <MenuIcon />
+                                </IconButton>
+                            </Grid>
+                        </Grid>
+
+                    </Grid>
                 </div>
             );
         }
@@ -44,17 +67,23 @@ export default class FollowingTags extends Component {
     }
 
     render() {
+
         return (
             <ThemeProvider theme={theme} >
-                <Box 
-                    boxShadow={3}
-                    margin={1}
-                    padding={2}
-                    bgcolor="primary.main" >
-                    
-                    <h3>Following Tags</h3>
-                    {this.renderTags()}
-                </Box>
+                <Grid
+                    container
+                    direction="column"
+                    justify="center"
+                    alignItems="flex-end" >
+                    <Paper 
+                        spacing
+                        color="primary.main" >
+                        <Typography variant="h6">
+                            Following Tags
+                        </Typography>
+                        {this.renderTags()}
+                    </Paper>
+                </Grid>
             </ThemeProvider>
         )
     }

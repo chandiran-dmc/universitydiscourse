@@ -16,6 +16,7 @@ import TopBar from '../TopBar';
 import ActionBar from './ActionBar';
 import Post from './../Post';
 import FollowingTags from './FollowingTags';
+import { Grid } from '@material-ui/core';
 import './MainFeedPage.css'
 
 export default class MainFeedPage extends Component {
@@ -41,19 +42,24 @@ export default class MainFeedPage extends Component {
 
 
         return (
-            <div>
-                <TopBar />
-                <div className="MainFeedPage">
-                    <div className="ActionBarContainer">
+            <div className="MainFeedPage">
+                <Grid 
+                    container
+                    wrap="nowrap" 
+                    spacing={2}
+                    direction="column" >
+                    <TopBar />
+                    <Grid item>
                         <ActionBar />
-                    </div>
-                    <div className="PostsContainer">
+                    </Grid>
+                    <Grid item>
                         <Post data={samplePost}/>
-                    </div>
-                    <div className="FollowingTagsContainer">
+                    </Grid>
+                    <Grid item>
                         <FollowingTags tags={sampleTags}/>
-                    </div>
-                </div>
+                    </Grid>
+                </Grid>
+
             </div>
         );
     }

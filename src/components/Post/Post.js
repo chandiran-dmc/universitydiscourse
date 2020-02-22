@@ -14,7 +14,9 @@
 
 
 import React, { Component } from 'react'
-import { Box, createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { Box, createMuiTheme, ThemeProvider, Grid, Avatar, Typography, Button, IconButton } from '@material-ui/core';
+import MenuIcon from '../../customeIcons/menuIcon';
+import LikeIcon from '../../customeIcons/likeIcon';
 
 const theme = createMuiTheme({
     palette: {
@@ -23,6 +25,10 @@ const theme = createMuiTheme({
         },
         secondary: {
             main: "#757575"
+        },
+        text: {
+            main: "#000000",
+            sub: "#9B9B9B"
         }
     }
 });
@@ -48,18 +54,85 @@ export default class Post extends Component {
 
         return (
             <ThemeProvider theme={theme} >
-                <Box 
+                <Box
                     boxShadow={3}
                     margin={1}
                     padding={2}
                     bgcolor="primary.main" >
-                    <p>title: {this.state.title}</p> 
-                    <p>user: {this.state.user}</p>
-                    <p>time: {new Date(this.state.time).toString()}</p>
-                    <p>content: {this.state.content}</p>
-                    <p>type: {this.state.type}</p>
-                    <p>upvote: {this.state.count}</p>
-                    <p>comments: {this.state.comments.length}</p>
+                    <Grid container wrap="nowrap" spacing={2}>
+                        <Grid item>
+                            <Avatar>{this.state.user}</Avatar>
+                        </Grid>
+                        <Grid item xs zeroMinWidth>
+                            <Grid item>
+                                <Typography 
+                                    variant="body1"
+                                    color="text.main" >
+                                    {this.state.title}
+                                </Typography>
+                            </Grid>
+                            <Grid item>
+                                <Typography 
+                                    variant="caption"
+                                    color="text.sub" >
+                                    {new Date(this.state.time).toString()}
+                                </Typography>
+                            </Grid>
+                        </Grid>
+                        <Grid item>
+                            <IconButton 
+                                disableElevation
+                                type="button"
+                                onClick={() => {alert('Delete?')}} >
+                                <MenuIcon />
+                            </IconButton>
+                        </Grid>
+                    </Grid>
+                    <Grid 
+                        container 
+                        wrap="nowrap" 
+                        spacing={2}
+                        direction="column">
+                        <Grid item>
+                            <Typography variant="h6">
+                                {this.state.content}
+                            </Typography>
+                        </Grid>
+                        <Grid 
+                            container
+                            wrap="nowrap"
+                            justify="flex-start"
+                            alignItems="center"
+                            direction="row">
+                            <Grid 
+                                container
+                                wrap="nowrap"
+                                spacing={0}
+                                justify="flex-start"
+                                alignItems="center"
+                                direction="row">
+                                <Grid item>
+                                    <IconButton 
+                                        disableElevation
+                                        type="button"
+                                        onClick={() => {alert('Like?')}} >
+                                        <LikeIcon />
+                                    </IconButton>
+                                </Grid>
+                                <Grid item>
+                                    <Typography variant="body2">
+                                        {this.state.count}
+                                    </Typography>
+                                </Grid>
+                            </Grid>
+                            <Grid item >
+                                <Button
+                                    variant="contained">
+                                    {this.state.comments.length <= 1 ? this.state.comments.length + " comment" : this.state.comments.length + " comments"}
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 </Box>
             </ThemeProvider>
         )

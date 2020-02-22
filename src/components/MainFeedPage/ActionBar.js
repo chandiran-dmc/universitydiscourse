@@ -18,7 +18,7 @@ import ImageIcon from '../../customeIcons/imageIcon';
 import DocIcon from '../../customeIcons/docIcon';
 import LinkIcon from '../../customeIcons/linkIcon';
 import TextIcon from '../../customeIcons/textIcon';
-import { Button, Box, createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { Button, Box, createMuiTheme, ThemeProvider, Grid, Typography } from '@material-ui/core';
 
 const theme = createMuiTheme({
     palette: {
@@ -62,62 +62,83 @@ export default class ActionBar extends Component {
         }
 
         return (
-            <Box 
-                boxShadow={3}
-                margin={1}
-                width="50%"
-                padding={2} >
-                <ThemeProvider theme={theme}>
-                    <p>
-                        MAKE A POST
-                    </p>
-                    <Button 
-                        color="secondary"
-                        variant="contained"
-                        startIcon={<TextIcon />}
-                        disableElevation
-                        type="button"
-                        onClick={() => {this.handleCreatePost("text")}} >
-                        TEXT
-                    </Button>
-                    <Button 
-                        color="primary"
-                        variant="contained"
-                        startIcon={<ImageIcon />}
-                        disableElevation
-                        type="button"
-                        onClick={() => {this.handleCreatePost("image")}} >
-                        IMAGE
-                    </Button>
-                    <Button 
-                        color="secondary"
-                        variant="contained"
-                        startIcon={<DocIcon />}
-                        disableElevation
-                        type="button"
-                        onClick={() => {this.handleCreatePost("document")}} >
-                        DOCUMENT
-                    </Button>
-                    <Button 
-                        color="primary"
-                        variant="contained"
-                        startIcon={<CalIcon />}
-                        disableElevation
-                        type="button"
-                        onClick={() => {this.handleCreatePost("calendar")}} >
-                        CALENDAR
-                    </Button>
-                    <Button 
-                        color="secondary"
-                        variant="contained"
-                        startIcon={<LinkIcon />}
-                        disableElevation
-                        type="button"
-                        onClick={() => {this.handleCreatePost("link")}} >
-                        LINK
-                    </Button>
-                </ThemeProvider>
-            </Box>
+            <div>
+                <Box 
+                    boxShadow={3}
+                    margin={1}
+                    padding={2} >
+                    <ThemeProvider theme={theme}>
+                        <Grid
+                            container
+                            direction="row"
+                            justify="center"
+                            alignItems="center"
+                            spacing={1}>
+                            <Grid item >
+                                <Typography variant="h6">
+                                    Create A Post : 
+                                </Typography>
+                            </Grid>
+                            <Grid item >
+                                <Button 
+                                    color="secondary.main"
+                                    variant="contained"
+                                    startIcon={<TextIcon />}
+                                    disableElevation
+                                    type="button"
+                                    onClick={() => {this.handleCreatePost("text")}} >
+                                    TEXT
+                                </Button>
+                            </Grid>
+                            <Grid item >
+                                <Button 
+                                    color="primary.main"
+                                    variant="contained"
+                                    startIcon={<ImageIcon />}
+                                    disableElevation
+                                    type="button"
+                                    onClick={() => {this.handleCreatePost("image")}} >
+                                    IMAGE
+                                </Button>
+                            </Grid>
+                            <Grid item >
+                                <Button 
+                                    color="secondary.main"
+                                    variant="contained"
+                                    startIcon={<DocIcon />}
+                                    disableElevation
+                                    type="button"
+                                    onClick={() => {this.handleCreatePost("document")}} >
+                                    DOCUMENT
+                                </Button>
+                            </Grid>
+                            <Grid item >
+                                <Button 
+                                    color="primary.main"
+                                    variant="contained"
+                                    startIcon={<CalIcon />}
+                                    disableElevation
+                                    type="button"
+                                    onClick={() => {this.handleCreatePost("calendar")}} >
+                                    CALENDAR
+                                </Button>
+                            </Grid>
+                            <Grid item >
+                                <Button 
+                                    color="secondary.main"
+                                    variant="contained"
+                                    startIcon={<LinkIcon />}
+                                    disableElevation
+                                    type="button"
+                                    onClick={() => {this.handleCreatePost("link")}} >
+                                    LINK
+                                </Button>
+                            </Grid>
+                        </Grid>
+                    </ThemeProvider>
+                </Box>
+            </div>
+            
         )
     }
 }
