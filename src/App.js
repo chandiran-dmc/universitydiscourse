@@ -14,7 +14,6 @@ export default function App() {
         <Switch>
           <Route path="/createpost" component={CreatePostPage} />
           <Route exact path="/" component={MainFeedPage} />
-
         </Switch>
       </Router>
     );
