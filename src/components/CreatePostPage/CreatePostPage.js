@@ -49,7 +49,7 @@ export default class CreatePostPage extends Component {
     
 
     render() {
-        if(this.state.type == "text") {
+        //if(this.state.type == "text") {
         return (
             <div>
                 <TopBar />
@@ -101,6 +101,6 @@ export default class CreatePostPage extends Component {
                 
             </div>
         )
-        }
+        //}
     }
 }

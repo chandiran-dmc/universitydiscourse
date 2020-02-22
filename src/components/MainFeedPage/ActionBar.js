@@ -28,7 +28,7 @@ import { Redirect } from 'react-router-dom';
 
         // redirect to create post page
         if (this.state.toCreatePostPage) {
-            return <Redirect to="/createpost" type={this.props.type}/>;
+            return <Redirect to="../CreatePostPage" type={this.props.type}/>;
         }
 
          return (
