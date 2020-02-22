@@ -16,6 +16,21 @@
 import React, { Component } from 'react'
 import TopBar from '../TopBar/TopBar';
 import './CreatePostPage.css'
+import { spacing } from '@material-ui/system';
+//import { positions, borderTop, borderBottom,borderLeft, borderRight } from '@material-ui/system';
+import { Button, Box, input,Grid } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: "#F2B705"
+        },
+        secondary: {
+            main: "#F2C94C"
+        }
+    }
+});
 
 export default class CreatePostPage extends Component {
 
@@ -52,16 +67,34 @@ export default class CreatePostPage extends Component {
         if(this.state.type === "text") {
             return (
                 <div>
-                    <TopBar />
-                    <div className="CreatePostPage">
-                        <form
-                            onSubmit={this.handleSearch}>
+                <TopBar />
+                <div className="CreatePostPage">
+                    <form
+                        onSubmit={this.handleSearch}>
+                            
+                <Grid
+                    container
+                    direction="column"
+                    justify="center"
+                    alignItems="center"
+                >
+                <Box
+                    boxShadow={30}
+                    margin={1}
+                    width="50%"
+                    mt={20}
+
+                > 
+
+               
+                 <ThemeProvider theme={theme}>
                         <label>
                             Post Title:
                             <p></p>
                             <input
                             className = "Heading"
                             type="text"
+                            disableElevation
                             value={this.state.value}
                             placeholder="Post Title..."
                             onChange={this.handleChange}
@@ -85,12 +118,35 @@ export default class CreatePostPage extends Component {
                         <p>
 
                         </p>
+                        <Grid
+                            container
+                            direction="row"
+                            justify="center"
+                            alignItems="center"
+                         >
+                        <Button 
+                            color="secondary"
+                            variant="contained"
+                            style={{justifyContent: 'center'}}
+                           // startIcon={<TextIcon />}
+                            disableElevation
+                            type="button"
+
+
+                            onClick={() => {this.handleCreatePost("text")}} >
+                            MAKE POST
+                        </Button>
+                        </Grid>
                         
-                        <input 
-                            className="SubmitButton"
-                            type="submit" 
-                            value="Make Post" 
-                        />
+                         {/* <input 
+                        //     className="SubmitButton"
+                        //     type="submit" 
+                        //     value="Make Post" 
+                        // /> */}
+                        </ThemeProvider>
+                        </Box>
+                </Grid>
+               
 
 
                         </form>
@@ -100,7 +156,85 @@ export default class CreatePostPage extends Component {
 
                     
                 </div>
+               
+                
             );
         }
+    
+    if(this.state.type === "image") {
+        return (
+            <Box
+                boxShadow={3}
+                margin={1}
+                width="50%"
+
+            > 
+
+            <div>
+                <TopBar />
+                <div className="CreatePostPage">
+                    <form
+                        onSubmit={this.handleSearch}>
+                    <ThemeProvider theme={theme}>
+                    <label>
+                        Post Title:
+                        <p></p>
+                        <input
+                        className = "Heading"
+                        type="text"
+                        disableElevation
+                        value={this.state.value}
+                        placeholder="Post Title..."
+                        onChange={this.handleChange}
+                    />
+
+                    
+                    </label>
+                    <label>
+                    <p></p>
+                        Post Content:
+                    <p></p>
+
+                        <input
+                        className = "TextBox"
+                        type="text"
+                        value={this.state.value}
+                        placeholder="Content..."
+                        onChange={this.handleChange}
+                    /> 
+                    </label>
+                    <p>
+
+                    </p>
+                    <Button 
+                        color="secondary"
+                        variant="contained"
+                        style={{justifyContent: 'center'}}
+                       // startIcon={<TextIcon />}
+                        disableElevation
+                        type="button"
+
+                        onClick={() => {this.handleCreatePost("text")}} >
+                        MAKE POST
+                    </Button>
+                    
+                     {/* <input 
+                    //     className="SubmitButton"
+                    //     type="submit" 
+                    //     value="Make Post" 
+                    // /> */}
+                    </ThemeProvider>
+
+
+                    </form>
+
+
+                </div>
+
+                
+            </div>
+            </Box>
+        );
     }
+                }
 }
