@@ -25,6 +25,7 @@ import sample_posts from '../../mock_data/post_data';
 export default class MainFeedPage extends Component {
 
     constructor(props) {
+        super(props);
         this.state = {
             posts: [],
             user: {}
