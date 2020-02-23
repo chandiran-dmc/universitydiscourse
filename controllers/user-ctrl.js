@@ -7,9 +7,25 @@ AuthenticateUser = (req, res) => {
     if (!body) {
         return res.status(400).json({
             success: false,
-            error: 'You must provide a movie',
+            error: 'You must provide an email',
         })
     }
+
+    await User.findOne({ email: req.params.email }, (err, user) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        if (!user) {
+            return res
+                .status(404)
+                .json({ success: false, error: `User not found` })
+        } else {
+            
+
+
+        }
+    }).catch(err => console.log(err))
 
 
 };
