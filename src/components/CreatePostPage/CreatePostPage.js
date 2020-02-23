@@ -17,9 +17,6 @@ import React, { Component } from 'react'
 import TopBar from '../TopBar/TopBar';
 import Footer from '../Footer/Footer';
 import './CreatePostPage.css'
-import { spacing } from '@material-ui/system';
-import { makeStyles } from '@material-ui/core/styles';
-import Chip from '@material-ui/core/Chip';
 //import { positions, borderTop, borderBottom,borderLeft, borderRight } from '@material-ui/system';
 import { Button, Box, input,Grid, TextField } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
@@ -41,16 +38,6 @@ const theme = createMuiTheme({
           }
     }
 });
-const useStyles = makeStyles(theme => ({
-    root: {
-      display: 'flex',
-      justifyContent: 'center',
-      flexWrap: 'wrap',
-      '& > *': {
-        margin: theme.spacing(0.5),
-      },
-    },
-  }));
 
   
 
