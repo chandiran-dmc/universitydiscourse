@@ -71,7 +71,7 @@ export default class FollowingTags extends Component {
         return (
             <ThemeProvider theme={theme} >
                 <Grid
-                    containercenter
+                    container
                     direction="column"
                     justify="center"
                     alignItems="flex-end" >

@@ -81,7 +81,7 @@ export default class ActionBar extends Component {
                             </Grid>
                             <Grid item >
                                 <Button 
-                                    color="secondary.main"
+                                    color="secondary"
                                     variant="contained"
                                     startIcon={<TextIcon />}
                                     disableElevation
@@ -92,7 +92,7 @@ export default class ActionBar extends Component {
                             </Grid>
                             <Grid item >
                                 <Button 
-                                    color="primary.main"
+                                    color="primary"
                                     variant="contained"
                                     startIcon={<ImageIcon />}
                                     disableElevation
@@ -103,7 +103,7 @@ export default class ActionBar extends Component {
                             </Grid>
                             <Grid item >
                                 <Button 
-                                    color="secondary.main"
+                                    color="secondary"
                                     variant="contained"
                                     startIcon={<DocIcon />}
                                     disableElevation
@@ -114,7 +114,7 @@ export default class ActionBar extends Component {
                             </Grid>
                             <Grid item >
                                 <Button 
-                                    color="primary.main"
+                                    color="primary"
                                     variant="contained"
                                     startIcon={<CalIcon />}
                                     disableElevation
@@ -125,7 +125,7 @@ export default class ActionBar extends Component {
                             </Grid>
                             <Grid item >
                                 <Button 
-                                    color="secondary.main"
+                                    color="secondary"
                                     variant="contained"
                                     startIcon={<LinkIcon />}
                                     disableElevation

@@ -17,29 +17,65 @@ import ActionBar from './ActionBar';
 import Post from './../Post';
 import FollowingTags from './FollowingTags';
 import { Grid } from '@material-ui/core';
-import './MainFeedPage.css'
+import './MainFeedPage.css';
+
+import sample_posts from '../../mock_data/post_data.json';
+import sample_user from '../../mock_data/user_data.json';
+
 
 export default class MainFeedPage extends Component {
 
-    render() {
-
-        /**
-         * TODO: get all the posts here before return
-         */
-        let samplePost = {
-            title: "hello", 
-            content: "hello world", 
-            user: "grr",
-            time: 1582313744816,
-            tags: ["cs240", "cs250"],
-            comments: ["hello", "this is good"],
-            type: "text",
-            count: "10"
+    constructor(props) {
+        super(props);
+        this.state = {
+            posts: [],
+            filteredPosts: [],
+            user: {},
+            tags: []
         };
-        let sampleTags = [
-            "cs307", "com217", "econ517"
-        ];
+    }
 
+    /**
+     * Helper function to get the posts for the user
+     * Get all the posts from hot section and filter by
+     * the tags the user follows
+     */
+    getPosts = () => {
+
+        // TODO: request the database for the hot posts
+        let posts = []
+        posts = sample_posts; // XXX
+
+        // TODO: Get user data from local file
+        let user = sample_user; // XXX
+        
+        // Filter the posts based on the tags the user follows
+        let tags = user.tags;
+        let filteredPosts = [];
+        posts.forEach((post) => {
+            if (tags.includes(post.tag)) {
+                filteredPosts.push(<div key={post.pid}><Post data={post}/></div>);
+            }
+        });
+
+        console.log(filteredPosts)
+        console.log(user.tags)
+
+        this.setState({
+            posts: sample_posts,
+            filteredPosts: filteredPosts,
+            user: user,
+            tags: user.tags
+        });
+
+        console.log(this.state.tags)
+    }
+
+    componentDidMount = () => {
+        this.getPosts();
+    }
+
+    render() {
 
         return (
             <div className="MainFeedPage">
@@ -60,13 +96,13 @@ export default class MainFeedPage extends Component {
                                 <ActionBar />
                             </Grid>
                             <Grid item>
-                                <Post data={samplePost}/>
+                                {this.state.filteredPosts}
                             </Grid>
                         </Grid>
                     </Grid>
 
                     <Grid item>
-                        <FollowingTags tags={sampleTags}/>
+                        <FollowingTags tags={this.state.tags}/>
                     </Grid>
                 </Grid>
 
