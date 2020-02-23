@@ -15,10 +15,13 @@
 
 import React, { Component } from 'react'
 import TopBar from '../TopBar/TopBar';
+import Footer from '../Footer/Footer';
 import './CreatePostPage.css'
 import { spacing } from '@material-ui/system';
+import { makeStyles } from '@material-ui/core/styles';
+import Chip from '@material-ui/core/Chip';
 //import { positions, borderTop, borderBottom,borderLeft, borderRight } from '@material-ui/system';
-import { Button, Box, input,Grid } from '@material-ui/core';
+import { Button, Box, input,Grid, TextField } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
@@ -28,9 +31,28 @@ const theme = createMuiTheme({
         },
         secondary: {
             main: "#F2C94C"
-        }
+        },
+        typography: {
+            
+                subtitle1: {
+                    fontSize: 48
+                }
+            
+          }
     }
 });
+const useStyles = makeStyles(theme => ({
+    root: {
+      display: 'flex',
+      justifyContent: 'center',
+      flexWrap: 'wrap',
+      '& > *': {
+        margin: theme.spacing(0.5),
+      },
+    },
+  }));
+
+  
 
 export default class CreatePostPage extends Component {
 
@@ -59,6 +81,7 @@ export default class CreatePostPage extends Component {
             }
         );
     }
+   
 
     render() {
 
@@ -68,6 +91,9 @@ export default class CreatePostPage extends Component {
             return (
                 <div>
                 <TopBar />
+                <Footer />
+               
+            
                 <div className="CreatePostPage">
                     <form
                         onSubmit={this.handleSearch}>
@@ -88,24 +114,30 @@ export default class CreatePostPage extends Component {
 
                
                  <ThemeProvider theme={theme}>
-                        <label>
-                            Post Title:
+                        <h3 style={{ color: '#023373'}}>
+                            Post Title
+                            </h3>
+                    
                             <p></p>
+                            <TextField id="filled-basic" label="Post Title" variant="filled" size="large">
                             <input
                             className = "Heading"
                             type="text"
                             disableElevation
                             value={this.state.value}
-                            placeholder="Post Title..."
                             onChange={this.handleChange}
                         />
+                        </TextField>
 
                         
-                        </label>
-                        <label>
+                        
+                        
                         <p></p>
-                            Post Content:
+                        <h3 style={{ color: '#023373'}}>
+                            Post Content
+                            </h3>
                         <p></p>
+                        <TextField id="filled-basic" label="Post Content" variant="filled">
 
                             <input
                             className = "TextBox"
@@ -114,7 +146,8 @@ export default class CreatePostPage extends Component {
                             placeholder="Content..."
                             onChange={this.handleChange}
                         /> 
-                        </label>
+                        </TextField>
+                        
                         <p>
 
                         </p>
@@ -128,7 +161,6 @@ export default class CreatePostPage extends Component {
                             color="secondary"
                             variant="contained"
                             style={{justifyContent: 'center'}}
-                           // startIcon={<TextIcon />}
                             disableElevation
                             type="button"
 
@@ -137,12 +169,6 @@ export default class CreatePostPage extends Component {
                             MAKE POST
                         </Button>
                         </Grid>
-                        
-                         {/* <input 
-                        //     className="SubmitButton"
-                        //     type="submit" 
-                        //     value="Make Post" 
-                        // /> */}
                         </ThemeProvider>
                         </Box>
                 </Grid>
@@ -163,37 +189,55 @@ export default class CreatePostPage extends Component {
     
     if(this.state.type === "image") {
         return (
+            <div>
+            <TopBar />
+            <Footer />
+           
+        
+            <div className="CreatePostPage">
+                <form
+                    onSubmit={this.handleSearch}>
+                        
+            <Grid
+                container
+                direction="column"
+                justify="center"
+                alignItems="center"
+            >
             <Box
-                boxShadow={3}
+                boxShadow={30}
                 margin={1}
                 width="50%"
+                mt={20}
 
             > 
 
-            <div>
-                <TopBar />
-                <div className="CreatePostPage">
-                    <form
-                        onSubmit={this.handleSearch}>
-                    <ThemeProvider theme={theme}>
-                    <label>
-                        Post Title:
+           
+             <ThemeProvider theme={theme}>
+                    <h3 style={{ color: '#023373'}}>
+                        Post Title
+                        </h3>
+                
                         <p></p>
+                        <TextField id="filled-basic" label="Post Title" variant="filled" size="large">
                         <input
                         className = "Heading"
                         type="text"
                         disableElevation
                         value={this.state.value}
-                        placeholder="Post Title..."
                         onChange={this.handleChange}
                     />
+                    </TextField>
 
                     
-                    </label>
-                    <label>
+                    
+                    
                     <p></p>
-                        Post Content:
+                    <h3 style={{ color: '#023373'}}>
+                        Post Content
+                        </h3>
                     <p></p>
+                    <TextField id="filled-basic" label="Post Content" variant="filled">
 
                         <input
                         className = "TextBox"
@@ -202,28 +246,33 @@ export default class CreatePostPage extends Component {
                         placeholder="Content..."
                         onChange={this.handleChange}
                     /> 
-                    </label>
+                    </TextField>
+                    
                     <p>
 
                     </p>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                     >
                     <Button 
                         color="secondary"
                         variant="contained"
                         style={{justifyContent: 'center'}}
-                       // startIcon={<TextIcon />}
                         disableElevation
                         type="button"
+
 
                         onClick={() => {this.handleCreatePost("text")}} >
                         MAKE POST
                     </Button>
-                    
-                     {/* <input 
-                    //     className="SubmitButton"
-                    //     type="submit" 
-                    //     value="Make Post" 
-                    // /> */}
+                    </Grid>
                     </ThemeProvider>
+                    </Box>
+            </Grid>
+           
 
 
                     </form>
@@ -233,7 +282,8 @@ export default class CreatePostPage extends Component {
 
                 
             </div>
-            </Box>
+           
+            
         );
     }
                 }

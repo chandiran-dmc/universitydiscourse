@@ -13,6 +13,7 @@
 
 import React, { Component } from 'react'
 import TopBar from '../TopBar';
+import Footer from '../Footer';
 import ActionBar from './ActionBar';
 import Post from './../Post';
 import FollowingTags from './FollowingTags';
@@ -43,6 +44,7 @@ export default class MainFeedPage extends Component {
         return (
             <div>
                 <TopBar />
+                
                 <div className="MainFeedPage">
                     <div className="ActionBarContainer">
                         <ActionBar />
@@ -53,7 +55,10 @@ export default class MainFeedPage extends Component {
                     <div className="FollowingTagsContainer">
                         <FollowingTags tags={sampleTags}/>
                     </div>
+                    
                 </div>
+
+                <Footer />
             </div>
         );
     }
