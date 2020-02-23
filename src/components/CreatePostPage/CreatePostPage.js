@@ -95,6 +95,7 @@ export default class CreatePostPage extends Component {
 
                         </form>
 
+<<<<<<< HEAD
 
                     </div>
 
@@ -102,5 +103,11 @@ export default class CreatePostPage extends Component {
                 </div>
             );
         }
+=======
+                
+            </div>
+        )
+        //}
+>>>>>>> 298e6d9b7d29717665635c5e79003451322255f8
     }
 }

@@ -19,7 +19,33 @@ import FollowingTags from './FollowingTags';
 import { Grid } from '@material-ui/core';
 import './MainFeedPage.css'
 
+import sample_posts from '../../mock_data/post_data';
+
+
 export default class MainFeedPage extends Component {
+
+    constructor(props) {
+        this.state = {
+            posts: [],
+            user: {}
+        };
+    }
+
+    /**
+     * Helper function to get the posts for the user
+     */
+    getPosts = () => {
+        
+        // TODO: Requst server for user information & posts
+
+        // For now, we are just getting data from the mock json file
+        this.setState({
+            posts: sample_posts,
+            user: this.state.user
+        });
+    }
+
+
 
     render() {
 
