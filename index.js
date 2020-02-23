@@ -3,7 +3,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 
 const db = require('./db')
-const movieRouter = require('./routes/movie-router')
+const movieRouter = require('./routes/user-router')
 
 const app = express()
 const apiPort = 3000
