@@ -14,13 +14,6 @@
     height: auto;
 
 }
-.LogoName2 {
-    max-width: 50%;
-    margin-top: 8px; 
-    margin-bottom: 10px;
-    margin-left: 8px;
-    height: auto;
-}
 
 .Form {
     margin-left: 45%;
@@ -28,10 +21,11 @@
     margin-top: 10%;
 }
 
-.LOGINButton {
+.NEXTButton {
     background-color: #F2B705;
     width: 110px;
 }
+
 
 
 

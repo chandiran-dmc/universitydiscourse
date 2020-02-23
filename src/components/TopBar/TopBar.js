@@ -66,6 +66,7 @@ export default class TopBar extends Component {
                         type="submit" 
                         value="" 
                     />
+                    
                 </form>
             </div>
         )

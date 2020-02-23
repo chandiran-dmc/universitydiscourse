@@ -13,6 +13,7 @@
 
 import React, { Component } from 'react'
 import TopBar from '../TopBar';
+import Footer from '../Footer';
 import ActionBar from './ActionBar';
 import Post from './../Post';
 import FollowingTags from './FollowingTags';
