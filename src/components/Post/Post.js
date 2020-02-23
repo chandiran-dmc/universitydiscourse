@@ -17,11 +17,13 @@ import React, { Component } from 'react'
 import { Box, createMuiTheme, ThemeProvider, Grid, Avatar, Typography, Button, IconButton } from '@material-ui/core';
 import MenuIcon from '../../customeIcons/menuIcon';
 import LikeIcon from '../../customeIcons/likeIcon';
+import { Redirect } from 'react-router-dom';
 
 export default class Post extends Component {
 
     constructor(props) {
         super(props);
+       
 
         const theme = createMuiTheme({
             palette: {
@@ -47,11 +49,31 @@ export default class Post extends Component {
             comments: props.data.comments,
             type: props.data.type,
             count: props.data.count,
-            theme: theme
+            theme: theme,
+            isEditPost: false,
+            mode: ""
         };
+
+
+       
+    }
+    handleRedirect = (editPost) => {
+        this.setState({
+            mode: editPost,
+            isEditPost: true
+        });
     }
 
     render() {
+        if (this.state.isEditPost === true) {
+
+            console.log("Post >> Edit a post : " + this.state.mode);
+
+            return <Redirect exact from="/" push to={{
+                pathname: "/createpost",
+                state: { mode: this.state.mode }
+            }}/>;
+        }
 
         return (
             <div>
@@ -84,7 +106,8 @@ export default class Post extends Component {
                             <Grid item>
                                 <IconButton 
                                     type="button"
-                                    onClick={() => {alert('Delete?')}} >
+                                    onClick={() => this.handleRedirect("edit post")} >
+                                    {/* onClick={() => {alert('Delete?')}} > */}
                                     <MenuIcon />
                                 </IconButton>
                             </Grid>
