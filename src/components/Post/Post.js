@@ -55,7 +55,7 @@ export default class Post extends Component {
         return (
             <ThemeProvider theme={theme} >
                 <Box
-                    boxShadow={3}
+                    boxShadow={2}
                     margin={1}
                     padding={2}
                     bgcolor="primary.main" >

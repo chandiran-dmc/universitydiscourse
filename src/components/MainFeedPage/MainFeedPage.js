@@ -46,15 +46,25 @@ export default class MainFeedPage extends Component {
                 <Grid 
                     container
                     wrap="nowrap" 
-                    spacing={2}
-                    direction="column" >
+                    spacing={4}
+                    direction="row"
+                    justify="center"
+                    alignItems="flex-start" >
                     <TopBar />
                     <Grid item>
-                        <ActionBar />
+                        <Grid container
+                        wrap="nowrap"
+                        spacing={2}
+                        direction="column">
+                            <Grid item>
+                                <ActionBar />
+                            </Grid>
+                            <Grid item>
+                                <Post data={samplePost}/>
+                            </Grid>
+                        </Grid>
                     </Grid>
-                    <Grid item>
-                        <Post data={samplePost}/>
-                    </Grid>
+
                     <Grid item>
                         <FollowingTags tags={sampleTags}/>
                     </Grid>

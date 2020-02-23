@@ -64,7 +64,7 @@ export default class ActionBar extends Component {
         return (
             <div>
                 <Box 
-                    boxShadow={3}
+                    boxShadow={2}
                     margin={1}
                     padding={2} >
                     <ThemeProvider theme={theme}>
