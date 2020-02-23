@@ -1,16 +1,18 @@
 import React from 'react';
-import logo from './image1.png';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import Sandbox from './components/Sandbox';
+import MainFeedPage from './components/MainFeedPage'
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Welcome to university discourse! The website is currently under development!
-        </p>
-      </header>
+
+      <Router>
+        <Route exact path="/" component={MainFeedPage} />
+        <Route path="/sandbox" component={Sandbox} />
+      </Router>
+
     </div>
   );
 }

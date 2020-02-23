@@ -15,15 +15,25 @@ import React, { Component } from 'react'
 import TopBar from '../TopBar';
 import ActionBar from './ActionBar';
 import './MainFeedPage.css'
+import Button from '@material-ui/core/Button';
 
 export default class MainFeedPage extends Component {
+
+    constructor(props) {
+        super(props);
+    }
+
+    onClickCreate() {
+        alert('hi');
+    }
+
     render() {
         return (
             <div>
                 <TopBar />
                 <div className="MainFeedPage">
                     <div className="ActionBarContainer">
-                        <ActionBar />
+                        <ActionBar onClickCreate={this.onClickCreate}/>
                     </div>
                     <div className="PostsContainer">
 
@@ -32,7 +42,11 @@ export default class MainFeedPage extends Component {
 
                     </div>
                 </div>
+                {/* <Button variant = "contained" color="primary">
+                    Hello World
+                </Button> */}
             </div>
+
         )
     }
 }

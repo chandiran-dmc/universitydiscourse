@@ -8,9 +8,9 @@
  * Please look at the UI mockup for image explanation
  */
 
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import './TopBar.css';
-import logo from '../../image1.png';
+import logo from '../../images/image1.png';
 
 export default class TopBar extends Component {
 
@@ -66,6 +66,7 @@ export default class TopBar extends Component {
                         type="submit" 
                         value="" 
                     />
+                    
                 </form>
             </div>
         )

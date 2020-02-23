@@ -4,13 +4,57 @@
 }
 
 .ActionBarButtonOdd {
-    background-color: #F2B705;
+    width: 20%;
+    height: 40%;
     border-color: transparent;
 }
 
 .ActionBarButtonEven {
-    background-color: #F2C94C;
+    width: 20%;
+    height: 40%;
     border-color: transparent;
+}
+
+#CreatePostButton {
+    /* background: url('../../images/createPostButton.svg'); */
+    background-color: #F2B705;
+    background-repeat: no-repeat;
+    background-position: top;
+}
+
+#FilterTextButton {
+    /* background: url('../../images/filterTextButton.svg'); */
+    background-color: #F2C94C;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#FilterImageButton {
+    /* background: url('../../images/filterImageButton.svg'); */
+    background-color: #F2B705;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#FilterDocumentButton {
+    /* background: url('../../images/filterDocumentButton.svg'); */
+    background-color: #F2C94C;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#FilterCalendarButton {
+    /* background: url('../../images/filterCalendarButton.svg'); */
+    background-color: #F2B705;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#FilterLinkButton {
+    /* background: url('../../images/filterLinkButton.svg'); */
+    background-color: #F2C94C;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .ActionBarButtonsContainer {
