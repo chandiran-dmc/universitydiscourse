@@ -43,42 +43,62 @@ createPost = (req, res) => {
         });
 }
 
-updateMovie = async (req, res) => {
-    const body = req.body
 
+/**
+ * Function to update a post on the database
+ */
+updatePost = async (req, res) => {
+
+    // Parse body from the request
+    const body = req.body;
+
+    // error checking
     if (!body) {
         return res.status(400).json({
             success: false,
             error: 'You must provide a body to update',
-        })
+        });
     }
 
-    Movie.findOne({ _id: req.params.id }, (err, movie) => {
+    // Query for the appropriate post document
+    Post.findOne({ pid: req.params.pid }, (err, post) => {
+
+        // Post not found
         if (err) {
             return res.status(404).json({
                 err,
-                message: 'Movie not found!',
-            })
+                message: 'Post not found!',
+            });
         }
-        movie.name = body.name
-        movie.time = body.time
-        movie.rating = body.rating
-        movie
+
+        // Post not found
+        if (!post) {
+            return res.status(401).json({
+                err,
+                message: 'Fuck you',
+            });
+        }
+
+        // Set new information for the post
+        post.title = body.title;
+        post.content = body.content;
+        post.tag = body.tag;
+        post
             .save()
             .then(() => {
                 return res.status(200).json({
                     success: true,
-                    id: movie._id,
-                    message: 'Movie updated!',
-                })
+                    id: post._id,
+                    message: 'Post updated!',
+                });
             })
             .catch(error => {
                 return res.status(404).json({
                     error,
-                    message: 'Movie not updated!',
-                })
-            })
-    })
+                    message: 'Post not updated!',
+                });
+            });
+    });
 }
 
 deleteMovie = async (req, res) => {
@@ -128,7 +148,7 @@ getMovies = async (req, res) => {
 
 module.exports = {
     createPost,
-    updateMovie,
+    updatePost,
     deleteMovie,
     getMovies,
     getMovieById,
