@@ -1,26 +1,46 @@
 [
     {
+        "pid" : "1",
         "title" : "how is the class?",
-        "author" : "yolo6969",
+        "content" : "good",
+        "user" : "yolo6969",
+        "time" : "1582313744816",
         "type" : "text",
-        "tag" : "cs307"
+        "tag" : "cs307",
+        "count" : "10",
+        "comments" : []
     },
     {
+        "pid" : "2",
         "title" : "how is the class?",
-        "author" : "grr",
+        "content" : "good",
+        "user" : "grr",
+        "time" : "1582313744816",
         "type" : "text",
-        "tag" : "cs252"
+        "tag" : "cs252",
+        "count" : "10",
+        "comments" : []
     },
     {
+        "pid" : "3",
         "title" : "how is the class?",
-        "author" : "tmaster",
+        "content" : "good",
+        "user" : "tmaster",
+        "time" : "1582313744816",
         "type" : "text",
-        "tag" : "cs240"
+        "tag" : "cs240",
+        "count" : "10",
+        "comments" : []
     },
     {
+        "pid" : "4",
         "title" : "how is the class?",
-        "author" : "hulkbuster",
+        "content" : "good",
+        "user" : "hulkbuster",
+        "time" : "1582313744816",
         "type" : "text",
-        "tag" : "cs180"
+        "tag" : "cs180",
+        "count" : "10",
+        "comments" : []
     }
 ]

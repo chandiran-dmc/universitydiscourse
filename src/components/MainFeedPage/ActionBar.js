@@ -62,83 +62,75 @@ export default class ActionBar extends Component {
         }
 
         return (
-            <div>
+            <ThemeProvider theme={theme}>
                 <Box 
                     boxShadow={2}
                     margin={1}
                     padding={2} >
-                    <ThemeProvider theme={theme}>
-                        <Grid
-                            container
-                            direction="row"
-                            justify="center"
-                            alignItems="center"
-                            spacing={1}>
-                            <Grid item >
-                                <Typography variant="h6">
-                                    Create A Post : 
-                                </Typography>
-                            </Grid>
-                            <Grid item >
-                                <Button 
-                                    color="secondary.main"
-                                    variant="contained"
-                                    startIcon={<TextIcon />}
-                                    disableElevation
-                                    type="button"
-                                    onClick={() => {this.handleCreatePost("text")}} >
-                                    TEXT
-                                </Button>
-                            </Grid>
-                            <Grid item >
-                                <Button 
-                                    color="primary.main"
-                                    variant="contained"
-                                    startIcon={<ImageIcon />}
-                                    disableElevation
-                                    type="button"
-                                    onClick={() => {this.handleCreatePost("image")}} >
-                                    IMAGE
-                                </Button>
-                            </Grid>
-                            <Grid item >
-                                <Button 
-                                    color="secondary.main"
-                                    variant="contained"
-                                    startIcon={<DocIcon />}
-                                    disableElevation
-                                    type="button"
-                                    onClick={() => {this.handleCreatePost("document")}} >
-                                    DOCUMENT
-                                </Button>
-                            </Grid>
-                            <Grid item >
-                                <Button 
-                                    color="primary.main"
-                                    variant="contained"
-                                    startIcon={<CalIcon />}
-                                    disableElevation
-                                    type="button"
-                                    onClick={() => {this.handleCreatePost("calendar")}} >
-                                    CALENDAR
-                                </Button>
-                            </Grid>
-                            <Grid item >
-                                <Button 
-                                    color="secondary.main"
-                                    variant="contained"
-                                    startIcon={<LinkIcon />}
-                                    disableElevation
-                                    type="button"
-                                    onClick={() => {this.handleCreatePost("link")}} >
-                                    LINK
-                                </Button>
-                            </Grid>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                        spacing={1}>
+                        <Grid item >
+                            <Typography variant="h6">
+                                Create A Post : 
+                            </Typography>
                         </Grid>
-                    </ThemeProvider>
+                        <Grid item >
+                            <Button 
+                                color="secondary"
+                                variant="contained"
+                                startIcon={<TextIcon />}
+                                type="button"
+                                onClick={() => {this.handleCreatePost("text")}} >
+                                TEXT
+                            </Button>
+                        </Grid>
+                        <Grid item >
+                            <Button 
+                                color="primary"
+                                variant="contained"
+                                startIcon={<ImageIcon />}
+                                type="button"
+                                onClick={() => {this.handleCreatePost("image")}} >
+                                IMAGE
+                            </Button>
+                        </Grid>
+                        <Grid item >
+                            <Button 
+                                color="secondary"
+                                variant="contained"
+                                startIcon={<DocIcon />}
+                                type="button"
+                                onClick={() => {this.handleCreatePost("document")}} >
+                                DOCUMENT
+                            </Button>
+                        </Grid>
+                        <Grid item >
+                            <Button 
+                                color="primary"
+                                variant="contained"
+                                startIcon={<CalIcon />}
+                                type="button"
+                                onClick={() => {this.handleCreatePost("calendar")}} >
+                                CALENDAR
+                            </Button>
+                        </Grid>
+                        <Grid item >
+                            <Button 
+                                color="secondary"
+                                variant="contained"
+                                startIcon={<LinkIcon />}
+                                type="button"
+                                onClick={() => {this.handleCreatePost("link")}} >
+                                LINK
+                            </Button>
+                        </Grid>
+                    </Grid>
                 </Box>
-            </div>
-            
+            </ThemeProvider>
         )
     }
 }

@@ -33,11 +33,11 @@ const theme = createMuiTheme({
     }
 });
 
-
 export default class Post extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             title: props.data.title,
             content: props.data.content,
@@ -53,12 +53,13 @@ export default class Post extends Component {
     render() {
 
         return (
-            <ThemeProvider theme={theme} >
+            <ThemeProvider theme={theme} >     
                 <Box
                     boxShadow={2}
                     margin={1}
                     padding={2}
                     bgcolor="primary.main" >
+                    
                     <Grid container wrap="nowrap" spacing={2}>
                         <Grid item>
                             <Avatar>{this.state.user}</Avatar>
@@ -67,21 +68,20 @@ export default class Post extends Component {
                             <Grid item>
                                 <Typography 
                                     variant="body1"
-                                    color="text.main" >
+                                    color="textPrimary" >
                                     {this.state.title}
                                 </Typography>
                             </Grid>
                             <Grid item>
                                 <Typography 
                                     variant="caption"
-                                    color="text.sub" >
+                                    color="textSecondary" >
                                     {new Date(this.state.time).toString()}
                                 </Typography>
                             </Grid>
                         </Grid>
                         <Grid item>
                             <IconButton 
-                                disableElevation
                                 type="button"
                                 onClick={() => {alert('Delete?')}} >
                                 <MenuIcon />
@@ -113,7 +113,6 @@ export default class Post extends Component {
                                 direction="row">
                                 <Grid item>
                                     <IconButton 
-                                        disableElevation
                                         type="button"
                                         onClick={() => {alert('Like?')}} >
                                         <LikeIcon />
