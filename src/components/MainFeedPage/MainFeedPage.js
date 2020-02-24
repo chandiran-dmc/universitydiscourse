@@ -26,16 +26,6 @@ import sample_user from '../../mock_data/user_data.json';
 
 export default class MainFeedPage extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            posts: [],
-            filteredPosts: [],
-            user: {},
-            tags: []
-        };
-    }
-
     /**
      * Helper function to get the posts for the user
      * Get all the posts from hot section and filter by
@@ -51,7 +41,7 @@ export default class MainFeedPage extends Component {
         let user = sample_user; // XXX
 
         // Filter the posts based on the tags the user follows
-        let tags =  this.state.tags.concat(user.tags);
+        let tags =  user.tags;
         let filteredPosts = [];
         posts.forEach((post) => {
             if (tags.includes(post.tag)) {
