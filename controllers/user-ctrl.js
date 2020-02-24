@@ -42,14 +42,17 @@ AuthenticateUser = (req, res) => {
 
 ChangePassword = (req, res) => {
     const body = req.body
-    const { email, password } = body;
+    const { email, oldpassword, newpassword } = body;
 
     if (!body) {
         return res.status(400).json({
             success: false,
-            error: 'You must provide an email',
+            error: 'You must provide an email, oldpassword and newpassword',
         })
     }
+
+    console.log("THIS IS THE OLD" + oldpassword);
+    console.log("THIS IS THE NEW" + newpassword);
 
     User.findOne({ email }, (err, user) => {
         if (err) {
@@ -62,17 +65,31 @@ ChangePassword = (req, res) => {
                 .json({ success: false, error: `User not found` })
         } else {            
             user
-            .isCorrectPassword(password, function(err, same) {
+            .isCorrectPassword(oldpassword, function(err, same) {
                 if (err) {
                     res.status(500)
                     .json({error: 'Internal error please try again'});
                 } else if (!same) {
                     res.status(401)
-                    .json({error: 'Incorrect email or password'});
+                    .json({error: 'Incorrect password'});
                 }
                 else {
-                    return res
-                    .json({ success: false, error: `Password was correct` })
+                    //user.email=email
+                    user.password=newpassword
+                    user
+                    .save()    
+                    .then(() => {
+                        return res.status(200).json({
+                            success: true,
+                            message: 'Password updated!',
+                        })
+                    })
+                    .catch(error => {
+                        return res.status(404).json({
+                            error,
+                            message: 'Password not updated!',
+                        })
+                    })
                 }
             })                         
         }
