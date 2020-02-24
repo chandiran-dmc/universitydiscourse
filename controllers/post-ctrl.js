@@ -4,6 +4,7 @@ const Post = require('../models/post-model');
  * Function to create a post on the database
  */
 createPost = (req, res) => {
+    console.log("createPost function called");
 
     // parsing body
     const body = req.body;
@@ -11,9 +12,10 @@ createPost = (req, res) => {
     if (!body) {
         return res.status(400).json({
             success: false,
-            error: 'You must provide a movie',
+            error: 'You must provide a post',
         });
     }
+    console.log(body);
 
     // create post model
     const post = new Post(body);
@@ -125,7 +127,7 @@ getMovies = async (req, res) => {
 }
 
 module.exports = {
-    createMovie,
+    createPost,
     updateMovie,
     deleteMovie,
     getMovies,
