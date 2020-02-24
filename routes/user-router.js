@@ -8,5 +8,6 @@ router.post('/register', UserCtrl.RegisterUser)
 router.post('/authenticate', UserCtrl.AuthenticateUser)
 router.post('/changepass', UserCtrl.ChangePassword)
 router.post('/changeemail', UserCtrl.ChangeEmail)
+router.post('/deleteuser', UserCtrl.DeleteUser)
 
 module.exports = router
