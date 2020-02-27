@@ -21,8 +21,10 @@ import './CreatePostPage.css'
 import { makeStyles } from '@material-ui/core/styles';
 //import Chip from '@material-ui/core/Chip';
 //import { positions, borderTop, borderBottom,borderLeft, borderRight } from '@material-ui/system';
-import { Button, Box, input,Grid, TextField } from '@material-ui/core';
+import { Button, Box, Grid, TextField } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { Redirect } from 'react-router-dom';
+const axios = require('axios');
 
 const theme = createMuiTheme({
     palette: {
@@ -33,26 +35,15 @@ const theme = createMuiTheme({
             main: "#F2C94C"
         },
         typography: {
-            
-                subtitle1: {
-                    fontSize: 48
-                }
-            
-          }
+
+            subtitle1: {
+                fontSize: 48
+            }
+
+        }
     }
 });
-const useStyles = makeStyles(theme => ({
-    root: {
-      display: 'flex',
-      justifyContent: 'center',
-      flexWrap: 'wrap',
-      '& > *': {
-        margin: theme.spacing(0.5),
-      },
-    },
-  }));
 
-  
 
 export default class CreatePostPage extends Component {
 
@@ -60,26 +51,101 @@ export default class CreatePostPage extends Component {
         super(props);
         this.state = {
             type: this.props.location.state.postType,
-            value: '',
             mode: this.props.location.state.mode,
 
+            title: "",
+            content: "",
+            tags: [],
+            isRedirect: false
         };
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSearch = this.handleSearch.bind(this);
+        this.handleChangeContent = this.handleChangeContent.bind(this);
+        this.handleChangeTitle = this.handleChangeTitle.bind(this);
+        this.handleChangeTags = this.handleChangeTags.bind(this);
+        this.handleCreatePost = this.handleCreatePost.bind(this);
+    }
+    handleChangeContent(event) {
+        this.setState(
+            {
+                type: this.state.type,
+                title: this.state.title,
+                content: event.target.value,
+                tags: this.state.tags
+            }
+        );
     }
 
-    handleSearch(event) {
+    handleChangeTags(event) {
+        this.setState(
+            {
+                type:this.state.type,
+                title: this.state.title,
+                content: this.state.content,
+                tags: event.target.value.replace(" ", "").split(",")
+            }
+        );
+    }
+
+    handleCreatePost(event) {
         // This is to stop the default behavior, 
         // which in this case is stopping form from reloading itself
         event.preventDefault();
-        alert('Searching for ' + this.state.value);
+
+        // Check if input is empty
+        if (this.state.tags.length === 0) {
+            alert('Tags cannot be empty');
+            return;
+        } else if (this.state.title.length === 0 ) {
+            alert('Title cannot be empty');
+            return;
+        } else if (this.state.content.length === 0) {
+            alert('Content cannot be empty');
+            return;
+        }
+
+        let username = localStorage.getItem("username");
+        if (!username) {
+            username = "johndoe";
+        }
+
+        // Send request to the database
+        axios({
+            method: 'post',
+            url: 'http://localhost:3000/api/post',
+            data: {
+                title: this.state.title,
+                user: username,
+                type: this.state.type,
+                tag: this.state.tags,
+                count: 0,
+                comments: [],
+                content: this.state.content,
+                time: new Date().getTime()
+            }
+        })
+        .then((response) => {
+            console.log(response);
+            this.setState({
+                type: this.state.type,
+                title: this.state.title,
+                content: this.state.content,
+                tags: this.state.tags,
+                isRedirect: true
+            });
+        })
+        .catch((error) => {
+            console.error(error);
+            alert('An error occurred');
+        });
     }
-    
-    handleChange(event) {
+
+    handleChangeTitle(event) {
         this.setState(
             {
-                value: event.target.value
+                type: this.state.type,
+                title: event.target.value,
+                content: this.state.content,
+                tags: this.state.tags
             }
         );
     }
@@ -189,204 +255,132 @@ export default class CreatePostPage extends Component {
 
         }
 
-        if(this.state.type === "text") {
+        if (this.state.isRedirect) {
+            return <Redirect exact from="/createpost" push to={{
+                pathname: "/"
+            }}/>;
+        }
+
+        if (this.state.type === "text") {
             return (
                 <div>
-                <TopBar />
-                <Footer />
-               
-            
-                <div className="CreatePostPage">
-                    <form
-                        onSubmit={this.handleSearch}>
-                            
-                <Grid
-                    container
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
-                >
-                <Box
-                    boxShadow={30}
-                    margin={1}
-                    width="50%"
-                    mt={20}
+                    <TopBar />
+                    <Footer />
 
-                > 
-
-               
-                 <ThemeProvider theme={theme}>
-                        <h3 style={{ color: '#023373'}}>
-                            Post Title
-                            </h3>
-                    
-                            <p></p>
-                            <TextField id="filled-basic" label="Post Title" variant="filled" size="large">
-                            <input
-                            className = "Heading"
-                            type="text"
-                            disableElevation
-                            value={this.state.value}
-                            onChange={this.handleChange}
-                        />
-                        </TextField>
-
-                        
-                        
-                        
-                        <p></p>
-                        <h3 style={{ color: '#023373'}}>
-                            Post Content
-                            </h3>
-                        <p></p>
-                        <TextField id="filled-basic" label="Post Content" variant="filled">
-
-                            <input
-                            className = "TextBox"
-                            type="text"
-                            value={this.state.value}
-                            placeholder="Content..."
-                            onChange={this.handleChange}
-                        /> 
-                        </TextField>
-                        
-                        <p>
-
-                        </p>
-                        <Grid
-                            container
-                            direction="row"
-                            justify="center"
-                            alignItems="center"
-                         >
-                        <Button 
-                            color="secondary"
-                            variant="contained"
-                            style={{justifyContent: 'center'}}
-                            disableElevation
-                            type="button"
-
-
-                            onClick={() => {this.handleCreatePost("text")}} >
-                            MAKE POST
-                        </Button>
-                        </Grid>
-                        </ThemeProvider>
-                        </Box>
-                </Grid>
-               
-
-
+                    <div className="CreatePostPage">
+                        <form
+                            onSubmit={this.handleCreatePost}>
+                            <Grid
+                                container
+                                direction="column"
+                                justify="center"
+                                alignItems="center" >
+                                <Box
+                                    boxShadow={0}
+                                    margin={1}
+                                    width="50%"
+                                    mt={20} >
+                                    <ThemeProvider theme={theme}>
+                                        <h3 style={{ color: '#023373' }}>
+                                            Post Title
+                                        </h3>
+                                        <br/>
+                                        <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} />
+                                        <br />
+                                        <h3 style={{ color: '#023373' }}>
+                                            Post Content
+                                        </h3>
+                                        <br />
+                                        <TextField id="filled-basic" label="Post Content" variant="filled" onChange={this.handleChangeContent}/>
+                                        <br />
+                                        <h3 style={{ color: '#023373' }}>
+                                            Tags
+                                        </h3>
+                                        <br />
+                                        <TextField id="filled-basic" label="Tags" variant="filled" onChange={this.handleChangeTags}/>
+                                        <Grid
+                                            container
+                                            direction="row"
+                                            justify="center"
+                                            alignItems="center" >
+                                                <Button
+                                                    color="secondary"
+                                                    variant="contained"
+                                                    style={{ justifyContent: 'center' }}
+                                                    disableElevation
+                                                    type="button"
+                                                    onClick={this.handleCreatePost} >
+                                                    MAKE POST
+                                                </Button>
+                                        </Grid>
+                                    </ThemeProvider>
+                                </Box>
+                            </Grid>
                         </form>
-
-
                     </div>
-
-                    
                 </div>
-               
-                
             );
         }
-    
-    if(this.state.type === "image") {
-        return (
-            <div>
-            <TopBar />
-            <Footer />
-           
-        
-            <div className="CreatePostPage">
-                <form
-                    onSubmit={this.handleSearch}>
-                        
-            <Grid
-                container
-                direction="column"
-                justify="center"
-                alignItems="center"
-            >
-            <Box
-                boxShadow={30}
-                margin={1}
-                width="50%"
-                mt={20}
 
-            > 
+        if (this.state.type === "image") {
+            return (
+                <div>
+                    <TopBar />
+                    <Footer />
 
-           
-             <ThemeProvider theme={theme}>
-                    <h3 style={{ color: '#023373'}}>
-                        Post Title
-                        </h3>
-                
-                        <p></p>
-                        <TextField id="filled-basic" label="Post Title" variant="filled" size="large">
-                        <input
-                        className = "Heading"
-                        type="text"
-                        disableElevation
-                        value={this.state.value}
-                        onChange={this.handleChange}
-                    />
-                    </TextField>
-
-                    
-                    
-                    
-                    <p></p>
-                    <h3 style={{ color: '#023373'}}>
-                        Post Content
-                        </h3>
-                    <p></p>
-                    <TextField id="filled-basic" label="Post Content" variant="filled">
-
-                        <input
-                        className = "TextBox"
-                        type="text"
-                        value={this.state.value}
-                        placeholder="Content..."
-                        onChange={this.handleChange}
-                    /> 
-                    </TextField>
-                    
-                    <p>
-
-                    </p>
-                    <Grid
-                        container
-                        direction="row"
-                        justify="center"
-                        alignItems="center"
-                     >
-                    <Button 
-                        color="secondary"
-                        variant="contained"
-                        style={{justifyContent: 'center'}}
-                        disableElevation
-                        type="button"
-
-
-                        onClick={() => {this.handleCreatePost("text")}} >
-                        MAKE POST
-                    </Button>
-                    </Grid>
-                    </ThemeProvider>
-                    </Box>
-            </Grid>
-           
-
-
-                    </form>
-
-
+                    <div className="CreatePostPage">
+                        <form
+                            onSubmit={this.handleCreatePost}>
+                            <Grid
+                                container
+                                direction="column"
+                                justify="center"
+                                alignItems="center" >
+                                <Box
+                                    boxShadow={30}
+                                    margin={1}
+                                    width="50%"
+                                    mt={20} >
+                                    <ThemeProvider theme={theme}>
+                                        <h3 style={{ color: '#023373' }}>
+                                            Post Title
+                                        </h3>
+                                        <br/>
+                                        <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} />
+                                        <br />
+                                        <h3 style={{ color: '#023373' }}>
+                                            Post Image URL
+                                        </h3>
+                                        <br />
+                                        <TextField id="filled-basic" label="Post Image URL" variant="filled" onChange={this.handleChangeContent}/>
+                                        <br />
+                                        <h3 style={{ color: '#023373' }}>
+                                            Tags
+                                        </h3>
+                                        <br />
+                                        <TextField id="filled-basic" label="Tags" variant="filled" onChange={this.handleChangeTags}/>
+                                        <Grid
+                                            container
+                                            direction="row"
+                                            justify="center"
+                                            alignItems="center" >
+                                                <Button
+                                                    color="secondary"
+                                                    variant="contained"
+                                                    style={{ justifyContent: 'center' }}
+                                                    disableElevation
+                                                    type="button"
+                                                    onClick={this.handleCreatePost} >
+                                                    MAKE POST
+                                                </Button>
+                                        </Grid>
+                                    </ThemeProvider>
+                                </Box>
+                            </Grid>
+                        </form>
+                    </div>
                 </div>
-
-                
-            </div>
-           
-            
-        );
+            );
+        }
     }
-                }
 }

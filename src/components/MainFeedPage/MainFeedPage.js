@@ -26,16 +26,6 @@ import sample_user from '../../mock_data/user_data.json';
 
 export default class MainFeedPage extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            posts: [],
-            filteredPosts: [],
-            user: {},
-            tags: []
-        };
-    }
-
     /**
      * Helper function to get the posts for the user
      * Get all the posts from hot section and filter by
@@ -49,64 +39,64 @@ export default class MainFeedPage extends Component {
 
         // TODO: Get user data from local file
         let user = sample_user; // XXX
-        
+
         // Filter the posts based on the tags the user follows
-        let tags = user.tags;
+        let tags =  [];
+        tags = user.tags;
         let filteredPosts = [];
         posts.forEach((post) => {
             if (tags.includes(post.tag)) {
-                filteredPosts.push(<div key={post.pid}><Post data={post}/></div>);
+                filteredPosts.push(<Post key={post.pid} data={post}/>);
             }
         });
 
-        console.log(filteredPosts)
-        console.log(user.tags)
-
-        this.setState({
-            posts: sample_posts,
-            filteredPosts: filteredPosts,
-            user: user,
-            tags: user.tags
-        });
-
-        console.log(this.state.tags)
+        return filteredPosts;
     }
 
-    componentDidMount = () => {
-        this.getPosts();
+
+    /**
+     * Helper function to get the tags that the user follows
+     */
+    getFollowingTags = () => {
+
+        // TODO: Get user data from local file
+        let user = sample_user; // XXX
+
+        // Filter the posts based on the tags the user follows
+        let tagsList =  user.tags;
+
+        return <FollowingTags tags={tagsList}/>;
     }
+
 
     render() {
-
         return (
             <div className="MainFeedPage">
                 <Grid 
                     container
                     wrap="nowrap" 
-                    spacing={4}
+                    spacing={3}
                     direction="row"
                     justify="center"
                     alignItems="flex-start" >
                     <TopBar />
                     <Grid item>
                         <Grid container
-                        wrap="nowrap"
-                        spacing={2}
-                        direction="column">
+                            wrap="nowrap"
+                            spacing={2}
+                            direction="column">
                             <Grid item>
                                 <ActionBar />
                             </Grid>
                             <Grid item>
-                                {this.state.filteredPosts}
+                                {this.getPosts()}
                             </Grid>
                         </Grid>
                     </Grid>
-
                     <Grid item>
-                        <FollowingTags tags={this.state.tags}/>
+                        {this.getFollowingTags()}
                     </Grid>
                 </Grid>
-
             </div>
         );
     }

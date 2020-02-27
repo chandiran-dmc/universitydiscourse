@@ -37,34 +37,31 @@ export default class FollowingTags extends Component {
         let tags = [];
         for (let i = 0; i < this.state.tags.length; i++) {
             tags[i] = (
-                <div>
-                    <Grid item >
-                        <Grid 
-                            container
-                            direction="row"
-                            justify="space-between"
-                            alignItems="center" >
-                            <Grid item >
-                                <Typography variant="button">
-                                    {this.state.tags[i]}
-                                </Typography>
-                            </Grid>
-                            <Grid item >
-                                <IconButton 
-                                    disableElevation
-                                    type="button"
-                                    onClick={() => {this.handleRemoveTag(this.state.tags[i])}} >
-                                    <MenuIcon />
-                                </IconButton>
-                            </Grid>
+                <Grid item key={i}>
+                    <Grid 
+                        container
+                        direction="row"
+                        justify="space-between"
+                        alignItems="center" >
+                        <Grid item >
+                            <Typography variant="button">
+                                {this.state.tags[i]}
+                            </Typography>
                         </Grid>
-
+                        <Grid item >
+                            <IconButton 
+                                type="button"
+                                onClick={() => {this.handleRemoveTag(this.state.tags[i])}} >
+                                <MenuIcon />
+                            </IconButton>
+                        </Grid>
                     </Grid>
-                </div>
+                </Grid>
             );
         }
         return tags;
     }
+
 
     render() {
 
