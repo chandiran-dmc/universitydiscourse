@@ -37,14 +37,14 @@ export default class ActionBar extends Component {
         super(props);
         this.state = {
             toCreatePostPage: false,
-            postType: ""
+            type: ""
         };
     }
 
     handleCreatePost = (type) => {
         this.setState({
             toCreatePostPage: true,
-            postType: type
+            type: type
         });
     }
 
@@ -53,11 +53,11 @@ export default class ActionBar extends Component {
         // redirect to create post page
         if (this.state.toCreatePostPage === true) {
 
-            console.log("ActionBar >> create a post of type : " + this.state.postType);
+            console.log("ActionBar >> create a post of type : " + this.state.type);
 
             return <Redirect exact from="/" push to={{
                 pathname: "/createpost",
-                state: { postType: this.state.postType }
+                state: { type: this.state.type }
             }}/>;
         }
 

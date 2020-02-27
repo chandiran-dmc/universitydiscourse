@@ -47,7 +47,7 @@ export default class CreatePostPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            type: this.props.location.state.postType,
+            type: this.props.location.state.type,
             mode: this.props.location.state.mode,
             title: (this.props.location.state.title === undefined ? "" : this.props.location.state.title),
             content: (this.props.location.state.content === undefined ? "" : this.props.location.state.content),
