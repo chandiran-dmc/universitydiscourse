@@ -24,6 +24,9 @@ import sample_posts from '../../mock_data/post_data.json';
 import sample_user from '../../mock_data/user_data.json';
 
 
+import sample_posts from '../../mock_data/post_data';
+
+
 export default class MainFeedPage extends Component {
 
     /**
