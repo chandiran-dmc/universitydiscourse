@@ -1,0 +1,40 @@
+.CreatePostPage {
+    margin-top: 10%;
+}
+ .Heading {
+    background-color: #011C40;
+    padding: 12px 20px 8px 10px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    font-size: 16px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+}
+.TextBox {
+    padding: 30px 20px 8px 30px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    font-size: 16px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100%;
+    max-width: 500px;
+    box-sizing: border-box;
+} 
+.SubmitButton {
+    padding: 30px 20px 8px 30px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    font-size: 16px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 100%;
+    max-width: 100px;
+    box-sizing: border-box;
+}

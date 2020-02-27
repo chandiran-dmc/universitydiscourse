@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-const axios = require('axios');
-
 export default class Login extends Component {
   constructor(props) {
     super(props)
@@ -18,21 +16,6 @@ export default class Login extends Component {
   onSubmit = (event) => {
     event.preventDefault();
     alert('Authentication coming soon!');
-    let email = localStorage.getItem("email");
-    axios({
-        method: 'post',
-        url: 'http://localhost:3001/api/register',
-        data: {
-            email: this.state.email,
-            password: this.state.password
-        }
-    })
-    .then((response) => {
-        console.log(response);
-    })
-    .catch((error) => {
-        console.error(error);
-    });
   }
   render() {
     return (

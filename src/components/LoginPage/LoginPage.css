@@ -1,0 +1,88 @@
+/* Give a certain amount of margin to the top due to fixed top bar */
+
+/* Media Queries: Tablet Landscape */
+@media screen and (max-width: 1060px) {
+    #primary { width:67%; }
+    #secondary { width:30%; margin-left:3%;}  
+}
+
+/* Media Queries: Tabled Portrait */
+@media screen and (max-width: 768px) {
+    #primary { width:100%; }
+    #secondary { width:100%; margin:0; border:none; }
+}
+
+img { max-width: 100%; height: auto; }
+
+/* code till here */
+
+/* .lowerFooter {
+    top: 0;
+    height: 40px;
+
+    position: fixed;
+    width: 100%;
+    overflow: auto;
+    background-color: #023373;
+}
+
+.Logo2 {
+    max-width: 3%;
+    margin-top: 20px;
+    margin-left: 100px;
+    height: auto;
+} */
+
+.lowerFooter2 {
+    bottom: 0;
+    height: 30px;
+
+    position: fixed;
+    width: 100%;
+    overflow: auto;
+    background-color: #023373;
+}
+
+.LoginText {
+    padding-left: 700px;
+    padding-top: 5px;
+    color: #F2B705;
+}
+
+.LoginLogo {
+    
+    max-width: 10%;
+    height: auto;
+    padding-left: 680px;
+    padding-top: 35px;
+
+}
+.LogoName2 {
+    max-width: 30%;
+    padding-left: 570px;
+    /* margin-top: 8px; 
+    margin-bottom: 10px;
+    margin-left: 8px;
+    height: auto; */
+}
+
+.LOGINButton {
+    
+    width: 195px;
+    padding-left: 500px;
+}
+
+.grid-container2 {
+    padding-left: 650px;
+    grid-column-gap: 50px;
+}
+
+
+
+
+
+
+
+
+
+

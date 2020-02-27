@@ -13,6 +13,7 @@ import './Footer.css';
 import logo from '../../images/image1.png';
 import logoName from '../../images/ImageName.png';
 
+
 export default class Footer extends Component {
 
      render() {
@@ -29,7 +30,7 @@ export default class Footer extends Component {
                         alt="logoName"
                 />
                 <div
-                       className="lowerFooter"
+                       className="lowerFooter2"
                 />
                 <p className="Info">
                     University discourse intends to assists students
@@ -37,16 +38,16 @@ export default class Footer extends Component {
                 <p className="Info2">
                     in finding solutions to their academic concerns 
                 </p>
-                
-                <p className="Info3">
-                    Explore Links 
-                </p>
                 <p className="Info4">
                     Contact 
+                </p>
+                <p className="Info3">
+                    Explore Links 
                 </p>
                 
                         
                 
+
             </div>
         )
     }
