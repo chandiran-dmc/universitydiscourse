@@ -10,10 +10,8 @@ const Post = new Schema(
         count: { type: Number, required: true },
         comments: { type: [String], required: true },
         content: { type: String, required: true },
-    },
-    { 
-        timestamps: true
-    },
+        time: { type: Number, required: true }
+    }
 );
 
 module.exports = mongoose.model('post', Post);

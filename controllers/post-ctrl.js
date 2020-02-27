@@ -64,7 +64,7 @@ updatePost = async (req, res) => {
     const query = {
         $and: [
             {user: req.params.user},
-            {title: req.params.title}
+            {time: req.params.time}
         ]
     };
     Post.findOne(query, (err, post) => {

@@ -94,6 +94,7 @@ export default class CreatePostPage extends Component {
                 count: 0,
                 comments: [],
                 content: this.state.content,
+                time: new Date().getTime()
             }
         })
         .then((response) => {

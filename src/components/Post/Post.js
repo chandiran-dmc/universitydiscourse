@@ -79,7 +79,7 @@ export default class Post extends Component {
                                 <Typography 
                                     variant="caption"
                                     color="textSecondary" >
-                                    {new Date(this.state.time).toString()}
+                                    {new Date(this.state.time).toTimeString()}
                                 </Typography>
                             </Grid>
                         </Grid>
