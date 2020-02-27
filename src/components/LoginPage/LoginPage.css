@@ -1,94 +1,88 @@
 /* Give a certain amount of margin to the top due to fixed top bar */
-.MainFeedPage {
-    margin-top: 10%;
+
+/* Media Queries: Tablet Landscape */
+@media screen and (max-width: 1060px) {
+    #primary { width:67%; }
+    #secondary { width:30%; margin-left:3%;}  
+}
+
+/* Media Queries: Tabled Portrait */
+@media screen and (max-width: 768px) {
+    #primary { width:100%; }
+    #secondary { width:100%; margin:0; border:none; }
+}
+
+img { max-width: 100%; height: auto; }
+
+/* code till here */
+
+/* .lowerFooter {
+    top: 0;
+    height: 40px;
+
+    position: fixed;
+    width: 100%;
+    overflow: auto;
+    background-color: #023373;
+}
+
+.Logo2 {
+    max-width: 3%;
+    margin-top: 20px;
+    margin-left: 100px;
+    height: auto;
+} */
+
+.lowerFooter2 {
+    bottom: 0;
+    height: 30px;
+
+    position: fixed;
+    width: 100%;
+    overflow: auto;
+    background-color: #023373;
 }
 
 .LoginText {
-    margin-top: 10%;
+    padding-left: 700px;
+    padding-top: 5px;
     color: #F2B705;
 }
 
 .LoginLogo {
     
-    max-width: 20%;
+    max-width: 10%;
     height: auto;
+    padding-left: 680px;
+    padding-top: 35px;
 
 }
 .LogoName2 {
-    max-width: 50%;
-    margin-top: 8px; 
+    max-width: 30%;
+    padding-left: 570px;
+    /* margin-top: 8px; 
     margin-bottom: 10px;
     margin-left: 8px;
-    height: auto;
+    height: auto; */
 }
 
-.Form {
-    margin-left: 45%;
+.LOGINButton {
     
-    margin-top: 10%;
+    width: 195px;
+    padding-left: 500px;
 }
 
-.ActionBarButtonOdd {
-    width: 20%;
-    height: 40%;
-    border-color: transparent;
+.grid-container2 {
+    padding-left: 650px;
+    grid-column-gap: 50px;
 }
 
-.ActionBarButtonEven {
-    width: 20%;
-    height: 40%;
-    border-color: transparent;
-}
 
-#CreatePostButton {
-    /* background: url('../../images/createPostButton.svg'); */
-    background-color: #F2B705;
-    background-repeat: no-repeat;
-    background-position: top;
-}
 
-#FilterTextButton {
-    /* background: url('../../images/filterTextButton.svg'); */
-    background-color: #F2C94C;
-    background-repeat: no-repeat;
-    background-position: center;
-}
 
-#FilterImageButton {
-    /* background: url('../../images/filterImageButton.svg'); */
-    background-color: #F2B705;
-    background-repeat: no-repeat;
-    background-position: center;
-}
 
-#FilterDocumentButton {
-    /* background: url('../../images/filterDocumentButton.svg'); */
-    background-color: #F2C94C;
-    background-repeat: no-repeat;
-    background-position: center;
-}
 
-#FilterCalendarButton {
-    /* background: url('../../images/filterCalendarButton.svg'); */
-    background-color: #F2B705;
-    background-repeat: no-repeat;
-    background-position: center;
-}
 
-#FilterLinkButton {
-    /* background: url('../../images/filterLinkButton.svg'); */
-    background-color: #F2C94C;
-    background-repeat: no-repeat;
-    background-position: center;
-}
 
-.ActionBarButtonsContainer {
-    padding: 15px;
-    width: fit-content;
-    height: auto;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
 
-.ActionBarContainer {
-    width: auto;
-}
+

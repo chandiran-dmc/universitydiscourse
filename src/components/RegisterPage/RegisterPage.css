@@ -10,9 +10,19 @@
 
 .LoginLogo {
     
-    max-width: 20%;
+    max-width: 10%;
     height: auto;
+    padding-left: 680px;
+    padding-top: 35px;
 
+}
+.LogoName2 {
+    max-width: 30%;
+    padding-left: 560px;
+    /* margin-top: 8px; 
+    margin-bottom: 10px;
+    margin-left: 8px;
+    height: auto; */
 }
 
 .Form {
@@ -20,68 +30,31 @@
     
     margin-top: 10%;
 }
-
-.ActionBarButtonOdd {
-    width: 20%;
-    height: 40%;
-    border-color: transparent;
+.RegisterText {
+    padding-left: 690px;
+    padding-top: 5px;
+    color: #F2B705;
 }
 
-.ActionBarButtonEven {
-    width: 20%;
-    height: 40%;
-    border-color: transparent;
+.NEXT {
+    
+    width: 195px;
+    padding-left: 500px;
 }
 
-#CreatePostButton {
-    /* background: url('../../images/createPostButton.svg'); */
-    background-color: #F2B705;
-    background-repeat: no-repeat;
-    background-position: top;
+.grid-container2R {
+    padding-left: 650px;
+    grid-column-gap: 50px;
+    padding-bottom: 500px;
 }
 
-#FilterTextButton {
-    /* background: url('../../images/filterTextButton.svg'); */
-    background-color: #F2C94C;
-    background-repeat: no-repeat;
-    background-position: center;
-}
 
-#FilterImageButton {
-    /* background: url('../../images/filterImageButton.svg'); */
-    background-color: #F2B705;
-    background-repeat: no-repeat;
-    background-position: center;
-}
 
-#FilterDocumentButton {
-    /* background: url('../../images/filterDocumentButton.svg'); */
-    background-color: #F2C94C;
-    background-repeat: no-repeat;
-    background-position: center;
-}
 
-#FilterCalendarButton {
-    /* background: url('../../images/filterCalendarButton.svg'); */
-    background-color: #F2B705;
-    background-repeat: no-repeat;
-    background-position: center;
-}
 
-#FilterLinkButton {
-    /* background: url('../../images/filterLinkButton.svg'); */
-    background-color: #F2C94C;
-    background-repeat: no-repeat;
-    background-position: center;
-}
 
-.ActionBarButtonsContainer {
-    padding: 15px;
-    width: fit-content;
-    height: auto;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
 
-.ActionBarContainer {
-    width: auto;
-}
+
+
+
+

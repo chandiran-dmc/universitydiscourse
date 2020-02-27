@@ -15,9 +15,24 @@ import React, { Component } from 'react'
 import TopBar from '../TopBar/TopBar';
 import Footer from '../Footer/Footer';
 import logo from '../../images/image1.png';
-import './LoginPage.css'
+import './RegisterPage.css'
+import logoName from '../../images/ImageName.png';
+import Button from '@material-ui/core/Button'
+import TextField from '@material-ui/core/TextField'
 
-export default class LoginPage extends Component {
+import {createMuiTheme } from '@material-ui/core/styles';
+import {ThemeProvider} from '@material-ui/styles'
+
+const theme = createMuiTheme ({
+    palette: {
+        primary: {
+            main:'#F2B705',
+        }
+    }
+
+});
+
+export default class RegisterPage extends Component {
 
     onClickCreate() {
         alert('hi');
@@ -28,7 +43,7 @@ export default class LoginPage extends Component {
             <div>
                 <TopBar />
                 <Footer />
-                <div className="LoginPage">
+                {/* <div className="LoginPage">
                 <form>
                 <div className="Form">
                 <img 
@@ -36,17 +51,60 @@ export default class LoginPage extends Component {
                         src={logo}
                         alt="logo"
                     />
-                <h1 className="LoginText">Login</h1>
-                    <input type="text"/>
+                <h1 className="LoginText">Register</h1>
+                    <input type="text"
+                    placeholder="the_jane@gmail.com"/>
                     <br />
-                    <input type="text"/>
+                    <input 
+                        className="NEXTButton"
+                        type="submit" 
+                        value="NEXT" 
+                    />
                 </div>
                 </form>
                 
 
                     
-                </div>
+                </div> */}
+                <div class="grid-container1" >
+                        <div class="grid-item">
+                            <img 
+                                className="LoginLogo"
+                                src={logo}
+                                alt="logo" /> 
+                            <br />
+                        </div>
+                        <div class="grid-item">
+                            <img 
+                                className="LogoName2"
+                                src={logoName}
+                                alt="logoName"/>
+                        </div>
+                        </div>
+                        <h1 className="RegisterText">Register</h1>
+                        <div class="grid-container2R" >
+                            <div class="grid-item">
+                                <TextField
+                                    required
+                                    id="filled-required"
+                                    label="email"
+                                    variant="filled" />
+                            </div>
+                            <br />
+                            
+                            <div class="grid-item">
+                                <ThemeProvider theme={theme}>
+                                <Button 
+                                    className  = "NEXT" 
+                                    variant = "contained"
+                                    color = "primary" >
+                                    NEXT
+                                </Button> 
+                                </ThemeProvider>
+                            </div>
+                        </div>
             </div>
+            
         )
     }
 }
