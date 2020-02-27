@@ -22,6 +22,7 @@ import TextField from '@material-ui/core/TextField'
 
 import {createMuiTheme } from '@material-ui/core/styles';
 import {ThemeProvider} from '@material-ui/styles'
+const axios = require('axios');
 
 const theme = createMuiTheme ({
     palette: {
@@ -33,7 +34,38 @@ const theme = createMuiTheme ({
 });
 export default class LoginPage extends Component {
 
-    
+    constructor(props) {
+        super(props)
+        this.state = {
+          email : '',
+          password: ''
+        };
+        this.handleEmailChange = this.handleChange.bind(this, 'email');
+        this.handlePasswordChange = this.handleChange.bind(this, 'password');
+      }
+
+    handleChange(keyName, e) {
+        this.setState({ [keyName]: e.target.value });
+    }
+
+    onSubmit = (event) => {
+        event.preventDefault();
+        alert('Authentication coming soon!');
+        axios({
+            method: 'post',
+            url: 'http://localhost:3001/api/register',
+            data: {
+                email: this.state.email,
+                password: this.state.password
+            }
+        })
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }    
 
     onClickCreate() {
         alert('hi');
@@ -41,7 +73,7 @@ export default class LoginPage extends Component {
 
     render() {
         return (
-            
+            <form onSubmit={this.onSubmit}>
             <div>
                 
                 <Footer />
@@ -79,7 +111,11 @@ export default class LoginPage extends Component {
                                     required
                                     id="filled-required"
                                     label="Username"
-                                    variant="filled" />
+                                    variant="filled"
+                                    name = "email"
+                                    value={this.state.email}
+                                    onChange={this.handleEmailChange}
+                                     />
                             </div>
                             <br />
                             <div class="grid-item">
@@ -87,6 +123,9 @@ export default class LoginPage extends Component {
                                     required
                                     id="filled-password-input"
                                     label="Password"
+                                    name = "Password"
+                                    value={this.state.password}
+                                    onChange={this.handlePasswordChange}
                                     type="password"
                                     autoComplete="current-password"
                                     variant="filled" />
@@ -97,7 +136,9 @@ export default class LoginPage extends Component {
                                 <Button 
                                     className  = "LOGINButton" 
                                     variant = "contained"
-                                    color = "primary" >
+                                    color = "primary" 
+                                    type = "submit"
+                                    >
                                     Log In
                                 </Button> 
                                 </ThemeProvider>
@@ -105,6 +146,7 @@ export default class LoginPage extends Component {
                         </div>
                 </div>
             </div>
+            </form>
         );
     }
 }
