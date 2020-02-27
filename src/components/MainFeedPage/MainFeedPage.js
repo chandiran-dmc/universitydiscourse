@@ -1,39 +1,61 @@
-/**
- * This page is the main feed page
- * The user should arrive to this page after logging in,
- * clicking on the university discourse icon, etc.
- * 
- * This page should consist of:
- * - top bar = search bar, user profile image button, etc. 
- * - action bar = a bar that includes buttons to create post,
- *                filter posts, etc.
- * - posts from the tags that the user follows
- * - tags that the user follows
- */
+import React, { Component } from 'react';
+const axios = require('axios');
 
-import React, { Component } from 'react'
-import TopBar from '../TopBar';
-import ActionBar from './ActionBar';
-import './MainFeedPage.css'
-
-export default class MainFeedPage extends Component {
-
-    render() {
-        return (
-            <div>
-                <TopBar />
-                <div className="MainFeedPage">
-                    <div className="ActionBarContainer">
-                        <ActionBar />
-                    </div>
-                    <div className="PostsContainer">
-
-                    </div>
-                    <div className="FollowingTagsContainer">
-
-                    </div>
-                </div>
-            </div>
-        )
-    }
+export default class Login extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      email : '',
+      password: ''
+    };
+  }
+  handleInputChange = (event) => {
+    const { value, name } = event.target;
+    this.setState({
+      [name]: value
+    });
+  }
+  onSubmit = (event) => {
+    event.preventDefault();
+    alert('Authentication coming soon!');
+    let email = localStorage.getItem("email");
+    axios({
+        method: 'post',
+        url: 'http://localhost:3001/api/register',
+        data: {
+            email: this.state.email,
+            password: this.state.password
+        }
+    })
+    .then((response) => {
+        console.log(response);
+    })
+    .catch((error) => {
+        console.error(error);
+    });
+  }
+  render() {
+    return (
+      <form onSubmit={this.onSubmit}>
+        <h1>Login Below!</h1>
+        <input
+          type="email"
+          name="email"
+          placeholder="Enter email"
+          value={this.state.email}
+          onChange={this.handleInputChange}
+          required
+        />
+        <input
+          type="password"
+          name="password"
+          placeholder="Enter password"
+          value={this.state.password}
+          onChange={this.handleInputChange}
+          required
+        />
+       <input type="submit" value="Submit"/>
+      </form>
+    );
+  }
 }
