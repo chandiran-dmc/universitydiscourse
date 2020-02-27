@@ -12,8 +12,9 @@ export default function App() {
 
       <Router>
         <Switch>
-          <Route path="/createpost" component={CreatePostPage} />
           <Route exact path="/" component={MainFeedPage} />
+          <Route path="/createpost" component={CreatePostPage} />
+          <Route path="/editpost" component={CreatePostPage} />
         </Switch>
       </Router>
     );

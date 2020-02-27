@@ -80,8 +80,18 @@ export default class Post extends Component {
             console.log("Post >> Edit a post : " + this.state.mode);
 
             return <Redirect exact from="/" push to={{
-                pathname: "/createpost",
-                state: { mode: this.state.mode }
+                pathname: "/editpost",
+                state: { 
+                    title: this.state.title,
+                    content: this.state.content,
+                    user: this.state.user,
+                    time: this.state.time,
+                    tags: this.state.tags,
+                    comments: this.state.comments,
+                    type: this.state.type,
+                    count: this.state.count,
+                    mode: this.state.mode
+                }
             }}/>;
         }
 
