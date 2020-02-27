@@ -43,7 +43,7 @@ export default class Post extends Component {
             content: props.data.content,
             user: props.data.user,
             time: props.data.time,
-            tags: props.data.tags,
+            tags: props.data.tag,
             comments: props.data.comments,
             type: props.data.type,
             count: props.data.count
@@ -60,7 +60,10 @@ export default class Post extends Component {
                     padding={2}
                     bgcolor="primary.main" >
                     
-                    <Grid container wrap="nowrap" spacing={2}>
+                    <Grid container 
+                        wrap="nowrap" 
+                        direction="row"
+                        spacing={2}>
                         <Grid item>
                             <Avatar>{this.state.user}</Avatar>
                         </Grid>
@@ -130,6 +133,11 @@ export default class Post extends Component {
                                     {this.state.comments.length <= 1 ? this.state.comments.length + " comment" : this.state.comments.length + " comments"}
                                 </Button>
                             </Grid>
+                        </Grid>
+                        <Grid>
+                            <Typography variant="body2">
+                                #{this.state.tags}
+                            </Typography>
                         </Grid>
                     </Grid>
                 </Box>

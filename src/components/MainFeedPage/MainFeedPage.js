@@ -24,9 +24,6 @@ import sample_posts from '../../mock_data/post_data.json';
 import sample_user from '../../mock_data/user_data.json';
 
 
-import sample_posts from '../../mock_data/post_data';
-
-
 export default class MainFeedPage extends Component {
 
     /**
@@ -44,7 +41,8 @@ export default class MainFeedPage extends Component {
         let user = sample_user; // XXX
 
         // Filter the posts based on the tags the user follows
-        let tags =  user.tags;
+        let tags =  [];
+        tags = user.tags;
         let filteredPosts = [];
         posts.forEach((post) => {
             if (tags.includes(post.tag)) {

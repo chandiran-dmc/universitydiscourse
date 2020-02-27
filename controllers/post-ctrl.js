@@ -61,7 +61,13 @@ updatePost = async (req, res) => {
     }
 
     // Query for the appropriate post document
-    Post.findOne({ pid: req.params.pid }, (err, post) => {
+    const query = {
+        $and: [
+            {user: req.params.user},
+            {title: req.params.title}
+        ]
+    };
+    Post.findOne(query, (err, post) => {
 
         // Post not found
         if (err) {

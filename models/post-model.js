@@ -3,8 +3,6 @@ const Schema = mongoose.Schema;
 
 const Post = new Schema(
     {
-        // Pid should be a unique value by hashing the time + username
-        pid: { type: Number, required: true},
         title: { type: String, require: true},
         user: { type: String, required: true },
         type: { type: String, required: true },

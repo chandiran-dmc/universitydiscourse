@@ -23,26 +23,4 @@ app.use('/api', postRouter)
 
 app.listen(apiPort, () => {
     console.log(`Server running on port ${apiPort}`)
-
-    axios({
-        method: 'post',
-        url: 'http://localhost:3000/api/post',
-        data: {
-            // Pid should be a unique value by hashing the time + username
-            pid: 400,
-            title: "tae yoon fuck you",
-            user: "tae",
-            type: "text",
-            tag: ["cs240", "cs252"],
-            count: 100,
-            comments: [],
-            content: "fuck you",
-        }
-    })
-    .then((response) => {
-        console.log(response);
-    })
-    .catch((error) => {
-        console.error(error);
-    });
-})
+});
