@@ -1,0 +1,87 @@
+/* Give a certain amount of margin to the top due to fixed top bar */
+.MainFeedPage {
+    margin-top: 10%;
+}
+
+.LoginText {
+    margin-top: 10%;
+    color: #F2B705;
+}
+
+.LoginLogo {
+    
+    max-width: 20%;
+    height: auto;
+
+}
+
+.Form {
+    margin-left: 45%;
+    
+    margin-top: 10%;
+}
+
+.ActionBarButtonOdd {
+    width: 20%;
+    height: 40%;
+    border-color: transparent;
+}
+
+.ActionBarButtonEven {
+    width: 20%;
+    height: 40%;
+    border-color: transparent;
+}
+
+#CreatePostButton {
+    /* background: url('../../images/createPostButton.svg'); */
+    background-color: #F2B705;
+    background-repeat: no-repeat;
+    background-position: top;
+}
+
+#FilterTextButton {
+    /* background: url('../../images/filterTextButton.svg'); */
+    background-color: #F2C94C;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#FilterImageButton {
+    /* background: url('../../images/filterImageButton.svg'); */
+    background-color: #F2B705;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#FilterDocumentButton {
+    /* background: url('../../images/filterDocumentButton.svg'); */
+    background-color: #F2C94C;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#FilterCalendarButton {
+    /* background: url('../../images/filterCalendarButton.svg'); */
+    background-color: #F2B705;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#FilterLinkButton {
+    /* background: url('../../images/filterLinkButton.svg'); */
+    background-color: #F2C94C;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.ActionBarButtonsContainer {
+    padding: 15px;
+    width: fit-content;
+    height: auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.ActionBarContainer {
+    width: auto;
+}
