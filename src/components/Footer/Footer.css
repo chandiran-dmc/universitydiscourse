@@ -1,7 +1,7 @@
 /* use top:0 and position:fixed to fix at top */
 .Footer {
     bottom: 0;
-    height: 160px;
+    height: 180px;
     position: fixed;
     width: 100%;
     overflow: auto;
