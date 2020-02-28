@@ -32,12 +32,6 @@ export default class Login extends Component {
     });
   }
   sendEmail = (event) => {
-    // if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email))
-    // {
-    //   this.setState({emailValid: false})
-    //   return;
-    // }
-    //alert('sent!');
 
     event.preventDefault();
     if (this.state.email === '') {
@@ -60,12 +54,11 @@ export default class Login extends Component {
       });
     }
     
-    sessionStorage.setItem('email', this.state.email);
+    localStorage.setItem('email', this.state.email);
   }
   onSubmit = (event) => {
     event.preventDefault();
     alert('Authentication coming soon!');
-    //let email = localStorage.getItem("email");
     axios({
         method: 'post',
         url: 'http://localhost:3001/api/register',
@@ -84,6 +77,10 @@ export default class Login extends Component {
     //this.renderRedirect();
   }
   render() {
+    let email2 = localStorage.getItem('email');
+    if (email2) {
+      alert('checkcheck');
+    }
     
     return (
 
