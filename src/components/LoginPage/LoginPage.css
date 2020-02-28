@@ -1,0 +1,44 @@
+/* Give a certain amount of margin to the top due to fixed top bar */
+.MainFeedPage {
+    margin-top: 10%;
+}
+
+.LoginText {
+    margin-top: 10%;
+    color: #F2B705;
+}
+
+.LoginLogo {
+    
+    max-width: 20%;
+    height: auto;
+
+}
+.LogoName2 {
+    max-width: 50%;
+    margin-top: 8px; 
+    margin-bottom: 10px;
+    margin-left: 8px;
+    height: auto;
+}
+
+.Form {
+    margin-left: 45%;
+    
+    margin-top: 10%;
+}
+
+.LOGINButton {
+    background-color: #F2B705;
+    width: 110px;
+}
+
+
+
+
+
+
+
+
+
+

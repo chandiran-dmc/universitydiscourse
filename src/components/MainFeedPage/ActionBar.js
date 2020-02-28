@@ -11,59 +11,116 @@
  * Please look at the UI mockup for image explanation
  */
 
- import React, { Component } from 'react';
- 
- export default class ActionBar extends Component {
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import CalIcon from '../../customeIcons/calIcon';
+import ImageIcon from '../../customeIcons/imageIcon';
+import DocIcon from '../../customeIcons/docIcon';
+import LinkIcon from '../../customeIcons/linkIcon';
+import TextIcon from '../../customeIcons/textIcon';
+import { Button, Box, ThemeProvider, Grid, Typography } from '@material-ui/core';
+
+export default class ActionBar extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            onClickCreate: this.props.onClickCreate
+            toCreatePostPage: false,
+            type: "",
+            theme: props.theme
         };
     }
-    
-     render() {
-         return (
-             <div className="ActionBarButtonsContainer">
-                 <button 
-                    className="ActionBarButtonOdd"
-                    id="CreatePostButton"
-                    type="button"
-                    onClick={() => {this.state.onClickCreate()}} >
-                    MAKE A POST
-                 </button>
-                 <button 
-                    className="ActionBarButtonEven"
-                    id="FilterTextButton"
-                    type="button" >
-                    TEXT
-                 </button>
-                 <button 
-                    className="ActionBarButtonOdd"
-                    id="FilterImageButton"
-                    type="button" >
-                    IMAGE
-                 </button>
-                 <button 
-                    className="ActionBarButtonEven"
-                    id="FilterDocumentButton"
-                    type="button" >
-                    DOCUMENT
-                 </button>
-                 <button 
-                    className="ActionBarButtonOdd"
-                    id="FilterCalendarButton"
-                    type="button" >
-                    CALENDAR
-                 </button>
-                 <button 
-                    className="ActionBarButtonEven"
-                    id="FilterLinkButton"
-                    type="button" >
-                    LINK
-                 </button>
-             </div>
-         )
-     }
- }
- 
+
+    handleCreatePost = (type) => {
+        this.setState({
+            toCreatePostPage: true,
+            type: type
+        });
+    }
+
+    render() {
+
+        // redirect to create post page
+        if (this.state.toCreatePostPage === true) {
+
+            console.log("ActionBar >> create a post of type : " + this.state.type);
+
+            return <Redirect exact from="/" push to={{
+                pathname: "/createpost",
+                state: { type: this.state.type }
+            }}/>;
+        }
+
+        return (
+            <ThemeProvider theme={this.state.theme}>
+                <Box 
+                    boxShadow={2}
+                    margin={1}
+                    padding={2} >
+                    <Grid
+                        container
+                        direction="row"
+                        justify="center"
+                        alignItems="center"
+                        spacing={1}>
+                        <Grid item >
+                            <Typography variant="h6">
+                                Create A Post : 
+                            </Typography>
+                        </Grid>
+                        <Grid item >
+                            <Button 
+                                color="secondary"
+                                variant="contained"
+                                startIcon={<TextIcon />}
+                                type="button"
+                                onClick={() => {this.handleCreatePost("text")}} >
+                                TEXT
+                            </Button>
+                        </Grid>
+                        <Grid item >
+                            <Button 
+                                color="primary"
+                                variant="contained"
+                                startIcon={<ImageIcon />}
+                                type="button"
+                                onClick={() => {this.handleCreatePost("image")}} >
+                                IMAGE
+                            </Button>
+                        </Grid>
+                        <Grid item >
+                            <Button 
+                                color="secondary"
+                                variant="contained"
+                                startIcon={<DocIcon />}
+                                type="button"
+                                onClick={() => {this.handleCreatePost("document")}} >
+                                DOCUMENT
+                            </Button>
+                        </Grid>
+                        <Grid item >
+                            <Button 
+                                color="primary"
+                                variant="contained"
+                                startIcon={<CalIcon />}
+                                type="button"
+                                onClick={() => {this.handleCreatePost("calendar")}} >
+                                CALENDAR
+                            </Button>
+                        </Grid>
+                        <Grid item >
+                            <Button 
+                                color="secondary"
+                                variant="contained"
+                                startIcon={<LinkIcon />}
+                                type="button"
+                                onClick={() => {this.handleCreatePost("link")}} >
+                                LINK
+                            </Button>
+                        </Grid>
+                    </Grid>
+                </Box>
+            </ThemeProvider>
+        )
+    }
+}

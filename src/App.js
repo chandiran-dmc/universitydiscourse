@@ -1,20 +1,21 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Sandbox from './components/Sandbox';
-import MainFeedPage from './components/MainFeedPage'
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import CreatePostPage from './components/CreatePostPage';
+import MainFeedPage from './components/MainFeedPage';
 
-function App() {
-  return (
-    <div className="App">
+export default function App() {
+    return (
 
       <Router>
-        <Route exact path="/" component={MainFeedPage} />
-        <Route path="/sandbox" component={Sandbox} />
+        <Switch>
+          <Route exact path="/" component={MainFeedPage} />
+          <Route path="/createpost" component={CreatePostPage} />
+          <Route path="/editpost" component={CreatePostPage} />
+        </Switch>
       </Router>
-
-    </div>
-  );
+    );
 }
-
-export default App;
