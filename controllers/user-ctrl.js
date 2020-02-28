@@ -1,5 +1,5 @@
 const User = require('../models/user-model')
-const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer')
 
 AuthenticateUser = (req, res) => {
     const body = req.body
@@ -40,9 +40,48 @@ AuthenticateUser = (req, res) => {
     }).catch(err => console.log(err))
 };
 
+RecoveryEmail = (req, res) => {
+    const body = req.body
+    const { email } = body;
+    
+    if (!body) {
+        return res.status(400).json({
+                success: false,
+                error: 'You must provide an email',
+        })
+    }
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'babytaetae123tae@gmail.com',
+            pass: 'babytae!123'
+        }
+
+    });
+
+    const mailOptions = {
+        from: 'rshitole@purdue.edu',
+        to: email,
+        subject: 'This is the subject',
+        text: 'this is the text'
+    };
+
+    transporter.sendMail(mailOptions, (err, response) => {
+        if (err) {
+            console.error('There was an email error: ', err);
+
+        } else {
+            console.log('here is response', response);
+            res.status(200).json('recovery email sent');
+        }
+
+    })
+
+};
+
 ChangeEmail = (req, res) => {
     const body = req.body
-    const { email, password, newemail } = body;
+    const { email, newemail } = body;
 
     if (!body) {
         return res.status(400).json({
@@ -61,17 +100,7 @@ ChangeEmail = (req, res) => {
                 .status(404)
                 .json({ success: false, error: `User not found` })
         } else {            
-            user
-            .isCorrectPassword(password, function(err, same) {
-                if (err) {
-                    res.status(500)
-                    .json({error: 'Internal error please try again'});
-                } else if (!same) {
-                    res.status(401)
-                    .json({error: 'Incorrect password'});
-                }
-                else {
-                    user.email=newemail
+            user.email=newemail
                     user
                     .save()    
                     .then(() => {
@@ -85,9 +114,7 @@ ChangeEmail = (req, res) => {
                             error,
                             message: 'Email not updated!',
                         })
-                    })
-                }
-            })                         
+                    })                         
         }
     }).catch(err => console.log(err))
 };
@@ -154,7 +181,7 @@ RegisterUser = (req, res) => {
     if (!body) {
         return res.status(400).json({
             success: false,
-            error: 'You must provide a movie',
+            error: 'You must provide a username',
         })
     }
 
@@ -236,5 +263,6 @@ module.exports = {
     AuthenticateUser,
     ChangeEmail,
     ChangePassword,
-    DeleteUser
+    DeleteUser,
+    RecoveryEmail
 }

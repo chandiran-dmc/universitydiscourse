@@ -16,7 +16,7 @@ import TopBar from '../TopBar/TopBar';
 import Footer from '../Footer/Footer';
 import logo from '../../images/image1.png';
 import logoName from '../../images/ImageName.png';
-import './LoginPage.css'
+import './RecoverPassword.css'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
@@ -34,59 +34,54 @@ const theme = createMuiTheme ({
     }
 
 });
-export default class LoginPage extends Component {
+export default class ChangePassword extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-          email : '',
-          password: '',
+        //    email : '',
+        //    oldpassword : '',
+        //    newpassword: '',
           redirect: false,
-          formErrors: {email: '', password: ''},
-          emailValid: false,
-          passwordValid: false,
-          formValid: false
         };
-        this.handleEmailChange = this.handleChange.bind(this, 'email');
-        this.handlePasswordChange = this.handleChange.bind(this, 'password');
+        // this.handleEmailChange = this.handleChange.bind(this, 'email');
+        // this.handleOldPasswordChange = this.handleChange.bind(this, 'oldpassword');
+        // this.handleNewPasswordChange = this.handleChange.bind(this, 'newpassword');
     }
 
       
 
-    handleChange(keyName, e) {
-        this.setState({ [keyName]: e.target.value });
-    }
+    // handleChange(keyName, e) {
+    //     this.setState({ [keyName]: e.target.value });
+    // }
 
     onSubmit = (event) => {
-        event.preventDefault();
-        alert('Authentication coming soon!');
-        axios({
-            method: 'post',
-            url: 'http://localhost:3001/api/authenticate',
-            data: {
-                email: this.state.email,
-                password: this.state.password
-            }
-        })
-        .then((response) => {
-            console.log(response);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+        //   event.preventDefault();
+        //  alert('Change coming soon!');
+        // axios({
+        //     method: 'post',
+        //     url: 'http://localhost:3001/api/changepass',
+        //     data: {
+        //         email: this.state.email,
+        //         oldpassword: this.state.oldpassword,
+        //         newpassword: this.state.newpassword,
+        //     }
+        // })
+        // .then((response) => {
+        //     console.log(response);
+        // })
+        // .catch((error) => {
+        //     console.error(error);
+        // });
         this.setState({redirect: true});
-        localStorage.setItem('email', this.state.email)
+        
     }    
 
-    onClickCreate() {
-        alert('hi');
-    }
+    // onClickCreate() {
+    //     alert('hi');
+    // }
 
     render() {
-        let email2 = localStorage.getItem('email');
-        if (email2) {
-            this.setState({redirect: true});
-        }
         if (this.state.redirect === true) {
 
             console.log("HELLOOOOOOOOO");
@@ -94,12 +89,12 @@ export default class LoginPage extends Component {
             
     
             return <Redirect exact from="/" push to={{
-                pathname: "/mp",
+                pathname: "/lp",
                 state: { type: this.state.type }
             }}/>;
         }
         return (
-            <form onSubmit={this.onSubmit}>
+           
             <div>
                 
                 <Footer />
@@ -130,8 +125,8 @@ export default class LoginPage extends Component {
                         </div>
                         </div>
                     
-                        <h1 className="LoginText">Login</h1>
-                        <div class="grid-container2" >
+                        <h1 className="RecoverPasswordText">Recover Password</h1>
+                        <div class="grid-containerRecover" >
                             <div class="grid-item">
                                 <TextField
                                     required
@@ -139,40 +134,55 @@ export default class LoginPage extends Component {
                                     label="Email"
                                     variant="filled"
                                     name = "email"
-                                    value={this.state.email}
-                                    onChange={this.handleEmailChange}
+                                    // value={this.state.email}
+                                    // onChange={this.handleEmailChange}
                                      />
                             </div>
                             <br />
                             <div class="grid-item">
                                 <TextField
-                                    required
-                                    id="filled-password-input"
-                                    label="Password"
-                                    name = "Password"
-                                    value={this.state.password}
-                                    onChange={this.handlePasswordChange}
-                                    type="password"
-                                    autoComplete="current-password"
-                                    variant="filled" />
+                                     id="filled-password-input"
+                                     label="New-Password"
+                                     name = "newpassword"
+                                    //  value={this.state.oldpassword}
+                                    //  onChange={this.handleOldPasswordChange}
+                                     type="password"
+                                     autoComplete="current-password"
+                                     variant="filled" 
+                                     />
                             </div>
                             <br />
                             <div class="grid-item">
+                                <TextField
+                                  id="filled-password-input"
+                                  label="Confirm-New-Password"
+                                  name = "confirmnewpassword"
+                                //   value={this.state.newpassword}
+                                //   onChange={this.handleNewPasswordChange}
+                                  type="password"
+                                  autoComplete="current-password"
+                                  variant="filled" 
+                                   />
+                            </div>
+                            <br />
+                            <div class="grid-item">
+                            <form onSubmit={this.onSubmit}>
                                 <ThemeProvider theme={theme}>
                                 <Button 
-                                    className  = "LOGINButton" 
+                                    className  = "Done" 
                                     variant = "contained"
                                     color = "primary" 
                                     type = "submit"
                                     >
-                                    Log In
+                                    Done
                                 </Button> 
                                 </ThemeProvider>
+                            </form>
                             </div>
                         </div>
                 </div>
             </div>
-            </form>
+            
         );
     }
 }
