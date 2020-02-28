@@ -58,19 +58,18 @@ export default class SendLink extends Component {
         alert('Change coming soon!');
         axios({
             method: 'post',
-            url: 'http://localhost:3000/api-user/recoverpassword',
+            url: 'http://localhost:3000/api-user/recover',
             data: {
                 email: this.state.email
-                
             }
         })
         .then((response) => {
+            this.setState({redirect: true});
             console.log(response);
         })
         .catch((error) => {
             console.error(error);
         });
-        this.setState({redirect: true});
         
     }    
 

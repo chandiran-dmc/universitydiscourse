@@ -18,13 +18,9 @@ import logo from '../../images/image1.png';
 import logoName from '../../images/ImageName.png';
 import './EntryPage.css'
 import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
-
 import { Redirect } from 'react-router-dom';
-
 import {createMuiTheme } from '@material-ui/core/styles';
 import {ThemeProvider} from '@material-ui/styles'
-const axios = require('axios');
 
 const theme = createMuiTheme ({
     palette: {
@@ -44,8 +40,6 @@ export default class EntryPage extends Component {
         };
     }
 
-
-
     onSubmit1 = (event) => {
         this.setState({redirect1: true});
     }    
@@ -54,13 +48,8 @@ export default class EntryPage extends Component {
         this.setState({redirect2: true});
     } 
 
-
     render() {
         if (this.state.redirect1 === true) {
-
-            console.log("HELLOOOOOOOOO");
-            
-            
     
             return <Redirect exact from="/" push to={{
                 pathname: "/lp",
@@ -68,16 +57,13 @@ export default class EntryPage extends Component {
             }}/>;
         }
         if (this.state.redirect2 === true) {
-
-            console.log("HELLOOOOOOOOO");
-            
-            
     
             return <Redirect exact from="/" push to={{
                 pathname: "/rp",
                 
             }}/>;
         }
+
 
         return (
             // <form onSubmit={this.onSubmit1}>
@@ -92,61 +78,54 @@ export default class EntryPage extends Component {
                    <meta name="HandheldFriendly" content="true" />
                 </head>
                 <div className="EntryPage">
-                
-                    
-                    
-                        <div class="grid-container" >
+                    <div class="grid-container" >
+                    <div class="grid-item">
+                        <img 
+                            className="LoginLogo"
+                            src={logo}
+                            alt="logo" /> 
+                        <br />
+                    </div>
+                    <div class="grid-item">
+                        <img 
+                            className="LogoName2"
+                            src={logoName}
+                            alt="logoName"/>
+                    </div>
+                    </div>
+                    <div class="grid-containerButtons" >
                         <div class="grid-item">
-                            <img 
-                                className="LoginLogo"
-                                src={logo}
-                                alt="logo" /> 
-                            <br />
+                        <form onSubmit={this.onSubmit1}>
+                            <ThemeProvider theme={theme}>
+                            <Button 
+                                className  = "LOGINButton" 
+                                variant = "contained"
+                                color = "primary" 
+                                type = "submit"
+                                >
+                                Log In
+                            </Button> 
+                            </ThemeProvider>
+                        </form>
                         </div>
+                        <br />
                         <div class="grid-item">
-                            <img 
-                                className="LogoName2"
-                                src={logoName}
-                                alt="logoName"/>
-                        </div>
-                        </div>
-                    
-                        {/* <h1 className="LoginText">Login</h1> */}
-                        <div class="grid-containerButtons" >
-                            <div class="grid-item">
-                            <form onSubmit={this.onSubmit1}>
-                                <ThemeProvider theme={theme}>
-                                <Button 
-                                    className  = "LOGINButton" 
-                                    variant = "contained"
-                                    color = "primary" 
-                                    type = "submit"
-                                    >
-                                    Log In
-                                </Button> 
-                                </ThemeProvider>
+                        <form onSubmit={this.onSubmit2}>
+                            <ThemeProvider theme={theme}>
+                            <Button 
+                                className  = "RegisterButton" 
+                                variant = "contained"
+                                color = "primary" 
+                                type = "submit"
+                                >
+                                Register
+                            </Button> 
+                            </ThemeProvider>
                             </form>
-                            </div>
-                            
-                            <br />
-                            <div class="grid-item">
-                            <form onSubmit={this.onSubmit2}>
-                                <ThemeProvider theme={theme}>
-                                <Button 
-                                    className  = "RegisterButton" 
-                                    variant = "contained"
-                                    color = "primary" 
-                                    type = "submit"
-                                    >
-                                    Register
-                                </Button> 
-                                </ThemeProvider>
-                                </form>
-                            </div>
                         </div>
+                    </div>
                 </div>
             </div>
-            // </form>
         );
     }
 }

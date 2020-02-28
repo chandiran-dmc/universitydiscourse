@@ -56,6 +56,9 @@ export default class RecoverPassword extends Component {
     onSubmit = (event) => {
         event.preventDefault();
         alert('Change coming soon!');
+
+        // Why are we calling recoverpassword again here?
+
         axios({
             method: 'post',
             url: 'http://localhost:3000/api-user/recoverpassword',

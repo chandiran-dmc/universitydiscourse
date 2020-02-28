@@ -55,7 +55,18 @@ export default class RegisterPage extends Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-        alert('Authentication coming soon!');
+
+        // Check for email and password format
+        if (!this.state.email.match(/[a-zA-Z0-9]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+/g)) {
+            alert('Email format not correct');
+            return;
+        }
+
+        if (this.state.password.length < 8 || !this.state.password.match(/[0-9]/g)) {
+            alert('Password format not correct');
+            return;
+        }
+
         axios({
             method: 'post',
             url: 'http://localhost:3000/api-user/register',
@@ -67,13 +78,21 @@ export default class RegisterPage extends Component {
         })
         .then((response) => {
             console.log(response);
+            localStorage.setItem('email', this.state.email);
+            this.setState({redirect: true});
         })
         .catch((error) => {
             console.error(error);
-        });
-        this.setState({redirect: true}); 
-        localStorage.setItem('email', this.state.email)
 
+            alert('User alreader registered!');
+            
+            // Catch for user that is not registered
+            if (error.message.includes("not registered")) {
+                alert('User already exists!');
+                return;
+            }
+
+        });
     }    
 
     onClickCreate() {

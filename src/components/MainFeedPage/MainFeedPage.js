@@ -84,26 +84,6 @@ export default class MainFeedPage extends Component {
           console.error(error);
           alert('An error occurred');
       });
-
-    await axios({
-        method: 'post',
-        url: 'http://localhost:3000/api-user/getuser',
-        data: {
-            email: localStorage.getItem("email")
-        }
-    })
-    .then((response) => {
-        let username = response.data.data.username;
-        console.log(username);
-        localStorage.setItem('username', username);
-
-        // TODO: Get user data from local file
-        
-    })
-    .catch((error) => {
-        console.error(error);
-        alert('An error occurred');
-    });
     }
 
 
@@ -112,6 +92,7 @@ export default class MainFeedPage extends Component {
     }
 
     render() {
+        
       return (
           <div className="MainFeedPage">
 
@@ -123,9 +104,9 @@ export default class MainFeedPage extends Component {
                   direction="column"
                   justify="space-around"
                   alignItems="center" >
-                  <Grid item >
+                  {/* <Grid item >
                       <TopBar /> 
-                  </Grid>
+                  </Grid> */}
                   <Grid 
                       container
                       wrap="nowrap" 

@@ -60,7 +60,6 @@ export default class LoginPage extends Component {
 
     onSubmit1 = (event) => {
         event.preventDefault();
-        alert('Authentication coming soon!');
         axios({
             method: 'post',
             url: 'http://localhost:3000/api-user/authenticate',
@@ -71,12 +70,13 @@ export default class LoginPage extends Component {
         })
         .then((response) => {
             console.log(response);
+            localStorage.setItem('email', this.state.email);
+            this.setState({redirect1: true});
         })
         .catch((error) => {
             console.error(error);
+            alert('Login Failed');
         });
-        this.setState({redirect1: true});
-        localStorage.setItem('email', this.state.email)
         
     }    
 

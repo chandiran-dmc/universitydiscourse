@@ -11,19 +11,17 @@
  * - tags that the user follows
  */
 
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import TopBar from '../TopBar/TopBar';
 import Footer from '../Footer/Footer';
 import logo from '../../images/image1.png';
 import logoName from '../../images/ImageName.png';
-import './ChangePassword.css'
-import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
-
+import './ChangePassword.css';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
 import { Redirect } from 'react-router-dom';
-
 import {createMuiTheme } from '@material-ui/core/styles';
-import {ThemeProvider} from '@material-ui/styles'
+import {ThemeProvider} from '@material-ui/styles';
 const axios = require('axios');
 
 const theme = createMuiTheme ({
@@ -32,8 +30,8 @@ const theme = createMuiTheme ({
             main:'#F2B705',
         }
     }
-
 });
+
 export default class ChangePassword extends Component {
 
     constructor(props) {
@@ -44,20 +42,38 @@ export default class ChangePassword extends Component {
            newpassword: '',
           redirect: false,
         };
+
         this.handleEmailChange = this.handleChange.bind(this, 'email');
         this.handleOldPasswordChange = this.handleChange.bind(this, 'oldpassword');
         this.handleNewPasswordChange = this.handleChange.bind(this, 'newpassword');
     }
-
-      
 
     handleChange(keyName, e) {
         this.setState({ [keyName]: e.target.value });
     }
 
     onSubmit = (event) => {
-          event.preventDefault();
-         alert('Change coming soon!');
+        event.preventDefault();
+        
+        // Check if email is current user's email
+        // Validate current user
+        if (this.state.email !== localStorage.getItem("email")) {
+            alert('You cannot change other users\' password');
+            return;
+        }
+
+        // Check password format
+        if (this.state.newpassword.length < 8 || !this.state.newpassword.match(/[0-9]/g)) {
+            alert('New password format not correct');
+            return;
+        }
+
+        // Check if old password and new password matches
+        if (this.state.oldpassword === this.state.newpassword) {
+            alert('Cannot change to the same password!');
+            return;
+        }
+
         axios({
             method: 'post',
             url: 'http://localhost:3000/api-user/changepass',
@@ -69,19 +85,27 @@ export default class ChangePassword extends Component {
         })
         .then((response) => {
             console.log(response);
+            this.setState({redirect: true});
         })
         .catch((error) => {
-            console.error(error);
-        });
-        this.setState({redirect: true});
-        
-    }    
+            
+            console.error(error.response);
 
-    onClickCreate() {
-        alert('hi');
+            // Check user
+            if (error.response.data.error === "User not found") {
+                alert('User does not exist');
+            }
+
+            // Catch invalid old password
+            if (error.response.data.error === "Incorrect password") {
+                alert('Invalid old password entered');
+            }
+
+        });
     }
 
     render() {
+
         if (this.state.redirect === true) {
             
             // Clear local storage
@@ -93,10 +117,9 @@ export default class ChangePassword extends Component {
                 state: { type: this.state.type }
             }}/>;
         }
+
         return (
-           
             <div>
-                
                 <Footer />
                 <TopBar/>
                 
@@ -106,83 +129,78 @@ export default class ChangePassword extends Component {
                    <meta name="HandheldFriendly" content="true" />
                 </head>
                 <div className="LoginPage">
-                
-                    
-                    
-                        <div class="grid-container1" >
+                    <div class="grid-container1" >
+                    <div class="grid-item">
+                        <img 
+                            className="LoginLogo"
+                            src={logo}
+                            alt="logo" /> 
+                        <br />
+                    </div>
+                    <div class="grid-item">
+                        <img 
+                            className="LogoName2"
+                            src={logoName}
+                            alt="logoName"/>
+                    </div>
+                    </div>
+                    <h1 className="ChangePasswordText">Change Password</h1>
+                    <div class="grid-containerChange" >
                         <div class="grid-item">
-                            <img 
-                                className="LoginLogo"
-                                src={logo}
-                                alt="logo" /> 
-                            <br />
+                            <TextField
+                                required
+                                id="filled-required"
+                                label="Email"
+                                variant="filled"
+                                name = "email"
+                                value={this.state.email}
+                                onChange={this.handleEmailChange}
+                                    />
                         </div>
+                        <br />
                         <div class="grid-item">
-                            <img 
-                                className="LogoName2"
-                                src={logoName}
-                                alt="logoName"/>
+                            <TextField
+                                    id="filled-password-input"
+                                    label="Old-Password"
+                                    name = "oldpassword"
+                                    value={this.state.oldpassword}
+                                    onChange={this.handleOldPasswordChange}
+                                    type="password"
+                                    autoComplete="current-password"
+                                    variant="filled" 
+                                    />
                         </div>
+                        <br />
+                        <div class="grid-item">
+                            <TextField
+                                id="filled-password-input"
+                                label="New-Password"
+                                name = "newpassword"
+                                value={this.state.newpassword}
+                                onChange={this.handleNewPasswordChange}
+                                type="password"
+                                autoComplete="current-password"
+                                variant="filled" 
+                                />
                         </div>
-                    
-                        <h1 className="ChangePasswordText">Change Password</h1>
-                        <div class="grid-containerChange" >
-                            <div class="grid-item">
-                                <TextField
-                                    required
-                                    id="filled-required"
-                                    label="Email"
-                                    variant="filled"
-                                    name = "email"
-                                    value={this.state.email}
-                                    onChange={this.handleEmailChange}
-                                     />
-                            </div>
-                            <br />
-                            <div class="grid-item">
-                                <TextField
-                                     id="filled-password-input"
-                                     label="Old-Password"
-                                     name = "oldpassword"
-                                     value={this.state.oldpassword}
-                                     onChange={this.handleOldPasswordChange}
-                                     type="password"
-                                     autoComplete="current-password"
-                                     variant="filled" 
-                                     />
-                            </div>
-                            <br />
-                            <div class="grid-item">
-                                <TextField
-                                  id="filled-password-input"
-                                  label="New-Password"
-                                  name = "newpassword"
-                                  value={this.state.newpassword}
-                                  onChange={this.handleNewPasswordChange}
-                                  type="password"
-                                  autoComplete="current-password"
-                                  variant="filled" 
-                                   />
-                            </div>
-                            <br />
-                            <div class="grid-item">
-                            <form onSubmit={this.onSubmit}>
-                                <ThemeProvider theme={theme}>
-                                <Button 
-                                    className  = "Done" 
-                                    variant = "contained"
-                                    color = "primary" 
-                                    type = "submit"
-                                    >
-                                    Done
-                                </Button> 
-                                </ThemeProvider>
-                            </form>
-                            </div>
+                        <br />
+                        <div class="grid-item">
+                        <form onSubmit={this.onSubmit}>
+                            <ThemeProvider theme={theme}>
+                            <Button 
+                                className  = "Done" 
+                                variant = "contained"
+                                color = "primary" 
+                                type = "submit"
+                                >
+                                Done
+                            </Button> 
+                            </ThemeProvider>
+                        </form>
                         </div>
+                    </div>
                 </div>
             </div>
-            
         );
     }
 }

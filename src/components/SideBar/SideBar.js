@@ -113,11 +113,30 @@ export default class SideBar extends Component {
         return <FollowingTags tags={tagsList}/>;
     }
 
-    getUserName = () => {
-        this.setState({
-            username: localStorage.getItem("username"),
-            isRedirect: false,
-            to: ""
+    getUserName = async () => {
+
+        await axios({
+            method: 'post',
+            url: 'http://localhost:3000/api-user/getuser',
+            data: {
+                email: localStorage.getItem("email")
+            }
+        })
+        .then((response) => {
+            let username = response.data.data.username;
+            console.log(username);
+            localStorage.setItem('username', username);
+
+            this.setState({
+                username: username,
+                isRedirect: false,
+                to: ""
+            });
+            
+        })
+        .catch((error) => {
+            console.error(error);
+            alert('An error occurred');
         });
     }
 

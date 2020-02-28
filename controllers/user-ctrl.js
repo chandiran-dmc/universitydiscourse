@@ -65,7 +65,7 @@ RecoveryEmail = (req, res) => {
         from: 'babytaetae123tae@gmail.com',
         to: email,
         subject: 'Password reset',
-        text: 'This is the link to change password: \n\n' + 'http://localhost:3000/recp' + '\n\n Lets do it yaay!',
+        text: 'This is the link to change password: \n\n' + 'http://localhost:3001/recp' + '\n\n Lets do it yaay!',
         //text: 'this is the text'
     };
 
@@ -247,7 +247,7 @@ RegisterUser = (req, res) => {
             })
         })
         .catch(error => {
-            return res.status(400).json({
+            return res.status(405).json({
                 error,
                 message: 'User not registered!',
             })
