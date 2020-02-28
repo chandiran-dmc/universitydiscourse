@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+
+import { Redirect } from 'react-router-dom';
 const axios = require('axios');
+
 
 export default class Login extends Component {
   constructor(props) {
@@ -8,6 +11,18 @@ export default class Login extends Component {
       email : '',
       password: ''
     };
+  }
+  state = {
+    redirect: false
+  }
+  setRedirect = () => {
+    this.setState({
+      redirect: true
+    })
+  }
+  renderRedirect = () => {
+      return <Redirect to="/mp" push />
+    
   }
   handleInputChange = (event) => {
     const { value, name } = event.target;
@@ -33,6 +48,7 @@ export default class Login extends Component {
     .catch((error) => {
         console.error(error);
     });
+    //this.renderRedirect();
   }
   render() {
     return (
@@ -54,7 +70,7 @@ export default class Login extends Component {
           onChange={this.handleInputChange}
           required
         />
-       <input type="submit" value="Submit"/>
+       <input type="submit" value="Submit" onClick={this.renderRedirect}/>
       </form>
     );
   }

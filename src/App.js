@@ -6,6 +6,7 @@ import {
   Link
 } from "react-router-dom";
 import CreatePostPage from './components/CreatePostPage';
+import LoginPage from './components/LoginPage'
 import MainFeedPage from './components/MainFeedPage';
 
 export default function App() {
@@ -13,11 +14,13 @@ export default function App() {
 
       <Router>
         <Switch>
-          <Route path="/createpost">
-            <CreatePostPage />
-          </Route>
+        <Route 
+          path='/lp'
+          render={LoginPage}
+        />
+          <Route path="/mp" component = {MainFeedPage} />
           <Route exact path="/">
-            <MainFeedPage />
+            <LoginPage />
           </Route>
 
         </Switch>

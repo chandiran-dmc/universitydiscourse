@@ -20,6 +20,8 @@ import './LoginPage.css'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
+import { Redirect } from 'react-router-dom';
+
 import {createMuiTheme } from '@material-ui/core/styles';
 import {ThemeProvider} from '@material-ui/styles'
 const axios = require('axios');
@@ -38,11 +40,14 @@ export default class LoginPage extends Component {
         super(props)
         this.state = {
           email : '',
-          password: ''
+          password: '',
+          redirect: false
         };
         this.handleEmailChange = this.handleChange.bind(this, 'email');
         this.handlePasswordChange = this.handleChange.bind(this, 'password');
-      }
+    }
+
+      
 
     handleChange(keyName, e) {
         this.setState({ [keyName]: e.target.value });
@@ -53,7 +58,7 @@ export default class LoginPage extends Component {
         alert('Authentication coming soon!');
         axios({
             method: 'post',
-            url: 'http://localhost:3001/api/register',
+            url: 'http://localhost:3001/api/authenticate',
             data: {
                 email: this.state.email,
                 password: this.state.password
@@ -65,6 +70,8 @@ export default class LoginPage extends Component {
         .catch((error) => {
             console.error(error);
         });
+        //this.setState({redirect: true});
+        
     }    
 
     onClickCreate() {
@@ -72,6 +79,17 @@ export default class LoginPage extends Component {
     }
 
     render() {
+        if (this.state.redirect === true) {
+
+            console.log("HELLOOOOOOOOO");
+            
+            
+    
+            return <Redirect exact from="/" push to={{
+                pathname: "/mp",
+                state: { type: this.state.type }
+            }}/>;
+        }
         return (
             <form onSubmit={this.onSubmit}>
             <div>
