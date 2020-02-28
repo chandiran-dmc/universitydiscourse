@@ -41,7 +41,8 @@ export default class LoginPage extends Component {
         this.state = {
           email : '',
           password: '',
-          redirect: false,
+          redirect1: false,
+          redirect2: false,
           formErrors: {email: '', password: ''},
           emailValid: false,
           passwordValid: false,
@@ -57,7 +58,7 @@ export default class LoginPage extends Component {
         this.setState({ [keyName]: e.target.value });
     }
 
-    onSubmit = (event) => {
+    onSubmit1 = (event) => {
         event.preventDefault();
         alert('Authentication coming soon!');
         axios({
@@ -74,9 +75,14 @@ export default class LoginPage extends Component {
         .catch((error) => {
             console.error(error);
         });
-        this.setState({redirect: true});
+        this.setState({redirect1: true});
         localStorage.setItem('email', this.state.email)
+        
     }    
+
+    onSubmit2 = (event) => {
+        this.setState({redirect2: true});
+    }
 
     onClickCreate() {
         alert('hi');
@@ -85,21 +91,32 @@ export default class LoginPage extends Component {
     render() {
         let email2 = localStorage.getItem('email');
         if (email2) {
-            this.setState({redirect: true});
+            this.setState({redirect1: true});
         }
-        if (this.state.redirect === true) {
+        if (this.state.redirect1 === true) {
 
             console.log("HELLOOOOOOOOO");
             
             
     
-            return <Redirect exact from="/" push to={{
+            return <Redirect exact from="/lp" push to={{
                 pathname: "/mp",
                 state: { type: this.state.type }
             }}/>;
         }
+        if (this.state.redirect2 === true) {
+
+            console.log("HELLOOOOOOOOO");
+            
+            
+    
+            return <Redirect exact from="/lp" push to={{
+                pathname: "/sendlink",
+                
+            }}/>;
+        }
+
         return (
-            <form onSubmit={this.onSubmit}>
             <div>
                 
                 <Footer />
@@ -158,6 +175,7 @@ export default class LoginPage extends Component {
                             </div>
                             <br />
                             <div class="grid-item">
+                            <form onSubmit={this.onSubmit1}>
                                 <ThemeProvider theme={theme}>
                                 <Button 
                                     className  = "LOGINButton" 
@@ -168,11 +186,26 @@ export default class LoginPage extends Component {
                                     Log In
                                 </Button> 
                                 </ThemeProvider>
+                            </form>
+                            </div>
+                            <br />
+                            <div class="grid-item">
+                            <form onSubmit={this.onSubmit2}>
+                                <ThemeProvider theme={theme}>
+                                <Button 
+                                    className  = "LOGINButton" 
+                                    variant = "contained"
+                                    color = "primary" 
+                                    type = "submit"
+                                    >
+                                    RESET PASSWORD
+                                </Button> 
+                                </ThemeProvider>
+                            </form>
                             </div>
                         </div>
                 </div>
             </div>
-            </form>
         );
     }
 }

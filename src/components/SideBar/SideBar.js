@@ -12,7 +12,7 @@ import {Redirect} from 'react-router-dom';
 
 import sample_user from '../../mock_data/user_data.json';
 
-
+const axios = require('axios');
 // const drawerWidth = 240;
 
 // const useStyles = makeStyles(theme => ({
@@ -30,6 +30,7 @@ export default class SideBar extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            username: "",
             isRedirect: false,
             to: ""
         };
@@ -53,6 +54,47 @@ export default class SideBar extends Component {
 
         // Clear local storage
         localStorage.removeItem("email");
+        localStorage.removeItem("username");
+
+        this.setState({
+            isRedirect: true,
+            to: "/"
+        });
+    }
+
+    handleRequest_remove = async () => {
+
+        // delete all post made by the user
+        axios({
+            method: 'delete',
+            url: 'http://localhost:3000/api/removeallposts',
+            data: {
+                user: localStorage.getItem("username")
+            }
+        })
+        .then((response) => {
+            localStorage.removeItem("username");
+            console.log(response);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+
+        // deletet user account
+        axios({
+            method: 'post',
+            url: 'http://localhost:3000/api-user/deleteuser',
+            data: {
+                email: localStorage.getItem("email")
+            }
+        })
+        .then((response) => {
+            localStorage.removeItem("email");
+            console.log(response);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
 
         this.setState({
             isRedirect: true,
@@ -69,6 +111,18 @@ export default class SideBar extends Component {
         // Filter the posts based on the tags the user follows
         let tagsList =  user.tags;
         return <FollowingTags tags={tagsList}/>;
+    }
+
+    getUserName = () => {
+        this.setState({
+            username: localStorage.getItem("username"),
+            isRedirect: false,
+            to: ""
+        });
+    }
+
+    componentDidMount() {
+        this.getUserName();
     }
 
     render() {
@@ -95,7 +149,7 @@ export default class SideBar extends Component {
               <Typography 
                   align="center"
                   variant="h5">
-                  {localStorage.getItem("username") === null ? "john doe" : localStorage.getItem("username")}
+                  {this.state.username}
               </Typography>
               <br/><br/><br/>
               <Typography 
@@ -112,6 +166,10 @@ export default class SideBar extends Component {
                   <br/>
                   <Button onClick={this.handleRequest_email}>
                       Change Email
+                  </Button>
+                  <br/>
+                  <Button onClick={this.handleRequest_remove}>
+                      Remove Account
                   </Button>
                   <br/>
                   <Button onClick={this.handleRequest_logout}>

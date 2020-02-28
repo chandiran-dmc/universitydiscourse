@@ -39,17 +39,17 @@ export default class Post extends Component {
     }
 
     handleRedirect = (editPost) => {
-        // if(this.state.user === localStorage.getItem("username")) {
+        if(this.state.user === localStorage.getItem("username")) {
 
             this.setState({
                 mode: editPost,
                 isEditPost: true
             });
 
-        // }
-        // else {
-        //     alert('You can not edit this post');
-        // }
+        }
+        else {
+            alert('You can not edit this post');
+        }
     }
 
     renderContent = () => {

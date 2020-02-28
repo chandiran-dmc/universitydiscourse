@@ -71,7 +71,9 @@ export default class RegisterPage extends Component {
         .catch((error) => {
             console.error(error);
         });
-        this.setState({redirect: true});
+        this.setState({redirect: true}); 
+        localStorage.setItem('email', this.state.email)
+
     }    
 
     onClickCreate() {

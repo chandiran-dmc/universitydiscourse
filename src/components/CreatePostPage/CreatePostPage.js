@@ -302,7 +302,7 @@ export default class CreatePostPage extends Component {
                                         Tags
                                     </h3>
                                     <br />
-                                    <TextField id="filled-basic" label="Tags" variant="filled" onChange={this.handleChangeTags}/>
+                                    <TextField id="filled-basic" label="Tags" variant="filled" onChange={this.handleChangeTags} defaultValue={this.state.tags.toString()} />
                                     <Grid
                                         container
                                         direction="row"
@@ -332,7 +332,7 @@ export default class CreatePostPage extends Component {
 
         if (this.state.isRedirect) {
             return <Redirect exact from="/createpost" push to={{
-                pathname: "/"
+                pathname: "/mp"
             }}/>;
         }
 

@@ -54,11 +54,11 @@ export default class SendLink extends Component {
     }
 
     onSubmit = (event) => {
-         event.preventDefault();
-         alert('Change coming soon!');
+        event.preventDefault();
+        alert('Change coming soon!');
         axios({
             method: 'post',
-            url: 'http://localhost:3001/api/recover',
+            url: 'http://localhost:3000/api-user/recoverpassword',
             data: {
                 email: this.state.email
                 
@@ -85,7 +85,7 @@ export default class SendLink extends Component {
             
             
     
-            return <Redirect exact from="/" push to={{
+            return <Redirect exact from="/sendlink" push to={{
                 pathname: "/lp",
                 state: { type: this.state.type }
             }}/>;

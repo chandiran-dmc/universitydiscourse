@@ -86,8 +86,9 @@ export default class ChangePassword extends Component {
             
             // Clear local storage
             localStorage.removeItem("email");
+           // localStorage.removeItem("username");
     
-            return <Redirect exact from="/" push to={{
+            return <Redirect exact from="/changepassword" push to={{
                 pathname: "/lp",
                 state: { type: this.state.type }
             }}/>;

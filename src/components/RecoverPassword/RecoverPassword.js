@@ -45,25 +45,22 @@ export default class RecoverPassword extends Component {
           redirect: false,
         };
         this.handleEmailChange = this.handleChange.bind(this, 'email');
-        this.handleNewPasswordChange = this.handleChange.bind(this, 'newpassword');
-        
+        this.handleNewPasswordChange = this.handleChange.bind(this, 'newpassword');    
     }
 
-      
-
+    
     handleChange(keyName, e) {
         this.setState({ [keyName]: e.target.value });
     }
 
     onSubmit = (event) => {
-          event.preventDefault();
-         alert('Change coming soon!');
+        event.preventDefault();
+        alert('Change coming soon!');
         axios({
             method: 'post',
             url: 'http://localhost:3000/api-user/recoverpassword',
             data: {
                 email: this.state.email,
-                
                 newpassword: this.state.newpassword,
             }
         })
@@ -74,7 +71,6 @@ export default class RecoverPassword extends Component {
             console.error(error);
         });
         this.setState({redirect: true});
-        
     }    
 
     // onClickCreate() {
@@ -82,13 +78,13 @@ export default class RecoverPassword extends Component {
     // }
 
     render() {
+        let email2 = localStorage.getItem('email');
+        if (email2) {
+            this.setState({redirect: true});
+        }
         if (this.state.redirect === true) {
 
-            console.log("HELLOOOOOOOOO");
-            
-            
-    
-            return <Redirect exact from="/" push to={{
+            return <Redirect exact from="/recp" push to={{
                 pathname: "/lp",
                 state: { type: this.state.type }
             }}/>;

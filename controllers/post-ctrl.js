@@ -108,6 +108,10 @@ updatePost = async (req, res) => {
 }
 
 removeAllPosts = async (req, res) => {
+
+    // Parse body from the request
+    const body = req.body;
+
     await Post.deleteMany({ user: body.user }, (err, post) => {
         if (err) {
             return res.status(400).json({ success: false, error: err });

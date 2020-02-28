@@ -83,8 +83,9 @@ export default class ChangeEmail extends Component {
             
             // Clear local storage
             localStorage.removeItem("email");
+          //  localStorage.removeItem("username");
     
-            return <Redirect exact from="/" push to={{
+            return <Redirect exact from="/changeemail" push to={{
                 pathname: "/lp",
                 state: { type: this.state.type }
             }}/>;
