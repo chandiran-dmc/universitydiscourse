@@ -17,7 +17,6 @@ import TopBar from '../TopBar';
 import ActionBar from './ActionBar';
 import Post from './../Post';
 import SideBar from '../SideBar';
-import FollowingTags from './FollowingTags';
 import { Grid, createMuiTheme } from '@material-ui/core';
 import './MainFeedPage.css';
 import sample_user from '../../mock_data/user_data.json';
@@ -101,21 +100,6 @@ export default class MainFeedPage extends Component {
     }
 
 
-    /**
-     * Helper function to get the tags that the user follows
-     */
-    getFollowingTags = () => {
-
-        // TODO: Get user data from local file
-        let user = sample_user; // XXX
-
-        // Filter the posts based on the tags the user follows
-        let tagsList =  user.tags;
-
-        return <FollowingTags tags={tagsList}/>;
-    }
-
-
     componentDidMount() {
         this.getPosts();
     }
@@ -154,9 +138,6 @@ export default class MainFeedPage extends Component {
                                     {this.state.filteredPosts === null ? <p>Fetching data</p> : this.state.filteredPosts}
                                 </Grid>
                             </Grid>
-                        </Grid>
-                        <Grid item>
-                            {this.getFollowingTags()}
                         </Grid>
                     </Grid>
                 </Grid>                
