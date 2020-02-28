@@ -59,11 +59,14 @@ RecoveryEmail = (req, res) => {
 
     });
 
+    //var str = 'rewati'
+    //var link = str.link('localhost:3001/api/recoverpassword');
     const mailOptions = {
-        from: 'rshitole@purdue.edu',
+        from: 'babytaetae123tae@gmail.com',
         to: email,
-        subject: 'This is the subject',
-        text: 'this is the text'
+        subject: 'Password reset',
+        text: 'This is the link to change password: \n\n' + 'http://localhost:3001/api/recoverpassword' + '\n\n Lets do it yaay!',
+        //text: 'this is the text'
     };
 
     transporter.sendMail(mailOptions, (err, response) => {
@@ -173,6 +176,46 @@ ChangePassword = (req, res) => {
     }).catch(err => console.log(err))
 };
 
+RecoverPassword = (req, res) => {
+    const body = req.body
+    const { email, newpassword } = body;
+
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide an email, newpassword',
+        })
+    }
+
+    User.findOne({ email }, (err, user) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        if (!user) {
+            return res
+                .status(404)
+                .json({ success: false, error: `User not found` })
+        } else {            
+            user.password=newpassword
+                    user
+                    .save()    
+                    .then(() => {
+                        return res.status(200).json({
+                            success: true,
+                            message: 'Password updated!',
+                        })
+                    })
+                    .catch(error => {
+                        return res.status(404).json({
+                            error,
+                            message: 'Password not updated!',
+                        })
+                    })                        
+        }
+    }).catch(err => console.log(err))
+};
+
 
 
 RegisterUser = (req, res) => {
@@ -264,5 +307,6 @@ module.exports = {
     ChangeEmail,
     ChangePassword,
     DeleteUser,
-    RecoveryEmail
+    RecoveryEmail,
+    RecoverPassword
 }
