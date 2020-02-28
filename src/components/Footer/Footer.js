@@ -43,10 +43,7 @@ export default class Footer extends Component {
                 </p>
                 <p className="Info3">
                     Explore Links 
-                </p>
-                
-                        
-                
+                </p>            
 
             </div>
         )

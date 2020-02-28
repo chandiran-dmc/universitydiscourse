@@ -38,21 +38,25 @@ export default class SideBar extends Component {
     handleRequest_password = () => {
         this.setState({
             isRedirect: true,
-            to: "password"
+            to: "changepassword"
         });
     }
     
     handleRequest_email = () => {
         this.setState({
             isRedirect: true,
-            to: "email"
+            to: "changeemail"
         });
     }
     
     handleRequest_logout = () => {
+
+        // Clear local storage
+        localStorage.removeItem("username");
+
         this.setState({
             isRedirect: true,
-            to: "logout"
+            to: "entry"
         });
     }
 
