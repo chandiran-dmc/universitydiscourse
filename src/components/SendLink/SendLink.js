@@ -16,7 +16,7 @@ import TopBar from '../TopBar/TopBar';
 import Footer from '../Footer/Footer';
 import logo from '../../images/image1.png';
 import logoName from '../../images/ImageName.png';
-import './LoginPage.css'
+import './SendLink.css'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
@@ -34,21 +34,17 @@ const theme = createMuiTheme ({
     }
 
 });
-export default class LoginPage extends Component {
+export default class SendLink extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-          email : '',
-          password: '',
+            email : '',
+       
           redirect: false,
-          formErrors: {email: '', password: ''},
-          emailValid: false,
-          passwordValid: false,
-          formValid: false
         };
-        this.handleEmailChange = this.handleChange.bind(this, 'email');
-        this.handlePasswordChange = this.handleChange.bind(this, 'password');
+         this.handleEmailChange = this.handleChange.bind(this, 'email');
+        
     }
 
       
@@ -58,14 +54,14 @@ export default class LoginPage extends Component {
     }
 
     onSubmit = (event) => {
-        event.preventDefault();
-        alert('Authentication coming soon!');
+         event.preventDefault();
+         alert('Change coming soon!');
         axios({
             method: 'post',
-            url: 'http://localhost:3001/api/authenticate',
+            url: 'http://localhost:3001/api/recover',
             data: {
-                email: this.state.email,
-                password: this.state.password
+                email: this.state.email
+                
             }
         })
         .then((response) => {
@@ -75,18 +71,14 @@ export default class LoginPage extends Component {
             console.error(error);
         });
         this.setState({redirect: true});
-        localStorage.setItem('email', this.state.email)
+        
     }    
 
-    onClickCreate() {
-        alert('hi');
-    }
+    // onClickCreate() {
+    //     alert('hi');
+    // }
 
     render() {
-        let email2 = localStorage.getItem('email');
-        if (email2) {
-            this.setState({redirect: true});
-        }
         if (this.state.redirect === true) {
 
             console.log("HELLOOOOOOOOO");
@@ -94,12 +86,12 @@ export default class LoginPage extends Component {
             
     
             return <Redirect exact from="/" push to={{
-                pathname: "/mp",
+                pathname: "/lp",
                 state: { type: this.state.type }
             }}/>;
         }
         return (
-            <form onSubmit={this.onSubmit}>
+           
             <div>
                 
                 <Footer />
@@ -110,7 +102,7 @@ export default class LoginPage extends Component {
                    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
                    <meta name="HandheldFriendly" content="true" />
                 </head>
-                <div className="LoginPage">
+                <div className="SendLink">
                 
                     
                     
@@ -130,8 +122,8 @@ export default class LoginPage extends Component {
                         </div>
                         </div>
                     
-                        <h1 className="LoginText">Login</h1>
-                        <div class="grid-container2" >
+                        <h1 className="ChangeEmailText">Enter Email</h1>
+                        <div class="grid-containerChange" >
                             <div class="grid-item">
                                 <TextField
                                     required
@@ -144,35 +136,36 @@ export default class LoginPage extends Component {
                                      />
                             </div>
                             <br />
-                            <div class="grid-item">
+                            {/* <div class="grid-item">
                                 <TextField
-                                    required
-                                    id="filled-password-input"
-                                    label="Password"
-                                    name = "Password"
-                                    value={this.state.password}
-                                    onChange={this.handlePasswordChange}
-                                    type="password"
-                                    autoComplete="current-password"
-                                    variant="filled" />
-                            </div>
-                            <br />
+                                   required
+                                   id="filled-required"
+                                   label="New-email"
+                                   variant="filled"
+                                   name = "email"
+                                   value={this.state.newemail}
+                                   onChange={this.handleNewEmailChange} 
+                                   />
+                            </div> */}
+                            
                             <div class="grid-item">
+                            <form onSubmit={this.onSubmit}>
                                 <ThemeProvider theme={theme}>
                                 <Button 
-                                    className  = "LOGINButton" 
+                                    className  = "Done" 
                                     variant = "contained"
                                     color = "primary" 
                                     type = "submit"
                                     >
-                                    Log In
+                                    Send Link
                                 </Button> 
                                 </ThemeProvider>
+                            </form>
                             </div>
                         </div>
                 </div>
             </div>
-            </form>
+            
         );
     }
 }

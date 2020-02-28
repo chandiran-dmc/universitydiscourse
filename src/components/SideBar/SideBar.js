@@ -56,7 +56,7 @@ export default class SideBar extends Component {
 
         this.setState({
             isRedirect: true,
-            to: "entry"
+            to: "/"
         });
     }
 
