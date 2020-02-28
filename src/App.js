@@ -20,7 +20,7 @@ export default function App() {
         />
           <Route path="/mp" component = {MainFeedPage} />
           <Route exact path="/">
-            <LoginPage />
+            <MainFeedPage />
           </Route>
 
         </Switch>

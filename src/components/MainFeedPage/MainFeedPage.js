@@ -30,6 +30,28 @@ export default class Login extends Component {
       [name]: value
     });
   }
+  sendEmail = (event) => {
+    event.preventDefault();
+    if (this.state.email === '') {
+      this.setState({
+        
+      });
+    } else {
+      axios({
+        method: 'post',
+        url: 'http://localhost:3001/api/recover',
+        data: {
+            email: this.state.email
+        }
+      })
+      .then((response) => {
+        console.log(response);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+    }
+  }
   onSubmit = (event) => {
     event.preventDefault();
     alert('Authentication coming soon!');
@@ -52,7 +74,7 @@ export default class Login extends Component {
   }
   render() {
     return (
-      <form onSubmit={this.onSubmit}>
+      <form onSubmit={this.sendEmail}>
         <h1>Login Below!</h1>
         <input
           type="email"
