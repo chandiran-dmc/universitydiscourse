@@ -9,7 +9,8 @@ export default class Login extends Component {
     super(props)
     this.state = {
       email : '',
-      password: ''
+      password: '',
+      emailValid: false
     };
   }
   state = {
@@ -31,6 +32,13 @@ export default class Login extends Component {
     });
   }
   sendEmail = (event) => {
+    // if (/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(this.state.email))
+    // {
+    //   this.setState({emailValid: false})
+    //   return;
+    // }
+    //alert('sent!');
+
     event.preventDefault();
     if (this.state.email === '') {
       this.setState({
@@ -51,11 +59,13 @@ export default class Login extends Component {
         console.error(error);
       });
     }
+    
+    sessionStorage.setItem('email', this.state.email);
   }
   onSubmit = (event) => {
     event.preventDefault();
     alert('Authentication coming soon!');
-    let email = localStorage.getItem("email");
+    //let email = localStorage.getItem("email");
     axios({
         method: 'post',
         url: 'http://localhost:3001/api/register',
@@ -70,10 +80,13 @@ export default class Login extends Component {
     .catch((error) => {
         console.error(error);
     });
+    
     //this.renderRedirect();
   }
   render() {
+    
     return (
+
       <form onSubmit={this.sendEmail}>
         <h1>Login Below!</h1>
         <input
@@ -93,7 +106,15 @@ export default class Login extends Component {
           required
         />
        <input type="submit" value="Submit" onClick={this.renderRedirect}/>
+       <div>
+         {this.state.emailValid ? (
+          <h1>Email format is wrong!</h1>): (<h1></h1>)
+        }
+       </div>
+       
+       
       </form>
+      
     );
   }
 }

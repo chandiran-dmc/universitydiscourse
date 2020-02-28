@@ -70,8 +70,7 @@ export default class LoginPage extends Component {
         .catch((error) => {
             console.error(error);
         });
-        //this.setState({redirect: true});
-        
+        //this.setState({redirect: true});        
     }    
 
     onClickCreate() {

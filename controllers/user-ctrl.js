@@ -81,7 +81,7 @@ RecoveryEmail = (req, res) => {
 
 ChangeEmail = (req, res) => {
     const body = req.body
-    const { email, password, newemail } = body;
+    const { email, newemail } = body;
 
     if (!body) {
         return res.status(400).json({
@@ -100,17 +100,7 @@ ChangeEmail = (req, res) => {
                 .status(404)
                 .json({ success: false, error: `User not found` })
         } else {            
-            user
-            .isCorrectPassword(password, function(err, same) {
-                if (err) {
-                    res.status(500)
-                    .json({error: 'Internal error please try again'});
-                } else if (!same) {
-                    res.status(401)
-                    .json({error: 'Incorrect password'});
-                }
-                else {
-                    user.email=newemail
+            user.email=newemail
                     user
                     .save()    
                     .then(() => {
@@ -124,9 +114,7 @@ ChangeEmail = (req, res) => {
                             error,
                             message: 'Email not updated!',
                         })
-                    })
-                }
-            })                         
+                    })                         
         }
     }).catch(err => console.log(err))
 };
@@ -193,7 +181,7 @@ RegisterUser = (req, res) => {
     if (!body) {
         return res.status(400).json({
             success: false,
-            error: 'You must provide a movie',
+            error: 'You must provide a username',
         })
     }
 
