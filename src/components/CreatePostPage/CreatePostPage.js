@@ -59,13 +59,13 @@ export default class CreatePostPage extends Component {
             isRedirect: false
         };
 
-        console.log(this.state.title);
-
         this.handleChangeContent = this.handleChangeContent.bind(this);
         this.handleChangeTitle = this.handleChangeTitle.bind(this);
         this.handleChangeTags = this.handleChangeTags.bind(this);
         this.handleCreatePost = this.handleCreatePost.bind(this);
+        this.handleUpdatePost = this.handleUpdatePost.bind(this);
     }
+    
     handleChangeContent(event) {
         this.setState(
             {
@@ -113,7 +113,7 @@ export default class CreatePostPage extends Component {
         // Send request to the database
         axios({
             method: 'post',
-            url: 'http://localhost:3000/api/post',
+            url: 'http://localhost:3000/api/createpost',
             data: {
                 title: this.state.title,
                 user: username,
@@ -153,7 +153,56 @@ export default class CreatePostPage extends Component {
     }
 
     handleUpdatePost(event) {
-        alert('yay');
+        // This is to stop the default behavior, 
+        // which in this case is stopping form from reloading itself
+        event.preventDefault();
+
+        // Check if input is empty
+        if (this.state.tags.length === 0) {
+            alert('Tags cannot be empty');
+            return;
+        } else if (this.state.title.length === 0 ) {
+            alert('Title cannot be empty');
+            return;
+        } else if (this.state.content.length === 0) {
+            alert('Content cannot be empty');
+            return;
+        }
+        
+        let username = localStorage.getItem("username");
+        if (!username) {
+            username = "johndoe";
+        }
+
+        // Send request to the database
+        axios({
+            method: 'put',
+            url: 'http://localhost:3000/api/updatepost',
+            data: {
+                title: this.state.title,
+                user: username,
+                type: this.state.type,
+                tag: this.state.tags,
+                count: 0,
+                comments: [],
+                content: this.state.content,
+                time: this.state.time
+            }
+        })
+        .then((response) => {
+            console.log(response);
+            this.setState({
+                type: this.state.type,
+                title: this.state.title,
+                content: this.state.content,
+                tags: this.state.tags,
+                isRedirect: true
+            });
+        })
+        .catch((error) => {
+            console.error(error);
+            alert('An error occurred');
+        });
     }
 
     getTextPage = () => {
@@ -180,19 +229,19 @@ export default class CreatePostPage extends Component {
                                         Post Title
                                     </h3>
                                     <br/>
-                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} />
+                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} defaultValue={this.state.title}/>
                                     <br />
                                     <h3 style={{ color: '#023373' }}>
                                         Post Content
                                     </h3>
                                     <br />
-                                    <TextField id="filled-basic" label="Post Content" variant="filled" onChange={this.handleChangeContent}/>
+                                    <TextField id="filled-basic" label="Post Content" variant="filled" onChange={this.handleChangeContent} defaultValue={this.state.content}/>
                                     <br />
                                     <h3 style={{ color: '#023373' }}>
                                         Tags
                                     </h3>
                                     <br />
-                                    <TextField id="filled-basic" label="Tags" variant="filled" onChange={this.handleChangeTags}/>
+                                    <TextField id="filled-basic" label="Tags" variant="filled" onChange={this.handleChangeTags} defaultValue={this.state.tags.toString()} />
                                     <Grid
                                         container
                                         direction="row"
@@ -241,13 +290,13 @@ export default class CreatePostPage extends Component {
                                         Post Title
                                     </h3>
                                     <br/>
-                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} />
+                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle}  defaultValue={this.state.title}/>
                                     <br />
                                     <h3 style={{ color: '#023373' }}>
                                         Post Image URL
                                     </h3>
                                     <br />
-                                    <TextField id="filled-basic" label="Post Image URL" variant="filled" onChange={this.handleChangeContent}/>
+                                    <TextField id="filled-basic" label="Post Image URL" variant="filled" onChange={this.handleChangeContent}  defaultValue={this.state.content}/>
                                     <br />
                                     <h3 style={{ color: '#023373' }}>
                                         Tags

@@ -14,32 +14,15 @@
 
 
 import React, { Component } from 'react'
-import { Box, createMuiTheme, ThemeProvider, Grid, Avatar, Typography, Button, IconButton } from '@material-ui/core';
+import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton } from '@material-ui/core';
 import MenuIcon from '../../customeIcons/menuIcon';
 import LikeIcon from '../../customeIcons/likeIcon';
 import { Redirect } from 'react-router-dom';
-
-const theme = createMuiTheme({
-    palette: {
-        primary: {
-            main: "#F2F2F2"
-        },
-        secondary: {
-            main: "#757575"
-        },
-        text: {
-            main: "#000000",
-            sub: "#9B9B9B"
-        }
-    }
-});
 
 export default class Post extends Component {
 
     constructor(props) {
         super(props);
-       
-
         this.state = {
             title: props.data.title,
             content: props.data.content,
@@ -49,14 +32,12 @@ export default class Post extends Component {
             comments: props.data.comments,
             type: props.data.type,
             count: props.data.count,
-            theme: theme,
+            theme: props.theme,
             isEditPost: false,
             mode: ""
-        };
-
-
-       
+        };       
     }
+
     handleRedirect = (editPost) => {
         // if(this.state.user === localStorage.getItem("username")) {
 
@@ -69,15 +50,31 @@ export default class Post extends Component {
         // else {
         //     alert('You can not edit this post');
         // }
-
-
-        
     }
+
+    renderContent = () => {
+
+        let content = <p>error</p>;
+
+        switch (this.state.type) {
+            case "text":
+                content = <Typography variant="h6">{this.state.content}</Typography>;
+                break;
+        
+            case "image":
+                content = <img src={this.state.content} alt={this.state.title} width="600"/>
+                break;
+
+            default:
+                break;
+        }
+
+        return content;
+    }
+
 
     render() {
         if (this.state.isEditPost === true) {
-
-            console.log("Post >> Edit a post : " + this.state.mode);
 
             return <Redirect exact from="/" push to={{
                 pathname: "/editpost",
@@ -96,12 +93,12 @@ export default class Post extends Component {
         }
 
         return (
-            <ThemeProvider theme={theme} >     
+            <ThemeProvider theme={this.state.theme} >     
                 <Box
                     boxShadow={2}
                     margin={1}
                     padding={2}
-                    bgcolor="primary.main" >
+                    bgcolor="post_primary.main" >
                     
                     <Grid container 
                         wrap="nowrap" 
@@ -140,9 +137,7 @@ export default class Post extends Component {
                         spacing={2}
                         direction="column">
                         <Grid item>
-                            <Typography variant="h6">
-                                {this.state.content}
-                            </Typography>
+                            {this.renderContent()}
                         </Grid>
                         <Grid 
                             container
@@ -178,8 +173,8 @@ export default class Post extends Component {
                             </Grid>
                         </Grid>
                         <Grid>
-                            <Typography variant="body2">
-                                #{this.state.tags}
+                            <Typography variant="inherit">
+                                #{this.state.tags.toString()}
                             </Typography>
                         </Grid>
                     </Grid>

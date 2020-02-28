@@ -18,18 +18,7 @@ import ImageIcon from '../../customeIcons/imageIcon';
 import DocIcon from '../../customeIcons/docIcon';
 import LinkIcon from '../../customeIcons/linkIcon';
 import TextIcon from '../../customeIcons/textIcon';
-import { Button, Box, createMuiTheme, ThemeProvider, Grid, Typography } from '@material-ui/core';
-
-const theme = createMuiTheme({
-    palette: {
-        primary: {
-            main: "#F2B705"
-        },
-        secondary: {
-            main: "#F2C94C"
-        }
-    }
-});
+import { Button, Box, ThemeProvider, Grid, Typography } from '@material-ui/core';
 
 export default class ActionBar extends Component {
 
@@ -37,7 +26,8 @@ export default class ActionBar extends Component {
         super(props);
         this.state = {
             toCreatePostPage: false,
-            type: ""
+            type: "",
+            theme: props.theme
         };
     }
 
@@ -62,7 +52,7 @@ export default class ActionBar extends Component {
         }
 
         return (
-            <ThemeProvider theme={theme}>
+            <ThemeProvider theme={this.state.theme}>
                 <Box 
                     boxShadow={2}
                     margin={1}

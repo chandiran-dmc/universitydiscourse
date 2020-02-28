@@ -15,7 +15,6 @@ createPost = (req, res) => {
             error: 'You must provide a post',
         });
     }
-    console.log(body);
 
     // create post model
     const post = new Post(body);
@@ -63,17 +62,18 @@ updatePost = async (req, res) => {
     // Query for the appropriate post document
     const query = {
         $and: [
-            {user: req.params.user},
-            {time: req.params.time}
+            {user: body.user},
+            {time: body.time}
         ]
     };
+
     Post.findOne(query, (err, post) => {
 
         // Post not found
         if (err) {
             return res.status(404).json({
                 err,
-                message: 'Post not found!',
+                message: 'Error occurred!',
             });
         }
 
@@ -81,7 +81,7 @@ updatePost = async (req, res) => {
         if (!post) {
             return res.status(401).json({
                 err,
-                message: 'Fuck you',
+                message: 'Post not found',
             });
         }
 
@@ -138,17 +138,21 @@ getMovieById = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
-getMovies = async (req, res) => {
-    await Movie.find({}, (err, movies) => {
+getPosts = async (req, res) => {
+    await Post.find({}, (err, posts) => {
+        // error handling
         if (err) {
-            return res.status(400).json({ success: false, error: err })
+            return res.status(400).json({ success: false, error: err });
         }
-        if (!movies.length) {
+        // result checking
+        if (!posts.length) {
             return res
                 .status(404)
-                .json({ success: false, error: `Movie not found` })
+                .json({ success: false, error: `Posts not found` });
         }
-        return res.status(200).json({ success: true, data: movies })
+        // return posts
+        return res.status(200).json({ success: true, data: posts });
+
     }).catch(err => console.log(err))
 }
 
@@ -156,6 +160,6 @@ module.exports = {
     createPost,
     updatePost,
     deleteMovie,
-    getMovies,
+    getPosts,
     getMovieById,
 }
