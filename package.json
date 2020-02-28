@@ -12,10 +12,14 @@
     "axios": "^0.19.2",
     "bcrypt": "^4.0.0",
     "body-parser": "^1.19.0",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "istanbul": "^0.4.5",
     "jsonwebtoken": "^8.5.1",
+    "mocha": "^7.1.0",
     "mongodb": "^3.5.3",
     "mongoose": "^5.9.2",
     "nodemailer": "^6.4.3",
@@ -31,6 +35,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test-user": "istanbul cover _mocha ./controllers/controllertest.spec.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

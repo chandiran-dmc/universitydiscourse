@@ -76,6 +76,19 @@ img { max-width: 100%; height: auto; }
     padding-left: 670px;
     grid-column-gap: 50px;
 }
+.grid-item1 {
+    padding-left: 176px;
+}
+
+.grid-item2 {
+    padding-left: 110px;
+}
+.gridcontainerfinal3 {
+    padding-left: 160px;
+
+}
+
+
 
 
 

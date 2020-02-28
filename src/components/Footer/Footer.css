@@ -1,7 +1,7 @@
 /* use top:0 and position:fixed to fix at top */
 .Footer {
     bottom: 0;
-    height: 180px;
+    height: 250px;
     position: fixed;
     width: 100%;
     overflow: auto;
@@ -52,7 +52,7 @@
     position: fixed;
     font-size: medium;
     margin-top: -40px;
-    margin-left: 550px;
+    margin-left: 700px;
     
  }
 
@@ -62,7 +62,7 @@
     position: fixed;
     font-size: medium;
     margin-top: -40px;
-    margin-left: 805px; 
+    margin-left: 1005px; 
     
  }
  

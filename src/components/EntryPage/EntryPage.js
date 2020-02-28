@@ -17,7 +17,8 @@ import Footer from '../Footer/Footer';
 import logo from '../../images/image1.png';
 import logoName from '../../images/ImageName.png';
 import './EntryPage.css'
-import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button';
+import {Grid} from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import {createMuiTheme } from '@material-ui/core/styles';
 import {ThemeProvider} from '@material-ui/styles'
@@ -78,15 +79,34 @@ export default class EntryPage extends Component {
                    <meta name="HandheldFriendly" content="true" />
                 </head>
                 <div className="EntryPage">
-                    <div class="grid-container" >
-                    <div class="grid-item">
+                    {/* <Grid 
+                        container
+                        direction="column"
+                        justify="center"
+                        alignItems="center">
+                        <Grid item >
+                            <img 
+                                className="LoginLogo"
+                                src={logo}
+                                alt="logo" /> 
+                        </Grid>
+                        <br />
+                        <Grid item >
+                            <img 
+                                className="LogoName2"
+                                src={logoName}
+                                alt="logoName"/>
+                        </Grid>
+                    </Grid> */}
+                    <div class="grid-containerEP" >
+                    <div class="grid-item1">
                         <img 
                             className="LoginLogo"
                             src={logo}
                             alt="logo" /> 
                         <br />
                     </div>
-                    <div class="grid-item">
+                    <div class="grid-item2">
                         <img 
                             className="LogoName2"
                             src={logoName}

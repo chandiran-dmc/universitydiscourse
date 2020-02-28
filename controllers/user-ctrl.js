@@ -37,8 +37,19 @@ AuthenticateUser = (req, res) => {
                 }
             })                         
         }
-    }).catch(err => console.log(err))
+    }).catch(err => console.log(err));
 };
+
+function makeid(length) {
+    var result           = '';
+    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for ( var i = 0; i < length; i++ ) {
+       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+ }
+
 
 RecoveryEmail = (req, res) => {
     const body = req.body
@@ -50,35 +61,55 @@ RecoveryEmail = (req, res) => {
                 error: 'You must provide an email',
         })
     }
-    const transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'babytaetae123tae@gmail.com',
-            pass: 'babytae!123'
-        }
 
-    });
-
-    //var str = 'rewati'
-    //var link = str.link('localhost:3001/api/recoverpassword');
-    const mailOptions = {
-        from: 'babytaetae123tae@gmail.com',
-        to: email,
-        subject: 'Password reset',
-        text: 'This is the link to change password: \n\n' + 'http://localhost:3001/recp' + '\n\n Lets do it yaay!',
-        //text: 'this is the text'
-    };
-
-    transporter.sendMail(mailOptions, (err, response) => {
+    User.findOne({ email }, (err, user) => {
         if (err) {
-            console.error('There was an email error: ', err);
-
-        } else {
-            console.log('here is response', response);
-            res.status(200).json('recovery email sent');
+            return res.status(400).json({ success: false, error: err })
         }
 
+        if (!user) {
+            return res
+                .status(404)
+                .json({ success: false, error: `User not found` })
+        }
     })
+    .catch(err => console.log(err))
+    .then((response) => {
+        
+        const transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'babytaetae123tae@gmail.com',
+                pass: 'babytae!123'
+            }
+    
+        });
+    
+        //var str = 'rewati'
+        //var link = str.link('localhost:3001/api/recoverpassword');
+
+        let hashaddress = makeid(40);
+        hashaddress = "?=" + hashaddress;
+
+        const mailOptions = {
+            from: 'babytaetae123tae@gmail.com',
+            to: email,
+            subject: 'Password reset',
+            text: 'This is the link to change password: \n\n' + 'http://localhost:3001/recp?=' + email + '\n\n Lets do it yaay!',
+            //text: 'this is the text'
+        };
+    
+        transporter.sendMail(mailOptions, (err, response) => {
+            if (err) {
+                console.error('There was an email error: ', err);
+    
+            } else {
+                console.log('here is response', response);
+                res.status(200).json('recovery email sent');
+            }
+    
+        })
+    });
 
 };
 

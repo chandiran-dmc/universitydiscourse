@@ -57,7 +57,7 @@ export default class ChangeEmail extends Component {
 
         // Validate current user
         if (this.state.oldemail !== localStorage.getItem("email")) {
-            alert('You cannot change other users\' email');
+            alert('Incorrect email');
             return;
         }
 
@@ -83,6 +83,8 @@ export default class ChangeEmail extends Component {
         })
         .then((response) => {
             console.log(response);
+            alert('Email successfully changed');
+
             this.setState({redirect: true});
         })
         .catch((error) => {
@@ -126,20 +128,21 @@ export default class ChangeEmail extends Component {
                 </head>
                 <div className="LoginPage">                    
                     <div class="grid-container1" >
-                    <div class="grid-item">
+                    <div class="grid-item1">
                         <img 
                             className="LoginLogo"
                             src={logo}
                             alt="logo" /> 
                         <br />
                     </div>
-                    <div class="grid-item">
+                    <div class="grid-item2">
                         <img 
                             className="LogoName2"
                             src={logoName}
                             alt="logoName"/>
                     </div>
                     </div>
+                    <div className="gridcontainerfinal3">
                     <h1 className="ChangeEmailText">Change Email</h1>
                     <div class="grid-containerChange" >
                         <div class="grid-item">
@@ -180,6 +183,7 @@ export default class ChangeEmail extends Component {
                             </ThemeProvider>
                         </form>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>

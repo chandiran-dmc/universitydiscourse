@@ -32,6 +32,18 @@ img { max-width: 100%; height: auto; }
     margin-left: 100px;
     height: auto;
 } */
+.grid-item1 {
+    padding-left: 176px;
+}
+
+.grid-item2 {
+    padding-left: 110px;
+}
+.gridcontainerfinal2 {
+    padding-left: 160px;
+
+}
+
 
 .lowerFooter2 {
     bottom: 0;
@@ -68,9 +80,11 @@ img { max-width: 100%; height: auto; }
 
 .Done {
     
-    width: 195px;
+    width: 225px;
     padding-left: 500px;
 }
+
+
 
 .grid-containerChange {
     padding-left: 670px;

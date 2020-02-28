@@ -76,10 +76,20 @@ img { max-width: 100%; height: auto; }
     width: 195px;
     padding-left: 500px;
 }
+.grid-item1 {
+    padding-left: 176px;
+}
 
+.grid-item2 {
+    padding-left: 110px;
+}
+
+/* .grid-containerEP {
+    padding-left: 150px ;
+} */
 .grid-containerButtons {
     padding-top: 50px;
-    padding-left: 650px;
+    padding-left: 850px;
     grid-column-gap: 50px;
 }
 

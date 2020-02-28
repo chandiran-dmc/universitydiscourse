@@ -40,12 +40,15 @@ export default class RecoverPassword extends Component {
         super(props)
         this.state = {
             email : '',
-    
-           newpassword: '',
-          redirect: false,
+            newpassword: '',
+            repeat: '',
+            redirect: false,
+            correctemail: window.location.href.substr( window.location.href.indexOf("=") + 1)
         };
+
         this.handleEmailChange = this.handleChange.bind(this, 'email');
-        this.handleNewPasswordChange = this.handleChange.bind(this, 'newpassword');    
+        this.handleNewPasswordChange = this.handleChange.bind(this, 'newpassword');
+        this.handleRepeatChange = this.handleChange.bind(this, 'repeat');
     }
 
     
@@ -55,9 +58,28 @@ export default class RecoverPassword extends Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-        alert('Change coming soon!');
 
-        // Why are we calling recoverpassword again here?
+
+        // Check for email and password format
+        if (!this.state.email.match(/[a-zA-Z0-9]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+/g)) {
+            alert('Email format not correct');
+            return;
+        }
+
+        if (this.state.email !== this.state.correctemail) {
+            alert('You cannot change others\' password');
+            return;
+        }
+
+        if (this.state.newpassword.length < 8 || !this.state.newpassword.match(/[0-9]/g)) {
+            alert('Password format not correct');
+            return;
+        }
+
+        if (this.state.newpassword !== this.state.repeat) {
+            alert('New password and confirm password does not match');
+            return;
+        }
 
         axios({
             method: 'post',
@@ -69,16 +91,14 @@ export default class RecoverPassword extends Component {
         })
         .then((response) => {
             console.log(response);
+            alert('Password successfully reset');
+
+            this.setState({redirect: true});
         })
         .catch((error) => {
-            console.error(error);
+            alert(error.response.data.error);
         });
-        this.setState({redirect: true});
     }    
-
-    // onClickCreate() {
-    //     alert('hi');
-    // }
 
     render() {
         let email2 = localStorage.getItem('email');
@@ -109,14 +129,14 @@ export default class RecoverPassword extends Component {
                     
                     
                         <div class="grid-container1" >
-                        <div class="grid-item">
+                        <div class="grid-item1">
                             <img 
                                 className="LoginLogo"
                                 src={logo}
                                 alt="logo" /> 
                             <br />
                         </div>
-                        <div class="grid-item">
+                        <div class="grid-item2">
                             <img 
                                 className="LogoName2"
                                 src={logoName}
@@ -124,6 +144,7 @@ export default class RecoverPassword extends Component {
                         </div>
                         </div>
                     
+                        <div className="gridcontainerfinal5" >
                         <h1 className="RecoverPasswordText">Recover Password</h1>
                         <div class="grid-containerRecover" >
                             <div class="grid-item">
@@ -140,14 +161,14 @@ export default class RecoverPassword extends Component {
                             <br />
                             <div class="grid-item">
                                 <TextField
-                                     id="filled-password-input"
-                                     label="New-Password"
-                                     name = "newpassword"
-                                    //  value={this.state.oldpassword}
-                                    //  onChange={this.handleOldPasswordChange}
-                                     type="password"
-                                     autoComplete="current-password"
-                                     variant="filled" 
+                                    id="filled-password-input"
+                                    label="New-Password"
+                                    name = "newpassword"
+                                    value={this.state.repeat}
+                                    onChange={this.handleRepeatChange}
+                                    type="password"
+                                    autoComplete="current-password"
+                                    variant="filled" 
                                      />
                             </div>
                             <br />
@@ -178,6 +199,7 @@ export default class RecoverPassword extends Component {
                                 </ThemeProvider>
                             </form>
                             </div>
+                        </div>
                         </div>
                 </div>
             </div>

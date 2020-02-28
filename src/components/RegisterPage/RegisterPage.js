@@ -63,7 +63,7 @@ export default class RegisterPage extends Component {
         }
 
         if (this.state.password.length < 8 || !this.state.password.match(/[0-9]/g)) {
-            alert('Password format not correct');
+            alert('Password format not correct\nMinimum length of 8 characters and atleast one digit');
             return;
         }
 
@@ -84,7 +84,7 @@ export default class RegisterPage extends Component {
         .catch((error) => {
             console.error(error);
 
-            alert('User alreader registered!');
+            alert('User with similar email already registered!');
             
             // Catch for user that is not registered
             if (error.message.includes("not registered")) {
@@ -136,20 +136,21 @@ export default class RegisterPage extends Component {
                     
                 </div> */}
                 <div class="grid-container1" >
-                        <div class="grid-item">
+                        <div class="grid-item1">
                             <img 
                                 className="LoginLogo"
                                 src={logo}
                                 alt="logo" /> 
                             <br />
                         </div>
-                        <div class="grid-item">
+                        <div class="grid-item2">
                             <img 
                                 className="LogoName2"
                                 src={logoName}
                                 alt="logoName"/>
                         </div>
                         </div>
+                        <div className ="gridcontainerfinal">
                         <h1 className="RegisterText">Register</h1>
                         <div class="grid-container2R" >
                             <div class="grid-item">
@@ -202,6 +203,7 @@ export default class RegisterPage extends Component {
                                 </Button> 
                                 </ThemeProvider>
                             </div>
+                        </div>
                         </div>
             </div>
             </form>

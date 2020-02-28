@@ -58,7 +58,7 @@ export default class ChangePassword extends Component {
         // Check if email is current user's email
         // Validate current user
         if (this.state.email !== localStorage.getItem("email")) {
-            alert('You cannot change other users\' password');
+            alert('Incorrect email');
             return;
         }
 
@@ -85,6 +85,8 @@ export default class ChangePassword extends Component {
         })
         .then((response) => {
             console.log(response);
+            alert('Password successfully changed');
+
             this.setState({redirect: true});
         })
         .catch((error) => {
@@ -110,7 +112,7 @@ export default class ChangePassword extends Component {
             
             // Clear local storage
             localStorage.removeItem("email");
-           // localStorage.removeItem("username");
+            localStorage.removeItem("username");
     
             return <Redirect exact from="/changepassword" push to={{
                 pathname: "/lp",
@@ -130,20 +132,21 @@ export default class ChangePassword extends Component {
                 </head>
                 <div className="LoginPage">
                     <div class="grid-container1" >
-                    <div class="grid-item">
+                    <div class="grid-item1">
                         <img 
                             className="LoginLogo"
                             src={logo}
                             alt="logo" /> 
                         <br />
                     </div>
-                    <div class="grid-item">
+                    <div class="grid-item2">
                         <img 
                             className="LogoName2"
                             src={logoName}
                             alt="logoName"/>
                     </div>
                     </div>
+                    <div className="gridcontainerfinal4">
                     <h1 className="ChangePasswordText">Change Password</h1>
                     <div class="grid-containerChange" >
                         <div class="grid-item">
@@ -198,6 +201,7 @@ export default class ChangePassword extends Component {
                             </ThemeProvider>
                         </form>
                         </div>
+                    </div>
                     </div>
                 </div>
             </div>

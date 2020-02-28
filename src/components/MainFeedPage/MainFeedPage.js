@@ -35,7 +35,7 @@ export default class MainFeedPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filteredPosts: null
+            filteredPosts: []
         };
     }
 
@@ -46,44 +46,44 @@ export default class MainFeedPage extends Component {
      */
     getPosts = async () => {
 
-      // TODO: request the database for the hot posts
-      let posts = []
+        // TODO: request the database for the hot posts
+        let posts = []
 
-      // Send request to the database
-      axios({
-          method: 'get',
-          url: 'http://localhost:3000/api/getposts'
-      })
-      .then((response) => {
-          posts = response.data.data;
+        // Send request to the database
+        axios({
+                method: 'get',
+                url: 'http://localhost:3000/api/getposts'
+        })
+        .then((response) => {
+                posts = response.data.data;
 
-          // TODO: Get user data from local file
-          let user = sample_user; // XXX
+                // TODO: Get user data from local file
+                let user = sample_user; // XXX
 
-          // Filter the posts based on the tags the user follows
-          let tags =  [];
-          tags = user.tags;
+                // Filter the posts based on the tags the user follows
+                let tags =  [];
+                tags = user.tags;
 
-          let filteredPosts = [];
+                let filteredPosts = [];
 
-          posts.forEach((post) => {
-              post.tag.forEach((tag) => {
+                posts.forEach((post) => {
 
-                  if (tags.includes(tag)) {
-                      filteredPosts.push(<Post key={Math.random()*100000} data={post} theme={theme}/>);
-                  }
-
-              });
-          });
-          
-          this.setState({
-              filteredPosts: filteredPosts
-          });
-      })
-      .catch((error) => {
-          console.error(error);
-          alert('An error occurred');
-      });
+                    for (let i = 0; i < post.tag.length; i++) {
+                        if (tags.includes(post.tag[i])) {
+                            filteredPosts.push(<Post key={Math.random()*100000} data={post} theme={theme}/>);
+                            break;
+                        }
+                    }
+                });
+                
+                this.setState({
+                    filteredPosts: filteredPosts
+                });
+        })
+        .catch((error) => {
+            console.error(error);
+            alert('An error occurred');
+        });
     }
 
 

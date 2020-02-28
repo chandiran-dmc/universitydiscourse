@@ -28,10 +28,22 @@
     padding-left: 690px;
     color: #F2B705;
 }
+.grid-item1 {
+    padding-left: 176px;
+}
+
+.grid-item2 {
+    padding-left: 110px;
+}
+
 
 .NEXT {
-    width: 195px;
+    width: 225px;
     padding-left: 500px;
+}
+.gridcontainerfinal {
+    padding-left: 200px;
+
 }
 
 .grid-container2R {

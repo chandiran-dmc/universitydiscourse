@@ -62,7 +62,7 @@ export default class Post extends Component {
                 break;
         
             case "image":
-                content = <img src={this.state.content} alt={this.state.title} width="600"/>
+                content = <img src={this.state.content} alt={"The Image URL is invalid"} width="600"/>
                 break;
 
             default:

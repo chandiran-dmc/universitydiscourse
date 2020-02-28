@@ -55,7 +55,13 @@ export default class SendLink extends Component {
 
     onSubmit = (event) => {
         event.preventDefault();
-        alert('Change coming soon!');
+        
+        // Check for email and password format
+        if (!this.state.email.match(/[a-zA-Z0-9]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+/g)) {
+            alert('Email format not correct');
+            return;
+        }
+
         axios({
             method: 'post',
             url: 'http://localhost:3000/api-user/recover',
@@ -64,11 +70,16 @@ export default class SendLink extends Component {
             }
         })
         .then((response) => {
+            alert('Please check your email inbox for reset link');
+
             this.setState({redirect: true});
-            console.log(response);
         })
         .catch((error) => {
-            console.error(error);
+
+            // Check if the user exists
+            if (error.response.data.error) {
+                alert(error.response.data.error);
+            }
         });
         
     }    
@@ -106,14 +117,14 @@ export default class SendLink extends Component {
                     
                     
                         <div class="grid-container1" >
-                        <div class="grid-item">
+                        <div class="grid-item1">
                             <img 
                                 className="LoginLogo"
                                 src={logo}
                                 alt="logo" /> 
                             <br />
                         </div>
-                        <div class="grid-item">
+                        <div class="grid-item2">
                             <img 
                                 className="LogoName2"
                                 src={logoName}
@@ -121,6 +132,7 @@ export default class SendLink extends Component {
                         </div>
                         </div>
                     
+                    <div className="gridcontainerfinal2">
                         <h1 className="ChangeEmailText">Enter Email</h1>
                         <div class="grid-containerChange" >
                             <div class="grid-item">
@@ -161,6 +173,7 @@ export default class SendLink extends Component {
                                 </ThemeProvider>
                             </form>
                             </div>
+                        </div>
                         </div>
                 </div>
             </div>

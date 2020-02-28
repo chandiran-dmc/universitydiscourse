@@ -8,11 +8,27 @@ import Divider from '@material-ui/core/Divider';
 import FollowingTags from './FollowingTags';
 import {Button} from '@material-ui/core';
 import {Redirect} from 'react-router-dom';
+import {createMuiTheme } from '@material-ui/core/styles';
+import {ThemeProvider} from '@material-ui/styles'
 
 
 import sample_user from '../../mock_data/user_data.json';
 
 const axios = require('axios');
+
+
+
+
+const theme = createMuiTheme ({
+  palette: {
+      primary: {
+          main:'#023373',
+      }
+  }
+
+});
+
+
 // const drawerWidth = 240;
 
 // const useStyles = makeStyles(theme => ({
@@ -158,11 +174,13 @@ export default class SideBar extends Component {
         }
 
         return (
+            <ThemeProvider theme={theme}>
           <div>
             <CssBaseline />
             <Drawer
               variant="permanent"
-              anchor="left" >
+              anchor="left"
+             >
               <div />
               <br/><br/><br/><br/>
               <Typography 
@@ -181,6 +199,7 @@ export default class SideBar extends Component {
               <List>
                   <Button onClick={this.handleRequest_password}>
                       Change Password
+                    
                   </Button>
                   <br/>
                   <Button onClick={this.handleRequest_email}>
@@ -210,6 +229,7 @@ export default class SideBar extends Component {
               <Divider/>
             </Drawer>
           </div>
+          </ThemeProvider>
         );
     }
 }

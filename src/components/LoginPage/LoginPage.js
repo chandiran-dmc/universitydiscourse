@@ -74,8 +74,8 @@ export default class LoginPage extends Component {
             this.setState({redirect1: true});
         })
         .catch((error) => {
-            console.error(error);
-            alert('Login Failed');
+            console.error(error.response.data.error);
+            alert(error.response.data.error);
         });
         
     }    
@@ -94,10 +94,6 @@ export default class LoginPage extends Component {
             this.setState({redirect1: true});
         }
         if (this.state.redirect1 === true) {
-
-            console.log("HELLOOOOOOOOO");
-            
-            
     
             return <Redirect exact from="/lp" push to={{
                 pathname: "/mp",
@@ -105,14 +101,8 @@ export default class LoginPage extends Component {
             }}/>;
         }
         if (this.state.redirect2 === true) {
-
-            console.log("HELLOOOOOOOOO");
-            
-            
-    
             return <Redirect exact from="/lp" push to={{
                 pathname: "/sendlink",
-                
             }}/>;
         }
 
@@ -132,14 +122,14 @@ export default class LoginPage extends Component {
                     
                     
                         <div class="grid-container1" >
-                        <div class="grid-item">
+                        <div class="grid-item1">
                             <img 
                                 className="LoginLogo"
                                 src={logo}
                                 alt="logo" /> 
                             <br />
                         </div>
-                        <div class="grid-item">
+                        <div class="grid-item2">
                             <img 
                                 className="LogoName2"
                                 src={logoName}
@@ -147,6 +137,7 @@ export default class LoginPage extends Component {
                         </div>
                         </div>
                     
+                    <div class ="gridcontainerfinal">
                         <h1 className="LoginText">Login</h1>
                         <div class="grid-container2" >
                             <div class="grid-item">
@@ -178,7 +169,7 @@ export default class LoginPage extends Component {
                             <form onSubmit={this.onSubmit1}>
                                 <ThemeProvider theme={theme}>
                                 <Button 
-                                    className  = "LOGINButton" 
+                                    className  = "LOGINButtonTwo" 
                                     variant = "contained"
                                     color = "primary" 
                                     type = "submit"
@@ -193,7 +184,7 @@ export default class LoginPage extends Component {
                             <form onSubmit={this.onSubmit2}>
                                 <ThemeProvider theme={theme}>
                                 <Button 
-                                    className  = "LOGINButton" 
+                                    className  = "LOGINButtonTwo" 
                                     variant = "contained"
                                     color = "primary" 
                                     type = "submit"
@@ -203,6 +194,7 @@ export default class LoginPage extends Component {
                                 </ThemeProvider>
                             </form>
                             </div>
+                        </div>
                         </div>
                 </div>
             </div>
