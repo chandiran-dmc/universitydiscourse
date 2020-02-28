@@ -16,6 +16,7 @@ import TopBar from '../TopBar';
 //import Footer from '../Footer';
 import ActionBar from './ActionBar';
 import Post from './../Post';
+import SideBar from '../SideBar';
 import FollowingTags from './FollowingTags';
 import { Grid, createMuiTheme } from '@material-ui/core';
 import './MainFeedPage.css';
@@ -122,6 +123,8 @@ export default class MainFeedPage extends Component {
     render() {
         return (
             <div className="MainFeedPage">
+
+                <SideBar />
 
                 <Grid 
                     container
