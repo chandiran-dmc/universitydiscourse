@@ -11,6 +11,7 @@ import ChangeEmail from './components/ChangeEmail'
 import ChangePassword from './components/ChangePassword'
 import RecoverPassword from './components/RecoverPassword'
 import RegisterPage from './components/RegisterPage'
+import SendLink from './components/SendLink'
 import MainFeedPage from './components/MainFeedPage';
 import EntryPage from './components/EntryPage/EntryPage';
 
@@ -21,9 +22,10 @@ export default function App() {
         <Switch>
         
           <Route path="/lp" component = {LoginPage} />
+          <Route path="/recp" component = {RecoverPassword} />
           <Route path="/rp" component = {RegisterPage} />
 
-          <Route exact path="/" component = {RecoverPassword} />
+          <Route exact path="/" component = {SendLink} />
           
 
         </Switch>

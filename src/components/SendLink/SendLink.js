@@ -16,7 +16,7 @@ import TopBar from '../TopBar/TopBar';
 import Footer from '../Footer/Footer';
 import logo from '../../images/image1.png';
 import logoName from '../../images/ImageName.png';
-import './RecoverPassword.css'
+import './SendLink.css'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
@@ -34,18 +34,16 @@ const theme = createMuiTheme ({
     }
 
 });
-export default class RecoverPassword extends Component {
+export default class SendLink extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
             email : '',
-    
-           newpassword: '',
+       
           redirect: false,
         };
-        this.handleEmailChange = this.handleChange.bind(this, 'email');
-        this.handleNewPasswordChange = this.handleChange.bind(this, 'newpassword');
+         this.handleEmailChange = this.handleChange.bind(this, 'email');
         
     }
 
@@ -56,15 +54,14 @@ export default class RecoverPassword extends Component {
     }
 
     onSubmit = (event) => {
-          event.preventDefault();
+         event.preventDefault();
          alert('Change coming soon!');
         axios({
             method: 'post',
-            url: 'http://localhost:3001/api/recoverpassword',
+            url: 'http://localhost:3001/api/recover',
             data: {
-                email: this.state.email,
+                email: this.state.email
                 
-                newpassword: this.state.newpassword,
             }
         })
         .then((response) => {
@@ -105,7 +102,7 @@ export default class RecoverPassword extends Component {
                    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
                    <meta name="HandheldFriendly" content="true" />
                 </head>
-                <div className="LoginPage">
+                <div className="SendLink">
                 
                     
                     
@@ -125,8 +122,8 @@ export default class RecoverPassword extends Component {
                         </div>
                         </div>
                     
-                        <h1 className="RecoverPasswordText">Recover Password</h1>
-                        <div class="grid-containerRecover" >
+                        <h1 className="ChangeEmailText">Enter Email</h1>
+                        <div class="grid-containerChange" >
                             <div class="grid-item">
                                 <TextField
                                     required
@@ -139,32 +136,18 @@ export default class RecoverPassword extends Component {
                                      />
                             </div>
                             <br />
-                            <div class="grid-item">
+                            {/* <div class="grid-item">
                                 <TextField
-                                     id="filled-password-input"
-                                     label="New-Password"
-                                     name = "newpassword"
-                                    //  value={this.state.oldpassword}
-                                    //  onChange={this.handleOldPasswordChange}
-                                     type="password"
-                                     autoComplete="current-password"
-                                     variant="filled" 
-                                     />
-                            </div>
-                            <br />
-                            <div class="grid-item">
-                                <TextField
-                                  id="filled-password-input"
-                                  label="Confirm-New-Password"
-                                  name = "confirmnewpassword"
-                                  value={this.state.newpassword}
-                                  onChange={this.handleNewPasswordChange}
-                                  type="password"
-                                  autoComplete="current-password"
-                                  variant="filled" 
+                                   required
+                                   id="filled-required"
+                                   label="New-email"
+                                   variant="filled"
+                                   name = "email"
+                                   value={this.state.newemail}
+                                   onChange={this.handleNewEmailChange} 
                                    />
-                            </div>
-                            <br />
+                            </div> */}
+                            
                             <div class="grid-item">
                             <form onSubmit={this.onSubmit}>
                                 <ThemeProvider theme={theme}>
@@ -174,7 +157,7 @@ export default class RecoverPassword extends Component {
                                     color = "primary" 
                                     type = "submit"
                                     >
-                                    Done
+                                    Send Link
                                 </Button> 
                                 </ThemeProvider>
                             </form>
