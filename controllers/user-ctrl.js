@@ -33,7 +33,7 @@ AuthenticateUser = (req, res) => {
                 }
                 else {
                     return res
-                    .json({ success: false, error: `Password was correct` })
+                    .json({ success: true, error: `Password was correct` })
                 }
             })                         
         }
@@ -81,6 +81,36 @@ RecoveryEmail = (req, res) => {
     })
 
 };
+
+// CheckEmail = (req, res) => {
+//     const body = req.body
+//     const { email } = body;
+
+//     if (!body) {
+//         return res.status(400).json({
+//             success: false,
+//             error: 'You must provide an email, oldpassword and newpassword',
+//         })
+//     }
+
+//     User.findOne({ email }, (err, user) => {
+//         if (err) {
+//             return res.status(400).json({ success: false, error: err })
+//         }
+
+//         if (!user) {
+//             return res
+//                 .status(404)
+//                 .json({ success: false, error: `User not found` })
+//         } else {            
+//             return res.status(200).json({
+//                 success: true,
+//                 message: 'Email exists!',
+//             })                        
+//         }
+//     }).catch(err => console.log(err))
+// };
+
 
 ChangeEmail = (req, res) => {
     const body = req.body
@@ -308,5 +338,8 @@ module.exports = {
     ChangePassword,
     DeleteUser,
     RecoveryEmail,
-    RecoverPassword
+    RecoverPassword,
+    getIndexPage: (req, res) => {
+        res.send("Hey");
+    }
 }

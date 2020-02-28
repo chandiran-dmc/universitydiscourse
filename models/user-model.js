@@ -10,7 +10,7 @@ const User = new Schema(
         password: { type: String, required: true},
 
     },
-    { timestamps: true },
+    { timestamps: true }
 )
 
 User.pre('save', function(next) {
@@ -43,4 +43,4 @@ User.methods.isCorrectPassword = function(password, callback){
   });
 }
 
-module.exports = mongoose.model('user', User)
+module.exports = mongoose.model('rewati', User)
