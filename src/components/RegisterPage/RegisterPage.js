@@ -58,7 +58,7 @@ export default class RegisterPage extends Component {
         alert('Authentication coming soon!');
         axios({
             method: 'post',
-            url: 'http://localhost:3000/api/register',
+            url: 'http://localhost:3000/api-user/register',
             data: {
                 email: this.state.email,
                 username: this.state.username,
@@ -81,13 +81,13 @@ export default class RegisterPage extends Component {
     render() {
 
         if (this.state.redirect === true) {
-            return <Redirect exact from="/rp" push to={{
+            return <Redirect from="/rp" push to={{
                 pathname: "/mp",
                 state: {type: this.state.type}
             }}/>;
         }
         return (
-            <form oenSubmit={this.onSubmit}>
+            <form onSubmit={this.onSubmit}>
             <div>
                 <TopBar />
                 <Footer />

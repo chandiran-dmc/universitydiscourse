@@ -1,9 +1,9 @@
-<<<<<<< HEAD
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors');
 const db = require('./db')
 const postRouter = require('./routes/post-router')
+const userRouter = require('./routes/user-router')
 
 const app = express()
 const apiPort = 3000
@@ -19,53 +19,8 @@ app.get('/', (req, res) => {
 })
 
 app.use('/api', postRouter)
+app.use('/api-user', userRouter);
 
 app.listen(apiPort, () => {
     console.log(`Server running on port ${apiPort}`)
 });
-=======
-import React, { Component } from 'react';
-export default class Login extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      email : '',
-      password: ''
-    };
-  }
-  handleInputChange = (event) => {
-    const { value, name } = event.target;
-    this.setState({
-      [name]: value
-    });
-  }
-  onSubmit = (event) => {
-    event.preventDefault();
-    alert('Authentication coming soon!');
-  }
-  render() {
-    return (
-      <form onSubmit={this.onSubmit}>
-        <h1>Login Below!</h1>
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter email"
-          value={this.state.email}
-          onChange={this.handleInputChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Enter password"
-          value={this.state.password}
-          onChange={this.handleInputChange}
-          required
-        />
-       <input type="submit" value="Submit"/>
-      </form>
-    );
-  }
-}
->>>>>>> eaa73b1ad11530f5455609d078986664bcd3eafe

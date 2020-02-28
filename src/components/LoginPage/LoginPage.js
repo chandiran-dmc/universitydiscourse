@@ -62,7 +62,7 @@ export default class LoginPage extends Component {
         alert('Authentication coming soon!');
         axios({
             method: 'post',
-            url: 'http://localhost:3001/api/authenticate',
+            url: 'http://localhost:3000/api-user/authenticate',
             data: {
                 email: this.state.email,
                 password: this.state.password

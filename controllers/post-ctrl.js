@@ -139,6 +139,7 @@ getMovieById = async (req, res) => {
 }
 
 getPosts = async (req, res) => {
+
     await Post.find({}, (err, posts) => {
         // error handling
         if (err) {

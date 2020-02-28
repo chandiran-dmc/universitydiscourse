@@ -60,7 +60,7 @@ export default class RecoverPassword extends Component {
          alert('Change coming soon!');
         axios({
             method: 'post',
-            url: 'http://localhost:3001/api/recoverpassword',
+            url: 'http://localhost:3000/api-user/recoverpassword',
             data: {
                 email: this.state.email,
                 

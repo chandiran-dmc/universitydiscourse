@@ -230,6 +230,9 @@ RegisterUser = (req, res) => {
 
     const user = new User(body)
 
+    console.log('asdfasdfasdfasdfasdf');
+    console.log(User.collection);
+
     if (!user) {
         return res.status(400).json({ success: false, error: err })
     }
@@ -300,6 +303,43 @@ DeleteUser = (req, res) => {
     }).catch(err => console.log(err))
 };
 
+FindUser = (req, res) => {
+    const body = req.body
+    const { email, username, password } = body;
+
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide an email and a password',
+        })
+    }
+
+    User.findOne({ email }, (err, user) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        if (!user) {
+            return res
+                .status(404)
+                .json({ success: false, error: `User not found` })
+        } else {            
+            User.findOne({ email }, (err, user) => {
+                if (err) {
+                    return res.status(400).json({ success: false, error: err })
+                }                
+                if (!user) {
+                    return res
+                        .status(404)
+                        .json({ success: false, error: `User not found` })
+                } else {                            
+                    return res.status(200).json({ success: true, data: user })
+                }                        
+            })                         
+        }
+    }).catch(err => console.log(err))
+};
+
 
 module.exports = {
     RegisterUser,
@@ -308,5 +348,6 @@ module.exports = {
     ChangePassword,
     DeleteUser,
     RecoveryEmail,
-    RecoverPassword
+    RecoverPassword,
+    FindUser
 }

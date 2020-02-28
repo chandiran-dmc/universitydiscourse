@@ -38,21 +38,21 @@ export default class SideBar extends Component {
     handleRequest_password = () => {
         this.setState({
             isRedirect: true,
-            to: "changepassword"
+            to: "/changepassword"
         });
     }
     
     handleRequest_email = () => {
         this.setState({
             isRedirect: true,
-            to: "changeemail"
+            to: "/changeemail"
         });
     }
     
     handleRequest_logout = () => {
 
         // Clear local storage
-        localStorage.removeItem("username");
+        localStorage.removeItem("email");
 
         this.setState({
             isRedirect: true,
@@ -78,8 +78,8 @@ export default class SideBar extends Component {
 
             console.log("SideBar >> redirecting to : " + this.state.to);
 
-            return <Redirect exact from="/" push to={{
-                pathname: "/" + this.state.to,
+            return <Redirect exact from="/mp" push to={{
+                pathname: this.state.to,
                 state: { type: this.state.to }
             }}/>;
         }

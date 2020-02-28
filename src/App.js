@@ -25,7 +25,7 @@ export default function App() {
           <Route path="/lp" component = {LoginPage} />
           <Route path="/recp" component = {RecoverPassword} />
           <Route path="/rp" component={RegisterPage} />
-          <Route path="/mp" component={MainFeedPage}/>
+          <Route exact path="/mp" component={MainFeedPage}/>
           <Route exact path="/" component = {EntryPage} />
           <Route exact path="/sendlink" component={SendLink} />
           <Route exact path="/changeemail" component={ChangeEmail} />

@@ -44,7 +44,7 @@ export default class MainFeedPage extends Component {
      * Get all the posts from hot section and filter by
      * the tags the user follows
      */
-    getPosts = () => {
+    getPosts = async () => {
 
       // TODO: request the database for the hot posts
       let posts = []
@@ -84,6 +84,26 @@ export default class MainFeedPage extends Component {
           console.error(error);
           alert('An error occurred');
       });
+
+    await axios({
+        method: 'post',
+        url: 'http://localhost:3000/api-user/getuser',
+        data: {
+            email: localStorage.getItem("email")
+        }
+    })
+    .then((response) => {
+        let username = response.data.data.username;
+        console.log(username);
+        localStorage.setItem('username', username);
+
+        // TODO: Get user data from local file
+        
+    })
+    .catch((error) => {
+        console.error(error);
+        alert('An error occurred');
+    });
     }
 
 

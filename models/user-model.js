@@ -1,16 +1,20 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
-const Schema = mongoose.Schema
+const Schema = mongoose.Schema;
 
 const User = new Schema(
     {
         email: { type: String, required: true, unique: true },
         username: {type: String, required: true, unique: true },
         password: { type: String, required: true},
-
     },
-    { timestamps: true },
+    { 
+      timestamps: true 
+    },
+    {
+      collection: 'user'
+    }
 )
 
 User.pre('save', function(next) {
@@ -43,4 +47,4 @@ User.methods.isCorrectPassword = function(password, callback){
   });
 }
 
-module.exports = mongoose.model('user', User)
+module.exports = mongoose.model('user', User, 'user')

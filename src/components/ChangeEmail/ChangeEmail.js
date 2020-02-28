@@ -58,7 +58,7 @@ export default class ChangeEmail extends Component {
          alert('Change coming soon!');
         axios({
             method: 'post',
-            url: 'http://localhost:3001/api/changeemail',
+            url: 'http://localhost:3000/api-user/changeemail',
             data: {
                 email: this.state.oldemail,
                 newemail: this.state.newemail
@@ -80,10 +80,9 @@ export default class ChangeEmail extends Component {
 
     render() {
         if (this.state.redirect === true) {
-
-            console.log("HELLOOOOOOOOO");
             
-            
+            // Clear local storage
+            localStorage.removeItem("email");
     
             return <Redirect exact from="/" push to={{
                 pathname: "/lp",

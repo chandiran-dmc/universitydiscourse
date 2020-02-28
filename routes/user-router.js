@@ -11,5 +11,6 @@ router.post('/changeemail', UserCtrl.ChangeEmail)
 router.post('/deleteuser', UserCtrl.DeleteUser)
 router.post('/recover', UserCtrl.RecoveryEmail)
 router.post('/recoverpassword', UserCtrl.RecoverPassword)
+router.post('/getuser', UserCtrl.FindUser)
 
 module.exports = router
