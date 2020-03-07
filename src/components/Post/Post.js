@@ -23,12 +23,26 @@ export default class Post extends Component {
 
     constructor(props) {
         super(props);
+
+        // button tags
+        let tags = [];
+        props.data.tag.forEach(tag => {
+            tags.push(
+                <Button
+                    onClick={() => {this.tagOnClick(tag)}}
+                    disableElevation
+                    size="small">
+                    #{tag}
+                </Button>
+            );
+        });
+
         this.state = {
             title: props.data.title,
             content: props.data.content,
             user: props.data.user,
             time: props.data.time,
-            tags: props.data.tag,
+            tags: tags,
             comments: props.data.comments,
             type: props.data.type,
             count: props.data.count,
@@ -36,6 +50,26 @@ export default class Post extends Component {
             isEditPost: false,
             mode: ""
         };       
+    }
+
+    tagOnClick = (tag) => {
+        if (window.confirm(`Would you like to follow ${tag}?`)) {
+            let tags = [];
+            if (localStorage.getItem("tags") != null) {
+                tags = localStorage.getItem("tags").split(",");
+            }
+            // update local storage
+            // check for duplicates
+            if (tags.includes(tag)) {
+                alert(`Tag ${tag} is already being followed.`);
+            } else {
+                tags.push(tag);
+            }
+            localStorage.setItem("tags", tags.toString());
+
+            // update database
+            // TODO:
+        }
     }
 
     handleRedirect = (editPost) => {
@@ -72,8 +106,8 @@ export default class Post extends Component {
         return content;
     }
 
-
     render() {
+
         if (this.state.isEditPost === true) {
 
             return <Redirect exact from="/" push to={{
@@ -90,7 +124,9 @@ export default class Post extends Component {
                     mode: this.state.mode
                 }
             }}/>;
+
         }
+
 
         return (
             <ThemeProvider theme={this.state.theme} >     
@@ -174,7 +210,7 @@ export default class Post extends Component {
                         </Grid>
                         <Grid>
                             <Typography variant="inherit">
-                                #{this.state.tags.toString()}
+                                {this.state.tags}
                             </Typography>
                         </Grid>
                     </Grid>
