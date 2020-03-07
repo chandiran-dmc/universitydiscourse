@@ -59,7 +59,7 @@ export default class Post extends Component {
                 tags = localStorage.getItem("tags").split(",");
             }
             // update local storage
-            // check for duplicates
+            // handling duplicate tags
             if (tags.includes(tag)) {
                 alert(`Tag ${tag} is already being followed.`);
             } else {
