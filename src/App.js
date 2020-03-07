@@ -13,6 +13,7 @@ import RegisterPage from './components/RegisterPage'
 import SendLink from './components/SendLink'
 import MainFeedPage from './components/MainFeedPage';
 import EntryPage from './components/EntryPage/EntryPage';
+import DropDown from './components/DropDown';
 
 export default function App() {
     return (
@@ -26,7 +27,7 @@ export default function App() {
           <Route path="/recp" component = {RecoverPassword} />
           <Route path="/rp" component={RegisterPage} />
           <Route exact path="/mp" component={MainFeedPage}/>
-          <Route exact path="/" component = {EntryPage} />
+          <Route exact path="/" component = {DropDown} />
           <Route exact path="/sendlink" component={SendLink} />
           <Route exact path="/changeemail" component={ChangeEmail} />
           <Route exact path="/changepassword" component={ChangePassword} />
