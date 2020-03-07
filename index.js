@@ -6,6 +6,7 @@ const postRouter = require('./routes/post-router')
 const userRouter = require('./routes/user-router')
 
 const app = express()
+const PORT = 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
@@ -19,6 +20,6 @@ app.get('/', (req, res) => {
 
 app.use('/api', postRouter)
 app.use('/api-user', userRouter);
-app.listen(process.env.PORT, () => {
-    console.log(`Server running on port ${process.env.PORT}`)
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
 });
