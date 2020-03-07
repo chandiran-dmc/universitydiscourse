@@ -359,7 +359,7 @@ FindUser = (req, res) => {
 
 UpdateUserTags = (req, res) => {
     const body = req.body
-    const { email } = body;
+    const { email, newtags } = body;
 
     if (!body) {
         return res.status(400).json({
@@ -379,18 +379,21 @@ UpdateUserTags = (req, res) => {
                 .status(404)
                 .json({ success: false, error: `User not found` });
         } else {            
-            User.updateOne({email}, (err, user) => {
-                if (err) {
-                    return res.status(400).json({ success: false, error: err });
-                }                
-                if (!user) {
-                    return res
-                        .status(404)
-                        .json({ success: false, error: `User not found` })
-                } else {                            
-                    return res.status(200).json({ success: true, data: user })
-                }                        
-            });                   
+            user.tags = newtags;
+            user
+            .save()    
+            .then(() => {
+                return res.status(200).json({
+                    success: true,
+                    message: 'Tags updated!',
+                })
+            })
+            .catch(error => {
+                return res.status(404).json({
+                    error,
+                    message: 'Tags not updated!',
+                })
+            });
         }
     }).catch(err => console.log(err))
 };
