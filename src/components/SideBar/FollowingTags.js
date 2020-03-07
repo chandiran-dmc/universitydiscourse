@@ -4,7 +4,7 @@
  */
 
 import React, { Component } from 'react';
-import { Grid, IconButton, createMuiTheme, ThemeProvider, Typography, Box } from '@material-ui/core';
+import { Grid, IconButton, createMuiTheme, ThemeProvider, Typography } from '@material-ui/core';
 import MenuIcon from '../../customeIcons/menuIcon';
 
 
@@ -72,16 +72,7 @@ export default class FollowingTags extends Component {
                     direction="column"
                     justify="center"
                     alignItems="flex-end" >
-                    <Box 
-                        boxShadow={2}
-                        margin={1}
-                        padding={2}
-                        bgcolor="primary.main" >
-                        <Typography variant="h6">
-                            Following Tags
-                        </Typography>
-                        {this.renderTags()}
-                    </Box>
+                    {this.renderTags()}
                 </Grid>
             </ThemeProvider>
         )

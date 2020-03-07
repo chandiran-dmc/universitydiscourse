@@ -39,17 +39,17 @@ export default class Post extends Component {
     }
 
     handleRedirect = (editPost) => {
-        // if(this.state.user === localStorage.getItem("username")) {
+        if(this.state.user === localStorage.getItem("username")) {
 
             this.setState({
                 mode: editPost,
                 isEditPost: true
             });
 
-        // }
-        // else {
-        //     alert('You can not edit this post');
-        // }
+        }
+        else {
+            alert('You can not edit this post');
+        }
     }
 
     renderContent = () => {
@@ -62,7 +62,7 @@ export default class Post extends Component {
                 break;
         
             case "image":
-                content = <img src={this.state.content} alt={this.state.title} width="600"/>
+                content = <img src={this.state.content} alt={"The Image URL is invalid"} width="600"/>
                 break;
 
             default:

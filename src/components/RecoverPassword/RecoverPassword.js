@@ -16,7 +16,7 @@ import TopBar from '../TopBar/TopBar';
 import Footer from '../Footer/Footer';
 import logo from '../../images/image1.png';
 import logoName from '../../images/ImageName.png';
-import './LoginPage.css'
+import './RecoverPassword.css'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
@@ -34,79 +34,86 @@ const theme = createMuiTheme ({
     }
 
 });
-export default class LoginPage extends Component {
+export default class RecoverPassword extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-          email : '',
-          password: '',
-          redirect1: false,
-          redirect2: false,
-          formErrors: {email: '', password: ''},
-          emailValid: false,
-          passwordValid: false,
-          formValid: false
+            email : '',
+            newpassword: '',
+            repeat: '',
+            redirect: false,
+            correctemail: window.location.href.substr( window.location.href.indexOf("=") + 1)
         };
+
         this.handleEmailChange = this.handleChange.bind(this, 'email');
-        this.handlePasswordChange = this.handleChange.bind(this, 'password');
+        this.handleNewPasswordChange = this.handleChange.bind(this, 'newpassword');
+        this.handleRepeatChange = this.handleChange.bind(this, 'repeat');
     }
 
-      
-
+    
     handleChange(keyName, e) {
         this.setState({ [keyName]: e.target.value });
     }
 
-    onSubmit1 = (event) => {
+    onSubmit = (event) => {
         event.preventDefault();
+
+
+        // Check for email and password format
+        if (!this.state.email.match(/[a-zA-Z0-9]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+/g)) {
+            alert('Email format not correct');
+            return;
+        }
+
+        if (this.state.email !== this.state.correctemail) {
+            alert('You cannot change others\' password');
+            return;
+        }
+
+        if (this.state.newpassword.length < 8 || !this.state.newpassword.match(/[0-9]/g)) {
+            alert('Password format not correct');
+            return;
+        }
+
+        if (this.state.newpassword !== this.state.repeat) {
+            alert('New password and confirm password does not match');
+            return;
+        }
+
         axios({
             method: 'post',
-            url: 'http://localhost:3000/api-user/authenticate',
+            url: 'http://localhost:3000/api-user/recoverpassword',
             data: {
                 email: this.state.email,
-                password: this.state.password
+                newpassword: this.state.newpassword,
             }
         })
         .then((response) => {
             console.log(response);
-            localStorage.setItem('email', this.state.email);
-            this.setState({redirect1: true});
+            alert('Password successfully reset');
+
+            this.setState({redirect: true});
         })
         .catch((error) => {
-            console.error(error.response.data.error);
             alert(error.response.data.error);
         });
-        
     }    
-
-    onSubmit2 = (event) => {
-        this.setState({redirect2: true});
-    }
-
-    onClickCreate() {
-        alert('hi');
-    }
 
     render() {
         let email2 = localStorage.getItem('email');
         if (email2) {
-            this.setState({redirect1: true});
+            this.setState({redirect: true});
         }
-        if (this.state.redirect1 === true) {
-    
-            return <Redirect exact from="/lp" push to={{
-                pathname: "/mp",
+        if (this.state.redirect === true) {
+
+            return <Redirect exact from="/recp" push to={{
+                pathname: "/lp",
                 state: { type: this.state.type }
             }}/>;
         }
-        if (this.state.redirect2 === true) {
-            return <Redirect exact from="/lp" push to={{
-                pathname: "/sendlink",
-            }}/>;
-        }
-
         return (
+           
             <div>
                 
                 <Footer />
@@ -137,9 +144,9 @@ export default class LoginPage extends Component {
                         </div>
                         </div>
                     
-                    <div class ="gridcontainerfinal">
-                        <h1 className="LoginText">Login</h1>
-                        <div class="grid-container2" >
+                        <div className="gridcontainerfinal5" >
+                        <h1 className="RecoverPasswordText">Recover Password</h1>
+                        <div class="grid-containerRecover" >
                             <div class="grid-item">
                                 <TextField
                                     required
@@ -154,42 +161,40 @@ export default class LoginPage extends Component {
                             <br />
                             <div class="grid-item">
                                 <TextField
-                                    required
                                     id="filled-password-input"
-                                    label="Password"
-                                    name = "Password"
-                                    value={this.state.password}
-                                    onChange={this.handlePasswordChange}
+                                    label="New-Password"
+                                    name = "newpassword"
+                                    value={this.state.repeat}
+                                    onChange={this.handleRepeatChange}
                                     type="password"
                                     autoComplete="current-password"
-                                    variant="filled" />
+                                    variant="filled" 
+                                     />
                             </div>
                             <br />
                             <div class="grid-item">
-                            <form onSubmit={this.onSubmit1}>
+                                <TextField
+                                  id="filled-password-input"
+                                  label="Confirm-New-Password"
+                                  name = "confirmnewpassword"
+                                  value={this.state.newpassword}
+                                  onChange={this.handleNewPasswordChange}
+                                  type="password"
+                                  autoComplete="current-password"
+                                  variant="filled" 
+                                   />
+                            </div>
+                            <br />
+                            <div class="grid-item">
+                            <form onSubmit={this.onSubmit}>
                                 <ThemeProvider theme={theme}>
                                 <Button 
-                                    className  = "LOGINButtonTwo" 
+                                    className  = "Done" 
                                     variant = "contained"
                                     color = "primary" 
                                     type = "submit"
                                     >
-                                    Log In
-                                </Button> 
-                                </ThemeProvider>
-                            </form>
-                            </div>
-                            <br />
-                            <div class="grid-item">
-                            <form onSubmit={this.onSubmit2}>
-                                <ThemeProvider theme={theme}>
-                                <Button 
-                                    className  = "LOGINButtonTwo" 
-                                    variant = "contained"
-                                    color = "primary" 
-                                    type = "submit"
-                                    >
-                                    RESET PASSWORD
+                                    Done
                                 </Button> 
                                 </ThemeProvider>
                             </form>
@@ -198,6 +203,7 @@ export default class LoginPage extends Component {
                         </div>
                 </div>
             </div>
+            
         );
     }
 }

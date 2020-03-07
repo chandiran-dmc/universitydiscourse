@@ -11,7 +11,10 @@ const Post = new Schema(
         comments: { type: [String], required: true },
         content: { type: String, required: true },
         time: { type: Number, required: true }
+    },
+    {
+        collection: 'posts'
     }
 );
 
-module.exports = mongoose.model('post', Post);
+module.exports = mongoose.model('post', Post, 'posts');

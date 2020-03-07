@@ -1,38 +1,53 @@
 /* Give a certain amount of margin to the top due to fixed top bar */
-.MainFeedPage {
+/* .MainFeedPage {
     margin-top: 10%;
-}
+} */
 
-.LoginText {
-    margin-top: 10%;
-    color: #F2B705;
-}
+
 
 .LoginLogo {
     
-    max-width: 20%;
+    max-width: 10%;
     height: auto;
+    padding-left: 680px;
+    padding-top: 25px;
+
+}
+.LogoName2 {
+    max-width: 30%;
+    padding-left: 560px;
 
 }
 
-.Form {
+/* .Form {
     margin-left: 45%;
     
     margin-top: 10%;
+} */
+.RegisterText {
+    padding-left: 690px;
+    color: #F2B705;
+}
+.grid-item1 {
+    padding-left: 176px;
 }
 
-.NEXTButton {
-    background-color: #F2B705;
-    width: 110px;
+.grid-item2 {
+    padding-left: 110px;
 }
 
 
+.NEXT {
+    width: 225px;
+    padding-left: 500px;
+}
+.gridcontainerfinal {
+    padding-left: 200px;
 
+}
 
-
-
-
-
-
-
-
+.grid-container2R {
+    padding-left: 650px;
+   grid-column-gap: 50px;
+    padding-bottom: 500px;  
+}

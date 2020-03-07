@@ -30,7 +30,7 @@ export default class Footer extends Component {
                         alt="logoName"
                 />
                 <div
-                       className="lowerFooter"
+                       className="lowerFooter2"
                 />
                 <p className="Info">
                     University discourse intends to assists students
@@ -43,10 +43,7 @@ export default class Footer extends Component {
                 </p>
                 <p className="Info3">
                     Explore Links 
-                </p>
-                
-                        
-                
+                </p>            
 
             </div>
         )

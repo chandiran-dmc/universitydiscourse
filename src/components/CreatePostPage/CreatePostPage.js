@@ -94,14 +94,14 @@ export default class CreatePostPage extends Component {
         event.preventDefault();
 
         // Check if input is empty
-        if (this.state.tags.length === 0) {
-            alert('Tags cannot be empty');
-            return;
-        } else if (this.state.title.length === 0 ) {
+        if (this.state.title.length === 0 ) {
             alert('Title cannot be empty');
             return;
         } else if (this.state.content.length === 0) {
             alert('Content cannot be empty');
+            return;
+        } else if (this.state.tags.length === 0 || this.state.tags[0] === "") {
+            alert('Tags cannot be empty');
             return;
         }
 
@@ -158,17 +158,17 @@ export default class CreatePostPage extends Component {
         event.preventDefault();
 
         // Check if input is empty
-        if (this.state.tags.length === 0) {
-            alert('Tags cannot be empty');
-            return;
-        } else if (this.state.title.length === 0 ) {
+        if (this.state.title.length === 0 ) {
             alert('Title cannot be empty');
             return;
         } else if (this.state.content.length === 0) {
             alert('Content cannot be empty');
             return;
+        } else if (this.state.tags.length === 0 || this.state.tags[0] === "") {
+            alert('Tags cannot be empty');
+            return;
         }
-        
+
         let username = localStorage.getItem("username");
         if (!username) {
             username = "johndoe";
@@ -302,7 +302,7 @@ export default class CreatePostPage extends Component {
                                         Tags
                                     </h3>
                                     <br />
-                                    <TextField id="filled-basic" label="Tags" variant="filled" onChange={this.handleChangeTags}/>
+                                    <TextField id="filled-basic" label="Tags" variant="filled" onChange={this.handleChangeTags} defaultValue={this.state.tags.toString()} />
                                     <Grid
                                         container
                                         direction="row"
@@ -332,7 +332,7 @@ export default class CreatePostPage extends Component {
 
         if (this.state.isRedirect) {
             return <Redirect exact from="/createpost" push to={{
-                pathname: "/"
+                pathname: "/mp"
             }}/>;
         }
 

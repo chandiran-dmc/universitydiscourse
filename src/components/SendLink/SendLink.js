@@ -16,7 +16,7 @@ import TopBar from '../TopBar/TopBar';
 import Footer from '../Footer/Footer';
 import logo from '../../images/image1.png';
 import logoName from '../../images/ImageName.png';
-import './LoginPage.css'
+import './SendLink.css'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
@@ -34,22 +34,17 @@ const theme = createMuiTheme ({
     }
 
 });
-export default class LoginPage extends Component {
+export default class SendLink extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-          email : '',
-          password: '',
-          redirect1: false,
-          redirect2: false,
-          formErrors: {email: '', password: ''},
-          emailValid: false,
-          passwordValid: false,
-          formValid: false
+            email : '',
+       
+          redirect: false,
         };
-        this.handleEmailChange = this.handleChange.bind(this, 'email');
-        this.handlePasswordChange = this.handleChange.bind(this, 'password');
+         this.handleEmailChange = this.handleChange.bind(this, 'email');
+        
     }
 
       
@@ -58,55 +53,55 @@ export default class LoginPage extends Component {
         this.setState({ [keyName]: e.target.value });
     }
 
-    onSubmit1 = (event) => {
+    onSubmit = (event) => {
         event.preventDefault();
+        
+        // Check for email and password format
+        if (!this.state.email.match(/[a-zA-Z0-9]+@[a-zA-Z0-9]+.[a-zA-Z0-9]+/g)) {
+            alert('Email format not correct');
+            return;
+        }
+
         axios({
             method: 'post',
-            url: 'http://localhost:3000/api-user/authenticate',
+            url: 'http://localhost:3000/api-user/recover',
             data: {
-                email: this.state.email,
-                password: this.state.password
+                email: this.state.email
             }
         })
         .then((response) => {
-            console.log(response);
-            localStorage.setItem('email', this.state.email);
-            this.setState({redirect1: true});
+            alert('Please check your email inbox for reset link');
+
+            this.setState({redirect: true});
         })
         .catch((error) => {
-            console.error(error.response.data.error);
-            alert(error.response.data.error);
+
+            // Check if the user exists
+            if (error.response.data.error) {
+                alert(error.response.data.error);
+            }
         });
         
     }    
 
-    onSubmit2 = (event) => {
-        this.setState({redirect2: true});
-    }
-
-    onClickCreate() {
-        alert('hi');
-    }
+    // onClickCreate() {
+    //     alert('hi');
+    // }
 
     render() {
-        let email2 = localStorage.getItem('email');
-        if (email2) {
-            this.setState({redirect1: true});
-        }
-        if (this.state.redirect1 === true) {
+        if (this.state.redirect === true) {
+
+            console.log("HELLOOOOOOOOO");
+            
+            
     
-            return <Redirect exact from="/lp" push to={{
-                pathname: "/mp",
+            return <Redirect exact from="/sendlink" push to={{
+                pathname: "/lp",
                 state: { type: this.state.type }
             }}/>;
         }
-        if (this.state.redirect2 === true) {
-            return <Redirect exact from="/lp" push to={{
-                pathname: "/sendlink",
-            }}/>;
-        }
-
         return (
+           
             <div>
                 
                 <Footer />
@@ -117,7 +112,7 @@ export default class LoginPage extends Component {
                    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
                    <meta name="HandheldFriendly" content="true" />
                 </head>
-                <div className="LoginPage">
+                <div className="SendLink">
                 
                     
                     
@@ -137,9 +132,9 @@ export default class LoginPage extends Component {
                         </div>
                         </div>
                     
-                    <div class ="gridcontainerfinal">
-                        <h1 className="LoginText">Login</h1>
-                        <div class="grid-container2" >
+                    <div className="gridcontainerfinal2">
+                        <h1 className="ChangeEmailText">Enter Email</h1>
+                        <div class="grid-containerChange" >
                             <div class="grid-item">
                                 <TextField
                                     required
@@ -152,44 +147,28 @@ export default class LoginPage extends Component {
                                      />
                             </div>
                             <br />
-                            <div class="grid-item">
+                            {/* <div class="grid-item">
                                 <TextField
-                                    required
-                                    id="filled-password-input"
-                                    label="Password"
-                                    name = "Password"
-                                    value={this.state.password}
-                                    onChange={this.handlePasswordChange}
-                                    type="password"
-                                    autoComplete="current-password"
-                                    variant="filled" />
-                            </div>
-                            <br />
+                                   required
+                                   id="filled-required"
+                                   label="New-email"
+                                   variant="filled"
+                                   name = "email"
+                                   value={this.state.newemail}
+                                   onChange={this.handleNewEmailChange} 
+                                   />
+                            </div> */}
+                            
                             <div class="grid-item">
-                            <form onSubmit={this.onSubmit1}>
+                            <form onSubmit={this.onSubmit}>
                                 <ThemeProvider theme={theme}>
                                 <Button 
-                                    className  = "LOGINButtonTwo" 
+                                    className  = "Done" 
                                     variant = "contained"
                                     color = "primary" 
                                     type = "submit"
                                     >
-                                    Log In
-                                </Button> 
-                                </ThemeProvider>
-                            </form>
-                            </div>
-                            <br />
-                            <div class="grid-item">
-                            <form onSubmit={this.onSubmit2}>
-                                <ThemeProvider theme={theme}>
-                                <Button 
-                                    className  = "LOGINButtonTwo" 
-                                    variant = "contained"
-                                    color = "primary" 
-                                    type = "submit"
-                                    >
-                                    RESET PASSWORD
+                                    Send Link
                                 </Button> 
                                 </ThemeProvider>
                             </form>
@@ -198,6 +177,7 @@ export default class LoginPage extends Component {
                         </div>
                 </div>
             </div>
+            
         );
     }
 }

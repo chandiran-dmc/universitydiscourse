@@ -32,6 +32,18 @@ img { max-width: 100%; height: auto; }
     margin-left: 100px;
     height: auto;
 } */
+.grid-item1 {
+    padding-left: 176px;
+}
+
+.grid-item2 {
+    padding-left: 110px;
+}
+.gridcontainerfinal2 {
+    padding-left: 160px;
+
+}
+
 
 .lowerFooter2 {
     bottom: 0;
@@ -42,13 +54,9 @@ img { max-width: 100%; height: auto; }
     overflow: auto;
     background-color: #023373;
 }
-.gridcontainerfinal {
-    padding-left: 200px;
 
-}
-
-.LoginText {
-    padding-left: 700px;
+.ChangeEmailText {
+    padding-left: 675px;
     padding-top: 5px;
     color: #F2B705;
 }
@@ -70,14 +78,16 @@ img { max-width: 100%; height: auto; }
     height: auto; */
 }
 
-.LOGINButtonTwo {
+.Done {
     
     width: 225px;
     padding-left: 500px;
 }
 
-.grid-container2 {
-    padding-left: 650px;
+
+
+.grid-containerChange {
+    padding-left: 670px;
     grid-column-gap: 50px;
 }
 
