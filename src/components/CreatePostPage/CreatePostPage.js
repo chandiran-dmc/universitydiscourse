@@ -18,10 +18,24 @@ import TopBar from '../TopBar/TopBar';
 import Footer from '../Footer/Footer';
 import './CreatePostPage.css'
 //import { positions, borderTop, borderBottom,borderLeft, borderRight } from '@material-ui/system';
-import { Button, Box, Grid, TextField } from '@material-ui/core';
+import { Button, Box, Grid, TextField, Chip} from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import { makeStyles } from '@material-ui/core/styles';
+import sample_user from '../../mock_data/user_data.json';
+import sample_tags from '../../mock_data/AllTags.json';
 const axios = require('axios');
+
+
+// const useStyles = makeStyles(theme => ({
+//     root: {
+//       width: 500,
+//       '& > * + *': {
+//         marginTop: theme.spacing(3),
+//       },
+//     },
+//   }));
 
 const theme = createMuiTheme({
     palette: {
@@ -41,6 +55,10 @@ const theme = createMuiTheme({
     }
 });
 
+//TODO: get the following tags from the database
+const top100Films = sample_user.tags
+
+
 
 export default class CreatePostPage extends Component {
 
@@ -56,7 +74,8 @@ export default class CreatePostPage extends Component {
             time: this.props.location.state.time,
             comments: this.props.location.state.comments,
             count: this.props.location.state.count,
-            isRedirect: false
+            isRedirect: false,
+            tagCheck: false
         };
 
         this.handleChangeContent = this.handleChangeContent.bind(this);
@@ -72,20 +91,44 @@ export default class CreatePostPage extends Component {
                 type: this.state.type,
                 title: this.state.title,
                 content: event.target.value,
-                tags: this.state.tags
-            }
+                tags: this.state.tags,
+                tagCheck: this.state.tagCheck
+               
+            },
+            () => {
+                // This will output an array of objects
+                // given by Autocompelte options property.
+                console.log(this.state.tags);
+              }
         );
     }
 
-    handleChangeTags(event) {
-        this.setState(
-            {
-                type:this.state.type,
-                title: this.state.title,
-                content: this.state.content,
-                tags: event.target.value.replace(" ", "").split(",")
-            }
-        );
+    handleChangeTags(event, values) {
+        console.log(event.target.value)
+        console.log(this.tagCheck)
+        
+        //TODO: if value exist in the database
+        let all =  [];
+        all = sample_tags.AllTag;
+        if(event.target.value === 0 || all.includes(event.target.value)) {
+            console.log(all)
+            this.setState(
+                {
+                    type:this.state.type,
+                    title: this.state.title,
+                    content: this.state.content,
+                    tags: values,
+                    tagCheck: true
+                }
+            );
+        }
+        else  {
+            console.log(event)
+            alert("Tag doesn't exist")
+        }
+        
+        
+        
     }
 
     handleCreatePost(event) {
@@ -94,16 +137,18 @@ export default class CreatePostPage extends Component {
         event.preventDefault();
 
         // Check if input is empty
-        if (this.state.title.length === 0 ) {
+        if (this.state.tags.length === 0) {
+            alert('Tags cannot be empty');
+            return;
+        } else if (this.state.title.length === 0 ) {
             alert('Title cannot be empty');
             return;
         } else if (this.state.content.length === 0) {
             alert('Content cannot be empty');
             return;
-        } else if (this.state.tags.length === 0 || this.state.tags[0] === "") {
-            alert('Tags cannot be empty');
-            return;
         }
+
+        console.log(this.tags);
 
         let username = localStorage.getItem("username");
         if (!username) {
@@ -147,7 +192,8 @@ export default class CreatePostPage extends Component {
                 type: this.state.type,
                 title: event.target.value,
                 content: this.state.content,
-                tags: this.state.tags
+                tags: this.state.tags,
+                tagCheck: this.state.tagCheck
             }
         );
     }
@@ -158,17 +204,17 @@ export default class CreatePostPage extends Component {
         event.preventDefault();
 
         // Check if input is empty
-        if (this.state.title.length === 0 ) {
+        if (this.state.tags.length === 0) {
+            alert('Tags cannot be empty');
+            return;
+        } else if (this.state.title.length === 0 ) {
             alert('Title cannot be empty');
             return;
         } else if (this.state.content.length === 0) {
             alert('Content cannot be empty');
             return;
-        } else if (this.state.tags.length === 0 || this.state.tags[0] === "") {
-            alert('Tags cannot be empty');
-            return;
         }
-
+        
         let username = localStorage.getItem("username");
         if (!username) {
             username = "johndoe";
@@ -204,8 +250,10 @@ export default class CreatePostPage extends Component {
             alert('An error occurred');
         });
     }
+    
 
     getTextPage = () => {
+        // const classes = useStyles();
         return (
             <div>
                 <TopBar />
@@ -241,7 +289,27 @@ export default class CreatePostPage extends Component {
                                         Tags
                                     </h3>
                                     <br />
-                                    <TextField id="filled-basic" label="Tags" variant="filled" onChange={this.handleChangeTags} defaultValue={this.state.tags.toString()} />
+                                    <div style={{ width: 500 }}>
+                                        <Autocomplete
+                                            multiple
+                                            id="tags-standard"
+                                            options={top100Films}
+
+                                            onChange={this.handleChangeTags}
+                                            freeSolo
+                                            renderInput={params => (
+                                            <TextField
+                                                {...params}
+                                                variant="standard"
+                                                label="Multiple values"
+                                                placeholder="Favorites"
+                                                margin ="normal"
+                                                fullWidth
+                                            />
+                                            )}
+                                        />
+                                    </div>
+                                    {/* <TextField id="filled-basic" label="Tags" variant="filled" onChange={this.handleChangeTags} defaultValue={this.state.tags.toString()} /> */}
                                     <Grid
                                         container
                                         direction="row"
@@ -302,7 +370,26 @@ export default class CreatePostPage extends Component {
                                         Tags
                                     </h3>
                                     <br />
-                                    <TextField id="filled-basic" label="Tags" variant="filled" onChange={this.handleChangeTags} defaultValue={this.state.tags.toString()} />
+                                    <div style={{ width: 500 }}>
+                                        <Autocomplete
+                                             multiple
+                                             id="tags-standard"
+                                             options={top100Films.map(option => option.title)}
+                                             defaultValue={[top100Films[13].title]}
+                                             onChange={this.handleChangeTags}
+                                             freeSolo
+                                             renderInput={params => (
+                                             <TextField
+                                                 {...params}
+                                                 variant="standard"
+                                                 label="Multiple values"
+                                                 placeholder="Favorites"
+                                                 margin ="normal"
+                                                 fullWidth
+                                             />
+                                             )}
+                                        />
+                                        </div>
                                     <Grid
                                         container
                                         direction="row"
@@ -326,6 +413,8 @@ export default class CreatePostPage extends Component {
             </div>
         );
     }
+
+    
    
 
     render() {
@@ -345,3 +434,4 @@ export default class CreatePostPage extends Component {
         }
     }
 }
+
