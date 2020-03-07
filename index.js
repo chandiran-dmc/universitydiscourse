@@ -21,6 +21,6 @@ app.get('/', (req, res) => {
 app.use('/api', postRouter)
 app.use('/api-user', userRouter);
 
-app.listen(apiPort, () => {
+app.listen(process.env.PORT || apiPort, () => {
     console.log(`Server running on port ${apiPort}`)
 });
