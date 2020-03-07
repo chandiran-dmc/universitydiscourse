@@ -259,10 +259,7 @@ RegisterUser = (req, res) => {
         })
     }
 
-    const user = new User(body)
-
-    console.log('asdfasdfasdfasdfasdf');
-    console.log(User.collection);
+    const user = new User(body);
 
     if (!user) {
         return res.status(400).json({ success: false, error: err })

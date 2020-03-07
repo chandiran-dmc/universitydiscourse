@@ -1,7 +1,9 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
 mongoose
-    .connect('mongodb://127.0.0.1:27017/unidiscourse', { useNewUrlParser: true })
+    .connect(
+        'mongodb+srv://babytaetae:babytaetae@cluster0-3ffi4.azure.mongodb.net/', 
+        { useNewUrlParser: true, useUnifiedTopology: true, connectWithNoPrimary: true})
     .catch(e => {
         console.error('Connection error', e.message);
     });
