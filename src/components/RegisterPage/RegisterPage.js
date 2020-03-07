@@ -69,7 +69,7 @@ export default class RegisterPage extends Component {
 
         axios({
             method: 'post',
-            url: 'http://localhost:3000/api-user/register',
+            url: 'http://localhost:' + process.env.PORT + '/api-user/register',
             data: {
                 email: this.state.email,
                 username: this.state.username,
