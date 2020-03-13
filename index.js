@@ -6,7 +6,7 @@ const postRouter = require('./routes/post-router')
 const userRouter = require('./routes/user-router')
 
 const app = express()
-const apiPort = 3000
+const PORT = 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
@@ -15,12 +15,11 @@ app.use(bodyParser.json())
 db.on('error', console.error.bind(console, 'MongoDB connection error:'))
 
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    res.send('Oops!');
 })
 
 app.use('/api', postRouter)
 app.use('/api-user', userRouter);
-
-app.listen(apiPort, () => {
-    console.log(`Server running on port ${apiPort}`)
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`)
 });

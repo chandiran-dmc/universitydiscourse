@@ -152,7 +152,7 @@ getPosts = async (req, res) => {
         // result checking
         if (!posts.length) {
             return res
-                .status(404)
+                .status(402)
                 .json({ success: false, error: `Posts not found` });
         }
         // return posts
