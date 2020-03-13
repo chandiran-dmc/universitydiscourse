@@ -51,15 +51,19 @@ export default class SideBar extends Component {
 
     handleRequest_password = () => {
         this.setState({
+            username: this.state.username,
             isRedirect: true,
-            to: "/changepassword"
+            to: "/changepassword",
+            tags: this.state.tags
         });
     }
     
     handleRequest_email = () => {
         this.setState({
+            username: this.state.username,
             isRedirect: true,
-            to: "/changeemail"
+            to: "/changeemail",
+            tags: this.state.tags
         });
     }
     
@@ -71,8 +75,10 @@ export default class SideBar extends Component {
         localStorage.removeItem("tags");
 
         this.setState({
+            username: this.state.username,
             isRedirect: true,
-            to: "/"
+            to: "/",
+            tags: this.state.tags
         });
     }
 
@@ -114,8 +120,10 @@ export default class SideBar extends Component {
         });
 
         this.setState({
+            username: this.state.username,
             isRedirect: true,
-            to: "/"
+            to: "/",
+            tags: this.state.tags
         });
     }
 
@@ -135,7 +143,8 @@ export default class SideBar extends Component {
             this.setState({
                 username: username,
                 isRedirect: false,
-                to: ""
+                to: "",
+                tags: this.state.tags
             });
             
         })
@@ -154,22 +163,22 @@ export default class SideBar extends Component {
         if (localStorage.getItem("tags") != null) {
             let tagsList =  localStorage.getItem("tags").split(",");
             this.setState({
-                username: "",
-                isRedirect: false,
-                to: "",
+                username: this.state.username,
+                isRedirect: this.state.isRedirect,
+                to: this.state.to,
                 tags: null
             });
             this.setState({
-                username: "",
-                isRedirect: false,
-                to: "",
+                username: this.state.username,
+                isRedirect: this.state.isRedirect,
+                to: this.state.to,
                 tags: <FollowingTags tags={tagsList}/>
             });
         } else {
             this.setState({
-                username: "",
-                isRedirect: false,
-                to: "",
+                username: this.state.username,
+                isRedirect: this.state.isRedirect,
+                to: this.state.to,
                 tags: null
             });
         }
