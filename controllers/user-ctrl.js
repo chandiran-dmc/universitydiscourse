@@ -275,6 +275,7 @@ RegisterUser = (req, res) => {
             })
         })
         .catch(error => {
+            console.log(error);
             return res.status(405).json({
                 error,
                 message: 'User not registered!',

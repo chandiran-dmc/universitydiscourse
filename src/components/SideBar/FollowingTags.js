@@ -6,6 +6,8 @@
 import React, { Component } from 'react';
 import { Grid, IconButton, createMuiTheme, ThemeProvider, Typography } from '@material-ui/core';
 import MenuIcon from '../../customeIcons/menuIcon';
+import axios from 'axios';
+
 
 
 const theme = createMuiTheme({
@@ -19,6 +21,7 @@ const theme = createMuiTheme({
     }
 });
 
+
 export default class FollowingTags extends Component {
 
     constructor(props) {
@@ -29,7 +32,39 @@ export default class FollowingTags extends Component {
     }
 
     handleRemoveTag = (tagName) => {
-        alert('Remove tag ' + tagName + ' ?')
+
+        if (window.confirm('Remove tag ' + tagName + ' ?')) {
+
+            let tags = localStorage.getItem("tags").split(",");
+            // remove the tag from the local storage
+            tags = tags.filter((value, index, arr) => {return value !== tagName});
+            if (tags.length === 0) {
+                localStorage.removeItem("tags");
+            }
+            else {
+                // update the local storage
+                localStorage.setItem("tags", tags.toString());
+            }
+
+            // update database
+            axios({
+                method: 'post',
+                url: 'http://localhost:3000/api-user/updateusertags',
+                data: {
+                    email: localStorage.getItem("email"),
+                    newtags: (tags.length === 0 ? "default" : tags.toString())
+                }
+            })
+            .then((response) => {
+                console.log("Tags updated");
+            })
+            .catch((error) => {
+                console.error(error.response);
+                if (error.response.data.message) {
+                    alert(error.response.data.message);
+                }
+            });
+        }
     }
 
     renderTags = () => {

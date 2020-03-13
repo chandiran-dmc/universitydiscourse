@@ -13,11 +13,12 @@
  */
 
 
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton } from '@material-ui/core';
 import MenuIcon from '../../customeIcons/menuIcon';
 import LikeIcon from '../../customeIcons/likeIcon';
 import { Redirect } from 'react-router-dom';
+import axios from 'axios';
 
 export default class Post extends Component {
 
@@ -62,13 +63,30 @@ export default class Post extends Component {
             // handling duplicate tags
             if (tags.includes(tag)) {
                 alert(`Tag ${tag} is already being followed.`);
+                return;
             } else {
                 tags.push(tag);
             }
             localStorage.setItem("tags", tags.toString());
 
             // update database
-            // TODO:
+            axios({
+                method: 'post',
+                url: 'http://localhost:3000/api-user/updateusertags',
+                data: {
+                    email: localStorage.getItem("email"),
+                    newtags: tags.toString()
+                }
+            })
+            .then((response) => {
+                console.log("Tags updated");
+            })
+            .catch((error) => {
+                console.error(error.response);
+                if (error.response.data.message) {
+                    alert(error.response.data.message);
+                }
+            });
         }
     }
 
@@ -96,7 +114,7 @@ export default class Post extends Component {
                 break;
         
             case "image":
-                content = <img src={this.state.content} alt={"The Image URL is invalid"} width="600"/>
+                content = <img src={this.state.content} alt={"Error with loading"} width="600"/>
                 break;
 
             default:
