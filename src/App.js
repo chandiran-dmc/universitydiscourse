@@ -14,6 +14,7 @@ import SendLink from './components/SendLink'
 import MainFeedPage from './components/MainFeedPage';
 import EntryPage from './components/EntryPage/EntryPage';
 
+
 export default function App() {
     return (
 
@@ -22,6 +23,7 @@ export default function App() {
           {/* <Route exact path="/" component={MainFeedPage} /> */}
           <Route exact path="/createpost" component={CreatePostPage} />
           <Route exact path="/editpost" component={CreatePostPage} />
+         
           <Route path="/lp" component = {LoginPage} />
           <Route path="/recp" component = {RecoverPassword} />
           <Route path="/rp" component={RegisterPage} />

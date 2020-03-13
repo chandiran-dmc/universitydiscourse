@@ -34,6 +34,7 @@ export default class Post extends Component {
             count: props.data.count,
             theme: props.theme,
             isEditPost: false,
+            isReportPost: false,
             mode: ""
         };       
     }
@@ -50,6 +51,13 @@ export default class Post extends Component {
         else {
             alert('You can not edit this post');
         }
+    }
+
+    handleRedirect = (ReportPost) => {
+        this.setState({
+            mode: ReportPost,
+            isReportPost: true
+        });
     }
 
     renderContent = () => {
@@ -78,6 +86,24 @@ export default class Post extends Component {
 
             return <Redirect exact from="/" push to={{
                 pathname: "/editpost",
+                state: { 
+                    title: this.state.title,
+                    content: this.state.content,
+                    user: this.state.user,
+                    time: this.state.time,
+                    tags: this.state.tags,
+                    comments: this.state.comments,
+                    type: this.state.type,
+                    count: this.state.count,
+                    mode: this.state.mode
+                }
+            }}/>;
+        }
+
+        if (this.state.isReportPost === true) {
+
+            return <Redirect exact from="/" push to={{
+                pathname: "/rp",
                 state: { 
                     title: this.state.title,
                     content: this.state.content,
@@ -122,6 +148,14 @@ export default class Post extends Component {
                                     {new Date(this.state.time).toTimeString()}
                                 </Typography>
                             </Grid>
+                        </Grid>
+                        <Grid item>
+                            <IconButton 
+                                type="button"
+                                onClick={() => this.handleRedirect("Report")} >
+                                
+                                
+                            </IconButton>
                         </Grid>
                         <Grid item>
                             <IconButton 
