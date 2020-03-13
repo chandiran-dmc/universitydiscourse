@@ -16,6 +16,7 @@
 import React, { Component } from 'react'
 import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton } from '@material-ui/core';
 import MenuIcon from '../../customeIcons/menuIcon';
+import Warning from '../../customeIcons/Warning';
 import LikeIcon from '../../customeIcons/likeIcon';
 import { Redirect } from 'react-router-dom';
 
@@ -152,7 +153,10 @@ export default class Post extends Component {
                         <Grid item>
                             <IconButton 
                                 type="button"
+                                
                                 onClick={() => this.handleRedirect("Report")} >
+                                   
+                                <i class='fa fa-bullhorn'></i>
                                 
                                 
                             </IconButton>
