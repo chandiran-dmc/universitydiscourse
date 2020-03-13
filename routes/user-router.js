@@ -12,5 +12,6 @@ router.post('/deleteuser', UserCtrl.DeleteUser)
 router.post('/recover', UserCtrl.RecoveryEmail)
 router.post('/recoverpassword', UserCtrl.RecoverPassword)
 router.post('/getuser', UserCtrl.FindUser)
+router.post('/updateusertags', UserCtrl.UpdateUserTags)
 
 module.exports = router

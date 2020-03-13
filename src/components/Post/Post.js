@@ -13,22 +13,38 @@
  */
 
 
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton } from '@material-ui/core';
 import MenuIcon from '../../customeIcons/menuIcon';
 import LikeIcon from '../../customeIcons/likeIcon';
 import { Redirect } from 'react-router-dom';
+import axios from 'axios';
 
 export default class Post extends Component {
 
     constructor(props) {
         super(props);
+
+        // button tags
+        let tags = [];
+        props.data.tag.forEach(tag => {
+            tags.push(
+                <Button
+                    key={Math.random()*100000}
+                    onClick={() => {this.tagOnClick(tag)}}
+                    disableElevation
+                    size="small">
+                    #{tag}
+                </Button>
+            );
+        });
+
         this.state = {
             title: props.data.title,
             content: props.data.content,
             user: props.data.user,
             time: props.data.time,
-            tags: props.data.tag,
+            tags: tags,
             comments: props.data.comments,
             type: props.data.type,
             count: props.data.count,
@@ -38,6 +54,45 @@ export default class Post extends Component {
             mode: "",
             postRedirect: ""
         };       
+    }
+
+    tagOnClick = (tag) => {
+        if (window.confirm(`Would you like to follow ${tag}?`)) {
+            let tags = [];
+            if (localStorage.getItem("tags") != null) {
+                tags = localStorage.getItem("tags").split(",");
+                // Remove default tag
+                tags = tags.filter((value, index, arr) => {return value !== "default"});
+            }
+            // update local storage
+            // handling duplicate tags
+            if (tags.includes(tag)) {
+                alert(`Tag ${tag} is already being followed.`);
+                return;
+            } else {
+                tags.push(tag);
+            }
+            localStorage.setItem("tags", tags.toString());
+
+            // update database
+            axios({
+                method: 'post',
+                url: 'http://localhost:3000/api-user/updateusertags',
+                data: {
+                    email: localStorage.getItem("email"),
+                    newtags: tags.toString()
+                }
+            })
+            .then((response) => {
+                console.log("Tags updated");
+            })
+            .catch((error) => {
+                console.error(error.response);
+                if (error.response.data.message) {
+                    alert(error.response.data.message);
+                }
+            });
+        }
     }
 
     handleRedirect = (editPost) => {
@@ -74,7 +129,7 @@ export default class Post extends Component {
                 break;
         
             case "image":
-                content = <img src={this.state.content} alt={"The Image URL is invalid"} width="600"/>
+                content = <img src={this.state.content} alt={"Error with loading"} width="600"/>
                 break;
 
             default:
@@ -84,8 +139,8 @@ export default class Post extends Component {
         return content;
     }
 
-
     render() {
+
         if (this.state.isEditPost === true) {
 
             return <Redirect exact from="/" push to={{
@@ -102,12 +157,14 @@ export default class Post extends Component {
                     mode: this.state.mode
                 }
             }}/>;
+
         }
         if (this.state.isRedirectPost == true) {
             return <Redirect exact from="/" push to={{
                 pathname: "/post"
             }}/>
          }
+
 
         return (
             <ThemeProvider theme={this.state.theme} >     
@@ -192,7 +249,7 @@ export default class Post extends Component {
                         </Grid>
                         <Grid>
                             <Typography variant="inherit">
-                                #{this.state.tags.toString()}
+                                {this.state.tags}
                             </Typography>
                         </Grid>
                     </Grid>

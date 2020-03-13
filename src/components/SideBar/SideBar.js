@@ -9,14 +9,10 @@ import FollowingTags from './FollowingTags';
 import {Button} from '@material-ui/core';
 import {Redirect} from 'react-router-dom';
 import {createMuiTheme } from '@material-ui/core/styles';
-import {ThemeProvider} from '@material-ui/styles'
+import {ThemeProvider} from '@material-ui/styles';
 
-
-import sample_user from '../../mock_data/user_data.json';
 
 const axios = require('axios');
-
-
 
 
 const theme = createMuiTheme ({
@@ -48,21 +44,26 @@ export default class SideBar extends Component {
         this.state = {
             username: "",
             isRedirect: false,
-            to: ""
+            to: "",
+            tags: null
         };
     }
 
     handleRequest_password = () => {
         this.setState({
+            username: this.state.username,
             isRedirect: true,
-            to: "/changepassword"
+            to: "/changepassword",
+            tags: this.state.tags
         });
     }
     
     handleRequest_email = () => {
         this.setState({
+            username: this.state.username,
             isRedirect: true,
-            to: "/changeemail"
+            to: "/changeemail",
+            tags: this.state.tags
         });
     }
     
@@ -71,12 +72,16 @@ export default class SideBar extends Component {
         // Clear local storage
         localStorage.removeItem("email");
         localStorage.removeItem("username");
+        localStorage.removeItem("tags");
 
         this.setState({
+            username: this.state.username,
             isRedirect: true,
-            to: "/"
+            to: "/",
+            tags: this.state.tags
         });
     }
+
 
     handleRequest_remove = async () => {
 
@@ -106,6 +111,8 @@ export default class SideBar extends Component {
         })
         .then((response) => {
             localStorage.removeItem("email");
+            localStorage.removeItem("tags");
+            localStorage.removeItem("username");
             console.log(response);
         })
         .catch((error) => {
@@ -113,20 +120,11 @@ export default class SideBar extends Component {
         });
 
         this.setState({
+            username: this.state.username,
             isRedirect: true,
-            to: "/"
+            to: "/",
+            tags: this.state.tags
         });
-    }
-
-    /**
-     * Helper function to get the tags that the user follows
-     */
-    getFollowingTags = () => {
-        // TODO: Get user data from local file
-        let user = sample_user; // XXX
-        // Filter the posts based on the tags the user follows
-        let tagsList =  user.tags;
-        return <FollowingTags tags={tagsList}/>;
     }
 
     getUserName = async () => {
@@ -140,13 +138,13 @@ export default class SideBar extends Component {
         })
         .then((response) => {
             let username = response.data.data.username;
-            console.log(username);
             localStorage.setItem('username', username);
 
             this.setState({
                 username: username,
                 isRedirect: false,
-                to: ""
+                to: "",
+                tags: this.state.tags
             });
             
         })
@@ -156,8 +154,41 @@ export default class SideBar extends Component {
         });
     }
 
+    /**
+     * Helper function to get the tags that the user follows
+     */
+    getFollowingTags = () => {
+        
+        // Filter the posts based on the tags the user follows
+        if (localStorage.getItem("tags") != null) {
+            let tagsList =  localStorage.getItem("tags").split(",");
+            this.setState({
+                username: this.state.username,
+                isRedirect: this.state.isRedirect,
+                to: this.state.to,
+                tags: null
+            });
+            this.setState({
+                username: this.state.username,
+                isRedirect: this.state.isRedirect,
+                to: this.state.to,
+                tags: <FollowingTags tags={tagsList}/>
+            });
+        } else {
+            this.setState({
+                username: this.state.username,
+                isRedirect: this.state.isRedirect,
+                to: this.state.to,
+                tags: null
+            });
+        }
+    }
+
     componentDidMount() {
         this.getUserName();
+        this.getFollowingTags();
+
+        setInterval(this.getFollowingTags, 1000);
     }
 
     render() {
@@ -224,7 +255,7 @@ export default class SideBar extends Component {
               </Typography>
               <br/>
               <Divider />
-              {this.getFollowingTags()}
+                {this.state.tags}
               <br/>
               <Divider/>
             </Drawer>

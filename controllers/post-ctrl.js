@@ -158,7 +158,7 @@ getPosts = async (req, res) => {
         // return posts
         return res.status(200).json({ success: true, data: posts });
 
-    }).catch(err => console.log(err))
+    }).catch(err => console.log(err));
 }
 
 module.exports = {
