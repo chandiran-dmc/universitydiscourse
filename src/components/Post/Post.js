@@ -24,6 +24,7 @@ export default class Post extends Component {
 
     constructor(props) {
         super(props);
+        console.log(props.data._id)
 
         // button tags
         let tags = [];
@@ -40,6 +41,7 @@ export default class Post extends Component {
         });
 
         this.state = {
+            id: props.data._id,
             title: props.data.title,
             content: props.data.content,
             user: props.data.user,
@@ -161,7 +163,7 @@ export default class Post extends Component {
         }
         if (this.state.isRedirectPost == true) {
             return <Redirect exact from="/" push to={{
-                pathname: "/post"
+                pathname: "/post" + this.state.id
             }}/>
          }
 

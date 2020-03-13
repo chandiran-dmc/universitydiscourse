@@ -66,6 +66,7 @@ export default class MainFeedPage extends Component {
                 }
             })
             .then((response) => {
+                console.log(response.data.data)
 
                 // Filter the posts based on the tags the user follows
                 let tags =  response.data.data.tags.split(",");
@@ -80,6 +81,7 @@ export default class MainFeedPage extends Component {
                     for (let i = 0; i < post.tag.length; i++) {
                         if (tags.includes(post.tag[i]) || tags.includes("default")) {
                             filteredPosts.push(<Post key={Math.random()*100000} data={post} theme={theme}/>);
+                            console.log(post)
                             break;
                         }
                     }
