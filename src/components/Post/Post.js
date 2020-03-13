@@ -34,7 +34,9 @@ export default class Post extends Component {
             count: props.data.count,
             theme: props.theme,
             isEditPost: false,
-            mode: ""
+            isRedirectPost: false,
+            mode: "",
+            postRedirect: ""
         };       
     }
 
@@ -50,6 +52,16 @@ export default class Post extends Component {
         else {
             alert('You can not edit this post');
         }
+    }
+    handleRedirectPost = (Post) => {
+        
+
+            this.setState({
+                postRedirect: Post,
+                isRedirectPost: true
+            });
+
+        
     }
 
     renderContent = () => {
@@ -91,6 +103,11 @@ export default class Post extends Component {
                 }
             }}/>;
         }
+        if (this.state.isRedirectPost == true) {
+            return <Redirect exact from="/" push to={{
+                pathname: "/post"
+            }}/>
+         }
 
         return (
             <ThemeProvider theme={this.state.theme} >     
@@ -109,11 +126,12 @@ export default class Post extends Component {
                         </Grid>
                         <Grid item xs zeroMinWidth>
                             <Grid item>
-                                <Typography 
+                                <Button 
                                     variant="body1"
-                                    color="textPrimary" >
+                                    color="textPrimary" 
+                                    onClick={() => this.handleRedirectPost("Post Redirect")} >
                                     {this.state.title}
-                                </Typography>
+                                </Button>
                             </Grid>
                             <Grid item>
                                 <Typography 
