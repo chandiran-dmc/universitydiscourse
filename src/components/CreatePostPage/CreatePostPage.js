@@ -17,7 +17,6 @@ import React, { Component } from 'react'
 import TopBar from '../TopBar/TopBar';
 import Footer from '../Footer/Footer';
 import './CreatePostPage.css'
-//import { positions, borderTop, borderBottom,borderLeft, borderRight } from '@material-ui/system';
 import { Button, Box, Grid, TextField, Chip} from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
@@ -26,16 +25,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import sample_user from '../../mock_data/user_data.json';
 import sample_tags from '../../mock_data/AllTags.json';
 const axios = require('axios');
-
-
-// const useStyles = makeStyles(theme => ({
-//     root: {
-//       width: 500,
-//       '& > * + *': {
-//         marginTop: theme.spacing(3),
-//       },
-//     },
-//   }));
 
 const theme = createMuiTheme({
     palette: {
@@ -56,7 +45,7 @@ const theme = createMuiTheme({
 });
 
 //TODO: get the following tags from the database
-const top100Films = sample_user.tags
+const followTags = sample_user.tags
 
 
 
@@ -64,6 +53,7 @@ export default class CreatePostPage extends Component {
 
     constructor(props) {
         super(props);
+        console.log(this.props.location.state.tags)
         this.state = {
             type: this.props.location.state.type,
             mode: this.props.location.state.mode,
@@ -75,7 +65,6 @@ export default class CreatePostPage extends Component {
             comments: this.props.location.state.comments,
             count: this.props.location.state.count,
             isRedirect: false,
-            tagCheck: false
         };
 
         this.handleChangeContent = this.handleChangeContent.bind(this);
@@ -92,7 +81,6 @@ export default class CreatePostPage extends Component {
                 title: this.state.title,
                 content: event.target.value,
                 tags: this.state.tags,
-                tagCheck: this.state.tagCheck
                
             },
             () => {
@@ -104,10 +92,9 @@ export default class CreatePostPage extends Component {
     }
 
     handleChangeTags(event, values) {
-        console.log(event.target.value)
-        console.log(this.tagCheck)
+      console.log(values);
         
-        //TODO: if value exist in the database
+        //TODO: get all from the database
         let all =  [];
         all = sample_tags.AllTag;
         if(event.target.value === 0 || all.includes(event.target.value)) {
@@ -118,13 +105,13 @@ export default class CreatePostPage extends Component {
                     title: this.state.title,
                     content: this.state.content,
                     tags: values,
-                    tagCheck: true
                 }
             );
         }
-        else  {
-            console.log(event)
+        else if(!all.includes(event.target.value) && event.target.value != null) {
+            console.log(event.target.value)
             alert("Tag doesn't exist")
+            values.pop()
         }
         
         
@@ -145,6 +132,17 @@ export default class CreatePostPage extends Component {
             return;
         } else if (this.state.content.length === 0) {
             alert('Content cannot be empty');
+            return;
+        }
+        let count = 0;
+
+        for(let i = 0; i < this.state.tags.length; i++) {
+            if(followTags.includes(this.state.tags[i])) {
+                count++;
+            }
+        }
+        if(count == 0) {
+            alert('You must include atleast one tag that you follow')
             return;
         }
 
@@ -193,7 +191,6 @@ export default class CreatePostPage extends Component {
                 title: event.target.value,
                 content: this.state.content,
                 tags: this.state.tags,
-                tagCheck: this.state.tagCheck
             }
         );
     }
@@ -212,6 +209,18 @@ export default class CreatePostPage extends Component {
             return;
         } else if (this.state.content.length === 0) {
             alert('Content cannot be empty');
+            return;
+        }
+
+        let count = 0;
+
+        for(let i = 0; i < this.state.tags.length; i++) {
+            if(followTags.includes(this.state.tags[i])) {
+                count++;
+            }
+        }
+        if(count == 0) {
+            alert('You must include atleast one tag that you follow')
             return;
         }
         
@@ -253,7 +262,6 @@ export default class CreatePostPage extends Component {
     
 
     getTextPage = () => {
-        // const classes = useStyles();
         return (
             <div>
                 <TopBar />
@@ -282,27 +290,27 @@ export default class CreatePostPage extends Component {
                                     <h3 style={{ color: '#023373' }}>
                                         Post Content
                                     </h3>
-                                    <br />
+                                    
                                     <TextField id="filled-basic" label="Post Content" variant="filled" onChange={this.handleChangeContent} defaultValue={this.state.content}/>
-                                    <br />
                                     <h3 style={{ color: '#023373' }}>
                                         Tags
                                     </h3>
-                                    <br />
-                                    <div style={{ width: 500 }}>
+                    
+                                    <div style={{ width: 300 }}>
                                         <Autocomplete
                                             multiple
                                             id="tags-standard"
-                                            options={top100Films}
+                                            options={followTags}
 
                                             onChange={this.handleChangeTags}
                                             freeSolo
+                                            defaultValue={this.state.tags}
                                             renderInput={params => (
                                             <TextField
                                                 {...params}
                                                 variant="standard"
-                                                label="Multiple values"
-                                                placeholder="Favorites"
+                                                label="Tags"
+                                                // placeholder="Favorites"
                                                 margin ="normal"
                                                 fullWidth
                                             />
@@ -370,26 +378,27 @@ export default class CreatePostPage extends Component {
                                         Tags
                                     </h3>
                                     <br />
-                                    <div style={{ width: 500 }}>
+                                    <div style={{ width: 300 }}>
                                         <Autocomplete
-                                             multiple
-                                             id="tags-standard"
-                                             options={top100Films.map(option => option.title)}
-                                             defaultValue={[top100Films[13].title]}
-                                             onChange={this.handleChangeTags}
-                                             freeSolo
-                                             renderInput={params => (
-                                             <TextField
-                                                 {...params}
-                                                 variant="standard"
-                                                 label="Multiple values"
-                                                 placeholder="Favorites"
-                                                 margin ="normal"
-                                                 fullWidth
-                                             />
-                                             )}
+                                            multiple
+                                            id="tags-standard"
+                                            options={followTags}
+
+                                            onChange={this.handleChangeTags}
+                                            freeSolo
+                                            defaultValue={this.state.tags}
+                                            renderInput={params => (
+                                            <TextField
+                                                {...params}
+                                                variant="standard"
+                                                label="Tags"
+                                                // placeholder="Favorites"
+                                                margin ="normal"
+                                                fullWidth
+                                            />
+                                            )}
                                         />
-                                        </div>
+                                    </div>
                                     <Grid
                                         container
                                         direction="row"
