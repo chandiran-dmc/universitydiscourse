@@ -322,7 +322,7 @@ DeleteUser = (req, res) => {
 
 FindUser = (req, res) => {
     const body = req.body
-    const { email, username, password } = body;
+    const { email, username } = body;
 
     if (!body) {
         return res.status(400).json({

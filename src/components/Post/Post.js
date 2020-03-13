@@ -30,6 +30,7 @@ export default class Post extends Component {
         props.data.tag.forEach(tag => {
             tags.push(
                 <Button
+                    key={Math.random()*100000}
                     onClick={() => {this.tagOnClick(tag)}}
                     disableElevation
                     size="small">
@@ -58,6 +59,8 @@ export default class Post extends Component {
             let tags = [];
             if (localStorage.getItem("tags") != null) {
                 tags = localStorage.getItem("tags").split(",");
+                // Remove default tag
+                tags = tags.filter((value, index, arr) => {return value !== "default"});
             }
             // update local storage
             // handling duplicate tags

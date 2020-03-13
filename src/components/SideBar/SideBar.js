@@ -130,7 +130,6 @@ export default class SideBar extends Component {
         })
         .then((response) => {
             let username = response.data.data.username;
-            console.log(username);
             localStorage.setItem('username', username);
 
             this.setState({
@@ -181,15 +180,6 @@ export default class SideBar extends Component {
         this.getFollowingTags();
 
         setInterval(this.getFollowingTags, 1000);
-
-        // add a local storage change listener
-        window.addEventListener("storage", this.getFollowingTags);
-    }
-
-    componentWillUnmount() {
-        // remove the local storage change listener
-        console.log("unmounted");
-        window.removeEventListener("storage", this.getFollowingTags);
     }
 
     render() {

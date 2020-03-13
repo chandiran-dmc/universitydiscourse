@@ -35,6 +35,12 @@ export default class FollowingTags extends Component {
 
         if (window.confirm('Remove tag ' + tagName + ' ?')) {
 
+            // cannot remove default tag manually
+            if (tagName === "default") {
+                alert('Cannot remove default tag');
+                return;
+            }
+
             let tags = localStorage.getItem("tags").split(",");
             // remove the tag from the local storage
             tags = tags.filter((value, index, arr) => {return value !== tagName});
