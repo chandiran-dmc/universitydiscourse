@@ -64,6 +64,7 @@ export default class CreatePostPage extends Component {
         this.handleChangeTags = this.handleChangeTags.bind(this);
         this.handleCreatePost = this.handleCreatePost.bind(this);
         this.handleUpdatePost = this.handleUpdatePost.bind(this);
+        this.handleCurveChange = this.handleCurveChange.bind(this);
     }
     
     handleChangeContent(event) {
@@ -84,6 +85,30 @@ export default class CreatePostPage extends Component {
                 title: this.state.title,
                 content: this.state.content,
                 tags: event.target.value.replace(" ", "").split(",")
+            }
+        );
+    }
+
+    handleCurveChange(event) {
+
+        let name = event.target.name;
+        let curves = this.state.tags;
+        if (name === "bound_A") {
+            curves[0] = event.target.value;
+        } else if (name === "bound_B") {
+            curves[1] = event.target.value;
+        } else if (name === "bound_C") {
+            curves[2] = event.target.value;
+        } else if (name === "bound_D") {
+            curves[3] = event.target.value;
+        }
+
+        this.setState(
+            {
+                type: this.state.type,
+                title: this.state.title,
+                content: this.state.content,
+                tags: curves
             }
         );
     }
@@ -140,6 +165,26 @@ export default class CreatePostPage extends Component {
         }
         // request for curve inputs
         else if (this.state.type === "curve") {
+            // TODO: error checking for curve input
+            if (this.state.title.length === 0) {
+                alert('Course name cannot be empty');
+                return;
+            } else if (this.state.tags.length != 4) {
+                alert('Some curve data is missing');
+                return;
+            } else if (this.state.tags[0] > 100) {
+                alert('The lower bound of A cannot be more than 100');
+                return;
+            } else if (this.state.tags[3] < 0) {
+                alert('The lower bound of D cannot be less than 0');
+                return;
+            } else if (!(this.state.tags[0] > this.state.tags[1] &&
+                       this.state.tags[1] > this.state.tags[2] &&
+                       this.state.tags[2] > this.state.tags[3])) {
+                alert('The input data is invalid. Check the order');
+                return;
+            }
+
             requestUrl = requestUrl + "createcurve";
         }
         // request for any other posts
@@ -428,7 +473,78 @@ export default class CreatePostPage extends Component {
     }
 
     getCurveInputPage = () => {
-
+        return (
+            <div>
+                <TopBar />
+                <div className="CreatePostPage">
+                    <form
+                        onSubmit={this.handleCreatePost}>
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center" >
+                            <Box
+                                boxShadow={30}
+                                margin={1}
+                                width="50%"
+                                mt={20} >
+                                <ThemeProvider theme={theme}>
+                                    <h3 style={{ color: '#023373' }}>
+                                        Course Name
+                                    </h3>
+                                    <br/>
+                                    <TextField id="filled-basic" label="" variant="filled" size="medium" onChange={this.handleChangeTitle}  defaultValue={this.state.title}/>
+                                    <br />
+                                    <h3 style={{ color: '#023373' }}>
+                                        Curve (lower bound)
+                                    </h3>
+                                    <br />
+                                    <TextField name="bound_A" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  defaultValue={this.state.content}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start">A%</InputAdornment>
+                                    }}
+                                    />
+                                    <br />
+                                    <TextField name="bound_B" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  defaultValue={this.state.content}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start">B%</InputAdornment>
+                                    }}
+                                    />
+                                    <br />
+                                    <TextField name="bound_C" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  defaultValue={this.state.content}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start">C%</InputAdornment>
+                                    }}
+                                    />
+                                    <br />
+                                    <TextField name="bound_D" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  defaultValue={this.state.content}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start">D%</InputAdornment>
+                                    }}
+                                    />
+                                    <Grid
+                                        container
+                                        direction="row"
+                                        justify="center"
+                                        alignItems="center" >
+                                            <Button
+                                                color="secondary"
+                                                variant="contained"
+                                                style={{ justifyContent: 'center' }}
+                                                disableElevation
+                                                type="button"
+                                                onClick={this.state.mode === "edit post" ? this.handleUpdatePost : this.handleCreatePost} >
+                                                MAKE POST
+                                            </Button>
+                                    </Grid>
+                                </ThemeProvider>
+                            </Box>
+                        </Grid>
+                    </form>
+                </div>
+            </div>
+        );
     }
 
     render() {
