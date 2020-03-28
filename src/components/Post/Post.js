@@ -147,12 +147,12 @@ export default class Post extends Component {
                         </Grid>
                         <Grid item xs zeroMinWidth>
                             <Grid item>
-                            <Button 
+                            <Typography 
                                     variant="body1"
-                                    color="textPrimary" 
-                                    onClick={() => this.handleRedirectPost("Post Redirect")} >
+                                    color="textPrimary" >
+                                  //  onClick={() => this.handleRedirectPost("Post Redirect")} >
                                     {this.state.title}
-                                </Button>
+                                </Typography>
                             </Grid>
                             <Grid item>
                                 <Typography 
