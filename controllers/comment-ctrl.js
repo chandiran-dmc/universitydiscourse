@@ -42,6 +42,25 @@ createComment = (req, res) => {
         });
 }
 
+getcomments = async (req, res) => {
+
+    await Comment.find({}, (err, comments) => {
+        // error handling
+        if (err) {
+            return res.status(400).json({ success: false, error: err });
+        }
+        // result checking
+        if (!comments.length) {
+            return res
+                .status(402)
+                .json({ success: false, error: `Posts not found` });
+        }
+        // return posts
+        return res.status(200).json({ success: true, data: comments });
+
+    }).catch(err => console.log(err))
+}
+
 
 module.exports = {
     createComment,
