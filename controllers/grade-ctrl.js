@@ -1,4 +1,4 @@
-const Grade = require('../models/user-model');
+const Grade = require('../models/grade-model');
 
 /**
  * Function to create a post on the database
@@ -9,7 +9,7 @@ createGrade = (req, res) => {
     const body = req.body;
     // error checking
     if (!body) {
-        return res.status(400).json({
+        return res.status(401).json({
             success: false,
             error: 'You must provide a post',
         });
@@ -17,21 +17,19 @@ createGrade = (req, res) => {
 
     let grade_data = {
         course: body.title,
-        user: body.user,
+        username: body.user,
         score: body.content,
         grade: body.tag[0],
         time: body.time
     };
-
-    console.log("> grade");
-    console.log(grade_data);
 
     // create grade model
     const grade = new Grade(grade_data);
 
     // error checking if grade model was successfully created
     if (!grade) {
-        return res.status(400).json({ success: false, error: err });
+        console.error('Failed to create new Grade document');
+        return res.status(401).json({ success: false, error: "Failed in creating new Grade document" });
     }
 
     // saving the grade to the database
@@ -40,11 +38,12 @@ createGrade = (req, res) => {
         .then(() => {
             return res.status(201).json({
                 success: true,
-                id: post.id,
                 message: 'Grade created!',
             });
         })
         .catch((error) => {
+            console.log('Grade not created!');
+            console.error(error);
             return res.status(400).json({
                 error,
                 message: 'Grade not created!',

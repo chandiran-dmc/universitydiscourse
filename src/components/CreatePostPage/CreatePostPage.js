@@ -94,15 +94,17 @@ export default class CreatePostPage extends Component {
         event.preventDefault();
 
         // Check if input is empty
-        if (this.state.title.length === 0 ) {
-            alert('Title cannot be empty');
-            return;
-        } else if (this.state.content.length === 0) {
-            alert('Content cannot be empty');
-            return;
-        } else if (this.state.tags.length === 0 || this.state.tags[0] === "") {
-            alert('Tags cannot be empty');
-            return;
+        if (this.state.type !== "grade" && this.state.type !== "curve") {
+            if (this.state.title.length === 0) {
+                alert('Title cannot be empty');
+                return;
+            } else if (this.state.content.length === 0) {
+                alert('Content cannot be empty');
+                return;
+            } else if (this.state.tags.length === 0 || this.state.tags[0] === "") {
+                alert('Tags cannot be empty');
+                return;
+            }
         }
 
         let username = localStorage.getItem("username");
@@ -113,11 +115,32 @@ export default class CreatePostPage extends Component {
         let requestUrl = 'http://localhost:3000/api/';
         // Send request differently for grade inputs
         if (this.state.type === "grade") {
-            requestUrl = requestUrl + "inputgrade";
+            // check for content validity
+            if (this.state.title.length === 0) {
+                alert('Course name cannot be empty');
+                return;
+            } else if (isNaN(this.state.content)) {
+                alert('Please input a number for score');
+                return;
+            } else if (this.state.content <= 0 || this.state.content >= 100) {
+                alert('Please input a valid number for score');
+                return;
+            } else if (
+                this.state.tags[0] !== 'A' &&
+                this.state.tags[0] !== 'B' &&
+                this.state.tags[0] !== 'C' &&
+                this.state.tags[0] !== 'D' &&
+                this.state.tags[0] !== 'F'
+            ) {
+                alert('Please input a valid grade of A,B,C,D or F');
+                return;
+            }
+
+            requestUrl = requestUrl + "creategrade";
         }
         // request for curve inputs
         else if (this.state.type === "curve") {
-            requestUrl = requestUrl + "inputcurve";
+            requestUrl = requestUrl + "createcurve";
         }
         // request for any other posts
         else {

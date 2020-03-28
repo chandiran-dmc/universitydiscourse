@@ -1,17 +1,17 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const Grade = new Schema(
+const Curve = new Schema(
     {
         course: { type: String, require: true},
-        username: { type: String, required: true },
-        score: { type: String, required: true },
+        user: { type: String, required: true },
+        score: { type: Number, required: true },
         grade: { type: String, required: true },
         time: { type: Number, required: true }
     },
     {
-        collection: 'grades'
+        collection: 'curves'
     }
 );
 
-module.exports = mongoose.model('grade', Grade, 'grades');
+module.exports = mongoose.model('curve', Curve, 'curves');
