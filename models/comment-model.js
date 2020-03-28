@@ -3,7 +3,6 @@ const Schema = mongoose.Schema;
 
 const Comment = new Schema(
     {
-        postid: {type: },
         count: { type: Number, required: true }
     },
     {

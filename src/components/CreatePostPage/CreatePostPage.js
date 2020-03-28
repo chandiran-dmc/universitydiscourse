@@ -56,6 +56,7 @@ export default class CreatePostPage extends Component {
             time: this.props.location.state.time,
             comments: this.props.location.state.comments,
             count: this.props.location.state.count,
+            makeacomment: this.props.location.state.makeacomment,
             isRedirect: false
         };
 
@@ -122,7 +123,7 @@ export default class CreatePostPage extends Component {
                 count: 0,
                 comments: [],
                 content: this.state.content,
-                time: new Date().getTime()
+                time: new Date().getTime(),
             }
         })
         .then((response) => {

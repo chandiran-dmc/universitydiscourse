@@ -35,13 +35,21 @@ export default class Post extends Component {
             count: props.data.count,
             theme: props.theme,
             isEditPost: false,
-            mode: ""
+            mode: "",
+            makeacomment: false,
+            seeallcomments: false,
+            comments: []
         };       
     }
 
-    createComment(event) {
-        event.preventDefault();
-
+    createComment = () => {
+        //event.preventDefault();
+        console.log(this.state.title);
+        this.setState(
+            {
+                makeacomment: true
+            }
+        );
         axios({
             method: 'post',
             url: 'http://localhost:3000/api-comment/comment',
@@ -58,12 +66,37 @@ export default class Post extends Component {
         });
     }
 
+    getComments = async () => {
+
+        // TODO: request the database for the comments
+        let comments = []
+
+        // Send request to the database
+        axios({
+                method: 'get',
+                url: 'http://localhost:3000/api-comment/getcomments'
+        })
+        .then((response) => {
+                comments = response.data.data;
+                
+                this.setState({
+                    comments: comments
+                });
+        })
+        .catch((error) => {
+            console.error(error);
+            alert('An error occurred');
+        });
+    }
+    
+
     handleRedirect = (editPost) => {
+        console.log(this.state.title)
         if(this.state.user === localStorage.getItem("username")) {
 
             this.setState({
                 mode: editPost,
-                isEditPost: true
+                isEditPost: true,
             });
 
         }
@@ -184,11 +217,16 @@ export default class Post extends Component {
                                         {this.state.count}
                                     </Typography>
                                 </Grid>
-                                <TextField id="filled-basic" label="Make a comment" variant="filled" onChange={this.handleChangeContent}/>
                                 <Grid item >
                                     <Button
-                                        variant="contained" onClick={this.createComment}>
-                                        {"comment"}
+                                        variant="contained" onClick={() => this.setState({makeacomment: !this.state.makeacomment})}>
+                                        {"Make a comment"}
+                                    </Button>
+                                </Grid>
+                                <Grid item >
+                                    <Button
+                                        variant="contained" onClick={() => this.setState({seeallcomments: !this.state.seeallcomments})}>
+                                        {"See all comments"}
                                     </Button>
                                 </Grid>
                             </Grid>
@@ -206,6 +244,17 @@ export default class Post extends Component {
                             alignItems="center"
                             direction="row">
                             
+                            
+                            {(this.state.makeacomment == true)?                                
+                                    <TextField id="filled-basic" label="Make a comment" variant="filled" onChange={this.handleChangeContent}/>:""
+                                
+                            }
+                            {(this.state.seeallcomments == true)?                                
+                                <Grid item>
+                                {this.state.commentlist === null ? <p>Fetching Comments</p> : this.state.comments}
+                            </Grid>:""                                
+                            }
+                                               
                             
                         </Grid>
                     </Grid>

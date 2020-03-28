@@ -44,5 +44,6 @@ createComment = (req, res) => {
 
 
 module.exports = {
-    createComment
+    createComment,
+    getcomments
 }
