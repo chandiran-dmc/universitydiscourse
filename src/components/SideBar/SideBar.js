@@ -83,7 +83,7 @@ export default class SideBar extends Component {
         // delete all post made by the user
         axios({
             method: 'delete',
-            url: 'http://localhost:3000/api/removeallposts',
+            url: 'https://unidiscourse-backend.herokuapp.com/api/removeallposts',
             data: {
                 user: localStorage.getItem("username")
             }
@@ -99,7 +99,7 @@ export default class SideBar extends Component {
         // deletet user account
         axios({
             method: 'post',
-            url: 'http://localhost:3000/api-user/deleteuser',
+            url: 'https://unidiscourse-backend.herokuapp.com/api-user/deleteuser',
             data: {
                 email: localStorage.getItem("email")
             }
@@ -133,7 +133,7 @@ export default class SideBar extends Component {
 
         await axios({
             method: 'post',
-            url: 'http://localhost:3000/api-user/getuser',
+            url: 'https://unidiscourse-backend.herokuapp.com/api-user/getuser',
             data: {
                 email: localStorage.getItem("email")
             }

@@ -113,7 +113,7 @@ export default class CreatePostPage extends Component {
         // Send request to the database
         axios({
             method: 'post',
-            url: 'http://localhost:3000/api/createpost',
+            url: 'https://unidiscourse-backend.herokuapp.com/api/createpost',
             data: {
                 title: this.state.title,
                 user: username,
@@ -177,7 +177,7 @@ export default class CreatePostPage extends Component {
         // Send request to the database
         axios({
             method: 'put',
-            url: 'http://localhost:3000/api/updatepost',
+            url: 'https://unidiscourse-backend.herokuapp.com/api/updatepost',
             data: {
                 title: this.state.title,
                 user: username,

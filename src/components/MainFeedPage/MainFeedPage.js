@@ -52,7 +52,7 @@ export default class MainFeedPage extends Component {
         // Send request to the database
         axios({
                 method: 'get',
-                url: 'http://localhost:3000/api/getposts'
+                url: 'https://unidiscourse-backend.herokuapp.com/api/getposts'
         })
         .then((response) => {
                 posts = response.data.data;

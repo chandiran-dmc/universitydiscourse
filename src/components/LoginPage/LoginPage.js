@@ -62,7 +62,7 @@ export default class LoginPage extends Component {
         event.preventDefault();
         axios({
             method: 'post',
-            url: 'http://localhost:3000/api-user/authenticate',
+            url: 'https://unidiscourse-backend.herokuapp.com/api-user/authenticate',
             data: {
                 email: this.state.email,
                 password: this.state.password

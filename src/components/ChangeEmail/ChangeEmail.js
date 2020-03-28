@@ -75,7 +75,7 @@ export default class ChangeEmail extends Component {
 
         axios({
             method: 'post',
-            url: 'http://localhost:3000/api-user/changeemail',
+            url: 'https://unidiscourse-backend.herokuapp.com/api-user/changeemail',
             data: {
                 email: this.state.oldemail,
                 newemail: this.state.newemail

@@ -76,7 +76,7 @@ export default class ChangePassword extends Component {
 
         axios({
             method: 'post',
-            url: 'http://localhost:3000/api-user/changepass',
+            url: 'https://unidiscourse-backend.herokuapp.com/api-user/changepass',
             data: {
                 email: this.state.email,
                 oldpassword: this.state.oldpassword,

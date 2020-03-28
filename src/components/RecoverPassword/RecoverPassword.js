@@ -83,7 +83,7 @@ export default class RecoverPassword extends Component {
 
         axios({
             method: 'post',
-            url: 'http://localhost:3000/api-user/recoverpassword',
+            url: 'https://unidiscourse-backend.herokuapp.com/api-user/recoverpassword',
             data: {
                 email: this.state.email,
                 newpassword: this.state.newpassword,

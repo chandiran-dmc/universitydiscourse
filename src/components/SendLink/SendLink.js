@@ -64,7 +64,7 @@ export default class SendLink extends Component {
 
         axios({
             method: 'post',
-            url: 'http://localhost:3000/api-user/recover',
+            url: 'https://unidiscourse-backend.herokuapp.com/api-user/recover',
             data: {
                 email: this.state.email
             }
