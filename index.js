@@ -6,7 +6,11 @@ const postRouter = require('./routes/post-router')
 const userRouter = require('./routes/user-router')
 
 const app = express()
-const PORT = 3000;
+// Heroku sets up the environment variable
+let PORT = process.env.PORT;
+if (PORT == undefined) {
+    PORT = 3000;
+}
 
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
