@@ -19,9 +19,15 @@ import MenuIcon from '../../customeIcons/menuIcon';
 import LikeIcon from '../../customeIcons/likeIcon';
 import { Redirect } from 'react-router-dom';
 import {FacebookShareButton} from "react-share"
-import { FacebookIcon } from 'react-social-icons';
+import FacebookIcon from '@material-ui/icons/Facebook';
+
+const ICON_DEFAULTS = {
+    round: true,
+    size: 30
+  };
 
 export default class Post extends Component {
+
 
     constructor(props) {
         super(props);
@@ -42,6 +48,8 @@ export default class Post extends Component {
             postRedirect: ""
         };       
     }
+    
+    
 
     handleRedirect = (editPost) => {
         if(this.state.user === localStorage.getItem("username")) {
@@ -202,8 +210,8 @@ export default class Post extends Component {
                                 </Grid>
                             </Grid>
                             <Grid item >
-                                <FacebookShareButton url={url} quote={"გააზიარე"} className="share">
-                                    <FacebookIcon size={32} round={true}/>
+                                <FacebookShareButton url={url} quote={"Hi"}>
+                                   <FacebookIcon />
                                 </FacebookShareButton>
                                 <Button
                                     variant="contained">
