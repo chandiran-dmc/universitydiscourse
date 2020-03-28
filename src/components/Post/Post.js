@@ -24,6 +24,7 @@ export default class Post extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            id: props.data._id,
             title: props.data.title,
             content: props.data.content,
             user: props.data.user,
@@ -34,7 +35,9 @@ export default class Post extends Component {
             count: props.data.count,
             theme: props.theme,
             isEditPost: false,
-            mode: ""
+            isRedirectPost: false,
+            mode: "",
+            postRedirect: ""
         };       
     }
 
@@ -51,6 +54,17 @@ export default class Post extends Component {
             alert('You can not edit this post');
         }
     }
+
+    handleRedirectPost = (Post) => {
+        
+
+        this.setState({
+            postRedirect: Post,
+            isRedirectPost: true
+        });
+
+    
+}
 
     renderContent = () => {
 
@@ -91,6 +105,24 @@ export default class Post extends Component {
                 }
             }}/>;
         }
+        if (this.state.isRedirectPost === true) {
+            console.log(this.state.id);
+
+            return <Redirect exact from="/" push to={{
+                pathname: "/post/" + `${this.state.id}`,
+                state: { 
+                    title: this.state.title,
+                    content: this.state.content,
+                    user: this.state.user,
+                    time: this.state.time,
+                    tags: this.state.tags,
+                    comments: this.state.comments,
+                    type: this.state.type,
+                    count: this.state.count,
+                    mode: this.state.mode
+                }
+            }}/>;
+        }
 
         return (
             <ThemeProvider theme={this.state.theme} >     
@@ -109,11 +141,12 @@ export default class Post extends Component {
                         </Grid>
                         <Grid item xs zeroMinWidth>
                             <Grid item>
-                                <Typography 
+                            <Button 
                                     variant="body1"
-                                    color="textPrimary" >
+                                    color="textPrimary" 
+                                    onClick={() => this.handleRedirectPost("Post Redirect")} >
                                     {this.state.title}
-                                </Typography>
+                                </Button>
                             </Grid>
                             <Grid item>
                                 <Typography 
