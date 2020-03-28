@@ -205,7 +205,8 @@ export default class Post extends Component {
                                 </Grid>
                             </Grid>
                             <Grid item >
-                                <FacebookShareButton url={url} quote={"გააზიარე"} className="share">
+                                <p>Facebook</p>
+                                <FacebookShareButton url={url} className="share">
                                     <FacebookIcon size={32} round={true}/>
                                 </FacebookShareButton>
                                 <Button
