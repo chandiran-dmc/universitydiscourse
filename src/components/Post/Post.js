@@ -18,6 +18,7 @@ import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton } from
 import MenuIcon from '../../customeIcons/menuIcon';
 import LikeIcon from '../../customeIcons/likeIcon';
 import { Redirect } from 'react-router-dom';
+import {FacebookShareButton} from "react-Share";
 
 export default class Post extends Component {
 
