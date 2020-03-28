@@ -18,7 +18,7 @@ import TopBar from '../TopBar/TopBar';
 import Footer from '../Footer/Footer';
 import './CreatePostPage.css'
 //import { positions, borderTop, borderBottom,borderLeft, borderRight } from '@material-ui/system';
-import { Button, Box, Grid, TextField } from '@material-ui/core';
+import { Button, Box, Grid, TextField, InputAdornment } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
 const axios = require('axios');
@@ -110,10 +110,24 @@ export default class CreatePostPage extends Component {
             username = "johndoe";
         }
 
+        let requestUrl = 'http://localhost:3000/api/';
+        // Send request differently for grade inputs
+        if (this.state.type === "grade") {
+            requestUrl = requestUrl + "inputgrade";
+        }
+        // request for curve inputs
+        else if (this.state.type === "curve") {
+            requestUrl = requestUrl + "inputcurve";
+        }
+        // request for any other posts
+        else {
+            requestUrl = requestUrl + "createpost";
+        }
+
         // Send request to the database
         axios({
             method: 'post',
-            url: 'http://localhost:3000/api/createpost',
+            url: requestUrl,
             data: {
                 title: this.state.title,
                 user: username,
@@ -327,6 +341,72 @@ export default class CreatePostPage extends Component {
         );
     }
    
+    getGradeInputPage = () => {
+        return (
+            <div>
+                <TopBar />
+                <div className="CreatePostPage">
+                    <form
+                        onSubmit={this.handleCreatePost}>
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center" >
+                            <Box
+                                boxShadow={30}
+                                margin={1}
+                                width="50%"
+                                mt={20} >
+                                <ThemeProvider theme={theme}>
+                                    <h3 style={{ color: '#023373' }}>
+                                        Course Name
+                                    </h3>
+                                    <br/>
+                                    <TextField id="filled-basic" label="" variant="filled" size="medium" onChange={this.handleChangeTitle}  defaultValue={this.state.title}/>
+                                    <br />
+                                    <h3 style={{ color: '#023373' }}>
+                                        Score (in percentage)
+                                    </h3>
+                                    <br />
+                                    <TextField id="filled-basic" label="" variant="outlined" onChange={this.handleChangeContent}  defaultValue={this.state.content}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start">%</InputAdornment>
+                                    }}
+                                    />
+                                    <br />
+                                    <h3 style={{ color: '#023373' }}>
+                                        Grade (A ~ F)
+                                    </h3>
+                                    <br />
+                                    <TextField id="filled-basic" label="" variant="filled" onChange={this.handleChangeTags} defaultValue={this.state.tags.toString()} />
+                                    <Grid
+                                        container
+                                        direction="row"
+                                        justify="center"
+                                        alignItems="center" >
+                                            <Button
+                                                color="secondary"
+                                                variant="contained"
+                                                style={{ justifyContent: 'center' }}
+                                                disableElevation
+                                                type="button"
+                                                onClick={this.state.mode === "edit post" ? this.handleUpdatePost : this.handleCreatePost} >
+                                                MAKE POST
+                                            </Button>
+                                    </Grid>
+                                </ThemeProvider>
+                            </Box>
+                        </Grid>
+                    </form>
+                </div>
+            </div>
+        );
+    }
+
+    getCurveInputPage = () => {
+
+    }
 
     render() {
 
@@ -339,9 +419,14 @@ export default class CreatePostPage extends Component {
         if (this.state.type === "text") {
             return this.getTextPage();
         }
-
         if (this.state.type === "image") {
             return this.getImagePage();
+        }
+        if (this.state.type === "grade") {
+            return this.getGradeInputPage();
+        }
+        if (this.state.type === "curve") {
+            return this.getCurveInputPage();
         }
     }
 }

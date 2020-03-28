@@ -129,6 +129,16 @@ export default class ActionBar extends Component {
                                 GRADE
                             </Button>
                         </Grid>
+                        <Grid item >
+                            <Button 
+                                color="secondary"
+                                variant="contained"
+                                startIcon={<GradeIcon />}
+                                type="button"
+                                onClick={() => {this.handleCreatePost("curve")}} >
+                                CURVE
+                            </Button>
+                        </Grid>
                     </Grid>
                 </Box>
             </ThemeProvider>
