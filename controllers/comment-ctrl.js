@@ -16,21 +16,21 @@ createComment = (req, res) => {
         });
     }
 
-    // create post model
+    // create comment model
     const comment = new Comment(body);
 
-    // error checking if post model was successfully created
+    // error checking if comment model was successfully created
     if (!comment) {
         return res.status(400).json({ success: false, error: err });
     }
 
-    // saving the post to the database
+    // saving the comment to the database
     comment
         .save()
         .then(() => {
             return res.status(201).json({
                 success: true,
-                id: comment.id,
+                //id: comment.id,
                 message: 'Comment created!',
             });
         })
@@ -44,5 +44,5 @@ createComment = (req, res) => {
 
 
 module.exports = {
-    createComment,
+    createComment
 }

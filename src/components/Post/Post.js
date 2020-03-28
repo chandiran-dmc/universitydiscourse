@@ -14,10 +14,11 @@
 
 
 import React, { Component } from 'react'
-import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton } from '@material-ui/core';
+import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, TextField } from '@material-ui/core';
 import MenuIcon from '../../customeIcons/menuIcon';
 import LikeIcon from '../../customeIcons/likeIcon';
 import { Redirect } from 'react-router-dom';
+const axios = require('axios');
 
 export default class Post extends Component {
 
@@ -36,6 +37,25 @@ export default class Post extends Component {
             isEditPost: false,
             mode: ""
         };       
+    }
+
+    createComment(event) {
+        event.preventDefault();
+
+        axios({
+            method: 'post',
+            url: 'http://localhost:3000/api-comment/comment',
+            data: {
+                count: 0,
+            }
+        })
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+            console.error(error);
+            alert('An error occurred');
+        });
     }
 
     handleRedirect = (editPost) => {
@@ -164,18 +184,29 @@ export default class Post extends Component {
                                         {this.state.count}
                                     </Typography>
                                 </Grid>
+                                <TextField id="filled-basic" label="Make a comment" variant="filled" onChange={this.handleChangeContent}/>
+                                <Grid item >
+                                    <Button
+                                        variant="contained" onClick={this.createComment}>
+                                        {"comment"}
+                                    </Button>
+                                </Grid>
                             </Grid>
-                            <Grid item >
-                                <Button
-                                    variant="contained">
-                                    {this.state.comments.length <= 1 ? this.state.comments.length + " comment" : this.state.comments.length + " comments"}
-                                </Button>
-                            </Grid>
+                            
                         </Grid>
                         <Grid>
                             <Typography variant="inherit">
                                 #{this.state.tags.toString()}
                             </Typography>
+                        </Grid>
+                        <Grid 
+                            container
+                            wrap="nowrap"
+                            justify="flex-start"
+                            alignItems="center"
+                            direction="row">
+                            
+                            
                         </Grid>
                     </Grid>
                 </Box>
