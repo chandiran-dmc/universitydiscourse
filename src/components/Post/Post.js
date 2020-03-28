@@ -18,7 +18,8 @@ import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton } from
 import MenuIcon from '../../customeIcons/menuIcon';
 import LikeIcon from '../../customeIcons/likeIcon';
 import { Redirect } from 'react-router-dom';
-import {FacebookShareButton} from "react-Share";
+import {FacebookShareButton} from "react-share"
+import { FacebookIcon } from 'react-social-icons';
 
 export default class Post extends Component {
 
@@ -89,6 +90,10 @@ export default class Post extends Component {
 
 
     render() {
+
+        
+        var url = `universitydiscourse.herokuapp.com/post/${this.state.id}`
+
         if (this.state.isEditPost === true) {
 
             return <Redirect exact from="/" push to={{
@@ -200,6 +205,9 @@ export default class Post extends Component {
                                 </Grid>
                             </Grid>
                             <Grid item >
+                                <FacebookShareButton url={url} quote={"გააზიარე"} className="share">
+                                    <FacebookIcon size={32} round={true}/>
+                                </FacebookShareButton>
                                 <Button
                                     variant="contained">
                                     {this.state.comments.length <= 1 ? this.state.comments.length + " comment" : this.state.comments.length + " comments"}
