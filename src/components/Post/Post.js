@@ -19,9 +19,15 @@ import MenuIcon from '../../customeIcons/menuIcon';
 import LikeIcon from '../../customeIcons/likeIcon';
 import { Redirect } from 'react-router-dom';
 import {FacebookShareButton} from "react-share"
-import { FacebookIcon } from 'react-social-icons';
+import FacebookIcon from '@material-ui/icons/Facebook';
+
+const ICON_DEFAULTS = {
+    round: true,
+    size: 30
+  };
 
 export default class Post extends Component {
+
 
     constructor(props) {
         super(props);
@@ -42,6 +48,8 @@ export default class Post extends Component {
             postRedirect: ""
         };       
     }
+    
+    
 
     handleRedirect = (editPost) => {
         if(this.state.user === localStorage.getItem("username")) {
@@ -90,10 +98,7 @@ export default class Post extends Component {
 
 
     render() {
-
-        
         var url = `universitydiscourse.herokuapp.com/post/${this.state.id}`
-
         if (this.state.isEditPost === true) {
 
             return <Redirect exact from="/" push to={{
@@ -147,12 +152,12 @@ export default class Post extends Component {
                         </Grid>
                         <Grid item xs zeroMinWidth>
                             <Grid item>
-                            <Typography 
+                            <Button 
                                     variant="body1"
-                                    color="textPrimary" >
-                                  //  onClick={() => this.handleRedirectPost("Post Redirect")} >
+                                    color="textPrimary" 
+                                    onClick={() => this.handleRedirectPost("Post Redirect")} >
                                     {this.state.title}
-                                </Typography>
+                                </Button>
                             </Grid>
                             <Grid item>
                                 <Typography 
@@ -205,9 +210,8 @@ export default class Post extends Component {
                                 </Grid>
                             </Grid>
                             <Grid item >
-                                <p>Facebook</p>
-                                <FacebookShareButton url={url} className="share">
-                                    <FacebookIcon size={32} round={true}/>
+                                <FacebookShareButton url={url} quote={"Hi"}>
+                                   <FacebookIcon />
                                 </FacebookShareButton>
                                 <Button
                                     variant="contained">
