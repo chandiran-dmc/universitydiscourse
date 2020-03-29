@@ -17,6 +17,8 @@ import React, { Component } from 'react'
 import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton } from '@material-ui/core';
 import MenuIcon from '../../customeIcons/menuIcon';
 import LikeIcon from '../../customeIcons/likeIcon';
+import {FacebookShareButton} from "react-share"
+import FacebookIcon from '@material-ui/icons/Facebook';
 const axios = require('axios');
 
 
@@ -27,6 +29,9 @@ export default class PostPage extends Component {
         super(props);
         var location = window.location.href;
         var result = location.substring(location.lastIndexOf("/") + 1);
+        var pos = result.indexOf('?');
+        if ( pos < 0 ) pos = result.length;
+        result = result.substring(0, pos);
         this.state = {
             id: result,
             type: "",
@@ -38,6 +43,7 @@ export default class PostPage extends Component {
             time: "",
             comments: [],
             count: 0,
+            user: "",
            
         };
 
@@ -62,6 +68,7 @@ export default class PostPage extends Component {
                 comments: response.data.data.comments,
                 content: response.data.data.content,
                 time: response.data.data.time,
+                user: response.data.data.user,
 
             })
                
@@ -120,7 +127,7 @@ export default class PostPage extends Component {
    
 
     render() {
-        
+        const iframe = <iframe src={`universitydiscourse.herokuapp.com/post/${this.state.id}`} width="540" height="450"/>
 
         return (
             <ThemeProvider theme={this.state.theme} >     
@@ -191,6 +198,9 @@ export default class PostPage extends Component {
                                 </Grid>
                             </Grid>
                             <Grid item >
+                                <FacebookShareButton url={iframe.props.src} quote={`universitydiscourse.herokuapp.com/post/${this.state.id}`}>
+                                   <FacebookIcon />
+                                </FacebookShareButton>
                                 <Button
                                     variant="contained"
                                     onClick={() => this.renderComments} >
