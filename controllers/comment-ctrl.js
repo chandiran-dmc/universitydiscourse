@@ -53,7 +53,7 @@ getcomments = async (req, res) => {
         if (!comments.length) {
             return res
                 .status(402)
-                .json({ success: false, error: `Posts not found` });
+                //.json({ success: false, error: `Posts not found` });
         }
         // return posts
         return res.status(200).json({ success: true, data: comments });

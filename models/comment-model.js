@@ -3,7 +3,10 @@ const Schema = mongoose.Schema;
 
 const Comment = new Schema(
     {
-        count: { type: Number, required: true }
+        postid: {type: String, required: true},
+        content: { type: String, required: true },
+        user: { type: String, required: true },
+        time: { type: Number, required: true }
     },
     {
         collection: 'comments'
