@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, TextField, createMuiTheme } from '@material-ui/core';
-
+import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, TextField, createMuiTheme, Paper, InputAdornment } from '@material-ui/core';
+import SearchIcon from '@material-ui/icons/Search';
 import MenuIcon from '../../customeIcons/menuIcon';
 import LikeIcon from '../../customeIcons/likeIcon';
 import { Redirect } from 'react-router-dom';
@@ -24,7 +24,10 @@ const theme = createMuiTheme({
         text: {
             main: "#000000",
             sub: "#9B9B9B"
-        }
+        },
+        iconButton: {
+          padding: 10,
+        },
     }
 });
 
@@ -49,8 +52,18 @@ export default class Post extends Component {
             makeacomment: false,
             seeallcomments: true,
             comments: [],
-            _id: props.data._id
+            _id: props.data._id,
+            commentContent: ""
         };       
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleChange(event) {
+        this.setState(
+            {
+                commentContent: event.target.value
+            }
+        );       
     }
 
     createComment = () => {
@@ -62,7 +75,7 @@ export default class Post extends Component {
             url: 'http://localhost:3000/api-comment/comment',
             data: {
                 postid: this.state._id,
-                content: "CHECK CHECK",
+                content: this.state.commentContent,
                 user: username,
                 time: new Date().getTime()                
             }
@@ -257,6 +270,38 @@ export default class Post extends Component {
                                 #{this.state.tags.toString()}
                             </Typography>
                         </Grid>
+
+
+
+
+
+
+
+                        <TextField
+                        id="outlined-full-width"
+                        label={"Comment as " + localStorage.getItem('username')} 
+                        style={{ margin: 1 }}
+                        placeholder="What are your thoughts?"
+                        fullWidth
+                        margin="normal"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        defaultValue = ""
+                        onChange={this.handleChange}
+                        variant="outlined"/>
+                        
+
+
+
+
+
+
+
+
+
+
+                        
                         <Grid 
                             container
                             wrap="nowrap"
