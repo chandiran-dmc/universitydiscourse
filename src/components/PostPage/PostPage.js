@@ -17,6 +17,7 @@ import React, { Component } from 'react'
 import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton } from '@material-ui/core';
 import MenuIcon from '../../customeIcons/menuIcon';
 import LikeIcon from '../../customeIcons/likeIcon';
+const axios = require('axios');
 
 
 
@@ -24,19 +25,56 @@ export default class PostPage extends Component {
 
     constructor(props) {
         super(props);
-        console.log(this.props.location.state.tags)
+        var location = window.location.href;
+        var result = location.substring(location.lastIndexOf("/") + 1);
         this.state = {
-            type: this.props.location.state.type,
-            mode: this.props.location.state.mode,
-            title: (this.props.location.state.title === undefined ? "" : this.props.location.state.title),
-            content: (this.props.location.state.content === undefined ? "" : this.props.location.state.content),
-            tags: (this.props.location.state.tags === undefined ? [] : this.props.location.state.tags),
-            user: this.props.location.state.user,
-            time: this.props.location.state.time,
-            comments: this.props.location.state.comments,
-            count: this.props.location.state.count,
-            isRedirect: false,
+            id: result,
+            type: "",
+            mode: "",
+            title: "",
+            content: "",
+            tags: [],
+            user: "",
+            time: "",
+            comments: [],
+            count: 0,
+           
         };
+
+        console.log(this.state.id)
+
+
+        axios({
+            method: 'get',
+            url: "http://localhost:3000/api/getPostByID",
+            params: {
+                id: this.state.id,
+                
+            }
+           
+        })
+        .then((response) => {
+            this.setState({
+                title: response.data.data.title,
+                type: response.data.data.type,
+                tags: response.data.data.tag,
+                count: response.data.data.count,
+                comments: response.data.data.comments,
+                content: response.data.data.content,
+                time: response.data.data.time,
+
+            })
+               
+
+                console.log(response);
+        })
+        .catch((error) => {
+
+                console.log(error);
+        });
+
+       
+
     }
     
     renderContent = () => {
@@ -82,6 +120,7 @@ export default class PostPage extends Component {
    
 
     render() {
+        
 
         return (
             <ThemeProvider theme={this.state.theme} >     
