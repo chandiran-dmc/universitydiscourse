@@ -16,9 +16,10 @@
 import React, { Component } from 'react'
 import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton } from '@material-ui/core';
 import MenuIcon from '../../customeIcons/menuIcon';
-import Warning from '../../customeIcons/Warning';
+//import Warning from '../../customeIcons/Warning';
 import LikeIcon from '../../customeIcons/likeIcon';
 import { Redirect } from 'react-router-dom';
+const axios = require('axios');
 
 export default class Post extends Component {
 
@@ -36,30 +37,134 @@ export default class Post extends Component {
             theme: props.theme,
             isEditPost: false,
             isReportPost: false,
-            mode: ""
+            reportCount: props.data.reportCount,
+            likeCount: props.data.likeCount,
+            upvoteCount: props.data.upvoteCount,
+            downvoteCount: props.data.downvoteCount,
+            reportArray: props.data.reportArray,
+            reportArrayindex: props.data.reportArrayindex,
+            id: props.data._id,
+            //report: props.data.report,
+            mode: "",
+            
+            
         };       
     }
 
-    handleRedirect = (editPost) => {
-        if(this.state.user === localStorage.getItem("username")) {
+    onSubmitLike = (event) => {
+        // alert("YOU LIKED THE POST");
+        // alert(this.state.likeCount);
+        console.log(this.state.likeCount)
+        axios({
+            method: 'post',
+            url: 'http://localhost:3000/api/like',
+            data: {
+                user: this.state.user,
+                time: this.state.time,
+                likeCount: this.state.likeCount+1,
+                id: this.state.id
+            }
+        })
+        .then((response) => {
+            console.log(response);
+            this.setState({likeCount: this.state.likeCount+1})
+            
+        })
+        .catch((error) => {
+        
+            console.log("THIS IS THE ERROR");
+            console.log(error);
+            return;
+            
 
-            this.setState({
-                mode: editPost,
-                isEditPost: true
-            });
+        });
+        
+    }    
 
+    onSubmitUpVote = (event) => {
+        // alert("YOU UPVOTED THE POST");
+        // alert(this.state.upvoteCount);
+        console.log(this.state.upvoteCount)
+        axios({
+            method: 'post',
+            url: 'http://localhost:3000/api/upvote',
+            data: {
+                user: this.state.user,
+                time: this.state.time,
+                upvoteCount: this.state.upvoteCount+1,
+                id: this.state.id
+            }
+        })
+        .then((response) => {
+            console.log(response);
+            this.setState({upvoteCount: this.state.upvoteCount+1})
+            
+        })
+        .catch((error) => {
+        
+            console.log("THIS IS THE ERROR");
+            console.log(error);
+            return;
+            
+
+        });
+        
+    } 
+
+    onSubmitDownVote = (event) => {
+        // alert("YOU DOWNVOTED THE POST");
+        // alert(this.state.downvoteCount);
+        console.log(this.state.downvoteCount)
+        axios({
+            method: 'post',
+            url: 'http://localhost:3000/api/downvote',
+            data: {
+                user: this.state.user,
+                time: this.state.time,
+                downvoteCount: this.state.downvoteCount+1,
+                id: this.state.id
+            }
+        })
+        .then((response) => {
+            console.log(response);
+            this.setState({downvoteCount: this.state.downvoteCount+1})
+            
+        })
+        .catch((error) => {
+        
+            console.log("THIS IS THE ERROR");
+            console.log(error);
+            return;
+            
+
+        });
+       
+    }    
+
+
+    handleRedirect = (mode) => {
+        if (mode === "editpost") {
+            if(this.state.user === localStorage.getItem("username")) {
+
+                this.setState({
+                    mode: "editpost",
+                    isEditPost: true
+                });
+
+            }
+            else {
+                alert('You can not edit this post');
+            }
         }
         else {
-            alert('You can not edit this post');
+            this.setState({
+                mode: "reportpost",
+                isReportPost: true
+            });
         }
     }
 
-    handleRedirect = (ReportPost) => {
-        this.setState({
-            mode: ReportPost,
-            isReportPost: true
-        });
-    }
+   
 
     renderContent = () => {
 
@@ -104,7 +209,7 @@ export default class Post extends Component {
         if (this.state.isReportPost === true) {
 
             return <Redirect exact from="/" push to={{
-                pathname: "/rp",
+                pathname: "/reportpost",
                 state: { 
                     title: this.state.title,
                     content: this.state.content,
@@ -114,7 +219,14 @@ export default class Post extends Component {
                     comments: this.state.comments,
                     type: this.state.type,
                     count: this.state.count,
-                    mode: this.state.mode
+                    mode: this.state.mode,
+                    reportCount: this.state.reportCount,
+                    id: this.state.id,
+                    reportArray: this.state.reportArray,
+                    reportArrayindex: this.state.reportArrayindex,
+                    //report: this.state.report
+            
+
                 }
             }}/>;
         }
@@ -150,21 +262,19 @@ export default class Post extends Component {
                                 </Typography>
                             </Grid>
                         </Grid>
+
                         <Grid item>
                             <IconButton 
                                 type="button"
-                                
-                                onClick={() => this.handleRedirect("Report")} >
-                                   
-                                <i class='fa fa-bullhorn'></i>
-                                
-                                
+                                onClick={() => this.handleRedirect("reportpost")} >
+                                <i className="fa fa-bullhorn"></i>
                             </IconButton>
                         </Grid>
+                        
                         <Grid item>
                             <IconButton 
                                 type="button"
-                                onClick={() => this.handleRedirect("edit post")} >
+                                onClick={() => this.handleRedirect("editpost")} >
                                 <MenuIcon />
                             </IconButton>
                         </Grid>
@@ -190,16 +300,51 @@ export default class Post extends Component {
                                 justify="flex-start"
                                 alignItems="center"
                                 direction="row">
+                                
                                 <Grid item>
                                     <IconButton 
                                         type="button"
-                                        onClick={() => {alert('Like?')}} >
-                                        <LikeIcon />
+                                        onClick={this.onSubmitLike} 
+                                        >
+                                        <i class="fa fa-heart"></i>
                                     </IconButton>
                                 </Grid>
+
                                 <Grid item>
                                     <Typography variant="body2">
-                                        {this.state.count}
+                                        {this.state.likeCount}
+                                    </Typography>
+                                </Grid>
+                               
+                               
+                                <Grid item>
+                                    <IconButton 
+                                        type="button"
+                                        onClick={this.onSubmitUpVote}
+                                         >
+                                        <i class="fa fa-thumbs-up"></i>
+                                    </IconButton>
+                                </Grid>
+
+                                <Grid item>
+                                    <Typography variant="body2">
+                                        {this.state.upvoteCount}
+                                    </Typography>
+                                </Grid>
+                                
+                                
+                                <Grid item>
+                                    <IconButton 
+                                        type="button"
+                                        onClick={this.onSubmitDownVote} 
+                                        >
+                                        <i class="fa fa-thumbs-down"></i>
+                                    </IconButton>
+                                </Grid>
+                                
+                                <Grid item>
+                                    <Typography variant="body2">
+                                        {this.state.downvoteCount}
                                     </Typography>
                                 </Grid>
                             </Grid>

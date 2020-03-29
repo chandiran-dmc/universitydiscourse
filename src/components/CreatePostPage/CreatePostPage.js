@@ -56,7 +56,14 @@ export default class CreatePostPage extends Component {
             time: this.props.location.state.time,
             comments: this.props.location.state.comments,
             count: this.props.location.state.count,
-            isRedirect: false
+            isRedirect: false,
+            reportCount: this.props.location.state.reportCount,
+            likeCount: this.props.location.state.likeCount,
+            upvoteCount: this.props.location.state.upvoteCount,
+            downvoteCount: this.props.location.state.downvoteCount,
+            reportArray: this.props.location.state.reportArray,
+            reportArrayindex: this.props.location.state.reportArrayindex,
+
         };
 
         this.handleChangeContent = this.handleChangeContent.bind(this);
@@ -122,7 +129,14 @@ export default class CreatePostPage extends Component {
                 count: 0,
                 comments: [],
                 content: this.state.content,
-                time: new Date().getTime()
+                time: new Date().getTime(),
+                reportCount:0,
+                likeCount:0,
+                upvoteCount: 0,
+                downvoteCount: 0,
+                reportArray: [],
+                reportArrayindex: -1,
+                
             }
         })
         .then((response) => {
