@@ -327,6 +327,67 @@ export default class CreatePostPage extends Component {
             </div>
         );
     }
+
+    getCalendarPage = () => {
+        return (
+            <div>
+                <TopBar />
+                <Footer />
+
+                <div className="CreatePostPage">
+                    <form
+                        onSubmit={this.handleCreatePost}>
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center" >
+                            <Box
+                                boxShadow={30}
+                                margin={1}
+                                width="50%"
+                                mt={20} >
+                                <ThemeProvider theme={theme}>
+                                    <h3 style={{ color: '#023373' }}>
+                                        Post Title
+                                    </h3>
+                                    <br/>
+                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle}  defaultValue={this.state.title}/>
+                                    <br />
+                                    <h3 style={{ color: '#023373' }}>
+                                        Post Image URL
+                                    </h3>
+                                    <br />
+                                    <TextField id="filled-basic" label="Post Image URL" variant="filled" onChange={this.handleChangeContent}  defaultValue={this.state.content}/>
+                                    <br />
+                                    <h3 style={{ color: '#023373' }}>
+                                        Tags
+                                    </h3>
+                                    <br />
+                                    <TextField id="filled-basic" label="Tags" variant="filled" onChange={this.handleChangeTags} defaultValue={this.state.tags.toString()} />
+                                    <Grid
+                                        container
+                                        direction="row"
+                                        justify="center"
+                                        alignItems="center" >
+                                            <Button
+                                                color="secondary"
+                                                variant="contained"
+                                                style={{ justifyContent: 'center' }}
+                                                disableElevation
+                                                type="button"
+                                                onClick={this.state.mode === "edit post" ? this.handleUpdatePost : this.handleCreatePost} >
+                                                MAKE POST
+                                            </Button>
+                                    </Grid>
+                                </ThemeProvider>
+                            </Box>
+                        </Grid>
+                    </form>
+                </div>
+            </div>
+        );
+    }
    
 
     render() {
@@ -343,6 +404,10 @@ export default class CreatePostPage extends Component {
 
         if (this.state.type === "image") {
             return this.getImagePage();
+        }
+
+        if (this.state.type === "calendar") {
+            return this.getCalendarPage();
         }
     }
 }
