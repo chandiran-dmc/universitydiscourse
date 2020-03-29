@@ -216,6 +216,7 @@ export default class Post extends Component {
                             <Grid item >
                                 <FacebookShareButton url={iframe.props.src} quote={`universitydiscourse.herokuapp.com/post/${this.state.id}`}>
                                    <FacebookIcon />
+                                   <meta property = "og:title" content={this.state.title} />
                                 </FacebookShareButton>
                                 <Button
                                     variant="contained">

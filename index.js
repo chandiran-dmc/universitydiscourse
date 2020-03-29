@@ -18,6 +18,20 @@ app.get('/', (req, res) => {
     res.send('Oops!');
 })
 
+// app.get('/mp', function(request, response) {
+//     console.log('About page visited!');
+//     const filePath = path.resolve(__dirname, './build', 'index.html')
+//     fs.readFile(filePath, 'utf8', function (err,data) {
+//       if (err) {
+//         return console.log(err);
+//       }
+//       data = data.replace(/\$OG_TITLE/g, 'About Page');
+//       data = data.replace(/\$OG_DESCRIPTION/g, "About page description");
+//       result = data.replace(/\$OG_IMAGE/g, 'https://i.imgur.com/V7irMl8.png');
+//       response.send(result);
+//     });
+//   });
+
 app.use('/api', postRouter)
 app.use('/api-user', userRouter);
 app.listen(PORT, () => {

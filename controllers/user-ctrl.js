@@ -357,6 +357,23 @@ FindUser = (req, res) => {
     }).catch(err => console.log(err))
 };
 
+getTagsByName = async (req, res) => {
+    
+    console.log(req.query.user)
+    await User.findOne({ username: req.query.user }, (err, user) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        if (!user) {
+            return res
+                .status(405)
+                .json({ success: false, error: `User not found` })
+        }
+        return res.status(200).json({ success: true, data: user })
+    }).catch(err => console.log(err))
+}
+
 
 UpdateUserTags = (req, res) => {
     const body = req.body
@@ -399,6 +416,8 @@ UpdateUserTags = (req, res) => {
     }).catch(err => console.log(err))
 };
 
+
+
 module.exports = {
     RegisterUser,
     AuthenticateUser,
@@ -408,5 +427,6 @@ module.exports = {
     RecoveryEmail,
     RecoverPassword,
     FindUser,
-    UpdateUserTags
+    UpdateUserTags,
+    getTagsByName
 }
