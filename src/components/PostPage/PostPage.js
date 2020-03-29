@@ -46,7 +46,7 @@ export default class PostPage extends Component {
 
         axios({
             method: 'get',
-            url: "http://localhost:3000/api/getPostByID",
+            url: "https://unidiscourse-backend.herokuapp.com/api/getPostByID",
             params: {
                 id: this.state.id,
                 
