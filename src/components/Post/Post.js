@@ -14,28 +14,39 @@
 
 
 import React, { Component } from 'react';
-import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton } from '@material-ui/core';
+import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, Dialog, DialogActions, DialogTitle } from '@material-ui/core';
 import MenuIcon from '../../customeIcons/menuIcon';
 import LikeIcon from '../../customeIcons/likeIcon';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+
+let openDialog = false;
 
 export default class Post extends Component {
 
     constructor(props) {
         super(props);
 
+        //TODO: Make the dialog appear on button click
+
         // button tags
         let tags = [];
         props.data.tag.forEach(tag => {
             tags.push(
-                <Button
-                    key={Math.random()*100000}
-                    onClick={() => {this.tagOnClick(tag)}}
-                    disableElevation
-                    size="small">
-                    #{tag}
-                </Button>
+                <div>
+                    <Button
+                        key={Math.random()*100000}
+                        onClick={() => {this.tagOnClick(tag)}}
+                        disableElevation
+                        size="small">
+                        #{tag}
+                    </Button>
+                    {/* <Dialog
+                        open={openDialog} >
+                        <DialogTitle>
+                        </DialogTitle>
+                    </Dialog> */}
+                </div>
             );
         });
 
@@ -51,10 +62,12 @@ export default class Post extends Component {
             theme: props.theme,
             isEditPost: false,
             mode: ""
-        };       
+        };
     }
 
+
     tagOnClick = (tag) => {
+
         if (window.confirm(`Would you like to follow ${tag}?`)) {
             let tags = [];
             if (localStorage.getItem("tags") != null) {
@@ -229,7 +242,12 @@ export default class Post extends Component {
                                 </Button>
                             </Grid>
                         </Grid>
-                        <Grid>
+                        <Grid
+                        item
+                        container
+                        justify="flex-start"
+                        alignItems="flex-start"
+                        direction="row">
                             <Typography variant="inherit">
                                 {this.state.tags}
                             </Typography>
