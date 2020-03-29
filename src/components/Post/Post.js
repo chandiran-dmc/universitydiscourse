@@ -42,6 +42,9 @@ export default class Post extends Component {
             upvoteCount: props.data.upvoteCount,
             downvoteCount: props.data.downvoteCount,
             reportArray: props.data.reportArray,
+            likeArray: props.data.likeArray,
+            upvoteArray: props.data.upvoteArray,
+            downvoteArray: props.data.downvoteArray,
             reportArrayindex: props.data.reportArrayindex,
             id: props.data._id,
             //report: props.data.report,
@@ -62,17 +65,21 @@ export default class Post extends Component {
                 user: this.state.user,
                 time: this.state.time,
                 likeCount: this.state.likeCount+1,
+                likeArray: this.state.likeArray,
                 id: this.state.id
             }
         })
         .then((response) => {
-            console.log(response);
-            this.setState({likeCount: this.state.likeCount+1})
+            alert("THIS IS NOT ERROR");
+            alert(response.data.likeCount);
+            //alert(response.data.data.likeArray);
+            this.setState({likeCount: response.data.likeCount})
+            this.setState({likeArray: response.data.likeArray})
             
         })
         .catch((error) => {
         
-            console.log("THIS IS THE ERROR");
+            alert("THIS IS THE ERROR");
             console.log(error);
             return;
             

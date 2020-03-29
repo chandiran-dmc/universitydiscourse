@@ -184,11 +184,7 @@ reportPost = async (req, res) => {
         
         var i = 0;
         var flag;
-        // var temp = 5;
-        // for (;temp < 6; temp++){
-        //     console.log("FOR CHECKING");
-
-        // }
+        
         console.log(i);
         
         for (i = 0; i < body.reportArrayindex; i++) {
@@ -241,11 +237,10 @@ reportPost = async (req, res) => {
 likePost = async (req, res) => {
 
  
-    // Parse body from the request
     const body = req.body;
 
-    console.log(body.likeCount);
-    console.log(body.id);
+    console.log(body);
+    
     
     if (!body) {
         console.log("NOOOO");
@@ -283,8 +278,39 @@ likePost = async (req, res) => {
             });
         }
 
+        var i = 0;
+        var flag;
+        
+        console.log(i);
+        
+        for (i = 0; i < body.likeCount - 1; i++) {
+            console.log("CURRENT USER");
+            console.log(body.user);
+            console.log("EARLIER USER");
+            console.log(body.likeArray[i]);
+            if (body.likeArray[i].localeCompare(body.user) === 0) {
+                console.log("COMES HERE");
+                flag = -100; // user already found
+
+            }
+        }
+
+        if (flag === -100) {
+            return res.status(200).json({
+               
+                err,
+                message: 'User has already liked the post',
+                likeCount: post.likeCount,
+                likeArray: post.likeArray,
+            });
+
+        }
+
         // Set new information for the post
         post.likeCount=body.likeCount;
+        //post.reportArrayindex=body.reportArrayindex;
+        console.log(body.user);
+        post.likeArray.push(body.user);
         
         post.save()
             .then(() => {
@@ -294,6 +320,8 @@ likePost = async (req, res) => {
                    
                     success: true,
                     id: post._id,
+                    likeCount: post.likeCount,
+                    likeArray: post.likeArray,
                     message: 'Like registered!',
                 });
             })
