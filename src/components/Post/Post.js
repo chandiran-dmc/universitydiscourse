@@ -98,7 +98,10 @@ export default class Post extends Component {
 
 
     render() {
-        var url = `universitydiscourse.herokuapp.com/post/${this.state.id}`
+        const iframe = <iframe src={`universitydiscourse.herokuapp.com/post/${this.state.id}`} width="540" height="450"/>
+        console.log(iframe.props.src);
+         var url = `universitydiscourse.herokuapp.com/post/${this.state.id}`
+        // var url = `https://mail.google.com/mail/u/0/#search/heroku/FMfcgxwHMZMNbdVXpGzLtvdhHZzDdGCS`
         if (this.state.isEditPost === true) {
 
             return <Redirect exact from="/" push to={{
@@ -122,6 +125,7 @@ export default class Post extends Component {
             return <Redirect exact from="/" push to={{
                 pathname: "/post/" + `${this.state.id}`,
                 state: { 
+                    id: this.state.id,
                     title: this.state.title,
                     content: this.state.content,
                     user: this.state.user,
@@ -210,7 +214,7 @@ export default class Post extends Component {
                                 </Grid>
                             </Grid>
                             <Grid item >
-                                <FacebookShareButton url={url} quote={"Hi"}>
+                                <FacebookShareButton url={iframe.props.src} quote={`universitydiscourse.herokuapp.com/post/${this.state.id}`}>
                                    <FacebookIcon />
                                 </FacebookShareButton>
                                 <Button
