@@ -113,16 +113,21 @@ export default class CreatePostPage extends Component {
     }
 
     handleChangeTags(event, values) {
-      let value = event.target.value
+        console.log(event.target.value)
       
-      if(event.target.value === 0 || this.state.all.includes(event.target.value)) {
+      if(event.target.value === 0 || this.state.all.includes(event.target.value) || event.target.value == null) {
         this.setState(
             {
                 type:this.state.type,
                 title: this.state.title,
                 content: this.state.content,
                 tags: values,
-            }
+            },
+            () => {
+                // This will output an array of objects
+                // given by Autocompelte options property.
+                console.log(this.state.tags);
+              }
         );
        }
        else if(!this.state.all.includes(event.target.value) && event.target.value != null) {
