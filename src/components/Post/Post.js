@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, TextField, createMuiTheme, Paper, InputAdornment } from '@material-ui/core';
-import SearchIcon from '@material-ui/icons/Search';
+import InsertCommentIcon from '@material-ui/icons/InsertComment';
+import ExpandLessIcon from '@material-ui/icons/ExpandLess';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MenuIcon from '../../customeIcons/menuIcon';
 import LikeIcon from '../../customeIcons/likeIcon';
 import { Redirect } from 'react-router-dom';
@@ -67,7 +69,12 @@ export default class Post extends Component {
     }
 
     createComment = () => {
+        if (this.state.commentContent === "") {
+            return;
+        }
+
         //event.preventDefault();
+        
         let username = localStorage.getItem("username");
         //console.log(this.state.title);
         axios({
@@ -92,7 +99,7 @@ export default class Post extends Component {
 
     getComments = async () => {
         this.setState({
-            seeallcomments: !this.state.seeallcomments
+            seeallcomments: true
         })
         console.log(this.state._id);
         // TODO: request the database for the comments
@@ -153,6 +160,7 @@ export default class Post extends Component {
             case "image":
                 content = <img src={this.state.content} alt={"The Image URL is invalid"} width="600"/>
                 break;
+                
 
             default:
                 break;
@@ -265,38 +273,43 @@ export default class Post extends Component {
                             alignItems="center"
                             direction="row">
 
+                            <TextField
+                            id="outlined-full-width"
+                            label={"Comment as " + localStorage.getItem('username')} 
+                            style={{ margin: 1 }}
+                            placeholder="What are your thoughts?"
+                            fullWidth
+                            margin="normal"
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                            defaultValue = ""
+                            onChange={this.handleChange}
+                            variant="outlined"/>
 
-                            <Grid item width={400}>
-
-                                <TextField
-                                id="outlined-full-width"
-                                label={"Comment as " + localStorage.getItem('username')} 
-                                style={{ margin: 1 }}
-                                placeholder="What are your thoughts?"
-                                fullWidth
-                                margin="normal"
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                                defaultValue = ""
-                                onChange={this.handleChange}
-                                variant="outlined"/>
-
-
-                            </Grid>
                             <Grid container justify="flex-end" >
                                 <Grid item>
                                     <Button
                                         variant="contained" onClick={() => this.createComment()}>
-                                        {"Post Comment"}
+                                        {
+                                            <InsertCommentIcon />
+                                        }
                                     </Button>
                                 </Grid>
                                 
                                 <Grid item>
-                                <Button
+                                    {(this.state.seeallcomments === true)?<Button
+                                    variant="contained" onClick={() => this.setState({seeallcomments: false})}>
+                                    {
+                                        <ExpandLessIcon />
+                                    }
+                                </Button>:<Button
                                     variant="contained" onClick={() => this.getComments()}>
-                                    {"See all comments"}
-                                </Button>
+                                    {
+                                        <ExpandMoreIcon />
+                                    }
+                                </Button>}
+                                
                                 </Grid>
 
 

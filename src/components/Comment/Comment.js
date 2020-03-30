@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, TextField, makeStyles, Dialog, DialogTitle, DialogContent, DialogActions } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
-import LikeIcon from '../../customeIcons/likeIcon';
-import { Redirect } from 'react-router-dom';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 const axios = require('axios');
 
 
+function Alert(props) {
+    return <MuiAlert elevation={6} variant="filled" {...props} />;
 
-//const open = React.useState(true);
+}
+
+
 
 
 const useStyles = makeStyles({
@@ -33,7 +37,8 @@ export default class Comment extends Component {
             time: props.data.time,
             theme: props.theme,
             editDialog: false,
-            dialogContent: ""
+            dialogContent: "",
+            _id: props.data._id
         };       
         
         this.handleChange = this.handleChange.bind(this);
@@ -50,19 +55,22 @@ export default class Comment extends Component {
 
     ChangeComment = () => {
         //event.preventDefault();
-        let username = localStorage.getItem("username");
-        console.log("TESTINGGG");
         axios({
             method: 'post',
             url: 'http://localhost:3000/api-comment/updatecomment',
             data: {
-                postid: this.state._id,
-                content: this.state.content,            
+                _id: this.state._id,
+                content: this.state.dialogContent,            
             }
         })
         .then((response) => {
             console.log(response);
-            this.getComments();
+            this.setState(
+                {
+                    content: this.state.dialogContent,
+                    editDialog: false
+                }
+            );   
         })
         .catch((error) => {
             console.error(error);
