@@ -98,6 +98,7 @@ export default class Post extends Component {
 
 
     render() {
+        console.log(this.state.tags.toString)
         const iframe = <iframe src={`universitydiscourse.herokuapp.com/post/${this.state.id}`} width="540" height="450"/>
         console.log(iframe.props.src);
          var url = `universitydiscourse.herokuapp.com/post/${this.state.id}`
@@ -214,7 +215,7 @@ export default class Post extends Component {
                                 </Grid>
                             </Grid>
                             <Grid item >
-                                <FacebookShareButton url={iframe.props.src} quote={`universitydiscourse.herokuapp.com/post/${this.state.id}`}>
+                                <FacebookShareButton url={iframe.props.src} quote={this.state.title} hashtag= {"#" + this.state.tags}>
                                    <FacebookIcon />
                                    <meta property = "og:title" content={this.state.title} />
                                 </FacebookShareButton>

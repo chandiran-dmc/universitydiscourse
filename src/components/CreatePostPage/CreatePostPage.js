@@ -45,7 +45,7 @@ const theme = createMuiTheme({
 });
 
 //TODO: get the following tags from the database
-const followTags = []
+const followTags = sample_user.tags
 
 
 
@@ -68,38 +68,13 @@ export default class CreatePostPage extends Component {
             isRedirect: false,
         };
 
-        axios({
-            method: 'get',
-            url: "http://localhost:3000/api-user/getTagsByName",
-            params: {
-                user: localStorage.getItem("username"),
-                
-            }
-           
-        })
-        .then((response) => {
-            // this.setState({
-            //     title: response.data.data.title,
-            //     type: response.data.data.type,
-            //     tags: response.data.data.tag,
-            //     count: response.data.data.count,
-            //     comments: response.data.data.comments,
-            //     content: response.data.data.content,
-            //     time: response.data.data.time,
-            //     user: response.data.data.user,
+        // let followTags = []
+        // followTags = localStorage.getItem("tags").split(",");
+        // this.setState({
+        //     followTags: followTags
+        // })
 
-            // })
-            this.setState({
-                followTags: response.data.data.tags
-            })
-               
-
-                console.log(response);
-        })
-        .catch((error) => {
-
-                console.log(error);
-        });
+        
 
 
         this.handleChangeContent = this.handleChangeContent.bind(this);
@@ -173,7 +148,7 @@ export default class CreatePostPage extends Component {
         let count = 0;
 
         for(let i = 0; i < this.state.tags.length; i++) {
-            if(this.state.followTags.includes(this.state.tags[i])) {
+            if(followTags.includes(this.state.tags[i])) {
                 count++;
             }
         }
@@ -251,7 +226,7 @@ export default class CreatePostPage extends Component {
         let count = 0;
 
         for(let i = 0; i < this.state.tags.length; i++) {
-            if(this.state.followTags.includes(this.state.tags[i])) {
+            if(followTags.includes(this.state.tags[i])) {
                 count++;
             }
         }
@@ -336,7 +311,7 @@ export default class CreatePostPage extends Component {
                                         <Autocomplete
                                             multiple
                                             id="tags-standard"
-                                            options={this.state.followTags}
+                                            options={followTags}
 
                                             onChange={this.handleChangeTags}
                                             freeSolo
@@ -418,7 +393,7 @@ export default class CreatePostPage extends Component {
                                         <Autocomplete
                                             multiple
                                             id="tags-standard"
-                                            options={this.state.followTags}
+                                            options={followTags}
 
                                             onChange={this.handleChangeTags}
                                             freeSolo
@@ -464,7 +439,7 @@ export default class CreatePostPage extends Component {
 
     render() {
 
-        console.log(this.state.followTags)
+        console.log(followTags)
 
         if (this.state.isRedirect) {
             return <Redirect exact from="/createpost" push to={{
