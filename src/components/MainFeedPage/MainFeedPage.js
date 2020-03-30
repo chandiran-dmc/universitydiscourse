@@ -58,7 +58,7 @@ export default class MainFeedPage extends Component {
 
         }
         
-    }
+    
 
     /**
      * Helper function to get the posts for the user

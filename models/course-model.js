@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const Course = new Schema(
     {
-        name: { type: String, require: true},
+        name: { type: String, required: true},
     },
     {
         collection: 'courses'

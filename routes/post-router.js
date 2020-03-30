@@ -14,6 +14,7 @@ router.put('/updatepost', PostCtrl.updatePost);
 router.delete('/removeallposts', PostCtrl.removeAllPosts);
 router.get('/getPostById', PostCtrl.getPostById)
 router.get('/getposts', PostCtrl.getPosts);
+router.get('/getcourses', CourseCtrl.getCourses);
 router.get('/getgrades', GradeCtrl.getGrades);
 router.get('/getcurves', CurveCtrl.getCurves);
 

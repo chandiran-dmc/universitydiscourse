@@ -47,26 +47,27 @@ createCourse = (req, res) => {
         });
 }
 
-// getCurves = async (req, res) => {
+getCourses = async (req, res) => {
 
-//     await Curve.find({}, (err, curves) => {
-//         // error handling
-//         if (err) {
-//             return res.status(400).json({ success: false, error: err });
-//         }
-//         // result checking
-//         if (!curves.length) {
-//             return res
-//                 .status(402)
-//                 .json({ success: false, error: `Curves not found` });
-//         }
-//         // return curves
-//         return res.status(200).json({ success: true, data: curves });
+    await Course.find({}, (err, courses) => {
+        // error handling
+        if (err) {
+            return res.status(400).json({ success: false, error: err });
+        }
+        // result checking
+        if (!courses.length) {
+            return res
+                .status(402)
+                .json({ success: false, error: `Courses not found` });
+        }
+        // return posts
+        return res.status(200).json({ success: true, data: courses });
 
-//     }).catch(err => console.log(err))
-// }
+    }).catch(err => console.log(err));
+}
+
 
 module.exports = {
     createCourse,
-    getCurves,
+    getCourses,
 }

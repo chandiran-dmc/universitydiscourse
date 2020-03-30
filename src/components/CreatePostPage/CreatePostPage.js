@@ -51,7 +51,6 @@ export default class CreatePostPage extends Component {
 
     constructor(props) {
         super(props);
-       // console.log(this.props.location.state.user)
         console.log(localStorage.getItem("username"))
         this.state = {
             type: this.props.location.state.type,
@@ -64,16 +63,28 @@ export default class CreatePostPage extends Component {
             comments: this.props.location.state.comments,
             count: this.props.location.state.count,
             isRedirect: false,
-            followTags: localStorage.getItem("tags").split(",")
+            followTags: localStorage.getItem("tags").split(","),
+            all: []
         };
 
-        
+        axios({
+            method: 'get',
+            url: 'http://localhost:3000/api/getcourses'
+          })
+          .then((response) => {
+            let all = []
+            for(let i = 0; i < response.data.data.length; i++) {
+                all.push(response.data.data[i].name)
+            }
+            this.setState({
+                all: all
+            })        
+          })
+          .catch((error) => {
+              console.error(error);
+              alert('An error occurred');
+          });
     
-
-
-
-        
-
 
         this.handleChangeContent = this.handleChangeContent.bind(this);
         this.handleChangeTitle = this.handleChangeTitle.bind(this);
@@ -102,27 +113,24 @@ export default class CreatePostPage extends Component {
     }
 
     handleChangeTags(event, values) {
-      console.log(values);
-        
-        //TODO: get all from the database
-        let all =  [];
-        all = sample_tags.AllTag;
-        if(event.target.value === 0 || all.includes(event.target.value)) {
-            console.log(all)
-            this.setState(
-                {
-                    type:this.state.type,
-                    title: this.state.title,
-                    content: this.state.content,
-                    tags: values,
-                }
-            );
-        }
-        else if(!all.includes(event.target.value) && event.target.value != null) {
-            console.log(event.target.value)
+      let value = event.target.value
+      
+      if(event.target.value === 0 || this.state.all.includes(event.target.value)) {
+        this.setState(
+            {
+                type:this.state.type,
+                title: this.state.title,
+                content: this.state.content,
+                tags: values,
+            }
+        );
+       }
+       else if(!this.state.all.includes(event.target.value) && event.target.value != null) {
             alert("Tag doesn't exist")
             values.pop()
         }
+              
+       
         
         
         
