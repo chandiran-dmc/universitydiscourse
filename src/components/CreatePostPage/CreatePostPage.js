@@ -17,7 +17,6 @@ import React, { Component } from 'react'
 import TopBar from '../TopBar/TopBar';
 import Footer from '../Footer/Footer';
 import './CreatePostPage.css'
-//import { positions, borderTop, borderBottom,borderLeft, borderRight } from '@material-ui/system';
 import { Button, Box, Grid, TextField, InputAdornment } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
@@ -45,8 +44,6 @@ const theme = createMuiTheme({
     }
 });
 
-//TODO: get the following tags from the database
-//const followTags = sample_user.tags
 
 
 
@@ -69,6 +66,11 @@ export default class CreatePostPage extends Component {
             isRedirect: false,
             followTags: localStorage.getItem("tags").split(",")
         };
+
+        
+    
+
+
 
         
 
