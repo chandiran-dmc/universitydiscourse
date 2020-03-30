@@ -51,7 +51,8 @@ export default class Post extends Component {
             isEditPost: false,
             isRedirectPost: false,
             mode: "",
-            postRedirect: ""
+            postRedirect: "",
+            rawTags: props.data.tag
         };       
         console.log(tags)
     }
@@ -205,7 +206,7 @@ export default class Post extends Component {
                                 </Grid>
                             </Grid>
                             <Grid item >
-                                <FacebookShareButton url={url} quote={this.state.title} hashtag= {"#" + this.state.tags}>
+                                <FacebookShareButton url={url} quote={this.state.title} hashtag= {"#" + this.state.rawTags}>
                                    <FacebookIcon />
                                    <meta property = "og:title" content={this.state.title} />
                                 </FacebookShareButton>
