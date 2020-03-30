@@ -50,7 +50,7 @@ export default class Post extends Component {
             isEditPost: false,
             mode: "",
             makeacomment: false,
-            seeallcomments: true,
+            seeallcomments: false,
             comments: [],
             _id: props.data._id,
             commentContent: ""
@@ -69,7 +69,7 @@ export default class Post extends Component {
     createComment = () => {
         //event.preventDefault();
         let username = localStorage.getItem("username");
-        console.log(this.state.title);
+        //console.log(this.state.title);
         axios({
             method: 'post',
             url: 'http://localhost:3000/api-comment/comment',
@@ -91,6 +91,9 @@ export default class Post extends Component {
     }
 
     getComments = async () => {
+        this.setState({
+            seeallcomments: !this.state.seeallcomments
+        })
         console.log(this.state._id);
         // TODO: request the database for the comments
         let commentlist = []
@@ -250,26 +253,59 @@ export default class Post extends Component {
                                         {this.state.count}
                                     </Typography>
                                 </Grid>
-                                <Grid item >
+                                
+                            </Grid>
+                                                        
+                        </Grid>
+                        <Grid 
+                            container
+                            wrap="nowrap"
+                            spacing={0}
+                            justify="flex-start"
+                            alignItems="center"
+                            direction="row">
+
+
+                            <Grid item width={400}>
+
+                                <TextField
+                                id="outlined-full-width"
+                                label={"Comment as " + localStorage.getItem('username')} 
+                                style={{ margin: 1 }}
+                                placeholder="What are your thoughts?"
+                                fullWidth
+                                margin="normal"
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                                defaultValue = ""
+                                onChange={this.handleChange}
+                                variant="outlined"/>
+
+
+                            </Grid>
+                            <Grid container justify="flex-end" >
+                                <Grid item>
                                     <Button
                                         variant="contained" onClick={() => this.createComment()}>
-                                        {"Make a comment"}
+                                        {"Post Comment"}
                                     </Button>
                                 </Grid>
-                                <Grid item >
-                                    <Button
-                                        variant="contained" onClick={() => this.getComments()}>
-                                        {"See all comments"}
-                                    </Button>
+                                
+                                <Grid item>
+                                <Button
+                                    variant="contained" onClick={() => this.getComments()}>
+                                    {"See all comments"}
+                                </Button>
                                 </Grid>
+
+
                             </Grid>
-                            
-                        </Grid>
-                        <Grid>
-                            <Typography variant="inherit">
-                                #{this.state.tags.toString()}
-                            </Typography>
-                        </Grid>
+
+
+
+
+                            </Grid>
 
 
 
@@ -277,19 +313,8 @@ export default class Post extends Component {
 
 
 
-                        <TextField
-                        id="outlined-full-width"
-                        label={"Comment as " + localStorage.getItem('username')} 
-                        style={{ margin: 1 }}
-                        placeholder="What are your thoughts?"
-                        fullWidth
-                        margin="normal"
-                        InputLabelProps={{
-                            shrink: true,
-                        }}
-                        defaultValue = ""
-                        onChange={this.handleChange}
-                        variant="outlined"/>
+
+                        
                         
 
 
@@ -311,8 +336,7 @@ export default class Post extends Component {
                             
                             
                             {(this.state.makeacomment == true)?                                
-                                    <TextField id="filled-basic" label="Make a comment" variant="filled"/>:""
-                                    
+                                    <TextField id="filled-basic" label="Post Comment" variant="filled"/>:""                                   
                                 
                             }
                             {(this.state.seeallcomments == true)?                                
