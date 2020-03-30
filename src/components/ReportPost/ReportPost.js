@@ -95,6 +95,7 @@ export default class ReportPost extends Component {
             // this.setState({reportCount: response.data.reportCount})
             // this.setState({reportArray: response.data.reportArray})
              //this.setState({var: true});
+             alert(response.data.message);
              this.setState({redirect1: true});
              //this.setState({reportCount: this.state.reportCount + 1})
              //setTimeout(function () {this.setState({redirect1: true, report: true})}, 2000);

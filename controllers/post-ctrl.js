@@ -132,7 +132,7 @@ removeAllPosts = async (req, res) => {
 }
 
 reportPost = async (req, res) => {
-    const reportArraylimit = 1;
+    const reportArraylimit = 100;
 
  
     // Parse body from the request
@@ -161,7 +161,7 @@ reportPost = async (req, res) => {
     };
     
 
-    Post.findOne(query, (err, post) => {
+    Post.findOne(query, async (err, post) => {
 
         // Post not found
         if (err) {
@@ -185,23 +185,25 @@ reportPost = async (req, res) => {
 
         // deleting the post 
         if (reportArraylimit === body.reportCount) {
-            console.log("DELETING");
-           
-            Post.findByIdAndDelete({_id: body.id}, (err, post ) => {
+            await post.remove((err, post) => {
                 if (err) {
                     return res.status(400).json({ success: false, error: err });
                 }
-        
                 if (!post) {
                     return res
-                        .status(404)
-                        .json({ success: false, error: `Post not found` });
+                    .status(404)
+                    .json({ success: false, error: `Post not found` });
                 }
                 console.log("SUCCESSFUL");
                 return res.status(200).json({ success: true,  message: "POST DELETED" });
-            }).catch(err => console.log(err));
-        }
+            })//.catch(err => console.log(err));
+            console.log("DELETING");    
+        } else {
          console.group("REACHES HERE");
+
+
+
+
         // Set new information for the post
         
         var i = 0;
@@ -256,7 +258,9 @@ reportPost = async (req, res) => {
                     message: 'Report not registered!',
                 });
             });
+        }
     });
+
 
 }
 
