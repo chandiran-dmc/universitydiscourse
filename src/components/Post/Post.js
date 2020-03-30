@@ -18,35 +18,19 @@ import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, Dialo
 import MenuIcon from '../../customeIcons/menuIcon';
 import LikeIcon from '../../customeIcons/likeIcon';
 import { Redirect } from 'react-router-dom';
+import Tag from './Tag';
 import axios from 'axios';
-
-let openDialog = false;
 
 export default class Post extends Component {
 
     constructor(props) {
         super(props);
 
-        //TODO: Make the dialog appear on button click
-
         // button tags
         let tags = [];
         props.data.tag.forEach(tag => {
             tags.push(
-                <div>
-                    <Button
-                        key={Math.random()*100000}
-                        onClick={() => {this.tagOnClick(tag)}}
-                        disableElevation
-                        size="small">
-                        #{tag}
-                    </Button>
-                    {/* <Dialog
-                        open={openDialog} >
-                        <DialogTitle>
-                        </DialogTitle>
-                    </Dialog> */}
-                </div>
+                <Tag name={tag} key={Math.random()*100000} />
             );
         });
 
@@ -63,47 +47,6 @@ export default class Post extends Component {
             isEditPost: false,
             mode: ""
         };
-    }
-
-
-    tagOnClick = (tag) => {
-
-        if (window.confirm(`Would you like to follow ${tag}?`)) {
-            let tags = [];
-            if (localStorage.getItem("tags") != null) {
-                tags = localStorage.getItem("tags").split(",");
-                // Remove default tag
-                tags = tags.filter((value, index, arr) => {return value !== "default"});
-            }
-            // update local storage
-            // handling duplicate tags
-            if (tags.includes(tag)) {
-                alert(`Tag ${tag} is already being followed.`);
-                return;
-            } else {
-                tags.push(tag);
-            }
-            localStorage.setItem("tags", tags.toString());
-
-            // update database
-            axios({
-                method: 'post',
-                url: 'http://localhost:3000/api-user/updateusertags',
-                data: {
-                    email: localStorage.getItem("email"),
-                    newtags: tags.toString()
-                }
-            })
-            .then((response) => {
-                console.log("Tags updated");
-            })
-            .catch((error) => {
-                console.error(error.response);
-                if (error.response.data.message) {
-                    alert(error.response.data.message);
-                }
-            });
-        }
     }
 
     handleRedirect = (editPost) => {
