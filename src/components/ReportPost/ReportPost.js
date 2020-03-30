@@ -72,9 +72,12 @@ export default class ReportPost extends Component {
             }
         })
         .then((response) => {
-            alert("ENTERING RESPONSE");
-            console.log(response);
-            // this.setState({reportCount: this.state.reportCount+1})
+            alert(response.data.message);
+            //alert(response.data.reportCount);
+            //this.setState({reportCount: response.data.reportCount})
+            this.setState({reportArray: response.data.reportArray})
+            
+             this.setState({reportCount: this.state.reportCount+1})
 
 
             // this.setState({reportArray: response.data.data.reportArray})
@@ -102,9 +105,7 @@ export default class ReportPost extends Component {
 
     
     render() {
-        if (this.state.report === true) {
-            alert("Report has been registered!");
-        }
+        
         if (this.state.redirect1 === true) {
     
             return <Redirect exact from="/" push to={{

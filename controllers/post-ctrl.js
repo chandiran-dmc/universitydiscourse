@@ -202,7 +202,9 @@ reportPost = async (req, res) => {
                 return res.status(200).json({
                    
                     err,
-                    message: 'User has already reported the post',
+                    reportArray: post.reportArray,
+                    reportCount: post.reportCount,
+                    message: 'User has already reported the post earlier, it is under review',
                 });
    
         }
@@ -219,8 +221,10 @@ reportPost = async (req, res) => {
                 return res.status(200).json({
                    
                     success: true,
+                    reportArray: post.reportArray,
+                    reportCount: post.reportCount,
                     id: post._id,
-                    message: 'Report registered 123!',
+                    message: 'Report registered!',
                 });
             })
             .catch(error => {
@@ -322,7 +326,7 @@ likePost = async (req, res) => {
                     id: post._id,
                     likeCount: post.likeCount,
                     likeArray: post.likeArray,
-                    message: 'Like registered!',
+                    message: 'You have liked the post!',
                 });
             })
             .catch(error => {
@@ -336,83 +340,12 @@ likePost = async (req, res) => {
 
 }
 
-downvotePost = async (req, res) => {
-
- 
-    // Parse body from the request
-    const body = req.body;
-
-    console.log(body.downvoteCount);
-    console.log(body.id);
-    
-    if (!body) {
-        console.log("NOOOO");
-        return res.status(400).json({
-            success: false,
-            error: 'You must provide a body to update',
-        });
-    }
-
-    const query = {
-        $and: [
-            {user: body.user},
-            {time: body.time}
-        ]
-    };
-
-    Post.findOne(query, (err, post) => {
-
-        // Post not found
-        if (err) {
-            console.log(err);
-            return res.status(404).json({
-                err,
-                message: 'Error occurred!',
-            });
-        }
-
-        // Post not found
-        if (!post) {
-            console.log(err);
-            return res.status(401).json({
-                
-                err,
-                message: 'Post not found',
-            });
-        }
-
-        // Set new information for the post
-        post.downvoteCount=body.downvoteCount;
-        
-        post.save()
-            .then(() => {
-                console.log("SUCCESS");
-                console.log(body.downvoteCount);
-                return res.status(200).json({
-                   
-                    success: true,
-                    id: post._id,
-                    message: 'Downvote registered!',
-                });
-            })
-            .catch(error => {
-                console.log(error);
-                return res.status(405).json({
-                    error,
-                    message: 'Downvote not registered!',
-                });
-            });
-    });
-
-}
 upvotePost = async (req, res) => {
 
- 
-    // Parse body from the request
     const body = req.body;
 
-    console.log(body.upvoteCount);
-    console.log(body.id);
+    console.log(body);
+    
     
     if (!body) {
         console.log("NOOOO");
@@ -448,10 +381,41 @@ upvotePost = async (req, res) => {
                 err,
                 message: 'Post not found',
             });
+        }
+
+        var i = 0;
+        var flag;
+        
+        console.log(i);
+        
+        for (i = 0; i < body.upvoteCount - 1; i++) {
+            console.log("CURRENT USER");
+            console.log(body.user);
+            console.log("EARLIER USER");
+            console.log(body.upvoteArray[i]);
+            if (body.upvoteArray[i].localeCompare(body.user) === 0) {
+                console.log("COMES HERE");
+                flag = -100; // user already found
+
+            }
+        }
+
+        if (flag === -100) {
+            return res.status(200).json({
+               
+                err,
+                message: 'User has already Upvoted the post',
+                upvoteCount: post.upvoteCount,
+                upvoteArray: post.upvoteArray,
+            });
+
         }
 
         // Set new information for the post
         post.upvoteCount=body.upvoteCount;
+        //post.reportArrayindex=body.reportArrayindex;
+        console.log(body.user);
+        post.upvoteArray.push(body.user);
         
         post.save()
             .then(() => {
@@ -461,7 +425,9 @@ upvotePost = async (req, res) => {
                    
                     success: true,
                     id: post._id,
-                    message: 'Upvote registered!',
+                    upvoteCount: post.upvoteCount,
+                    upvoteArray: post.upvoteArray,
+                    message: 'You have Upvoted the post!',
                 });
             })
             .catch(error => {
@@ -469,6 +435,106 @@ upvotePost = async (req, res) => {
                 return res.status(405).json({
                     error,
                     message: 'Upvote not registered!',
+                });
+            });
+    });
+
+}
+downvotePost = async (req, res) => {
+
+    const body = req.body;
+
+    console.log(body);
+    
+    
+    if (!body) {
+        console.log("NOOOO");
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a body to update',
+        });
+    }
+
+    const query = {
+        $and: [
+            {user: body.user},
+            {time: body.time}
+        ]
+    };
+
+    Post.findOne(query, (err, post) => {
+
+        // Post not found
+        if (err) {
+            console.log(err);
+            return res.status(404).json({
+                err,
+                message: 'Error occurred!',
+            });
+        }
+
+        // Post not found
+        if (!post) {
+            console.log(err);
+            return res.status(401).json({
+                
+                err,
+                message: 'Post not found',
+            });
+        }
+
+        var i = 0;
+        var flag;
+        
+        console.log(i);
+        
+        for (i = 0; i < body.downvoteCount - 1; i++) {
+            console.log("CURRENT USER");
+            console.log(body.user);
+            console.log("EARLIER USER");
+            console.log(body.downvoteArray[i]);
+            if (body.downvoteArray[i].localeCompare(body.user) === 0) {
+                console.log("COMES HERE");
+                flag = -100; // user already found
+
+            }
+        }
+
+        if (flag === -100) {
+            return res.status(200).json({
+               
+                err,
+                message: 'User has already Downvoted the post',
+                downvoteCount: post.downvoteCount,
+                downvoteArray: post.downvoteArray,
+            });
+
+        }
+
+        // Set new information for the post
+        post.downvoteCount=body.downvoteCount;
+        //post.reportArrayindex=body.reportArrayindex;
+        console.log(body.user);
+        post.downvoteArray.push(body.user);
+        
+        post.save()
+            .then(() => {
+                console.log("SUCCESS");
+                console.log(body.downvoteCount);
+                return res.status(200).json({
+                   
+                    success: true,
+                    id: post._id,
+                    downvoteCount: post.downvoteCount,
+                    downvoteArray: post.downvoteArray,
+                    message: 'You have Downvoted the post!',
+                });
+            })
+            .catch(error => {
+                console.log(error);
+                return res.status(405).json({
+                    error,
+                    message: 'Downvote not registered!',
                 });
             });
     });

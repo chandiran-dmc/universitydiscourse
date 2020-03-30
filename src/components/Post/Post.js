@@ -70,8 +70,8 @@ export default class Post extends Component {
             }
         })
         .then((response) => {
-            alert("THIS IS NOT ERROR");
-            alert(response.data.likeCount);
+            alert(response.data.message);
+            //alert(response.data.likeCount);
             //alert(response.data.data.likeArray);
             this.setState({likeCount: response.data.likeCount})
             this.setState({likeArray: response.data.likeArray})
@@ -99,12 +99,16 @@ export default class Post extends Component {
                 user: this.state.user,
                 time: this.state.time,
                 upvoteCount: this.state.upvoteCount+1,
+                upvoteArray: this.state.upvoteArray,
                 id: this.state.id
             }
         })
         .then((response) => {
-            console.log(response);
-            this.setState({upvoteCount: this.state.upvoteCount+1})
+            alert(response.data.message);
+            //alert(response.data.likeCount);
+            //alert(response.data.data.likeArray);
+            this.setState({upvoteCount: response.data.upvoteCount})
+            this.setState({upvoteArray: response.data.upvoteArray})
             
         })
         .catch((error) => {
@@ -129,12 +133,20 @@ export default class Post extends Component {
                 user: this.state.user,
                 time: this.state.time,
                 downvoteCount: this.state.downvoteCount+1,
+              
+                downvoteArray: this.state.downvoteArray,
                 id: this.state.id
             }
         })
         .then((response) => {
-            console.log(response);
-            this.setState({downvoteCount: this.state.downvoteCount+1})
+            //if (response.data.message.localeCompare("already")) {
+                alert(response.data.message);
+            //}
+           
+            //alert(response.data.likeCount);
+            //alert(response.data.data.likeArray);
+            this.setState({downvoteCount: response.data.downvoteCount})
+            this.setState({downvoteArray: response.data.downvoteArray})
             
         })
         .catch((error) => {
