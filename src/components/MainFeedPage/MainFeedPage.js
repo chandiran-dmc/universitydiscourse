@@ -37,26 +37,7 @@ export default class MainFeedPage extends Component {
         this.state = {
             filteredPosts: []
         };
-        // let all =  [];
-        // let i = 0
-        // all = sample_tags.AllTag;
-        // for(i = 0; i < all.length; i++) {
-        //     axios({
-        //         method: 'post',
-        //         url: "http://localhost:3000/api/createCourse",
-        //         data: {
-        //            name: all[i]
-        //         }
-        //     })
-        //     .then((response) => {
-        //     })
-        //     .catch((error) => {
-        //         console.error(error);
-        //         alert('An error occurred');
-        //     });
-
-
-        }
+    }
         
     
 

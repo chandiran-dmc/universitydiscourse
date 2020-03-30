@@ -49,11 +49,6 @@ export default class Post extends Component {
                         size="small">
                         #{tag}
                     </Button>
-                    {/* <Dialog
-                        open={openDialog} >
-                        <DialogTitle>
-                        </DialogTitle>
-                    </Dialog> */}
                 </div>
             );
         });
@@ -74,6 +69,7 @@ export default class Post extends Component {
             mode: "",
             postRedirect: ""
         };       
+        console.log(tags)
     }
     tagOnClick = (tag) => {
 
@@ -165,10 +161,7 @@ export default class Post extends Component {
 
     render() {
         console.log(this.state.tags.toString)
-        const iframe = <iframe src={`universitydiscourse.herokuapp.com/post/${this.state.id}`} width="540" height="450"/>
-        console.log(iframe.props.src);
          var url = `universitydiscourse.herokuapp.com/post/${this.state.id}`
-        // var url = `https://mail.google.com/mail/u/0/#search/heroku/FMfcgxwHMZMNbdVXpGzLtvdhHZzDdGCS`
         if (this.state.isEditPost === true) {
 
             return <Redirect exact from="/" push to={{
@@ -191,18 +184,6 @@ export default class Post extends Component {
 
             return <Redirect exact from="/" push to={{
                 pathname: "/post/" + `${this.state.id}`,
-                state: { 
-                    id: this.state.id,
-                    title: this.state.title,
-                    content: this.state.content,
-                    user: this.state.user,
-                    time: this.state.time,
-                    tags: this.state.tags,
-                    comments: this.state.comments,
-                    type: this.state.type,
-                    count: this.state.count,
-                    mode: this.state.mode
-                }
             }}/>;
         }
 
@@ -281,7 +262,7 @@ export default class Post extends Component {
                                 </Grid>
                             </Grid>
                             <Grid item >
-                                <FacebookShareButton url={iframe.props.src} quote={this.state.title} hashtag= {"#" + this.state.tags}>
+                                <FacebookShareButton url={url} quote={this.state.title} hashtag= {"#" + this.state.tags}>
                                    <FacebookIcon />
                                    <meta property = "og:title" content={this.state.title} />
                                 </FacebookShareButton>
