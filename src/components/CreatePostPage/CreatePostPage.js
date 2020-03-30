@@ -65,7 +65,7 @@ export default class CreatePostPage extends Component {
             likeArray: this.props.location.state.likeArray,
             upvoteArray: this.props.location.state.upvoteArray,
             downvoteArray: this.props.location.state.downvoteArray,
-            reportArrayindex: this.props.location.state.reportArrayindex,
+            //reportArraylimit: this.props.location.state.reportArraylimit,
 
         };
 
@@ -141,7 +141,7 @@ export default class CreatePostPage extends Component {
                 likeArray: [],
                 upvoteArray: [],
                 downvoteArray: [],
-                reportArrayindex: -1,
+                //reportArraylimit: 1,
                 
             }
         })

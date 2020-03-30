@@ -15,7 +15,7 @@ const Post = new Schema(
         likeArray: {type: [String], required: true},
         upvoteArray: {type: [String], required: true},
         downvoteArray: {type: [String], required: true},
-        reportArrayindex: {type: Number, required: true},
+        //reportArraylimit: {type: Number, required: true},
         //isEditPost: { type: Number, required: false },
         //isReportPost: { type: Number, required: false },
         //mode: { type: Number, required: false },

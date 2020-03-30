@@ -39,46 +39,65 @@ const theme = createMuiTheme ({
 export default class ReportPost extends Component {
 
     constructor(props) {
-        super(props)
+        super(props);
+        console.log('props -----',props);
         this.state = {
-            reportCount: this.props.location.state.reportCount,
+            
+            
             id: this.props.location.state.id,
             user:this.props.location.state.user,
             time:this.props.location.state.time,
             reportArray: this.props.location.state.reportArray,
-            reportArrayindex: this.props.location.state.reportArrayindex,
+           // reportArraylimit: this.props.location.state.reportArraylimit,
+            reportCount: this.props.location.state.reportCount,
             redirect1: false,
-            report: false,
+            //report: false,
+            
         };
         //console.log(this.state.reportCount);
         
     }
 
     onSubmit1 = (event) => {
-        
+        event.preventDefault();
+        // setTimeout(function(){
+        //     window.location = "http://localhost:3001/mp";
+        //    },2000);
        
-        console.log(this.state.reportCount)
-        this.setState({redirect1: true, report: true});
+        //console.log(this.state.reportCount)
+        //setTimeout(()=> this.setState({redirect1: true, report: true}), 2000);
+        //this.location.reload();
+         
+        
+        //this.setState({redirect1: true});
+        // setTimeout(() => {
+        //     this.setState({
+        //         redirect: true,
+        //     })
+        // }, 1000)
+        
         axios({
             method: 'post',
             url: 'http://localhost:3000/api/report',
             data: {
                 user: this.state.user,
+                report_user: localStorage.getItem("username"),
                 time: this.state.time,
-                reportArray: this.state.reportArray,
-                reportArrayindex: this.state.reportArrayindex+1,
                 reportCount: this.state.reportCount+1,
+                reportArray: this.state.reportArray,
+                //reportArraylimit: this.state.reportArraylimit,
+                
+                
                 id: this.state.id
             }
         })
         .then((response) => {
-            alert(response.data.message);
-            //alert(response.data.reportCount);
-            //this.setState({reportCount: response.data.reportCount})
-            this.setState({reportArray: response.data.reportArray})
-            
-             this.setState({reportCount: this.state.reportCount+1})
-
+            // this.setState({reportCount: response.data.reportCount})
+            // this.setState({reportArray: response.data.reportArray})
+             //this.setState({var: true});
+             this.setState({redirect1: true});
+             //this.setState({reportCount: this.state.reportCount + 1})
+             //setTimeout(function () {this.setState({redirect1: true, report: true})}, 2000);
 
             // this.setState({reportArray: response.data.data.reportArray})
             // console.log("recent person inserted");
@@ -96,7 +115,19 @@ export default class ReportPost extends Component {
             
 
         });
+        // if (this.state.var) {
+        //     this.setState({redirect1: true, report: true});
+
+        // }
+
+        
+           
+        
+        
     }  
+    onSubmit2 = (event) => {
+        this.setState({redirect1: true});
+    }
     
     
     
@@ -182,6 +213,33 @@ export default class ReportPost extends Component {
                             </Button> 
                             </ThemeProvider>
                             </form>
+                            <br />
+                            <form onSubmit={this.onSubmit1}>
+                            <ThemeProvider theme={theme}>
+                            <Button 
+                                className  = "ReportButton" 
+                                variant = "contained"
+                                color = "primary" 
+                                type = "submit"
+                                >
+                                I do not want to give a reason.
+                            </Button> 
+                            </ThemeProvider>
+                            </form>
+                            <br />
+                            <form onSubmit={this.onSubmit2}>
+                            <ThemeProvider theme={theme}>
+                            <Button 
+                                className  = "ReportButton" 
+                                variant = "contained"
+                                color = "primary" 
+                                type = "submit"
+                                >
+                                Main Feed Page
+                            </Button> 
+                            </ThemeProvider>
+                            </form>
+
                         </div>
                     </div>
                 </div>

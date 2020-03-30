@@ -132,6 +132,7 @@ removeAllPosts = async (req, res) => {
 }
 
 reportPost = async (req, res) => {
+    const reportArraylimit = 1;
 
  
     // Parse body from the request
@@ -158,6 +159,7 @@ reportPost = async (req, res) => {
             {time: body.time}
         ]
     };
+    
 
     Post.findOne(query, (err, post) => {
 
@@ -180,6 +182,26 @@ reportPost = async (req, res) => {
             });
         }
 
+
+        // deleting the post 
+        if (reportArraylimit === body.reportCount) {
+            console.log("DELETING");
+           
+            Post.findByIdAndDelete({_id: body.id}, (err, post ) => {
+                if (err) {
+                    return res.status(400).json({ success: false, error: err });
+                }
+        
+                if (!post) {
+                    return res
+                        .status(404)
+                        .json({ success: false, error: `Post not found` });
+                }
+                console.log("SUCCESSFUL");
+                return res.status(200).json({ success: true,  message: "POST DELETED" });
+            }).catch(err => console.log(err));
+        }
+         console.group("REACHES HERE");
         // Set new information for the post
         
         var i = 0;
@@ -187,12 +209,12 @@ reportPost = async (req, res) => {
         
         console.log(i);
         
-        for (i = 0; i < body.reportArrayindex; i++) {
+        for (i = 0; i < body.reportCount - 1; i++) {
             console.log("CURRENT USER");
-            console.log(body.user);
+            console.log(body.report_user);
             console.log("EARLIER USER");
             console.log(body.reportArray[i]);
-            if (body.reportArray[i].localeCompare(body.user) === 0) {
+            if (body.reportArray[i].localeCompare(body.report_user) === 0) {
                 console.log("COMES HERE");
                 flag = -100; // user already found
 
@@ -209,8 +231,8 @@ reportPost = async (req, res) => {
    
         }
         post.reportCount=body.reportCount;
-        post.reportArrayindex=body.reportArrayindex;
-        post.reportArray.push(body.user);
+        //post.reportArrayindex=body.reportArrayindex;
+        post.reportArray.push(body.report_user);
         
         
         
@@ -289,10 +311,10 @@ likePost = async (req, res) => {
         
         for (i = 0; i < body.likeCount - 1; i++) {
             console.log("CURRENT USER");
-            console.log(body.user);
+            console.log(body.like_user);
             console.log("EARLIER USER");
             console.log(body.likeArray[i]);
-            if (body.likeArray[i].localeCompare(body.user) === 0) {
+            if (body.likeArray[i].localeCompare(body.like_user) === 0) {
                 console.log("COMES HERE");
                 flag = -100; // user already found
 
@@ -313,8 +335,8 @@ likePost = async (req, res) => {
         // Set new information for the post
         post.likeCount=body.likeCount;
         //post.reportArrayindex=body.reportArrayindex;
-        console.log(body.user);
-        post.likeArray.push(body.user);
+        console.log(body.like_user);
+        post.likeArray.push(body.like_user);
         
         post.save()
             .then(() => {
@@ -390,10 +412,10 @@ upvotePost = async (req, res) => {
         
         for (i = 0; i < body.upvoteCount - 1; i++) {
             console.log("CURRENT USER");
-            console.log(body.user);
+            console.log(body.like_user);
             console.log("EARLIER USER");
             console.log(body.upvoteArray[i]);
-            if (body.upvoteArray[i].localeCompare(body.user) === 0) {
+            if (body.upvoteArray[i].localeCompare(body.like_user) === 0) {
                 console.log("COMES HERE");
                 flag = -100; // user already found
 
@@ -414,8 +436,8 @@ upvotePost = async (req, res) => {
         // Set new information for the post
         post.upvoteCount=body.upvoteCount;
         //post.reportArrayindex=body.reportArrayindex;
-        console.log(body.user);
-        post.upvoteArray.push(body.user);
+        console.log(body.like_user);
+        post.upvoteArray.push(body.like_user);
         
         post.save()
             .then(() => {
@@ -490,10 +512,10 @@ downvotePost = async (req, res) => {
         
         for (i = 0; i < body.downvoteCount - 1; i++) {
             console.log("CURRENT USER");
-            console.log(body.user);
+            console.log(body.like_user);
             console.log("EARLIER USER");
             console.log(body.downvoteArray[i]);
-            if (body.downvoteArray[i].localeCompare(body.user) === 0) {
+            if (body.downvoteArray[i].localeCompare(body.like_user) === 0) {
                 console.log("COMES HERE");
                 flag = -100; // user already found
 
@@ -514,8 +536,8 @@ downvotePost = async (req, res) => {
         // Set new information for the post
         post.downvoteCount=body.downvoteCount;
         //post.reportArrayindex=body.reportArrayindex;
-        console.log(body.user);
-        post.downvoteArray.push(body.user);
+        console.log(body.like_user);
+        post.downvoteArray.push(body.like_user);
         
         post.save()
             .then(() => {

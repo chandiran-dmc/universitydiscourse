@@ -17,7 +17,7 @@ import React, { Component } from 'react'
 import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton } from '@material-ui/core';
 import MenuIcon from '../../customeIcons/menuIcon';
 //import Warning from '../../customeIcons/Warning';
-import LikeIcon from '../../customeIcons/likeIcon';
+
 import { Redirect } from 'react-router-dom';
 const axios = require('axios');
 
@@ -25,6 +25,7 @@ export default class Post extends Component {
 
     constructor(props) {
         super(props);
+        console.log('props -----',props);
         this.state = {
             title: props.data.title,
             content: props.data.content,
@@ -45,7 +46,7 @@ export default class Post extends Component {
             likeArray: props.data.likeArray,
             upvoteArray: props.data.upvoteArray,
             downvoteArray: props.data.downvoteArray,
-            reportArrayindex: props.data.reportArrayindex,
+            //reportArraylimit: props.data.reportArraylimit,
             id: props.data._id,
             //report: props.data.report,
             mode: "",
@@ -62,7 +63,8 @@ export default class Post extends Component {
             method: 'post',
             url: 'http://localhost:3000/api/like',
             data: {
-                user: this.state.user,
+                like_user: localStorage.getItem("username"),
+                user:this.state.user,
                 time: this.state.time,
                 likeCount: this.state.likeCount+1,
                 likeArray: this.state.likeArray,
@@ -96,6 +98,7 @@ export default class Post extends Component {
             method: 'post',
             url: 'http://localhost:3000/api/upvote',
             data: {
+                like_user: localStorage.getItem("username"),
                 user: this.state.user,
                 time: this.state.time,
                 upvoteCount: this.state.upvoteCount+1,
@@ -130,6 +133,7 @@ export default class Post extends Component {
             method: 'post',
             url: 'http://localhost:3000/api/downvote',
             data: {
+                like_user: localStorage.getItem("username"),
                 user: this.state.user,
                 time: this.state.time,
                 downvoteCount: this.state.downvoteCount+1,
@@ -147,12 +151,12 @@ export default class Post extends Component {
             //alert(response.data.data.likeArray);
             this.setState({downvoteCount: response.data.downvoteCount})
             this.setState({downvoteArray: response.data.downvoteArray})
-            
+        
         })
         .catch((error) => {
         
-            console.log("THIS IS THE ERROR");
-            console.log(error);
+            //console.log("THIS IS THE ERROR");
+            //console.log(error);
             return;
             
 
@@ -242,7 +246,7 @@ export default class Post extends Component {
                     reportCount: this.state.reportCount,
                     id: this.state.id,
                     reportArray: this.state.reportArray,
-                    reportArrayindex: this.state.reportArrayindex,
+                    //reportArraylimit: this.state.reportArraylimit,
                     //report: this.state.report
             
 
