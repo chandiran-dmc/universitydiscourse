@@ -46,7 +46,7 @@ const theme = createMuiTheme({
 });
 
 //TODO: get the following tags from the database
-const followTags = sample_user.tags
+//const followTags = sample_user.tags
 
 
 
@@ -67,13 +67,8 @@ export default class CreatePostPage extends Component {
             comments: this.props.location.state.comments,
             count: this.props.location.state.count,
             isRedirect: false,
+            followTags: localStorage.getItem("tags").split(",")
         };
-
-        // let followTags = []
-        // followTags = localStorage.getItem("tags").split(",");
-        // this.setState({
-        //     followTags: followTags
-        // })
 
         
 
@@ -176,7 +171,7 @@ export default class CreatePostPage extends Component {
         let count = 0;
 
         for(let i = 0; i < this.state.tags.length; i++) {
-            if(followTags.includes(this.state.tags[i])) {
+            if(this.state.followTags.includes(this.state.tags[i])) {
                 count++;
             }
         }
@@ -309,7 +304,7 @@ export default class CreatePostPage extends Component {
         let count = 0;
 
         for(let i = 0; i < this.state.tags.length; i++) {
-            if(followTags.includes(this.state.tags[i])) {
+            if(this.state.followTags.includes(this.state.tags[i])) {
                 count++;
             }
         }
@@ -394,7 +389,7 @@ export default class CreatePostPage extends Component {
                                         <Autocomplete
                                             multiple
                                             id="tags-standard"
-                                            options={followTags}
+                                            options={this.state.followTags}
 
                                             onChange={this.handleChangeTags}
                                             freeSolo
@@ -476,7 +471,7 @@ export default class CreatePostPage extends Component {
                                         <Autocomplete
                                             multiple
                                             id="tags-standard"
-                                            options={followTags}
+                                            options={this.state.followTags}
 
                                             onChange={this.handleChangeTags}
                                             freeSolo
@@ -659,7 +654,7 @@ export default class CreatePostPage extends Component {
 
     render() {
 
-        console.log(followTags)
+        console.log(this.state.followTags)
 
         if (this.state.isRedirect) {
             return <Redirect exact from="/createpost" push to={{

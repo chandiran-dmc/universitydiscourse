@@ -20,6 +20,7 @@ import LikeIcon from '../../customeIcons/likeIcon';
 import { Redirect } from 'react-router-dom';
 import {FacebookShareButton} from "react-share"
 import FacebookIcon from '@material-ui/icons/Facebook';
+const axios = require('axios');
 
 const ICON_DEFAULTS = {
     round: true,
@@ -63,7 +64,7 @@ export default class Post extends Component {
             content: props.data.content,
             user: props.data.user,
             time: props.data.time,
-            tags: props.data.tag,
+            tags: tags,
             comments: props.data.comments,
             type: props.data.type,
             count: props.data.count,
@@ -73,6 +74,45 @@ export default class Post extends Component {
             mode: "",
             postRedirect: ""
         };       
+    }
+    tagOnClick = (tag) => {
+
+        if (window.confirm(`Would you like to follow ${tag}?`)) {
+            let tags = [];
+            if (localStorage.getItem("tags") != null) {
+                tags = localStorage.getItem("tags").split(",");
+                // Remove default tag
+                tags = tags.filter((value, index, arr) => {return value !== "default"});
+            }
+            // update local storage
+            // handling duplicate tags
+            if (tags.includes(tag)) {
+                alert(`Tag ${tag} is already being followed.`);
+                return;
+            } else {
+                tags.push(tag);
+            }
+            localStorage.setItem("tags", tags.toString());
+
+            // update database
+            axios({
+                method: 'post',
+                url: 'http://localhost:3000/api-user/updateusertags',
+                data: {
+                    email: localStorage.getItem("email"),
+                    newtags: tags.toString()
+                }
+            })
+            .then((response) => {
+                console.log("Tags updated");
+            })
+            .catch((error) => {
+                console.error(error.response);
+                if (error.response.data.message) {
+                    alert(error.response.data.message);
+                }
+            });
+        }
     }
     
     
@@ -258,7 +298,7 @@ export default class Post extends Component {
                         alignItems="flex-start"
                         direction="row">
                             <Typography variant="inherit">
-                                #{this.state.tags.toString()}
+                                {this.state.tags}
                             </Typography>
                         </Grid>
                     </Grid>
