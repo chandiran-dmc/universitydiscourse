@@ -18,6 +18,7 @@ import ImageIcon from '../../customeIcons/imageIcon';
 import DocIcon from '../../customeIcons/docIcon';
 import LinkIcon from '../../customeIcons/linkIcon';
 import TextIcon from '../../customeIcons/textIcon';
+import GradeIcon from '../../customeIcons/gradeIcon';
 import { Button, Box, ThemeProvider, Grid, Typography } from '@material-ui/core';
 
 export default class ActionBar extends Component {
@@ -116,6 +117,26 @@ export default class ActionBar extends Component {
                                 type="button"
                                 onClick={() => {this.handleCreatePost("link")}} >
                                 LINK
+                            </Button>
+                        </Grid>
+                        <Grid item >
+                            <Button 
+                                color="primary"
+                                variant="contained"
+                                startIcon={<GradeIcon />}
+                                type="button"
+                                onClick={() => {this.handleCreatePost("grade")}} >
+                                GRADE
+                            </Button>
+                        </Grid>
+                        <Grid item >
+                            <Button 
+                                color="secondary"
+                                variant="contained"
+                                startIcon={<GradeIcon />}
+                                type="button"
+                                onClick={() => {this.handleCreatePost("curve")}} >
+                                CURVE
                             </Button>
                         </Grid>
                     </Grid>

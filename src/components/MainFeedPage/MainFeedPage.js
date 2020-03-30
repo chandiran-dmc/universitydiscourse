@@ -6,7 +6,6 @@ import Post from './../Post';
 import SideBar from '../SideBar';
 import { Grid, createMuiTheme } from '@material-ui/core';
 import './MainFeedPage.css';
-import sample_user from '../../mock_data/user_data.json';
 const axios = require('axios');
 
 const theme = createMuiTheme({

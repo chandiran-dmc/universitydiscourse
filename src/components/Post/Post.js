@@ -13,8 +13,8 @@
  */
 
 
-import React, { Component } from 'react'
-import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton } from '@material-ui/core';
+import React, { Component } from 'react';
+import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, Dialog, DialogActions, DialogTitle } from '@material-ui/core';
 import MenuIcon from '../../customeIcons/menuIcon';
 import LikeIcon from '../../customeIcons/likeIcon';
 import { Redirect } from 'react-router-dom';
@@ -26,11 +26,37 @@ const ICON_DEFAULTS = {
     size: 30
   };
 
+let openDialog = false;
+
 export default class Post extends Component {
 
 
     constructor(props) {
         super(props);
+
+        //TODO: Make the dialog appear on button click
+
+        // button tags
+        let tags = [];
+        props.data.tag.forEach(tag => {
+            tags.push(
+                <div>
+                    <Button
+                        key={Math.random()*100000}
+                        onClick={() => {this.tagOnClick(tag)}}
+                        disableElevation
+                        size="small">
+                        #{tag}
+                    </Button>
+                    {/* <Dialog
+                        open={openDialog} >
+                        <DialogTitle>
+                        </DialogTitle>
+                    </Dialog> */}
+                </div>
+            );
+        });
+
         this.state = {
             id: props.data._id,
             title: props.data.title,
@@ -225,7 +251,12 @@ export default class Post extends Component {
                                 </Button>
                             </Grid>
                         </Grid>
-                        <Grid>
+                        <Grid
+                        item
+                        container
+                        justify="flex-start"
+                        alignItems="flex-start"
+                        direction="row">
                             <Typography variant="inherit">
                                 #{this.state.tags.toString()}
                             </Typography>

@@ -17,7 +17,8 @@ import React, { Component } from 'react'
 import TopBar from '../TopBar/TopBar';
 import Footer from '../Footer/Footer';
 import './CreatePostPage.css'
-import { Button, Box, Grid, TextField, Chip} from '@material-ui/core';
+//import { positions, borderTop, borderBottom,borderLeft, borderRight } from '@material-ui/system';
+import { Button, Box, Grid, TextField, InputAdornment } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
 import Autocomplete from '@material-ui/lab/Autocomplete';
@@ -82,6 +83,7 @@ export default class CreatePostPage extends Component {
         this.handleChangeTags = this.handleChangeTags.bind(this);
         this.handleCreatePost = this.handleCreatePost.bind(this);
         this.handleUpdatePost = this.handleUpdatePost.bind(this);
+        this.handleCurveChange = this.handleCurveChange.bind(this);
     }
 
     
@@ -129,21 +131,47 @@ export default class CreatePostPage extends Component {
         
     }
 
+    handleCurveChange(event) {
+
+        let name = event.target.name;
+        let curves = this.state.tags;
+        if (name === "bound_A") {
+            curves[0] = event.target.value;
+        } else if (name === "bound_B") {
+            curves[1] = event.target.value;
+        } else if (name === "bound_C") {
+            curves[2] = event.target.value;
+        } else if (name === "bound_D") {
+            curves[3] = event.target.value;
+        }
+
+        this.setState(
+            {
+                type: this.state.type,
+                title: this.state.title,
+                content: this.state.content,
+                tags: curves
+            }
+        );
+    }
+
     handleCreatePost(event) {
         // This is to stop the default behavior, 
         // which in this case is stopping form from reloading itself
         event.preventDefault();
 
         // Check if input is empty
-        if (this.state.tags.length === 0) {
-            alert('Tags cannot be empty');
-            return;
-        } else if (this.state.title.length === 0 ) {
-            alert('Title cannot be empty');
-            return;
-        } else if (this.state.content.length === 0) {
-            alert('Content cannot be empty');
-            return;
+        if (this.state.type !== "grade" && this.state.type !== "curve") {
+            if (this.state.title.length === 0) {
+                alert('Title cannot be empty');
+                return;
+            } else if (this.state.content.length === 0) {
+                alert('Content cannot be empty');
+                return;
+            } else if (this.state.tags.length === 0 || this.state.tags[0] === "") {
+                alert('Tags cannot be empty');
+                return;
+            }
         }
         let count = 0;
 
@@ -156,7 +184,7 @@ export default class CreatePostPage extends Component {
             alert('You must include atleast one tag that you follow')
             return;
         }
-
+        
         console.log(this.tags);
 
         let username = localStorage.getItem("username");
@@ -164,10 +192,65 @@ export default class CreatePostPage extends Component {
             username = "johndoe";
         }
 
+        let requestUrl = 'http://localhost:3000/api/';
+        // Send request differently for grade inputs
+        if (this.state.type === "grade") {
+            // check for content validity
+            if (this.state.title.length === 0) {
+                alert('Course name cannot be empty');
+                return;
+            } else if (isNaN(this.state.content)) {
+                alert('Please input a number for score');
+                return;
+            } else if (this.state.content <= 0 || this.state.content >= 100) {
+                alert('Please input a valid number for score');
+                return;
+            } else if (
+                this.state.tags[0] !== 'A' &&
+                this.state.tags[0] !== 'B' &&
+                this.state.tags[0] !== 'C' &&
+                this.state.tags[0] !== 'D' &&
+                this.state.tags[0] !== 'F'
+            ) {
+                alert('Please input a valid grade of A,B,C,D or F');
+                return;
+            }
+
+            requestUrl = requestUrl + "creategrade";
+        }
+        // request for curve inputs
+        else if (this.state.type === "curve") {
+            // TODO: error checking for curve input
+            if (this.state.title.length === 0) {
+                alert('Course name cannot be empty');
+                return;
+            } else if (this.state.tags.length != 4) {
+                alert('Some curve data is missing');
+                return;
+            } else if (this.state.tags[0] > 100) {
+                alert('The lower bound of A cannot be more than 100');
+                return;
+            } else if (this.state.tags[3] < 0) {
+                alert('The lower bound of D cannot be less than 0');
+                return;
+            } else if (!(this.state.tags[0] > this.state.tags[1] &&
+                       this.state.tags[1] > this.state.tags[2] &&
+                       this.state.tags[2] > this.state.tags[3])) {
+                alert('The input data is invalid. Check the order');
+                return;
+            }
+
+            requestUrl = requestUrl + "createcurve";
+        }
+        // request for any other posts
+        else {
+            requestUrl = requestUrl + "createpost";
+        }
+
         // Send request to the database
         axios({
             method: 'post',
-            url: 'http://localhost:3000/api/createpost',
+            url: requestUrl,
             data: {
                 title: this.state.title,
                 user: username,
@@ -436,6 +519,143 @@ export default class CreatePostPage extends Component {
 
     
    
+    getGradeInputPage = () => {
+        return (
+            <div>
+                <TopBar />
+                <div className="CreatePostPage">
+                    <form
+                        onSubmit={this.handleCreatePost}>
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center" >
+                            <Box
+                                boxShadow={30}
+                                margin={1}
+                                width="50%"
+                                mt={20} >
+                                <ThemeProvider theme={theme}>
+                                    <h3 style={{ color: '#023373' }}>
+                                        Course Name
+                                    </h3>
+                                    <br/>
+                                    <TextField id="filled-basic" label="" variant="filled" size="medium" onChange={this.handleChangeTitle}  defaultValue={this.state.title}/>
+                                    <br />
+                                    <h3 style={{ color: '#023373' }}>
+                                        Score (in percentage)
+                                    </h3>
+                                    <br />
+                                    <TextField id="filled-basic" label="" variant="outlined" onChange={this.handleChangeContent}  defaultValue={this.state.content}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start">%</InputAdornment>
+                                    }}
+                                    />
+                                    <br />
+                                    <h3 style={{ color: '#023373' }}>
+                                        Grade (A ~ F)
+                                    </h3>
+                                    <br />
+                                    <TextField id="filled-basic" label="" variant="filled" onChange={this.handleChangeTags} defaultValue={this.state.tags.toString()} />
+                                    <Grid
+                                        container
+                                        direction="row"
+                                        justify="center"
+                                        alignItems="center" >
+                                            <Button
+                                                color="secondary"
+                                                variant="contained"
+                                                style={{ justifyContent: 'center' }}
+                                                disableElevation
+                                                type="button"
+                                                onClick={this.state.mode === "edit post" ? this.handleUpdatePost : this.handleCreatePost} >
+                                                MAKE POST
+                                            </Button>
+                                    </Grid>
+                                </ThemeProvider>
+                            </Box>
+                        </Grid>
+                    </form>
+                </div>
+            </div>
+        );
+    }
+
+    getCurveInputPage = () => {
+        return (
+            <div>
+                <TopBar />
+                <div className="CreatePostPage">
+                    <form
+                        onSubmit={this.handleCreatePost}>
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center" >
+                            <Box
+                                boxShadow={30}
+                                margin={1}
+                                width="50%"
+                                mt={20} >
+                                <ThemeProvider theme={theme}>
+                                    <h3 style={{ color: '#023373' }}>
+                                        Course Name
+                                    </h3>
+                                    <br/>
+                                    <TextField id="filled-basic" label="" variant="filled" size="medium" onChange={this.handleChangeTitle}  defaultValue={this.state.title}/>
+                                    <br />
+                                    <h3 style={{ color: '#023373' }}>
+                                        Curve (lower bound)
+                                    </h3>
+                                    <br />
+                                    <TextField name="bound_A" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  defaultValue={this.state.content}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start">A%</InputAdornment>
+                                    }}
+                                    />
+                                    <br />
+                                    <TextField name="bound_B" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  defaultValue={this.state.content}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start">B%</InputAdornment>
+                                    }}
+                                    />
+                                    <br />
+                                    <TextField name="bound_C" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  defaultValue={this.state.content}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start">C%</InputAdornment>
+                                    }}
+                                    />
+                                    <br />
+                                    <TextField name="bound_D" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  defaultValue={this.state.content}
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start">D%</InputAdornment>
+                                    }}
+                                    />
+                                    <Grid
+                                        container
+                                        direction="row"
+                                        justify="center"
+                                        alignItems="center" >
+                                            <Button
+                                                color="secondary"
+                                                variant="contained"
+                                                style={{ justifyContent: 'center' }}
+                                                disableElevation
+                                                type="button"
+                                                onClick={this.state.mode === "edit post" ? this.handleUpdatePost : this.handleCreatePost} >
+                                                MAKE POST
+                                            </Button>
+                                    </Grid>
+                                </ThemeProvider>
+                            </Box>
+                        </Grid>
+                    </form>
+                </div>
+            </div>
+        );
+    }
 
     render() {
 
@@ -450,9 +670,14 @@ export default class CreatePostPage extends Component {
         if (this.state.type === "text") {
             return this.getTextPage();
         }
-
         if (this.state.type === "image") {
             return this.getImagePage();
+        }
+        if (this.state.type === "grade") {
+            return this.getGradeInputPage();
+        }
+        if (this.state.type === "curve") {
+            return this.getCurveInputPage();
         }
     }
 }
