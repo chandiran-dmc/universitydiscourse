@@ -126,9 +126,9 @@ export default class ReportPost extends Component {
         
         
     }  
-    onSubmit2 = (event) => {
-        this.setState({redirect1: true});
-    }
+    // onSubmit2 = (event) => {
+    //     this.setState({redirect1: true});
+    // }
     
     
     
@@ -228,7 +228,7 @@ export default class ReportPost extends Component {
                             </ThemeProvider>
                             </form>
                             <br />
-                            <form onSubmit={this.onSubmit2}>
+                            {/* <form onSubmit={this.onSubmit2}>
                             <ThemeProvider theme={theme}>
                             <Button 
                                 className  = "ReportButton" 
@@ -239,7 +239,7 @@ export default class ReportPost extends Component {
                                 Main Feed Page
                             </Button> 
                             </ThemeProvider>
-                            </form>
+                            </form> */}
 
                         </div>
                     </div>

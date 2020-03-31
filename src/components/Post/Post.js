@@ -16,6 +16,13 @@
 import React, { Component } from 'react'
 import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton } from '@material-ui/core';
 import MenuIcon from '../../customeIcons/menuIcon';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import Divider from '@material-ui/core/Divider';
+import InboxIcon from '@material-ui/icons/Inbox';
+import DraftsIcon from '@material-ui/icons/Drafts';
 //import Warning from '../../customeIcons/Warning';
 
 import { Redirect } from 'react-router-dom';
@@ -200,6 +207,17 @@ export default class Post extends Component {
         
             case "image":
                 content = <img src={this.state.content} alt={"The Image URL is invalid"} width="600"/>
+                break;
+
+            case "calendar":
+                content = <List component="nav" aria-label="main mailbox folders">
+                  <ListItem button>
+                    <ListItemIcon>
+                      <InboxIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Inbox" />
+                  </ListItem>
+                </List>
                 break;
 
             default:
