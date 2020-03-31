@@ -70,7 +70,7 @@ export default class Comment extends Component {
             }
         })
         .then((response) => {
-            alert(response.data.message);
+            this.renderSet(response.data.message, "info");
             //alert(response.data.likeCount);
             //alert(response.data.data.likeArray);
             this.setState({likeCountComment: response.data.likeCountComment})
@@ -105,7 +105,7 @@ export default class Comment extends Component {
             }
         })
         .then((response) => {
-            alert(response.data.message);
+            this.renderSet(response.data.message, "info");
             //alert(response.data.likeCount);
             //alert(response.data.data.likeArray);
             this.setState({upvoteCountComment: response.data.upvoteCountComment})
@@ -142,7 +142,7 @@ export default class Comment extends Component {
         })
         .then((response) => {
             //if (response.data.message.localeCompare("already")) {
-                alert(response.data.message);
+                this.renderSet(response.data.message, "info");
             //}
            
             //alert(response.data.likeCount);
@@ -228,6 +228,19 @@ export default class Comment extends Component {
         });
     }
 
+    
+    renderSet(text, alertType) {
+        this.setState({alert: true, alertText: text, alertType: alertType});
+    }
+
+    renderAlert(text) {
+        return <Snackbar open={this.state.alert} autoHideDuration={2000}  onClose={() => this.setState({alert: false})}>
+                    <Alert severity={this.state.alertType}>
+                    {this.state.alertText}
+                    </Alert>
+                </Snackbar>
+    }
+
 
     render() {
         
@@ -235,6 +248,7 @@ export default class Comment extends Component {
         return (
             
             <ThemeProvider theme={this.state.theme} >     
+                {this.renderAlert()}
                 <Box
                     boxShadow={2}
                     margin={2}
@@ -261,7 +275,7 @@ export default class Comment extends Component {
                             </Typography>
                         </Grid>
                         <Grid container justify="flex-end">
-                            <IconButton type="button" onClick={() => (localStorage.getItem("username") === this.state.user)?this.setState({editDialog: true}):alert("You cannot edit this comment")}>
+                            <IconButton type="button" onClick={() => (localStorage.getItem("username") === this.state.user)?this.setState({editDialog: true}):this.renderSet("You cannot edit this comment", "error")}>
                                 <EditIcon />
                             </IconButton>
                         </Grid>

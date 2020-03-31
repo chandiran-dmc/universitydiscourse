@@ -17,6 +17,7 @@ import SchoolIcon from '@material-ui/icons/School';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import { makeStyles } from '@material-ui/core/styles';
+import { borderRight } from '@material-ui/system';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -167,7 +168,7 @@ export default class Post extends Component {
                 commentContent: ""
             })
             this.getComments();
-            this.renderSet("Comment Created!", "success")
+            this.renderSet("Comment Created!", "success");
         })
         .catch((error) => {
             console.error(error);
@@ -229,7 +230,7 @@ export default class Post extends Component {
             }
         })
         .then((response) => {
-            this.renderSet(response.data.message);
+            this.renderSet(response.data.message, "info");
             //alert(response.data.message);
             //alert(response.data.likeCount);
             //alert(response.data.data.likeArray);
@@ -265,7 +266,7 @@ export default class Post extends Component {
             }
         })
         .then((response) => {
-            this.renderSet(response.data.message);
+            this.renderSet(response.data.message, "info");
             //alert(response.data.likeCount);
             //alert(response.data.data.likeArray);
             this.setState({upvoteCount: response.data.upvoteCount})
@@ -302,7 +303,7 @@ export default class Post extends Component {
         })
         .then((response) => {
             //if (response.data.message.localeCompare("already")) {
-            this.renderSet(response.data.message);
+            this.renderSet(response.data.message, "info");
             //}
            
             //alert(response.data.likeCount);
@@ -349,7 +350,7 @@ export default class Post extends Component {
         console.log(re);
         this.setState({
             uniquecourse: true,
-            coursename: this.state.tags[re]
+            coursename: this.state.rawTags[re]
         })
         
     }
@@ -369,8 +370,10 @@ export default class Post extends Component {
             case "text":
                 content = <Typography variant="h6">{this.state.content}</Typography>;
                 break;
+
+            
         
-            case "image":
+            case "calendar":
                     var content2 = []
                     for (let i = 0; i < this.state.tags.length; i++) {
                         
@@ -382,7 +385,7 @@ export default class Post extends Component {
                                 <ListItemIcon>
                                 <SchoolIcon />
                                 </ListItemIcon>
-                                <ListItemText primary={this.state.tags[i]} />
+                                <ListItemText primary={this.state.rawTags[i]} />
                             </ListItem>
                             
                             <Divider />      
@@ -432,9 +435,9 @@ export default class Post extends Component {
                     user: this.state.user,
                     time: this.state.time,
                     tags: this.state.tags,
-                    comments: this.state.comments,
+                    //comments: this.state.comments,
                     type: this.state.type,
-                    count: this.state.count,
+                    //count: this.state.count,
                     mode: this.state.mode
                 }
             }}/>;
@@ -463,14 +466,6 @@ export default class Post extends Component {
                     reportCount: this.state.reportCount,
                     id: this.state.id,
                     reportArray: this.state.reportArray,
-
-                    title: this.state.title,
-                    content: this.state.content,
-                    tags: this.state.tags,
-                    comments: this.state.comments,
-                    type: this.state.type,
-                    count: this.state.count,
-                    mode: this.state.mode,
                     //reportArraylimit: this.state.reportArraylimit,
                     //report: this.state.report
             
@@ -497,6 +492,7 @@ export default class Post extends Component {
                             <Avatar>{this.state.user}</Avatar>
                         </Grid>
                         <Grid item xs zeroMinWidth>
+                            
                             <Grid item>
                             <Button 
                                     variant="body1"
@@ -512,6 +508,15 @@ export default class Post extends Component {
                                     {new Date(this.state.time).toTimeString()}
                                 </Typography>
                             </Grid>
+                        </Grid>
+                        <Grid item >
+                            <IconButton 
+                                type="button">
+                            <FacebookShareButton url={url} quote={this.state.title} hashtag= {"#" + this.state.rawTags}>
+                            <FacebookIcon  fontSize="medium"/>
+                            <meta property = "og:title" content={this.state.title} />
+                            </FacebookShareButton>
+                            </IconButton>
                         </Grid>
 
                         <Grid item>
@@ -689,16 +694,7 @@ export default class Post extends Component {
 
 
 
-                        <Grid item >
-                                <FacebookShareButton url={url} quote={this.state.title} hashtag= {"#" + this.state.rawTags}>
-                                   <FacebookIcon />
-                                   <meta property = "og:title" content={this.state.title} />
-                                </FacebookShareButton>
-                                <Button
-                                    variant="contained">
-                                    {this.state.comments.length <= 1 ? this.state.comments.length + " comment" : this.state.comments.length + " comments"}
-                                </Button>
-                        </Grid>
+                        
 
                     </Grid>
                     <Grid

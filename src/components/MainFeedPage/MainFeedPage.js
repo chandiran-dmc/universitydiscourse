@@ -7,6 +7,15 @@ import SideBar from '../SideBar';
 import { Grid, createMuiTheme } from '@material-ui/core';
 import './MainFeedPage.css';
 import sample_tags from '../../mock_data/AllTags.json';
+
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 const axios = require('axios');
 
 const theme = createMuiTheme({
@@ -35,8 +44,25 @@ export default class MainFeedPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            filteredPosts: []
+            filteredPosts: [],
+            alert: false,
+            alertText: "",
+            alertType: ""
         };
+        //localStorage.setItem("tags", "CS307");
+    }
+
+    
+    renderSet(text, alertType) {
+        this.setState({alert: true, alertText: text, alertType: alertType});
+    }
+
+    renderAlert(text) {
+        return <Snackbar open={this.state.alert} autoHideDuration={2000}  onClose={() => this.setState({alert: false})}>
+                    <Alert severity={this.state.alertType}>
+                    {this.state.alertText}
+                    </Alert>
+                </Snackbar>
     }
         
     
@@ -113,8 +139,9 @@ export default class MainFeedPage extends Component {
     render() {
         
       return (
+          
           <div className="MainFeedPage">
-
+            {this.renderAlert()}
               <SideBar />
 
               <Grid 

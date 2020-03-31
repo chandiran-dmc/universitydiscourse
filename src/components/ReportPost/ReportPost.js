@@ -26,7 +26,18 @@ import Select from '@material-ui/core/Select';
 import FormHelperText from '@material-ui/core/FormHelperText';
 
 import FormControl from '@material-ui/core/FormControl';
+
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 const axios = require('axios');
+
+
 
 const theme = createMuiTheme ({
     palette: {
@@ -50,6 +61,9 @@ export default class ReportPost extends Component {
             reportArray: this.props.location.state.reportArray,
            // reportArraylimit: this.props.location.state.reportArraylimit,
             reportCount: this.props.location.state.reportCount,
+            alert: false,
+            alertText: "",
+            alertType: "",
             redirect1: false,
             //report: false,
             
@@ -96,8 +110,9 @@ export default class ReportPost extends Component {
             // this.setState({reportCount: response.data.reportCount})
             // this.setState({reportArray: response.data.reportArray})
              //this.setState({var: true});
-             alert(response.data.message);
-             this.setState({redirect1: true});
+             this.renderSet(response.data.message, "success");
+             //alert(response.data.message);
+             setTimeout(()=> this.setState({redirect1: true, report: true}), 2000);
              //this.setState({reportCount: this.state.reportCount + 1})
              //setTimeout(function () {this.setState({redirect1: true, report: true})}, 2000);
 
@@ -130,6 +145,19 @@ export default class ReportPost extends Component {
     onSubmit2 = (event) => {
         this.setState({redirect1: true});
     }
+
+
+    renderSet(text, alertType) {
+        this.setState({alert: true, alertText: text, alertType: alertType});
+    }
+
+    renderAlert(text) {
+        return <Snackbar open={this.state.alert} autoHideDuration={2000}  onClose={() => this.setState({alert: false})}>
+                    <Alert severity={this.state.alertType}>
+                    {this.state.alertText}
+                    </Alert>
+                </Snackbar>
+    }
     
     
     
@@ -143,6 +171,10 @@ export default class ReportPost extends Component {
     
             return <Redirect exact from="/" push to={{
                 pathname: "/mp",
+                state: { 
+                    alert: true
+
+                }
                 
             }}/>;
         }
@@ -153,6 +185,7 @@ export default class ReportPost extends Component {
         return (
             
             <div>
+                {this.renderAlert()}
                 
                 <Footer />
                 <TopBar/>

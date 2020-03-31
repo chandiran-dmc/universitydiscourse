@@ -21,6 +21,16 @@ import { Button, Box, Grid, TextField, InputAdornment } from '@material-ui/core'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
 const axios = require('axios');
 
 const theme = createMuiTheme({
@@ -71,7 +81,8 @@ export default class CreatePostPage extends Component {
             downvoteArray: this.props.location.state.downvoteArray,
             //reportArraylimit: this.props.location.state.reportArraylimit,
 
-            
+            //CHANGE THIS
+            //followTags: (localStorage.getItem("tags") === undefined)?localStorage.getItem("tags").split(","):"",
             followTags: localStorage.getItem("tags").split(","),
             all: []
         };
@@ -101,6 +112,8 @@ export default class CreatePostPage extends Component {
         this.handleCreatePost = this.handleCreatePost.bind(this);
         this.handleUpdatePost = this.handleUpdatePost.bind(this);
         this.handleCurveChange = this.handleCurveChange.bind(this);
+        
+        this.handleChangeTae = this.handleChangeTae.bind(this);
     }
 
     
@@ -143,11 +156,17 @@ export default class CreatePostPage extends Component {
             alert("Tag doesn't exist")
             values.pop()
         }
-              
-       
-        
-        
-        
+    }
+
+    handleChangeTae(event) {
+        this.setState(
+            {
+                type:this.state.type,
+                title: this.state.title,
+                content: this.state.content,
+                tags: event.target.value.replace(" ", "").split(",")
+            }
+        );
     }
 
     handleCurveChange(event) {
@@ -182,13 +201,16 @@ export default class CreatePostPage extends Component {
         // Check if input is empty
         if (this.state.type !== "grade" && this.state.type !== "curve") {
             if (this.state.title.length === 0) {
-                alert('Title cannot be empty');
+                //alert('Title cannot be empty');
+                this.renderSet("Title cannot be empty!", "error");
                 return;
             } else if (this.state.content.length === 0) {
-                alert('Content cannot be empty');
+                //alert('Content cannot be empty');
+                this.renderSet("Content cannot be empty!", "error");
                 return;
             } else if (this.state.tags.length === 0 || this.state.tags[0] === "") {
-                alert('Tags cannot be empty');
+                //alert('Tags cannot be empty');
+                this.renderSet("Tags cannot be empty!", "error");
                 return;
             }
         }
@@ -199,7 +221,7 @@ export default class CreatePostPage extends Component {
                 count++;
             }
         }
-        if(count == 0) {
+        if(count == 0 && (this.state.type !== "grade" && this.state.type !== "curve")) {
             alert('You must include atleast one tag that you follow')
             return;
         }
@@ -585,7 +607,7 @@ export default class CreatePostPage extends Component {
                                         Grade (A ~ F)
                                     </h3>
                                     <br />
-                                    <TextField id="filled-basic" label="" variant="filled" onChange={this.handleChangeTags} defaultValue={this.state.tags.toString()} />
+                                    <TextField id="filled-basic" label="" variant="filled" onChange={this.handleChangeTae} defaultValue={this.state.tags.toString()} />
                                     <Grid
                                         container
                                         direction="row"
@@ -685,6 +707,101 @@ export default class CreatePostPage extends Component {
         );
     }
 
+    getCalendarPage = () => {
+        return (
+            <div>
+                {this.renderAlert()}
+                <TopBar />
+                <Footer />
+
+                <div className="CreatePostPage">
+                    <form
+                        onSubmit={this.handleCreatePost}>
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center" >
+                            <Box
+                                boxShadow={0}
+                                margin={1}
+                                width="50%"
+                                mt={20} >
+                                <ThemeProvider theme={theme}>
+                                    <h3 style={{ color: '#023373' }}>
+                                        Post Title
+                                    </h3>
+                                    <br/>
+                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} defaultValue={this.state.title}/>
+                                    <br />
+                                    <h3 style={{ color: '#023373' }}>
+                                        Post Content
+                                    </h3>
+                                    
+                                    <TextField id="filled-basic" label="Ask for feedback" variant="filled" onChange={this.handleChangeContent} defaultValue={this.state.content}/>
+                                    <h3 style={{ color: '#023373' }}>
+                                        COURSES
+                                    </h3>
+                    
+                                    <div style={{ width: 300 }}>
+                                        <Autocomplete
+                                            multiple
+                                            id="tags-standard"
+                                            options={this.state.all}
+
+                                            onChange={this.handleChangeTags}
+                                            freeSolo
+                                            defaultValue={this.state.tags}
+                                            renderInput={params => (
+                                            <TextField
+                                                {...params}
+                                                variant="standard"
+                                                label="Courses"
+                                                // placeholder="Favorites"
+                                                margin ="normal"
+                                                fullWidth
+                                            />
+                                            )}
+                                        />
+                                    </div>
+                                    {/* <TextField id="filled-basic" label="Tags" variant="filled" onChange={this.handleChangeTags} defaultValue={this.state.tags.toString()} /> */}
+                                    <Grid
+                                        container
+                                        direction="row"
+                                        justify="center"
+                                        alignItems="center" >
+                                            <Button
+                                                color="secondary"
+                                                variant="contained"
+                                                style={{ justifyContent: 'center' }}
+                                                disableElevation
+                                                type="button"
+                                                onClick={this.state.mode === "edit post" ? this.handleUpdatePost : this.handleCreatePost} >
+                                                MAKE POST
+                                            </Button>
+                                    </Grid>
+                                </ThemeProvider>
+                            </Box>
+                        </Grid>
+                    </form>
+                </div>
+            </div>
+        );
+    }
+
+    
+    renderSet(text, alertType) {
+        this.setState({alert: true, alertText: text, alertType: alertType});
+    }
+
+    renderAlert(text) {
+        return <Snackbar open={this.state.alert} autoHideDuration={2000}  onClose={() => this.setState({alert: false})}>
+                    <Alert severity={this.state.alertType}>
+                    {this.state.alertText}
+                    </Alert>
+                </Snackbar>
+    }
+
     render() {
 
         console.log(this.state.followTags)
@@ -706,6 +823,9 @@ export default class CreatePostPage extends Component {
         }
         if (this.state.type === "curve") {
             return this.getCurveInputPage();
+        }
+        if (this.state.type === "calendar") {
+            return this.getCalendarPage();
         }
     }
 }
