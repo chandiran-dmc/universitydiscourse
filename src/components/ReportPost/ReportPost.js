@@ -85,6 +85,7 @@ export default class ReportPost extends Component {
                 time: this.state.time,
                 reportCount: this.state.reportCount+1,
                 reportArray: this.state.reportArray,
+                
                 //reportArraylimit: this.state.reportArraylimit,
                 
                 

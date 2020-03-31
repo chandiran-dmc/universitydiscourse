@@ -103,7 +103,8 @@ export default class Post extends Component {
             commentuser: "",
 
             alert: false,
-            alertText: ""
+            alertText: "",
+            alertType: ""
             
             
         };       
@@ -152,6 +153,7 @@ export default class Post extends Component {
                 commentContent: ""
             })
             this.getComments();
+            this.renderSet("Comment Created!", "success")
         })
         .catch((error) => {
             console.error(error);
@@ -249,7 +251,7 @@ export default class Post extends Component {
             }
         })
         .then((response) => {
-            alert(response.data.message);
+            this.renderSet(response.data.message);
             //alert(response.data.likeCount);
             //alert(response.data.data.likeArray);
             this.setState({upvoteCount: response.data.upvoteCount})
@@ -286,7 +288,7 @@ export default class Post extends Component {
         })
         .then((response) => {
             //if (response.data.message.localeCompare("already")) {
-                alert(response.data.message);
+            this.renderSet(response.data.message);
             //}
            
             //alert(response.data.likeCount);
@@ -382,13 +384,13 @@ export default class Post extends Component {
         return content;
     }
     
-    renderSet(text) {
-        this.setState({alert: true, alertText: text});
+    renderSet(text, alertType) {
+        this.setState({alert: true, alertText: text, alertType: alertType});
     }
 
     renderAlert(text) {
         return <Snackbar open={this.state.alert} autoHideDuration={2000}  onClose={() => this.setState({alert: false})}>
-                    <Alert severity="error">
+                    <Alert severity={this.state.alertType}>
                     {this.state.alertText}
                     </Alert>
                 </Snackbar>
@@ -432,6 +434,14 @@ export default class Post extends Component {
                     reportCount: this.state.reportCount,
                     id: this.state.id,
                     reportArray: this.state.reportArray,
+
+                    title: this.state.title,
+                    content: this.state.content,
+                    tags: this.state.tags,
+                    comments: this.state.comments,
+                    type: this.state.type,
+                    count: this.state.count,
+                    mode: this.state.mode,
                     //reportArraylimit: this.state.reportArraylimit,
                     //report: this.state.report
             
@@ -477,7 +487,7 @@ export default class Post extends Component {
                         <Grid item>
                             <IconButton 
                                 type="button"
-                                onClick={() => (this.state.reportArray.includes(localStorage.getItem('username')))?this.renderSet("You cannot report a post twice!"):this.handleRedirect("reportpost")} >
+                                onClick={() => (this.state.reportArray.includes(localStorage.getItem('username')))?this.renderSet("You cannot report a post twice!", "error"):this.handleRedirect("reportpost")} >
                                 <i className="fa fa-bullhorn"></i>
                             </IconButton>
                         </Grid>
