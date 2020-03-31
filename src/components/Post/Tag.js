@@ -147,7 +147,31 @@ export default class Tag extends Component {
             defaultCurves[3] = defaultCurves[3] / (curves.length + 1);
 
         } else if (grades.length !== 0) {
+            for (let i = 0; i < grades.length; i++) {
 
+                // increment the occurence based on grade
+                switch (grades[i].grade) {
+                    case "A":
+                        occurences[0]++;
+                        break;
+                
+                    case "B":
+                        occurences[1]++;
+                        break;
+
+                    case "C":
+                        occurences[2]++;
+                        break;
+
+                    case "D":
+                        occurences[3]++;
+                        break;
+
+                    case "F":
+                        occurences[4]++;
+                        break;
+                }
+            }
         }
 
         // set options for the chart react component
