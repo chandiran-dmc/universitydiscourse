@@ -121,6 +121,65 @@ updateComment = async (req, res) => {
 }
 
 
+deleteComment = async (req, res) => {
+
+    // Parse body from the request
+    const body = req.body;
+
+    // error checking
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a body to update',
+        });
+    }
+
+    // Query for the appropriate post document
+    const query = {
+        $and: [
+            {_id: body._id}
+        ]
+    };
+
+    Comment.findOne(query, (err, comment) => {
+
+        // Comment not found
+        if (err) {
+            return res.status(404).json({
+                err,
+                message: 'Error occurred!',
+            });
+        }
+
+        // Comment not found
+        if (!comment) {
+            return res.status(401).json({
+                err,
+                message: 'Comment not found',
+            });
+        }
+
+        // Set new information for the comment
+        comment.content = body.content;
+        comment
+            .remove()
+            .then(() => {
+                return res.status(200).json({
+                    success: true,
+                    id: comment._id,
+                    message: 'Comment updated!',
+                });
+            })
+            .catch(error => {
+                return res.status(404).json({
+                    error,
+                    message: 'Comment not updated!',
+                });
+            });
+    });
+}
+
+
 
 
 
@@ -129,5 +188,6 @@ updateComment = async (req, res) => {
 module.exports = {
     createComment,
     getComments,
-    updateComment
+    updateComment,
+    deleteComment
 }

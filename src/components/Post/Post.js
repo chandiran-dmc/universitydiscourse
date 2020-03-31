@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
-import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, TextField, createMuiTheme, Paper, InputAdornment } from '@material-ui/core';
+import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, TextField, createMuiTheme, List, ListItem, ListItemIcon, Divider, ListItemText } from '@material-ui/core';
 import InsertCommentIcon from '@material-ui/icons/InsertComment';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+
+import InboxIcon from '../../customeIcons/menuIcon';
 import MenuIcon from '../../customeIcons/menuIcon';
 import LikeIcon from '../../customeIcons/likeIcon';
 import { Redirect } from 'react-router-dom';
 import Comment from './../Comment';
+import SchoolIcon from '@material-ui/icons/School';
+
+
 const axios = require('axios');
 
 const theme = createMuiTheme({
@@ -55,7 +60,10 @@ export default class Post extends Component {
             seeallcomments: false,
             comments: [],
             _id: props.data._id,
-            commentContent: ""
+            commentContent: "",
+            uniquecourse: false,
+            coursename: ""
+
         };       
         this.handleChange = this.handleChange.bind(this);
     }
@@ -148,6 +156,15 @@ export default class Post extends Component {
         }
     }
 
+    handleButton = (re) => {
+        console.log(re);
+        this.setState({
+            uniquecourse: true,
+            coursename: this.state.tags[re]
+        })
+        
+    }
+
     renderContent = () => {
 
         let content = <p>error</p>;
@@ -158,8 +175,31 @@ export default class Post extends Component {
                 break;
         
             case "image":
-                content = <img src={this.state.content} alt={"The Image URL is invalid"} width="600"/>
+                    var content2 = []
+                    for (let i = 0; i < this.state.tags.length; i++) {
+                        
+                        content2.push( <div>
+                        <List component="nav" aria-label="main mailbox folders"> 
+                        
+                        <ThemeProvider theme={theme}>                 
+                            <ListItem button onClick={() => this.handleButton(i)}>
+                                <ListItemIcon>
+                                <SchoolIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={this.state.tags[i]} />
+                            </ListItem>
+                            
+                            <Divider />      
+                            </ThemeProvider>    
+                                          
+                        </List>
+                    </div>);
+                    }
+                
+
+                content = content2
                 break;
+            
                 
 
             default:
@@ -186,6 +226,13 @@ export default class Post extends Component {
                     count: this.state.count,
                     mode: this.state.mode
                 }
+            }}/>;
+        }
+
+        if (this.state.uniquecourse === true) {
+
+            return <Redirect exact from="/" push to={{
+                pathname: "/course/" + this.state.coursename,
             }}/>;
         }
 

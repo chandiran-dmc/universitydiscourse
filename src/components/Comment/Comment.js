@@ -57,7 +57,7 @@ export default class Comment extends Component {
         //event.preventDefault();
         axios({
             method: 'post',
-            url: 'http://localhost:3000/api-comment/updatecomment',
+            url: 'http://localhost:3000/api-comment/deletecomment',
             data: {
                 _id: this.state._id,
                 content: this.state.dialogContent,            
@@ -68,7 +68,7 @@ export default class Comment extends Component {
             this.setState(
                 {
                     content: this.state.dialogContent,
-                    editDialog: false
+                    editDialog: false,
                 }
             );   
         })
