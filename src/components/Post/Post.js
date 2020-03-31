@@ -222,9 +222,7 @@ export default class Post extends Component {
                         justify="flex-start"
                         alignItems="flex-start"
                         direction="row">
-                            <Typography variant="inherit">
-                                {this.state.tags}
-                            </Typography>
+                            {this.state.tags}
                         </Grid>
                     </Grid>
                 </Box>
