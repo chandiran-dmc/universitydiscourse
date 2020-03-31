@@ -21,9 +21,6 @@ import { Button, Box, Grid, TextField, InputAdornment } from '@material-ui/core'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import { makeStyles } from '@material-ui/core/styles';
-import sample_user from '../../mock_data/user_data.json';
-import sample_tags from '../../mock_data/AllTags.json';
 const axios = require('axios');
 
 const theme = createMuiTheme({

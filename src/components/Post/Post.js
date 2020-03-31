@@ -21,7 +21,6 @@ import { Redirect } from 'react-router-dom';
 import {FacebookShareButton} from "react-share"
 import FacebookIcon from '@material-ui/icons/Facebook';
 import Tag from './Tag';
-import axios from 'axios';
 
 export default class Post extends Component {
 
@@ -107,6 +106,7 @@ export default class Post extends Component {
         console.log(this.state.tags.toString)
          var url = `universitydiscourse.herokuapp.com/post/${this.state.id}`
         if (this.state.isEditPost === true) {
+            console.log(this.state.isEditPost)
 
             return <Redirect exact from="/" push to={{
                 pathname: "/editpost",
