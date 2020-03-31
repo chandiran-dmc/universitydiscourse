@@ -42,6 +42,7 @@ export default class RegisterPage extends Component {
           email : '',
           username: '',
           password: '',
+          
           redirect: false
         };
         this.handleEmailChange = this.handleChange.bind(this, 'email');

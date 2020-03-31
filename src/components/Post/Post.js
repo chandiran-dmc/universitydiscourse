@@ -6,7 +6,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import InboxIcon from '../../customeIcons/menuIcon';
 import MenuIcon from '../../customeIcons/menuIcon';
-import LikeIcon from '../../customeIcons/likeIcon';
+//import Warning from '../../customeIcons/Warning';
+
 import { Redirect } from 'react-router-dom';
 import Comment from './../Comment';
 import SchoolIcon from '@material-ui/icons/School';
@@ -44,6 +45,7 @@ export default class Post extends Component {
 
     constructor(props) {
         super(props);
+        console.log('props -----',props);
         this.state = {
             title: props.data.title,
             content: props.data.content,
@@ -62,8 +64,22 @@ export default class Post extends Component {
             _id: props.data._id,
             commentContent: "",
             uniquecourse: false,
-            coursename: ""
+            coursename: "",
 
+            isReportPost: false,
+            reportCount: props.data.reportCount,
+            likeCount: props.data.likeCount,
+            upvoteCount: props.data.upvoteCount,
+            downvoteCount: props.data.downvoteCount,
+            reportArray: props.data.reportArray,
+            likeArray: props.data.likeArray,
+            upvoteArray: props.data.upvoteArray,
+            downvoteArray: props.data.downvoteArray,
+            //reportArraylimit: props.data.reportArraylimit,
+            id: props.data._id,
+            //report: props.data.report,
+            
+            
         };       
         this.handleChange = this.handleChange.bind(this);
     }
@@ -141,18 +157,136 @@ export default class Post extends Component {
     }
     
 
-    handleRedirect = (editPost) => {
-        console.log(this.state.title)
-        if(this.state.user === localStorage.getItem("username")) {
+    
+    onSubmitLike = (event) => {
+        // alert("YOU LIKED THE POST");
+        // alert(this.state.likeCount);
+        console.log(this.state.likeCount)
+        axios({
+            method: 'post',
+            url: 'http://localhost:3000/api/like',
+            data: {
+                like_user: localStorage.getItem("username"),
+                user:this.state.user,
+                time: this.state.time,
+                likeCount: this.state.likeCount+1,
+                likeArray: this.state.likeArray,
+                id: this.state.id
+            }
+        })
+        .then((response) => {
+            alert(response.data.message);
+            //alert(response.data.likeCount);
+            //alert(response.data.data.likeArray);
+            this.setState({likeCount: response.data.likeCount})
+            this.setState({likeArray: response.data.likeArray})
+            
+        })
+        .catch((error) => {
+        
+            alert("THIS IS THE ERROR");
+            console.log(error);
+            return;
+            
 
-            this.setState({
-                mode: editPost,
-                isEditPost: true,
-            });
+        });
+        
+    }    
 
+    onSubmitUpVote = (event) => {
+        // alert("YOU UPVOTED THE POST");
+        // alert(this.state.upvoteCount);
+        console.log(this.state.upvoteCount)
+        axios({
+            method: 'post',
+            url: 'http://localhost:3000/api/upvote',
+            data: {
+                like_user: localStorage.getItem("username"),
+                user: this.state.user,
+                time: this.state.time,
+                upvoteCount: this.state.upvoteCount+1,
+                upvoteArray: this.state.upvoteArray,
+                id: this.state.id
+            }
+        })
+        .then((response) => {
+            alert(response.data.message);
+            //alert(response.data.likeCount);
+            //alert(response.data.data.likeArray);
+            this.setState({upvoteCount: response.data.upvoteCount})
+            this.setState({upvoteArray: response.data.upvoteArray})
+            
+        })
+        .catch((error) => {
+        
+            console.log("THIS IS THE ERROR");
+            console.log(error);
+            return;
+            
+
+        });
+        
+    } 
+
+    onSubmitDownVote = (event) => {
+        // alert("YOU DOWNVOTED THE POST");
+        // alert(this.state.downvoteCount);
+        console.log(this.state.downvoteCount)
+        axios({
+            method: 'post',
+            url: 'http://localhost:3000/api/downvote',
+            data: {
+                like_user: localStorage.getItem("username"),
+                user: this.state.user,
+                time: this.state.time,
+                downvoteCount: this.state.downvoteCount+1,
+              
+                downvoteArray: this.state.downvoteArray,
+                id: this.state.id
+            }
+        })
+        .then((response) => {
+            //if (response.data.message.localeCompare("already")) {
+                alert(response.data.message);
+            //}
+           
+            //alert(response.data.likeCount);
+            //alert(response.data.data.likeArray);
+            this.setState({downvoteCount: response.data.downvoteCount})
+            this.setState({downvoteArray: response.data.downvoteArray})
+        
+        })
+        .catch((error) => {
+        
+            //console.log("THIS IS THE ERROR");
+            //console.log(error);
+            return;
+            
+
+        });
+       
+    }    
+
+
+    handleRedirect = (mode) => {
+        if (mode === "editpost") {
+            if(this.state.user === localStorage.getItem("username")) {
+
+                this.setState({
+                    mode: "editpost",
+                    isEditPost: true
+                });
+
+            }
+            else {
+                alert('You can not edit this post');
+            }
         }
         else {
-            alert('You can not edit this post');
+            this.setState({
+                mode: "reportpost",
+                isReportPost: true
+            });
         }
     }
 
@@ -235,6 +369,30 @@ export default class Post extends Component {
                 pathname: "/course/" + this.state.coursename,
             }}/>;
         }
+        if (this.state.isReportPost === true) {
+
+            return <Redirect exact from="/" push to={{
+                pathname: "/reportpost",
+                state: { 
+                    title: this.state.title,
+                    content: this.state.content,
+                    user: this.state.user,
+                    time: this.state.time,
+                    tags: this.state.tags,
+                    comments: this.state.comments,
+                    type: this.state.type,
+                    count: this.state.count,
+                    mode: this.state.mode,
+                    reportCount: this.state.reportCount,
+                    id: this.state.id,
+                    reportArray: this.state.reportArray,
+                    //reportArraylimit: this.state.reportArraylimit,
+                    //report: this.state.report
+            
+
+                }
+            }}/>;
+        }
 
         return (
             <ThemeProvider theme={this.state.theme} >     
@@ -267,10 +425,19 @@ export default class Post extends Component {
                                 </Typography>
                             </Grid>
                         </Grid>
+
                         <Grid item>
                             <IconButton 
                                 type="button"
-                                onClick={() => this.handleRedirect("edit post")} >
+                                onClick={() => this.handleRedirect("reportpost")} >
+                                <i className="fa fa-bullhorn"></i>
+                            </IconButton>
+                        </Grid>
+                        
+                        <Grid item>
+                            <IconButton 
+                                type="button"
+                                onClick={() => this.handleRedirect("editpost")} >
                                 <MenuIcon />
                             </IconButton>
                         </Grid>
@@ -296,16 +463,51 @@ export default class Post extends Component {
                                 justify="flex-start"
                                 alignItems="center"
                                 direction="row">
+                                
                                 <Grid item>
                                     <IconButton 
                                         type="button"
-                                        onClick={() => {alert('Like?')}} >
-                                        <LikeIcon />
+                                        onClick={this.onSubmitLike} 
+                                        >
+                                        <i class="fa fa-heart"></i>
                                     </IconButton>
                                 </Grid>
+
                                 <Grid item>
                                     <Typography variant="body2">
-                                        {this.state.count}
+                                        {this.state.likeCount}
+                                    </Typography>
+                                </Grid>
+                               
+                               
+                                <Grid item>
+                                    <IconButton 
+                                        type="button"
+                                        onClick={this.onSubmitUpVote}
+                                         >
+                                        <i class="fa fa-thumbs-up"></i>
+                                    </IconButton>
+                                </Grid>
+
+                                <Grid item>
+                                    <Typography variant="body2">
+                                        {this.state.upvoteCount}
+                                    </Typography>
+                                </Grid>
+                                
+                                
+                                <Grid item>
+                                    <IconButton 
+                                        type="button"
+                                        onClick={this.onSubmitDownVote} 
+                                        >
+                                        <i class="fa fa-thumbs-down"></i>
+                                    </IconButton>
+                                </Grid>
+                                
+                                <Grid item>
+                                    <Typography variant="body2">
+                                        {this.state.downvoteCount}
                                     </Typography>
                                 </Grid>
                                 
