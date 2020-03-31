@@ -567,20 +567,20 @@ downvotePost = async (req, res) => {
 
 }
 
+getPostById = async (req, res) => {
     
-
-getMovieById = async (req, res) => {
-    await Movie.findOne({ _id: req.params.id }, (err, movie) => {
+    console.log(req.query.id)
+    await Post.findOne({ _id: req.query.id }, (err, post) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
 
-        if (!movie) {
+        if (!post) {
             return res
-                .status(404)
-                .json({ success: false, error: `Movie not found` })
+                .status(405)
+                .json({ success: false, error: `Post not found` })
         }
-        return res.status(200).json({ success: true, data: movie })
+        return res.status(200).json({ success: true, data: post })
     }).catch(err => console.log(err))
 }
 
@@ -600,7 +600,7 @@ getPosts = async (req, res) => {
         // return posts
         return res.status(200).json({ success: true, data: posts });
 
-    }).catch(err => console.log(err))
+    }).catch(err => console.log(err));
 }
 
 module.exports = {
@@ -612,5 +612,5 @@ module.exports = {
     updatePost,
     removeAllPosts,
     getPosts,
-    getMovieById,
+    getPostById,
 }

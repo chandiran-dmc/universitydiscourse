@@ -134,21 +134,21 @@ ChangeEmail = (req, res) => {
                 .status(404)
                 .json({ success: false, error: `User not found` })
         } else {            
-            user.email=newemail
-                    user
-                    .save()    
-                    .then(() => {
-                        return res.status(200).json({
-                            success: true,
-                            message: 'Email updated!',
-                        })
-                    })
-                    .catch(error => {
-                        return res.status(404).json({
-                            error,
-                            message: 'Email not updated!',
-                        })
-                    })                         
+            user.email = newemail;
+            user
+            .save()    
+            .then(() => {
+                return res.status(200).json({
+                    success: true,
+                    message: 'Email updated!',
+                })
+            })
+            .catch(error => {
+                return res.status(404).json({
+                    error,
+                    message: 'Email not updated!',
+                })
+            });
         }
     }).catch(err => console.log(err))
 };
@@ -275,6 +275,7 @@ RegisterUser = (req, res) => {
             })
         })
         .catch(error => {
+            console.log(error);
             return res.status(405).json({
                 error,
                 message: 'User not registered!',
@@ -321,7 +322,7 @@ DeleteUser = (req, res) => {
 
 FindUser = (req, res) => {
     const body = req.body
-    const { email, username, password } = body;
+    const { email, username } = body;
 
     if (!body) {
         return res.status(400).json({
@@ -356,6 +357,66 @@ FindUser = (req, res) => {
     }).catch(err => console.log(err))
 };
 
+getTagsByName = async (req, res) => {
+    
+    console.log(req.query.user)
+    await User.findOne({ username: req.query.user }, (err, user) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        if (!user) {
+            return res
+                .status(405)
+                .json({ success: false, error: `User not found` })
+        }
+        return res.status(200).json({ success: true, data: user })
+    }).catch(err => console.log(err))
+}
+
+
+UpdateUserTags = (req, res) => {
+    const body = req.body
+    const { email, newtags } = body;
+
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide an email',
+        });
+    }
+
+    User.findOne({ email }, (err, user) => {
+
+        if (err) {
+            return res.status(400).json({ success: false, error: err });
+        }
+
+        if (!user) {
+            return res
+                .status(404)
+                .json({ success: false, error: `User not found` });
+        } else {            
+            user.tags = newtags;
+            user
+            .save()    
+            .then(() => {
+                return res.status(200).json({
+                    success: true,
+                    message: 'Tags updated!',
+                })
+            })
+            .catch(error => {
+                return res.status(404).json({
+                    error,
+                    message: 'Tags not updated!',
+                })
+            });
+        }
+    }).catch(err => console.log(err))
+};
+
+
 
 module.exports = {
     RegisterUser,
@@ -365,5 +426,7 @@ module.exports = {
     DeleteUser,
     RecoveryEmail,
     RecoverPassword,
-    FindUser
+    FindUser,
+    UpdateUserTags,
+    getTagsByName
 }

@@ -104,3 +104,18 @@ test('should render correct number of upvotes', () => {
     const { findByText } = render(<Post data={mockPostData} theme={theme}/>);
     expect(findByText(mockPostData.count)).toBeTruthy();
 });
+/* test('should render correct number of downvotes', () => {
+    
+    const mockPostData = getRandomPostData("text");
+
+    const { findByText } = render(<Post data={mockPostData} theme={theme}/>);
+    expect(findByText(mockPostData.count)).toBeTruthy();
+});*/
+
+/*test('should render correct number of likes', () => {
+    
+    const mockPostData = getRandomPostData("text");
+
+    const { findByText } = render(<Post data={mockPostData} theme={theme}/>);
+    expect(findByText(mockPostData.count)).toBeTruthy();
+});*/

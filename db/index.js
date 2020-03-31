@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 mongoose.set('useCreateIndex', true);
 
+mongoose.set('useCreateIndex', true);
 mongoose
     .connect(
         'mongodb+srv://babytaetae:babytaetae@cluster0-3ffi4.azure.mongodb.net/', 

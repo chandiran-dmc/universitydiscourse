@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, TextField, createMuiTheme, List, ListItem, ListItemIcon, Divider, ListItemText } from '@material-ui/core';
+import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, TextField, Dialog, DialogActions, DialogTitle, createMuiTheme, List, ListItem, ListItemIcon, Divider, ListItemText } from '@material-ui/core';
 import InsertCommentIcon from '@material-ui/icons/InsertComment';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
@@ -7,6 +7,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import InboxIcon from '../../customeIcons/menuIcon';
 import MenuIcon from '../../customeIcons/menuIcon';
 //import Warning from '../../customeIcons/Warning';
+import {FacebookShareButton} from "react-share"
+import FacebookIcon from '@material-ui/icons/Facebook';
+import Tag from './Tag';
 
 import { Redirect } from 'react-router-dom';
 import Comment from './../Comment';
@@ -68,12 +71,22 @@ export default class Post extends Component {
     constructor(props) {
         super(props);
         console.log('props -----',props);
+        
+
+        // button tags
+        let tags = [];
+        props.data.tag.forEach(tag => {
+            tags.push(
+                <Tag name={tag} key={Math.random()*100000} />
+            );
+        });
         this.state = {
+            id: props.data._id,
             title: props.data.title,
             content: props.data.content,
             user: props.data.user,
             time: props.data.time,
-            tags: props.data.tag,
+            tags: tags,
             comments: props.data.comments,
             type: props.data.type,
             count: props.data.count,
@@ -98,13 +111,14 @@ export default class Post extends Component {
             upvoteArray: props.data.upvoteArray,
             downvoteArray: props.data.downvoteArray,
             //reportArraylimit: props.data.reportArraylimit,
-            id: props.data._id,
             //report: props.data.report,
             commentuser: "",
 
             alert: false,
             alertText: "",
-            alertType: ""
+            alertType: "",
+            postRedirect: "",
+            rawTags: props.data.tag
             
             
         };       
@@ -339,6 +353,13 @@ export default class Post extends Component {
         })
         
     }
+    
+    handleRedirectPost = (Post) => {
+        this.setState({
+            postRedirect: Post,
+            isRedirectPost: true
+        });
+    }
 
     renderContent = () => {
 
@@ -398,9 +419,10 @@ export default class Post extends Component {
 
 
     render() {
-        //this.getUserName();
-        
+        console.log(this.state.tags.toString)
+        var url = `universitydiscourse.herokuapp.com/post/${this.state.id}`
         if (this.state.isEditPost === true) {
+            console.log(this.state.isEditPost)
 
             return <Redirect exact from="/" push to={{
                 pathname: "/editpost",
@@ -415,6 +437,13 @@ export default class Post extends Component {
                     count: this.state.count,
                     mode: this.state.mode
                 }
+            }}/>;
+        }
+        if (this.state.isRedirectPost === true) {
+            console.log(this.state.id);
+
+            return <Redirect exact from="/" push to={{
+                pathname: "/post/" + `${this.state.id}`,
             }}/>;
         }
 
@@ -469,11 +498,12 @@ export default class Post extends Component {
                         </Grid>
                         <Grid item xs zeroMinWidth>
                             <Grid item>
-                                <Typography 
+                            <Button 
                                     variant="body1"
-                                    color="textPrimary" >
+                                    color="textPrimary" 
+                                    onClick={() => this.handleRedirectPost("Post Redirect")} >
                                     {this.state.title}
-                                </Typography>
+                                </Button>
                             </Grid>
                             <Grid item>
                                 <Typography 
@@ -500,6 +530,8 @@ export default class Post extends Component {
                             </IconButton>
                         </Grid>
                     </Grid>
+
+
                     <Grid 
                         container 
                         wrap="nowrap" 
@@ -627,23 +659,7 @@ export default class Post extends Component {
 
 
 
-                            </Grid>
-
-
-
-
-
-
-
-
-                        
-                        
-
-
-
-
-
-
+                        </Grid>
 
 
 
@@ -669,7 +685,34 @@ export default class Post extends Component {
                                                
                             
                         </Grid>
+
+
+
+
+                        <Grid item >
+                                <FacebookShareButton url={url} quote={this.state.title} hashtag= {"#" + this.state.rawTags}>
+                                   <FacebookIcon />
+                                   <meta property = "og:title" content={this.state.title} />
+                                </FacebookShareButton>
+                                <Button
+                                    variant="contained">
+                                    {this.state.comments.length <= 1 ? this.state.comments.length + " comment" : this.state.comments.length + " comments"}
+                                </Button>
+                        </Grid>
+
                     </Grid>
+                    <Grid
+                        item
+                        container
+                        justify="flex-start"
+                        alignItems="flex-start"
+                        direction="row">
+                            {this.state.tags}
+                        
+
+
+                    </Grid>
+
                 </Box>
             </ThemeProvider>
         )

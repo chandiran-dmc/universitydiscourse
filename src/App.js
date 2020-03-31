@@ -12,6 +12,7 @@ import RecoverPassword from './components/RecoverPassword'
 import RegisterPage from './components/RegisterPage'
 import SendLink from './components/SendLink'
 import MainFeedPage from './components/MainFeedPage';
+import PostPage from './components/PostPage';
 import EntryPage from './components/EntryPage/EntryPage';
 import CoursePage from './components/CoursePage';
 import ReportPost from './components/ReportPost/ReportPost';
@@ -34,8 +35,9 @@ export default function App() {
           <Route exact path="/sendlink" component={SendLink} />
           <Route exact path="/changeemail" component={ChangeEmail} />
           <Route exact path="/changepassword" component={ChangePassword} />
-          
           <Route exact path="/course/:id" component={CoursePage} />
+          <Route exact path="/post/:id" component={PostPage} />
+          
         </Switch>
       </Router>
     );

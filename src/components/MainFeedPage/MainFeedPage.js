@@ -6,7 +6,7 @@ import Post from './../Post';
 import SideBar from '../SideBar';
 import { Grid, createMuiTheme } from '@material-ui/core';
 import './MainFeedPage.css';
-import sample_user from '../../mock_data/user_data.json';
+import sample_tags from '../../mock_data/AllTags.json';
 const axios = require('axios');
 
 const theme = createMuiTheme({
@@ -38,6 +38,8 @@ export default class MainFeedPage extends Component {
             filteredPosts: []
         };
     }
+        
+    
 
     /**
      * Helper function to get the posts for the user
@@ -46,31 +48,42 @@ export default class MainFeedPage extends Component {
      */
     getPosts = async () => {
 
-        // TODO: request the database for the hot posts
-        let posts = []
-
         // Send request to the database
         axios({
                 method: 'get',
                 url: 'http://localhost:3000/api/getposts'
         })
         .then((response) => {
-                posts = response.data.data;
+            
+            let posts = [];
+            posts = response.data.data;
 
-                // TODO: Get user data from local file
-                let user = sample_user; // XXX
+            // request user data for the tags
+            axios({
+                method: 'post',
+                url: 'http://localhost:3000/api-user/getuser',
+                data: {
+                    email: localStorage.getItem("email"),
+                    username: localStorage.getItem("username")
+                }
+            })
+            .then((response) => {
+                console.log(response.data.data)
 
                 // Filter the posts based on the tags the user follows
-                let tags =  [];
-                tags = user.tags;
+                let tags =  response.data.data.tags.split(",");
+
+                // save the tags to the local storage
+                localStorage.setItem("tags", tags.toString());
 
                 let filteredPosts = [];
 
                 posts.forEach((post) => {
 
                     for (let i = 0; i < post.tag.length; i++) {
-                        if (tags.includes(post.tag[i])) {
+                        if (tags.includes(post.tag[i]) || tags.includes("default")) {
                             filteredPosts.push(<Post key={Math.random()*100000} data={post} theme={theme}/>);
+                            console.log(post)
                             break;
                         }
                     }
@@ -79,6 +92,12 @@ export default class MainFeedPage extends Component {
                 this.setState({
                     filteredPosts: filteredPosts
                 });
+
+            })
+            .catch((error) => {
+                console.error(error);
+                alert('An error occurred');
+            });
         })
         .catch((error) => {
             console.error(error);

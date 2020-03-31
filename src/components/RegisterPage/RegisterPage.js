@@ -74,7 +74,8 @@ export default class RegisterPage extends Component {
             data: {
                 email: this.state.email,
                 username: this.state.username,
-                password: this.state.password
+                password: this.state.password,
+                tags: "default"
             }
         })
         .then((response) => {
@@ -84,15 +85,16 @@ export default class RegisterPage extends Component {
         })
         .catch((error) => {
             console.error(error);
-
-            alert('User with similar email already registered!');
             
             // Catch for user that is not registered
             if (error.message.includes("not registered")) {
                 alert('User already exists!');
                 return;
             }
-
+            else {
+                // catch for duplicate email
+                alert('Error');
+            }
         });
     }    
 
