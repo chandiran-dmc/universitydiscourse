@@ -179,6 +179,312 @@ deleteComment = async (req, res) => {
     });
 }
 
+likeComment = async (req, res) => {
+
+ 
+    const body = req.body;
+
+    console.log(body);
+    
+    
+    if (!body) {
+        console.log("NOOOO");
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a body to update',
+        });
+    }
+
+    const query = {
+        $and: [
+            {user: body.user},
+            {time: body.time}
+        ]
+    };
+
+    Comment.findOne(query, (err, comment) => {
+
+        // Post not found
+        if (err) {
+            console.log(err);
+            return res.status(404).json({
+                err,
+                message: 'Error occurred!',
+            });
+        }
+
+        // Comment not found
+        if (!comment) {
+            console.log(err);
+            return res.status(401).json({
+                
+                err,
+                message: 'Comment not found',
+            });
+        }
+
+        var i = 0;
+        var flag;
+        
+        console.log(i);
+        
+        for (i = 0; i < body.likeCountComment - 1; i++) {
+            console.log("CURRENT USER");
+            console.log(body.like_user);
+            console.log("EARLIER USER");
+            console.log(body.likeArrayComment[i]);
+            if (body.likeArrayComment[i].localeCompare(body.like_user) === 0) {
+                console.log("COMES HERE");
+                flag = -100; // user already found
+
+            }
+        }
+
+        if (flag === -100) {
+            return res.status(200).json({
+               
+                err,
+                message: 'User has already liked the comment',
+                likeCountComment: comment.likeCountComment,
+                likeArrayComment: comment.likeArrayComment,
+            });
+
+        }
+
+        // Set new information for the post
+        comment.likeCountComment=body.likeCountComment;
+        //post.reportArrayindex=body.reportArrayindex;
+        console.log(body.like_user);
+        comment.likeArrayComment.push(body.like_user);
+        
+        comment.save()
+            .then(() => {
+                console.log("SUCCESS");
+                console.log(body.likeCountComment);
+                return res.status(200).json({
+                   
+                    success: true,
+                    id: comment._id,
+                    likeCountComment: comment.likeCountComment,
+                    likeArrayComment: comment.likeArrayComment,
+                    message: 'You have liked the comment!',
+                });
+            })
+            .catch(error => {
+                console.log(error);
+                return res.status(405).json({
+                    error,
+                    message: 'Like not registered!',
+                });
+            });
+    });
+
+}
+
+upvoteComment = async (req, res) => {
+
+ 
+    const body = req.body;
+
+    console.log(body);
+    
+    
+    if (!body) {
+        console.log("NOOOO");
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a body to update',
+        });
+    }
+
+    const query = {
+        $and: [
+            {user: body.user},
+            {time: body.time}
+        ]
+    };
+
+    Comment.findOne(query, (err, comment) => {
+
+        // Post not found
+        if (err) {
+            console.log(err);
+            return res.status(404).json({
+                err,
+                message: 'Error occurred!',
+            });
+        }
+
+        // Comment not found
+        if (!comment) {
+            console.log(err);
+            return res.status(401).json({
+                
+                err,
+                message: 'Comment not found',
+            });
+        }
+
+        var i = 0;
+        var flag;
+        
+        console.log(i);
+        
+        for (i = 0; i < body.upvoteCountComment - 1; i++) {
+            console.log("CURRENT USER");
+            console.log(body.like_user);
+            console.log("EARLIER USER");
+            console.log(body.upvoteArrayComment[i]);
+            if (body.upvoteArrayComment[i].localeCompare(body.like_user) === 0) {
+                console.log("COMES HERE");
+                flag = -100; // user already found
+
+            }
+        }
+
+        if (flag === -100) {
+            return res.status(200).json({
+               
+                err,
+                message: 'User has already upvoted the comment',
+                upvoteCountComment: comment.upvoteCountComment,
+                upvoteArrayComment: comment.upvoteArrayComment,
+            });
+
+        }
+
+        // Set new information for the post
+        comment.upvoteCountComment=body.upvoteCountComment;
+        //post.reportArrayindex=body.reportArrayindex;
+        console.log(body.like_user);
+        comment.upvoteArrayComment.push(body.like_user);
+        
+        comment.save()
+            .then(() => {
+                console.log("SUCCESS");
+                console.log(body.upvoteCountComment);
+                return res.status(200).json({
+                   
+                    success: true,
+                    id: comment._id,
+                    upvoteCountComment: comment.upvoteCountComment,
+                    upvoteArrayComment: comment.upvoteArrayComment,
+                    message: 'You have upvoted the comment!',
+                });
+            })
+            .catch(error => {
+                console.log(error);
+                return res.status(405).json({
+                    error,
+                    message: 'Upvote not registered!',
+                });
+            });
+    });
+
+}
+
+downvoteComment = async (req, res) => {
+
+ 
+    const body = req.body;
+
+    console.log(body);
+    
+    
+    if (!body) {
+        console.log("NOOOO");
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a body to update',
+        });
+    }
+
+    const query = {
+        $and: [
+            {user: body.user},
+            {time: body.time}
+        ]
+    };
+
+    Comment.findOne(query, (err, comment) => {
+
+        // Post not found
+        if (err) {
+            console.log(err);
+            return res.status(404).json({
+                err,
+                message: 'Error occurred!',
+            });
+        }
+
+        // Comment not found
+        if (!comment) {
+            console.log(err);
+            return res.status(401).json({
+                
+                err,
+                message: 'Comment not found',
+            });
+        }
+
+        var i = 0;
+        var flag;
+        
+        console.log(i);
+        
+        for (i = 0; i < body.downvoteCountComment - 1; i++) {
+            console.log("CURRENT USER");
+            console.log(body.like_user);
+            console.log("EARLIER USER");
+            console.log(body.downvoteArrayComment[i]);
+            if (body.downvoteArrayComment[i].localeCompare(body.like_user) === 0) {
+                console.log("COMES HERE");
+                flag = -100; // user already found
+
+            }
+        }
+
+        if (flag === -100) {
+            return res.status(200).json({
+               
+                err,
+                message: 'User has already downvoted the comment',
+                downvoteCountComment: comment.downvoteCountComment,
+                downvoteArrayComment: comment.downvoteArrayComment,
+            });
+
+        }
+
+        // Set new information for the post
+        comment.downvoteCountComment=body.downvoteCountComment;
+        //post.reportArrayindex=body.reportArrayindex;
+        console.log(body.like_user);
+        comment.downvoteArrayComment.push(body.like_user);
+        
+        comment.save()
+            .then(() => {
+                console.log("SUCCESS");
+                console.log(body.downvoteCountComment);
+                return res.status(200).json({
+                   
+                    success: true,
+                    id: comment._id,
+                    downvoteCountComment: comment.downvoteCountComment,
+                    downvoteArrayComment: comment.downvoteArrayComment,
+                    message: 'You have downvoted the comment!',
+                });
+            })
+            .catch(error => {
+                console.log(error);
+                return res.status(405).json({
+                    error,
+                    message: 'Downvote not registered!',
+                });
+            });
+    });
+
+}
+
 
 
 
@@ -189,5 +495,8 @@ module.exports = {
     createComment,
     getComments,
     updateComment,
-    deleteComment
+    deleteComment,
+    likeComment,
+    upvoteComment,
+    downvoteComment
 }

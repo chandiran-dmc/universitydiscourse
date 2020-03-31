@@ -181,13 +181,14 @@ export default class ReportPost extends Component {
                     <FormControl>
 
                     <Select
-                         native
+                        native
+                        defaultValue={1}
                         inputProps={{
                         name: 'age',
                         id: 'age-native-simple',
                         }}
                         >
-                        <option value="" />
+                        <option value={1}>I do not want to give a reason</option>
                         <option>Inappropriate Content</option>
                         <option>I don't like it</option>
                         <option>Other</option>
@@ -211,19 +212,6 @@ export default class ReportPost extends Component {
                                 type = "submit"
                                 >
                                 Report
-                            </Button> 
-                            </ThemeProvider>
-                            </form>
-                            <br />
-                            <form onSubmit={this.onSubmit1}>
-                            <ThemeProvider theme={theme}>
-                            <Button 
-                                className  = "ReportButton" 
-                                variant = "contained"
-                                color = "primary" 
-                                type = "submit"
-                                >
-                                I do not want to give a reason.
                             </Button> 
                             </ThemeProvider>
                             </form>

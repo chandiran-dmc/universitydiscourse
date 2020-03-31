@@ -11,9 +11,18 @@ import MenuIcon from '../../customeIcons/menuIcon';
 import { Redirect } from 'react-router-dom';
 import Comment from './../Comment';
 import SchoolIcon from '@material-ui/icons/School';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+import { makeStyles } from '@material-ui/core/styles';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 
 const axios = require('axios');
+
+
 
 const theme = createMuiTheme({
     palette: {
@@ -42,6 +51,19 @@ const theme = createMuiTheme({
 
 
 export default class Post extends Component {
+
+    
+
+    addTodo() {
+        setTimeout(()=> this.getComments(), 11);
+        setTimeout(()=> this.setState({
+            seeallcomments: false
+        }), 10);
+        setTimeout(()=> this.setState({
+            seeallcomments: false
+        }), 15);       
+
+    }
 
     constructor(props) {
         super(props);
@@ -78,11 +100,18 @@ export default class Post extends Component {
             //reportArraylimit: props.data.reportArraylimit,
             id: props.data._id,
             //report: props.data.report,
+            commentuser: "",
+
+            alert: false,
+            alertText: ""
             
             
         };       
         this.handleChange = this.handleChange.bind(this);
+        var addTodo = this.addTodo.bind(this);
     }
+
+    
 
     handleChange(event) {
         this.setState(
@@ -108,16 +137,25 @@ export default class Post extends Component {
                 postid: this.state._id,
                 content: this.state.commentContent,
                 user: username,
-                time: new Date().getTime()                
+                time: new Date().getTime(),
+                likeCountComment: 0,
+                upvoteCountComment: 0,
+                downvoteCountComment: 0,
+                likeArrayComment: [],
+                upvoteArrayComment: [],
+                downvoteArrayComment: [],                
             }
         })
         .then((response) => {
             console.log(response);
+            this.setState({
+                commentContent: ""
+            })
             this.getComments();
         })
         .catch((error) => {
             console.error(error);
-            alert('An error occurred');
+            this.renderSet("An error occurred");
         });
     }
 
@@ -142,7 +180,7 @@ export default class Post extends Component {
                 let comments = []
                 commentlist.forEach((comment) => {
                     if (comment.postid == this.state._id) {
-                        comments.push(<Comment key={Math.random()*100000} data={comment} theme={theme}/>);
+                        comments.push(<Comment key={Math.random()*100000} data={comment} theme={theme} addTodo={this.addTodo.bind(this)}/>);
                     }
                 });
                 
@@ -175,7 +213,8 @@ export default class Post extends Component {
             }
         })
         .then((response) => {
-            alert(response.data.message);
+            this.renderSet(response.data.message);
+            //alert(response.data.message);
             //alert(response.data.likeCount);
             //alert(response.data.data.likeArray);
             this.setState({likeCount: response.data.likeCount})
@@ -342,9 +381,23 @@ export default class Post extends Component {
 
         return content;
     }
+    
+    renderSet(text) {
+        this.setState({alert: true, alertText: text});
+    }
+
+    renderAlert(text) {
+        return <Snackbar open={this.state.alert} autoHideDuration={2000}  onClose={() => this.setState({alert: false})}>
+                    <Alert severity="error">
+                    {this.state.alertText}
+                    </Alert>
+                </Snackbar>
+    }
 
 
     render() {
+        //this.getUserName();
+        
         if (this.state.isEditPost === true) {
 
             return <Redirect exact from="/" push to={{
@@ -374,15 +427,8 @@ export default class Post extends Component {
             return <Redirect exact from="/" push to={{
                 pathname: "/reportpost",
                 state: { 
-                    title: this.state.title,
-                    content: this.state.content,
                     user: this.state.user,
                     time: this.state.time,
-                    tags: this.state.tags,
-                    comments: this.state.comments,
-                    type: this.state.type,
-                    count: this.state.count,
-                    mode: this.state.mode,
                     reportCount: this.state.reportCount,
                     id: this.state.id,
                     reportArray: this.state.reportArray,
@@ -395,7 +441,9 @@ export default class Post extends Component {
         }
 
         return (
-            <ThemeProvider theme={this.state.theme} >     
+            
+            <ThemeProvider theme={this.state.theme} >
+                {this.renderAlert()}
                 <Box
                     boxShadow={2}
                     margin={1}
@@ -429,7 +477,7 @@ export default class Post extends Component {
                         <Grid item>
                             <IconButton 
                                 type="button"
-                                onClick={() => this.handleRedirect("reportpost")} >
+                                onClick={() => (this.state.reportArray.includes(localStorage.getItem('username')))?this.renderSet("You cannot report a post twice!"):this.handleRedirect("reportpost")} >
                                 <i className="fa fa-bullhorn"></i>
                             </IconButton>
                         </Grid>
@@ -524,7 +572,8 @@ export default class Post extends Component {
 
                             <TextField
                             id="outlined-full-width"
-                            label={"Comment as " + localStorage.getItem('username')} 
+                            label={"Comment"} 
+                            
                             style={{ margin: 1 }}
                             placeholder="What are your thoughts?"
                             fullWidth
@@ -533,6 +582,7 @@ export default class Post extends Component {
                                 shrink: true,
                             }}
                             defaultValue = ""
+                            value = {this.state.commentContent}
                             onChange={this.handleChange}
                             variant="outlined"/>
 

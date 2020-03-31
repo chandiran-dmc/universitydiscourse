@@ -38,12 +38,134 @@ export default class Comment extends Component {
             theme: props.theme,
             editDialog: false,
             dialogContent: "",
-            _id: props.data._id
+            _id: props.data._id,
+
+            likeCountComment: props.data.likeCountComment,
+            upvoteCountComment: props.data.upvoteCountComment,
+            downvoteCountComment: props.data.downvoteCountComment,
+            likeArrayComment: props.data.likeArrayComment,
+            upvoteArrayComment: props.data.upvoteArrayComment,
+            downvoteArrayComment: props.data.downvoteArrayComment,
         };       
         
         this.handleChange = this.handleChange.bind(this);
         
     }
+
+    
+    onSubmitLike = (event) => {
+        // alert("YOU LIKED THE POST");
+        // alert(this.state.likeCount);
+        console.log(this.state.likeCount)
+        axios({
+            method: 'post',
+            url: 'http://localhost:3000/api-comment/like',
+            data: {
+                like_user: localStorage.getItem("username"),
+                user:this.state.user,
+                time: this.state.time,
+                likeCountComment: this.state.likeCountComment+1,
+                likeArrayComment: this.state.likeArrayComment,
+                id: this.state._id
+            }
+        })
+        .then((response) => {
+            alert(response.data.message);
+            //alert(response.data.likeCount);
+            //alert(response.data.data.likeArray);
+            this.setState({likeCountComment: response.data.likeCountComment})
+            this.setState({likeArrayComment: response.data.likeArrayComment})
+            
+        })
+        .catch((error) => {
+        
+            alert("THIS IS THE ERROR");
+            console.log(error);
+            return;
+            
+
+        });
+        
+    }    
+
+    onSubmitUpVote = (event) => {
+        // alert("YOU UPVOTED THE POST");
+        // alert(this.state.upvoteCount);
+        console.log(this.state.upvoteCountComment)
+        axios({
+            method: 'post',
+            url: 'http://localhost:3000/api-comment/upvote',
+            data: {
+                like_user: localStorage.getItem("username"),
+                user: this.state.user,
+                time: this.state.time,
+                upvoteCountComment: this.state.upvoteCountComment+1,
+                upvoteArrayComment: this.state.upvoteArrayComment,
+                id: this.state._id
+            }
+        })
+        .then((response) => {
+            alert(response.data.message);
+            //alert(response.data.likeCount);
+            //alert(response.data.data.likeArray);
+            this.setState({upvoteCountComment: response.data.upvoteCountComment})
+            this.setState({upvoteArrayComment: response.data.upvoteArrayComment})
+            
+        })
+        .catch((error) => {
+        
+            console.log("THIS IS THE ERROR");
+            console.log(error);
+            return;
+            
+
+        });
+        
+    } 
+
+    onSubmitDownVote = (event) => {
+        // alert("YOU DOWNVOTED THE POST");
+        // alert(this.state.downvoteCount);
+        console.log(this.state.downvoteCountComment)
+        axios({
+            method: 'post',
+            url: 'http://localhost:3000/api-comment/downvote',
+            data: {
+                like_user: localStorage.getItem("username"),
+                user: this.state.user,
+                time: this.state.time,
+                downvoteCountComment: this.state.downvoteCountComment+1,
+              
+                downvoteArrayComment: this.state.downvoteArrayComment,
+                id: this.state._id
+            }
+        })
+        .then((response) => {
+            //if (response.data.message.localeCompare("already")) {
+                alert(response.data.message);
+            //}
+           
+            //alert(response.data.likeCount);
+            //alert(response.data.data.likeArray);
+            this.setState({downvoteCountComment: response.data.downvoteCountComment})
+            this.setState({downvoteArrayComment: response.data.downvoteArrayComment})
+        
+        })
+        .catch((error) => {
+        
+            //console.log("THIS IS THE ERROR");
+            //console.log(error);
+            return;
+            
+
+        });
+       
+    }    
+
+
+
+
+
 
     handleChange(event) {
         this.setState(
@@ -54,6 +176,34 @@ export default class Comment extends Component {
     }
 
     ChangeComment = () => {
+        //event.preventDefault();
+        
+        axios({
+            method: 'post',
+            url: 'http://localhost:3000/api-comment/updatecomment',
+            data: {
+                _id: this.state._id,
+                content: this.state.dialogContent,            
+            }
+        })
+        .then((response) => {
+            console.log(response);
+            this.setState(
+                {
+                    content: this.state.dialogContent,
+                    editDialog: false,
+                }
+            );   
+        })
+        .catch((error) => {
+            console.error(error);
+            alert('An error occurred');
+        });
+    }
+
+    DeleteComment(event) {
+        var addTodo = this.props.addTodo;
+        addTodo();
         //event.preventDefault();
         axios({
             method: 'post',
@@ -111,7 +261,7 @@ export default class Comment extends Component {
                             </Typography>
                         </Grid>
                         <Grid container justify="flex-end">
-                            <IconButton type="button" onClick={() => this.setState({editDialog: true})}>
+                            <IconButton type="button" onClick={() => (localStorage.getItem("username") === this.state.user)?this.setState({editDialog: true}):alert("You cannot edit this comment")}>
                                 <EditIcon />
                             </IconButton>
                         </Grid>
@@ -140,7 +290,7 @@ export default class Comment extends Component {
                                 id="outlined-full-width"
                                 label={"Edit Comment"} 
                                 style={{ margin: 1 }}
-                                fullWidth
+                                fullWidth="true"
                                 margin="normal"
                                 InputLabelProps={{
                                     shrink: true,
@@ -149,15 +299,79 @@ export default class Comment extends Component {
                                 onChange={this.handleChange}
                                 variant="outlined"/>
                         </DialogContent>
+                        
                         <DialogActions>
                         <Button onClick={() => this.ChangeComment()} color="primary">
                             Edit Comment
+                        </Button>                       
+                         
+                        </DialogActions>
+                        <DialogActions>
+                        <Button onClick={() => this.DeleteComment()} color="primary">
+                            Delete Comment
                         </Button>
                         <Button onClick={() => this.setState({editDialog: false})} color="primary">
                             Cancel
                         </Button>
                         </DialogActions>
                     </Dialog>
+
+                    <Grid 
+                        container
+                        wrap="nowrap"
+                        spacing={0}
+                        justify="flex-start"
+                        alignItems="center"
+                        direction="row">
+                        
+                        <Grid item>
+                            <IconButton 
+                                type="button"
+                                onClick={this.onSubmitLike} 
+                                >
+                                <i class="fa fa-heart"></i>
+                            </IconButton>
+                        </Grid>
+
+                        <Grid item>
+                            <Typography variant="body2">
+                                {this.state.likeCountComment}
+                            </Typography>
+                        </Grid>
+                        
+                        
+                        <Grid item>
+                            <IconButton 
+                                type="button"
+                                onClick={this.onSubmitUpVote}
+                                    >
+                                <i class="fa fa-thumbs-up"></i>
+                            </IconButton>
+                        </Grid>
+
+                        <Grid item>
+                            <Typography variant="body2">
+                                {this.state.upvoteCountComment}
+                            </Typography>
+                        </Grid>
+                        
+                        
+                        <Grid item>
+                            <IconButton 
+                                type="button"
+                                onClick={this.onSubmitDownVote} 
+                                >
+                                <i class="fa fa-thumbs-down"></i>
+                            </IconButton>
+                        </Grid>
+                        
+                        <Grid item>
+                            <Typography variant="body2">
+                                {this.state.downvoteCountComment}
+                            </Typography>
+                        </Grid>
+                        
+                    </Grid>
 
 
 
