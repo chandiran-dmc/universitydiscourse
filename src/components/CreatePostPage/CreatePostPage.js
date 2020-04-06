@@ -153,7 +153,9 @@ export default class CreatePostPage extends Component {
         );
        }
        else if(!this.state.all.includes(event.target.value) && event.target.value != null) {
-            alert("Tag doesn't exist")
+            //alert("Tag doesn't exist");
+            
+            this.renderSet("Tag doesn't exist!", "error");
             values.pop()
         }
     }
@@ -222,7 +224,8 @@ export default class CreatePostPage extends Component {
             }
         }
         if(count == 0 && (this.state.type !== "grade" && this.state.type !== "curve")) {
-            alert('You must include atleast one tag that you follow')
+            //alert('You must include atleast one tag that you follow');
+            this.renderSet("You must include atleast one tag that you follow!", "error");
             return;
         }
         
@@ -238,13 +241,16 @@ export default class CreatePostPage extends Component {
         if (this.state.type === "grade") {
             // check for content validity
             if (this.state.title.length === 0) {
-                alert('Course name cannot be empty');
+                //alert('Course name cannot be empty');
+                this.renderSet("Course name cannot be empty!", "error");
                 return;
             } else if (isNaN(this.state.content)) {
-                alert('Please input a number for score');
+                //alert('Please input a number for score');
+                this.renderSet("Please input a number for score!", "error");
                 return;
             } else if (this.state.content <= 0 || this.state.content >= 100) {
-                alert('Please input a valid number for score');
+                //alert('Please input a valid number for score');
+                this.renderSet("Please input a valid number for score!", "error");                
                 return;
             } else if (
                 this.state.tags[0] !== 'A' &&
@@ -253,7 +259,8 @@ export default class CreatePostPage extends Component {
                 this.state.tags[0] !== 'D' &&
                 this.state.tags[0] !== 'F'
             ) {
-                alert('Please input a valid grade of A,B,C,D or F');
+                //alert('Please input a valid grade of A,B,C,D or F');
+                this.renderSet("Please input a valid grade of A,B,C,D or F!", "error"); 
                 return;
             }
 
@@ -263,21 +270,26 @@ export default class CreatePostPage extends Component {
         else if (this.state.type === "curve") {
             // TODO: error checking for curve input
             if (this.state.title.length === 0) {
-                alert('Course name cannot be empty');
+                //alert('Course name cannot be empty');                
+                this.renderSet("Course name cannot be empty!", "error");
                 return;
             } else if (this.state.tags.length != 4) {
-                alert('Some curve data is missing');
+                //alert('Some curve data is missing');
+                this.renderSet("Some curve data is missing!", "error");
                 return;
             } else if (this.state.tags[0] > 100) {
-                alert('The lower bound of A cannot be more than 100');
+                //alert('The lower bound of A cannot be more than 100');
+                this.renderSet("The lower bound of A cannot be more than 100!", "error");
                 return;
             } else if (this.state.tags[3] < 0) {
-                alert('The lower bound of D cannot be less than 0');
+                //alert('The lower bound of D cannot be less than 0');
+                this.renderSet("The lower bound of D cannot be less than 0!", "error");
                 return;
             } else if (!(this.state.tags[0] > this.state.tags[1] &&
                        this.state.tags[1] > this.state.tags[2] &&
                        this.state.tags[2] > this.state.tags[3])) {
-                alert('The input data is invalid. Check the order');
+                //alert('The input data is invalid. Check the order');
+                this.renderSet("The input data is invalid. Check the order!", "error");
                 return;
             }
 
@@ -409,6 +421,7 @@ export default class CreatePostPage extends Component {
     getTextPage = () => {
         return (
             <div>
+                {this.renderAlert()}
                 <TopBar />
                 <Footer />
 
@@ -490,6 +503,7 @@ export default class CreatePostPage extends Component {
     getImagePage = () => {
         return (
             <div>
+                {this.renderAlert()}
                 <TopBar />
                 <Footer />
 
@@ -572,6 +586,7 @@ export default class CreatePostPage extends Component {
     getGradeInputPage = () => {
         return (
             <div>
+                {this.renderAlert()}
                 <TopBar />
                 <div className="CreatePostPage">
                     <form
@@ -620,7 +635,7 @@ export default class CreatePostPage extends Component {
                                                 disableElevation
                                                 type="button"
                                                 onClick={this.state.mode === "edit post" ? this.handleUpdatePost : this.handleCreatePost} >
-                                                MAKE POST
+                                                POST GRADE
                                             </Button>
                                     </Grid>
                                 </ThemeProvider>
@@ -635,6 +650,7 @@ export default class CreatePostPage extends Component {
     getCurveInputPage = () => {
         return (
             <div>
+                {this.renderAlert()}
                 <TopBar />
                 <div className="CreatePostPage">
                     <form
@@ -695,7 +711,7 @@ export default class CreatePostPage extends Component {
                                                 disableElevation
                                                 type="button"
                                                 onClick={this.state.mode === "edit post" ? this.handleUpdatePost : this.handleCreatePost} >
-                                                MAKE POST
+                                                POST CURVE
                                             </Button>
                                     </Grid>
                                 </ThemeProvider>

@@ -29,6 +29,7 @@ export default class CoursePage extends Component {
         result = result.substring(0, pos);
         this.state = {
             id: result,
+            selectedFile: null,
            
         };
 
@@ -38,14 +39,36 @@ export default class CoursePage extends Component {
                
 
     }
+
+    onChangeHandler=event=>{
+
+        console.log(event.target.files[0])
+        this.setState({
+            selectedFile: event.target.files[0],
+        })
     
-   
+    }
+    
+    onClickHandler = () => {
+        const data = new FormData() 
+        data.append('file', this.state.selectedFile)
+        console.log(data);
+    }   
 
     render() {
         return (
             <Grid>
                 <Grid item>
                     {this.state.id}
+                </Grid>
+                <Grid item>
+                    
+                    <input type="file" name="file" onChange={this.onChangeHandler}/>
+                    
+                </Grid>
+                <Grid item>
+                    
+                    <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>                     
                 </Grid>
             </Grid>
         )

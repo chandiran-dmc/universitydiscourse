@@ -132,7 +132,7 @@ removeAllPosts = async (req, res) => {
 }
 
 reportPost = async (req, res) => {
-    const reportArraylimit = 100;
+    const reportArraylimit = 3;
 
  
     // Parse body from the request

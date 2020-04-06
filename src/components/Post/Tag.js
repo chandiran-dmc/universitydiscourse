@@ -7,6 +7,16 @@ import { Button, Dialog, DialogTitle, DialogActions, DialogContent } from '@mate
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+
 export default class Tag extends Component {
 
     constructor(props) {
@@ -30,7 +40,8 @@ export default class Tag extends Component {
         // update local storage
         // handling duplicate tags
         if (tags.includes(tag)) {
-            alert(`Tag ${tag} is already being followed.`);
+            this.renderSet(`Tag ${tag} is already being followed.`, "error");
+            //alert(`Tag ${tag} is already being followed.`);
             // Close dialog
             this.closeDialog();
             return;
@@ -209,10 +220,22 @@ export default class Tag extends Component {
             });
         }
     }
+    renderSet(text, alertType) {
+        this.setState({alert: true, alertText: text, alertType: alertType});
+    }
+
+    renderAlert(text) {
+        return <Snackbar open={this.state.alert} autoHideDuration={2000}  onClose={() => this.setState({alert: false})}>
+                    <Alert severity={this.state.alertType}>
+                    {this.state.alertText}
+                    </Alert>
+                </Snackbar>
+    }
 
     render() {
         return (
             <div>
+                {this.renderAlert()}
                 <Button
                     onClick={this.toggleOpen}
                     disableElevation

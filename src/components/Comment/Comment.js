@@ -194,6 +194,8 @@ export default class Comment extends Component {
                     editDialog: false,
                 }
             );   
+            
+            this.renderSet("You have successfully edited the comment!", "success");
         })
         .catch((error) => {
             console.error(error);
@@ -203,7 +205,7 @@ export default class Comment extends Component {
 
     DeleteComment(event) {
         var addTodo = this.props.addTodo;
-        addTodo();
+        
         //event.preventDefault();
         axios({
             method: 'post',
@@ -219,8 +221,11 @@ export default class Comment extends Component {
                 {
                     content: this.state.dialogContent,
                     editDialog: false,
+
                 }
             );   
+            addTodo();
+            //this.renderSet("You have successfully deleted the comment!", "success");
         })
         .catch((error) => {
             console.error(error);

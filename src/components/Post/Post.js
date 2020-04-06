@@ -370,8 +370,9 @@ export default class Post extends Component {
             case "text":
                 content = <Typography variant="h6">{this.state.content}</Typography>;
                 break;
-
-            
+            case "image":
+                content = <img src={this.state.content} alt={"The Image URL is invalid"} width="600"/>
+                break;            
         
             case "calendar":
                     var content2 = []
@@ -522,7 +523,7 @@ export default class Post extends Component {
                         <Grid item>
                             <IconButton 
                                 type="button"
-                                onClick={() => (this.state.reportArray.includes(localStorage.getItem('username')))?this.renderSet("You cannot report a post twice!", "error"):this.handleRedirect("reportpost")} >
+                                onClick={() => (this.state.reportArray.includes(localStorage.getItem('username')))?this.renderSet("You cannot report a post twice!", "error"):(this.state.user === localStorage.getItem('username'))?this.renderSet("You cannot report your own post!", "error"):this.handleRedirect("reportpost")} >
                                 <i className="fa fa-bullhorn"></i>
                             </IconButton>
                         </Grid>
