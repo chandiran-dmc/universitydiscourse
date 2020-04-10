@@ -14,10 +14,24 @@
  */
 
 import React, { Component } from 'react'
-import { Grid, Card, CardMedia, CardContent, Typography } from '@material-ui/core';
+import { Grid, Card, CardMedia, CardContent, Typography, CardActions, Button, createMuiTheme, ThemeProvider, Divider } from '@material-ui/core';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 
+const theme = createMuiTheme({
+    palette: {
+        primary: {
+            main: "#F2B705"
+        },
+        secondary: {
+            main: "#F2C94C"
+        },
+        text: {
+            main: "#000000",
+            sub: "#9B9B9B"
+        }
+    }
+});
 
 export default class CoursePage extends Component {
 
@@ -36,17 +50,128 @@ export default class CoursePage extends Component {
             title: "Defualt course title",
             description: "Default course description",
             credit: 0,
+            followButton: <div/>
         };
     }
 
     /**
-     * Get grade graph and display it
-     * Get the course information through purdue io api
+     * List of functions to execute to update/show to user
      */
     componentDidMount() {
+        // Get grade graph and display it
         this.showGraph(this.state.id);
+
+        // Get the course information through purdue io api
+
+        // Check if the user is currently following this tag (course)
+        // if so, change to unfollow button
+        // if not, enable the follow button with correct callback function
+        this.checkFollowing(this.state.id);
     }
     
+    /**
+     * This method checks the local storage to see if the user follows the current course
+     * and handles the result
+     */
+    checkFollowing = (tag) => { 
+        let followingTags = localStorage.getItem("tags");
+        // set empty array if item non existant
+        if (followingTags == null) {
+            followingTags = [];
+        } else {
+            // get the tags in an array
+            followingTags = followingTags.split(",");
+        }
+
+        // unfollow button
+        if (followingTags.includes(tag)) {
+            this.setState({
+                followButton: 
+                <Button
+                    variant="contained"
+                    color="primary"
+                    style={{width : "100%"}}
+                    onClick={this.unfollowTag}
+                >
+                    Unfollow
+                </Button>
+            });
+        } else {
+            // set the appropriate callback function
+            this.setState({
+                followButton: 
+                <Button
+                    variant="contained"
+                    color="primary"
+                    style={{width : "100%"}}
+                    onClick={this.followTag}
+                >
+                    Follow
+                </Button>
+            });
+        }
+    }
+
+    /**
+     * This method is called when the user clicks an unfollow tag button
+     */
+    unfollowTag = () => {
+        let tag = this.state.id;
+
+        // request server for update on user
+
+        // update local storage
+
+        // change button to follow
+        this.setState({
+            followButton: 
+            <Button
+                variant="contained"
+                color="primary"
+                style={{width : "100%"}}
+                onClick={this.followTag}
+            >
+                Follow
+            </Button>
+        });        
+
+        // show alert to the user to notify that the process is done
+    }
+
+
+    /**
+     * This method is called when the user clicks an enabled follow tag button
+     */
+    followTag = () => {
+        let tag = this.state.id;
+        
+        // request server for update on user
+
+        // update local storage
+
+        // change button to unfollow
+        this.setState({
+            followButton: 
+            <Button
+                variant="contained"
+                color="primary"
+                style={{width : "100%"}}
+                onClick={this.unfollowTag}
+            >
+                Unfollow
+            </Button>
+        });
+        
+        // show alert to the user to notify that the process is done
+    }
+
+    /**
+     * This method gets data using the purdue.io API for course information
+     */
+    getCourseInfo = async (tag) => {
+
+    }
+
     /**
      * This method pulls data from the server and displays the grade
      */
@@ -168,60 +293,86 @@ export default class CoursePage extends Component {
             legend: {
                 display: false
             },
+            maintainAspectRatio: false,
         };
         // set grade graph
         this.setState({
-            graph: <Line data={state} options={option}/>,
+            graph: 
+                <Line
+                    data={state}
+                    options={option}
+                    height={200}
+                />,
         });
     }
 
     render() {
         return (
-            <Grid
-                container
-                justify="center"
-                alignItems="center"
-                direction="column"
-            >
+            <ThemeProvider theme={theme}>
                 <Grid
-                    item
-                    style={{width : "80%"}}
+                    container
+                    justify="center"
+                    alignItems="center"
+                    direction="column"
                 >
-                    <Card>
-                        <CardMedia 
-                            image="https://images.pexels.com/photos/1781709/pexels-photo-1781709.jpeg"
-                            style={{paddingTop: '15%'}}
-                        />
-                        <CardContent>
-                            <Typography
-                                variant="h4"
-                            >
-                                {this.state.id}
-                            </Typography>
-                            <Typography
-                                variant="h5"
-                                gutterBottom
-                            >
-                                {this.state.title}
-                            </Typography>
-                            <br/>
-                            <Typography
-                                variant="body1"
-                            >
-                                Credit Hours: {this.state.credit}.00
-                            </Typography>
-                            <Typography
-                                variant="body1"
-                            >
-                                {this.state.description}
-                            </Typography>
-                        </CardContent>
-                    </Card>
+                    <Grid
+                        item
+                        style={{width : "80%"}}
+                    >
+                        <Card>
+                            <CardMedia 
+                                image="https://images.pexels.com/photos/1781709/pexels-photo-1781709.jpeg"
+                                style={{paddingTop: '15%'}}
+                            />
+                            <CardContent>
+                                <Typography
+                                    variant="h4"
+                                >
+                                    {this.state.id}
+                                </Typography>
+                                <Typography
+                                    variant="h5"
+                                    gutterBottom
+                                >
+                                    {this.state.title}
+                                </Typography>
+                                <br/>
+                                <Typography
+                                    variant="body1"
+                                >
+                                    Credit Hours: {this.state.credit}.00
+                                </Typography>
+                                <Typography
+                                    variant="body1"
+                                >
+                                    {this.state.description}
+                                </Typography>
+                            </CardContent>
+                            <CardActions>
+                                {this.state.followButton}
+                            </CardActions>
+                        </Card>
+                    </Grid>
+                    <Grid
+                        item
+                        style={{width: "80%", marginTop: "3%"}}
+                    >
+                        <Typography
+                            variant="h5"
+                            align="center"
+                        >
+                            Grade Distribution Graph
+                        </Typography>
+                    </Grid>
+                    <Grid
+                        item
+                        style={{width: "80%"}}
+                    >
+                        {this.state.graph}
+                    </Grid>
                 </Grid>
-                <Grid>
-                    {this.state.graph}
-                </Grid>
-            </Grid>
+            </ThemeProvider>
+            
         )
     }
  }
