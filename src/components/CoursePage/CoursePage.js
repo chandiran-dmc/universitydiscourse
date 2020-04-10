@@ -14,7 +14,7 @@
  */
 
 import React, { Component } from 'react'
-import { Grid } from '@material-ui/core';
+import { Grid, Card, CardMedia, CardContent, Typography } from '@material-ui/core';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 
@@ -33,11 +33,15 @@ export default class CoursePage extends Component {
         this.state = {
             id: result,
             graph: <div/>,
+            title: "Defualt course title",
+            description: "Default course description",
+            credit: 0,
         };
     }
 
     /**
      * Get grade graph and display it
+     * Get the course information through purdue io api
      */
     componentDidMount() {
         this.showGraph(this.state.id);
@@ -173,9 +177,46 @@ export default class CoursePage extends Component {
 
     render() {
         return (
-            <Grid>
-                <Grid item>
-                    {this.state.id}
+            <Grid
+                container
+                justify="center"
+                alignItems="center"
+                direction="column"
+            >
+                <Grid
+                    item
+                    style={{width : "80%"}}
+                >
+                    <Card>
+                        <CardMedia 
+                            image="https://images.pexels.com/photos/1781709/pexels-photo-1781709.jpeg"
+                            style={{paddingTop: '15%'}}
+                        />
+                        <CardContent>
+                            <Typography
+                                variant="h4"
+                            >
+                                {this.state.id}
+                            </Typography>
+                            <Typography
+                                variant="h5"
+                                gutterBottom
+                            >
+                                {this.state.title}
+                            </Typography>
+                            <br/>
+                            <Typography
+                                variant="body1"
+                            >
+                                Credit Hours: {this.state.credit}.00
+                            </Typography>
+                            <Typography
+                                variant="body1"
+                            >
+                                {this.state.description}
+                            </Typography>
+                        </CardContent>
+                    </Card>
                 </Grid>
                 <Grid>
                     {this.state.graph}
