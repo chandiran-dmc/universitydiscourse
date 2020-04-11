@@ -48,7 +48,7 @@ export default class CoursePage extends Component {
             id: result,
             graph: <div/>,
             title: "Defualt course title",
-            description: "Default course description",
+            description: "No course description available",
             credit: 0,
             followButton: <div/>
         };
@@ -62,6 +62,7 @@ export default class CoursePage extends Component {
         this.showGraph(this.state.id);
 
         // Get the course information through purdue io api
+        this.getCourseInfo(this.state.id);
 
         // Check if the user is currently following this tag (course)
         // if so, change to unfollow button
@@ -72,6 +73,8 @@ export default class CoursePage extends Component {
     /**
      * This method checks the local storage to see if the user follows the current course
      * and handles the result
+     * 
+     * @param  tag  the course name
      */
     checkFollowing = (tag) => { 
         let followingTags = localStorage.getItem("tags");
@@ -118,9 +121,9 @@ export default class CoursePage extends Component {
     unfollowTag = () => {
         let tag = this.state.id;
 
-        // request server for update on user
+        // TODO: request server for update on user
 
-        // update local storage
+        // TODO: update local storage
 
         // change button to follow
         this.setState({
@@ -135,7 +138,7 @@ export default class CoursePage extends Component {
             </Button>
         });        
 
-        // show alert to the user to notify that the process is done
+        // TODO: show alert to the user to notify that the process is done
     }
 
 
@@ -145,9 +148,9 @@ export default class CoursePage extends Component {
     followTag = () => {
         let tag = this.state.id;
         
-        // request server for update on user
+        // TODO: request server for update on user
 
-        // update local storage
+        // TODO: update local storage
 
         // change button to unfollow
         this.setState({
@@ -162,18 +165,76 @@ export default class CoursePage extends Component {
             </Button>
         });
         
-        // show alert to the user to notify that the process is done
+        // TODO: show alert to the user to notify that the process is done
     }
+
 
     /**
      * This method gets data using the purdue.io API for course information
+     * For more information, check https://github.com/Purdue-io/PurdueApi 
+     * 
+     * @param  tag  course name
      */
     getCourseInfo = async (tag) => {
 
+        // the 'CS' part of the course name
+        let result = this.getAbbrevAndNum(tag);
+        let abbreviation = result.abbreviation;
+        let number = result.number;
+
+        // make the request to Purdue.io with the following url
+        let url = "http://api.purdue.io/odata/Courses?%24filter=Subject/Abbreviation eq '" 
+                    + abbreviation + "' and Number eq '" + number + "'";
+
+        // request
+        await axios({
+            method: 'get',
+            url: url
+        }).then((response) => {
+            let queryResult = response.data.value[0];
+            this.setState({
+                title: queryResult.Title,
+                description: (queryResult.Description === "" ? "No course description available" : queryResult.Description),
+                credit: queryResult.CreditHours,
+            });
+        }).catch((error) => {
+            console.error(error);
+            // TODO: notify the user that there has been an error
+        })
+    }
+    /**
+     * This is a helper function to extract the abbreviation (ex: 'CS')
+     * and the course number (ex: '18000') from the given course name
+     * 
+     * @param  tag  the course name (ex: CS307)
+     * @returns an object with abbreviation and number extracted from the tag
+     */
+    getAbbrevAndNum = (tag) => {
+
+        // get abbreviation by matching with regex
+        let found = tag.match(/[A-Za-z]+/g);
+        found = found[0];
+
+        // get course number
+        let number = tag.match(/[0-9]+/g);
+        number = number[0] + "";
+        // add additional 0s to the number for correct querying
+        let numLength = 5 - number.length;
+        for (let i = 0; i < numLength; i++) {
+            number += "0";
+        }
+
+        return {
+            abbreviation: found,
+            number: number
+        };
     }
 
     /**
      * This method pulls data from the server and displays the grade
+     * by updating the state of graph with a react-chart-js component
+     * 
+     * @param  tag  the course name
      */
     showGraph = async (tag) => {
 
@@ -305,6 +366,7 @@ export default class CoursePage extends Component {
                 />,
         });
     }
+
 
     render() {
         return (
