@@ -119,55 +119,112 @@ export default class CoursePage extends Component {
      * This method is called when the user clicks an unfollow tag button
      */
     unfollowTag = () => {
-        let tag = this.state.id;
+        let tagName = this.state.id;
 
-        // TODO: request server for update on user
+        if (window.confirm('Remove tag ' + tagName + ' ?')) {
 
-        // TODO: update local storage
+            // cannot remove default tag manually
+            if (tagName === "default") {
+                alert('Cannot remove default tag');
+                return;
+            }
 
-        // change button to follow
-        this.setState({
-            followButton: 
-            <Button
-                variant="contained"
-                color="primary"
-                style={{width : "100%"}}
-                onClick={this.followTag}
-            >
-                Follow
-            </Button>
-        });        
+            let tags = localStorage.getItem("tags").split(",");
+            // remove the tag from the local storage
+            tags = tags.filter((value, index, arr) => {return value !== tagName});
+            if (tags.length === 0) {
+                localStorage.removeItem("tags");
+            }
+            else {
+                // update the local storage
+                localStorage.setItem("tags", tags.toString());
+            }
 
-        // TODO: show alert to the user to notify that the process is done
+            // update database
+            axios({
+                method: 'post',
+                url: 'http://localhost:3000/api-user/updateusertags',
+                data: {
+                    email: localStorage.getItem("email"),
+                    newtags: (tags.length === 0 ? "default" : tags.toString())
+                }
+            })
+            .then((response) => {
+                console.log("Tags updated");
+                // change button to follow
+                this.setState({
+                    followButton: 
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        style={{width : "100%"}}
+                        onClick={this.followTag}
+                    >
+                        Follow
+                    </Button>
+                });   
+            })
+            .catch((error) => {
+                console.error(error.response);
+                if (error.response.data.message) {
+                    alert(error.response.data.message);
+                }
+            });
+        }
     }
-
 
     /**
      * This method is called when the user clicks an enabled follow tag button
      */
     followTag = () => {
         let tag = this.state.id;
-        
-        // TODO: request server for update on user
+        let tags = [];
+        if (localStorage.getItem("tags") != null) {
+            tags = localStorage.getItem("tags").split(",");
+            // Remove default tag
+            tags = tags.filter((value, index, arr) => {return value !== "default"});
+        }
+        // update local storage
+        // handling duplicate tags
+        if (tags.includes(tag)) {
+            alert(`Tag ${tag} is already being followed.`);
+            return;
+        } else {
+            tags.push(tag);
+        }
+        localStorage.setItem("tags", tags.toString());
 
-        // TODO: update local storage
-
-        // change button to unfollow
-        this.setState({
-            followButton: 
-            <Button
-                variant="contained"
-                color="primary"
-                style={{width : "100%"}}
-                onClick={this.unfollowTag}
-            >
-                Unfollow
-            </Button>
+        // update database
+        axios({
+            method: 'post',
+            url: 'http://localhost:3000/api-user/updateusertags',
+            data: {
+                email: localStorage.getItem("email"),
+                newtags: tags.toString()
+            }
+        })
+        .then((response) => {
+            console.log("Tags updated");
+            // change button to unfollow
+            this.setState({
+                followButton: 
+                <Button
+                    variant="contained"
+                    color="primary"
+                    style={{width : "100%"}}
+                    onClick={this.unfollowTag}
+                >
+                    Unfollow
+                </Button>
+            });
+        })
+        .catch((error) => {
+            console.error(error.response);
+            if (error.response.data.message) {
+                alert(error.response.data.message);
+            }
         });
-        
-        // TODO: show alert to the user to notify that the process is done
     }
-
 
     /**
      * This method gets data using the purdue.io API for course information
@@ -199,9 +256,10 @@ export default class CoursePage extends Component {
             });
         }).catch((error) => {
             console.error(error);
-            // TODO: notify the user that there has been an error
+            alert("error while fetching course information");
         })
     }
+
     /**
      * This is a helper function to extract the abbreviation (ex: 'CS')
      * and the course number (ex: '18000') from the given course name
@@ -435,7 +493,7 @@ export default class CoursePage extends Component {
                 </Grid>
             </ThemeProvider>
             
-        )
+        );
     }
  }
 

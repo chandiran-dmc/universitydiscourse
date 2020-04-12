@@ -6,7 +6,6 @@ import Post from './../Post';
 import SideBar from '../SideBar';
 import { Grid, createMuiTheme } from '@material-ui/core';
 import './MainFeedPage.css';
-import sample_tags from '../../mock_data/AllTags.json';
 
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -49,7 +48,6 @@ export default class MainFeedPage extends Component {
             alertText: "",
             alertType: ""
         };
-        //localStorage.setItem("tags", "CS307");
     }
 
     

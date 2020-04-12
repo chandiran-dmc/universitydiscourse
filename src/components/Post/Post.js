@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
-import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, TextField, Dialog, DialogActions, DialogTitle, createMuiTheme, List, ListItem, ListItemIcon, Divider, ListItemText } from '@material-ui/core';
+import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, TextField, createMuiTheme, List, ListItem, ListItemIcon, Divider, ListItemText } from '@material-ui/core';
 import InsertCommentIcon from '@material-ui/icons/InsertComment';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
-import InboxIcon from '../../customeIcons/menuIcon';
 import MenuIcon from '../../customeIcons/menuIcon';
 //import Warning from '../../customeIcons/Warning';
 import {FacebookShareButton} from "react-share"
@@ -16,8 +14,6 @@ import Comment from './../Comment';
 import SchoolIcon from '@material-ui/icons/School';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import { makeStyles } from '@material-ui/core/styles';
-import { borderRight } from '@material-ui/system';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
