@@ -49,7 +49,8 @@ export default class MainFeedPage extends Component {
             alert: false,
             alertText: "",
             alertType: "",
-            toTagSearch: false
+            toTagSearch: false,
+            searchType: ""
         };
         //localStorage.setItem("tags", "CS307");
     }
@@ -147,6 +148,9 @@ export default class MainFeedPage extends Component {
         if (this.state.toTagSearch === true) {
             return <Redirect exact from="/" push to={{
                 pathname: "/searchtag",
+                state: {
+                    searchType: "Tag"
+                }
             }}/>;
         }
         

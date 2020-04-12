@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import Post from './../Post';
 import { Grid, createMuiTheme, Button, TextField, Typography } from '@material-ui/core';
-// import './MainFeedPage.css';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TagButton from './TagButton';
 import SearchIcon from '@material-ui/icons/Search';
-import SelectInput from '@material-ui/core/Select/SelectInput';
 
 
 
@@ -50,8 +48,10 @@ export default class TagSearch extends Component {
             all: [],
             tags: [],
             tagsDisplay: [],
-            check: false
+            check: false,
+            searchType: this.props.location.state.searchType
         };
+        console.log(this.state.searchType)
         //localStorage.setItem("tags", "CS307");
         axios({
             method: 'get',
@@ -168,8 +168,8 @@ export default class TagSearch extends Component {
     }
 
     render() {
-        this.handleCheck()
         console.log(this.state.filteredPosts)
+        console.log(this.state.searchType)
       return (
           
           <div className="MainFeedPage">
@@ -242,7 +242,7 @@ export default class TagSearch extends Component {
                               <Grid item>
                               </Grid>
                               <Grid item>
-                                  {!this.state.check ? <p> </p> : this.state.filteredPosts.length != 0 ? this.state.filteredPosts : this.state.tags.length != 0 ? <p> </p> : <p>No posts with matching tags</p>}
+                                  {this.state.filteredPosts.length != 0 ? this.state.filteredPosts : (this.state.searchType != null ? this.state.searchType = null : <p>No posts matching the current search. Add tags or search for different ones</p>)}
                               </Grid>
                           </Grid>
                       </Grid>
