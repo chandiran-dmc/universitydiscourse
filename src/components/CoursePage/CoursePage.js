@@ -46,11 +46,8 @@ export default class CoursePage extends Component {
 
         this.state = {
             id: result,
-            graph: <div/>,
-            title: "Defualt course title",
-            description: "Default course description",
-            credit: 0,
-            followButton: <div/>
+            selectedFile: null,
+           
         };
     }
 
@@ -68,7 +65,17 @@ export default class CoursePage extends Component {
         // if not, enable the follow button with correct callback function
         this.checkFollowing(this.state.id);
     }
+
+    onChangeHandler=event=>{
+
+        console.log(event.target.files[0])
+        this.setState({
+            selectedFile: event.target.files[0],
+        })
     
+    }
+    
+<<<<<<< HEAD
     /**
      * This method checks the local storage to see if the user follows the current course
      * and handles the result
@@ -305,6 +312,17 @@ export default class CoursePage extends Component {
                 />,
         });
     }
+=======
+    onClickHandler = () => {
+        const data = new FormData() 
+        data.append('file', this.state.selectedFile)
+        axios.post("http://localhost:3001/api/user-profile", data, {
+        }).then(res => {
+            console.log(res)
+        })
+        console.log(data);
+    }   
+>>>>>>> c9ee79a065e8420ef89d6b727b46da11e1bd9595
 
     render() {
         return (
@@ -371,8 +389,21 @@ export default class CoursePage extends Component {
                         {this.state.graph}
                     </Grid>
                 </Grid>
+<<<<<<< HEAD
             </ThemeProvider>
             
+=======
+                <Grid item>
+                    
+                    <input type="file" name="file" onChange={this.onChangeHandler}/>
+                    
+                </Grid>
+                <Grid item>
+                    
+                    <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>                     
+                </Grid>
+            </Grid>
+>>>>>>> c9ee79a065e8420ef89d6b727b46da11e1bd9595
         )
     }
  }

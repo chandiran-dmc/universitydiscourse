@@ -25,7 +25,8 @@
     "jsonwebtoken": "^8.5.1",
     "mocha": "^7.1.0",
     "mongodb": "^3.5.3",
-    "mongoose": "^5.9.2",
+    "mongoose": "^5.9.7",
+    "multer": "^1.4.2",
     "node-sass": "^4.13.1",
     "nodemailer": "^6.4.3",
     "nodemon": "^2.0.2",
@@ -38,13 +39,14 @@
     "react-scripts": "3.3.1",
     "react-share": "^4.1.0",
     "react-social-icons": "^4.1.0",
-    "typeface-roboto": "0.0.75"
+    "typeface-roboto": "0.0.75",
+    "uuid": "^7.0.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3001 react-scripts start & nodemon index.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "test-user": "istanbul cover _mocha ./controllers/controllertest.spec.js",
+    "test-user": "istanbul cover _mocha ./controllers/controller.test.spec.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
