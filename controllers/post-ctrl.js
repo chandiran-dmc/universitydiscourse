@@ -207,31 +207,31 @@ reportPost = async (req, res) => {
         // Set new information for the post
         
         var i = 0;
-        var flag;
+        //var flag;
         
         console.log(i);
         
-        for (i = 0; i < body.reportCount - 1; i++) {
-            console.log("CURRENT USER");
-            console.log(body.report_user);
-            console.log("EARLIER USER");
-            console.log(body.reportArray[i]);
-            if (body.reportArray[i].localeCompare(body.report_user) === 0) {
-                console.log("COMES HERE");
-                flag = -100; // user already found
+        // for (i = 0; i < body.reportCount - 1; i++) {
+        //     console.log("CURRENT USER");
+        //     console.log(body.report_user);
+        //     console.log("EARLIER USER");
+        //     console.log(body.reportArray[i]);
+        //     if (body.reportArray[i].localeCompare(body.report_user) === 0) {
+        //         console.log("COMES HERE");
+        //         flag = -100; // user already found
 
-            }
-        }
-        if (flag === -100) {
-                return res.status(200).json({
+        //     }
+        // }
+        // if (flag === -100) {
+        //         return res.status(200).json({
                    
-                    err,
-                    reportArray: post.reportArray,
-                    reportCount: post.reportCount,
-                    message: 'User has already reported the post earlier, it is under review',
-                });
+        //             err,
+        //             reportArray: post.reportArray,
+        //             reportCount: post.reportCount,
+        //             message: 'User has already reported the post earlier, it is under review',
+        //         });
    
-        }
+        // }
         post.reportCount=body.reportCount;
         //post.reportArrayindex=body.reportArrayindex;
         post.reportArray.push(body.report_user);
