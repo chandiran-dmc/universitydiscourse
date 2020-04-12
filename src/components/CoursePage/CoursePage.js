@@ -257,7 +257,7 @@ export default class CoursePage extends Component {
         }).catch((error) => {
             console.error(error);
             alert("error while fetching course information");
-        })
+        });
     }
 
     /**
