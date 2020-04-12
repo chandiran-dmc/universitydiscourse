@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Post from './../Post';
-import { Grid, createMuiTheme, Button } from '@material-ui/core';
+import { Grid, createMuiTheme, Button, TextField } from '@material-ui/core';
 // import './MainFeedPage.css';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 
 
@@ -42,9 +43,30 @@ export default class TagSearch extends Component {
             alert: false,
             alertText: "",
             alertType: "",
-            toTagSearch: false
+            toTagSearch: false,
+            all: [],
+            tags: []
         };
         //localStorage.setItem("tags", "CS307");
+        axios({
+            method: 'get',
+            url: 'http://localhost:3000/api/getcourses'
+          })
+          .then((response) => {
+            let all = []
+            for(let i = 0; i < response.data.data.length; i++) {
+                all.push(response.data.data[i].name)
+            }
+            this.setState({
+                all: all
+            })        
+          })
+          .catch((error) => {
+              console.error(error);
+              alert('An error occurred');
+          });
+
+          this.handleChangeTags = this.handleChangeTags.bind(this);
     }
 
     
@@ -58,6 +80,19 @@ export default class TagSearch extends Component {
                     {this.state.alertText}
                     </Alert>
                 </Snackbar>
+    }
+    handleChangeTags(event, values) {
+        console.log(event.target.value)
+      
+      if(event.target.value === 0 || this.state.all.includes(event.target.value) || event.target.value == null) {
+          this.setState({
+              tags: values
+          })
+       }
+       else if(!this.state.all.includes(event.target.value) && event.target.value != null) {
+            alert("Tag doesn't exist")
+            values.pop()
+        }
     }
     
 
@@ -78,30 +113,12 @@ export default class TagSearch extends Component {
             let posts = [];
             posts = response.data.data;
 
-            // request user data for the tags
-            axios({
-                method: 'post',
-                url: 'http://localhost:3000/api-user/getuser',
-                data: {
-                    email: localStorage.getItem("email"),
-                    username: localStorage.getItem("username")
-                }
-            })
-            .then((response) => {
-                console.log(response.data.data)
-
-                // Filter the posts based on the tags the user follows
-                let tags =  response.data.data.tags.split(",");
-
-                // save the tags to the local storage
-                localStorage.setItem("tags", tags.toString());
-
                 let filteredPosts = [];
 
                 posts.forEach((post) => {
 
                     for (let i = 0; i < post.tag.length; i++) {
-                        if (tags.includes(post.tag[i]) || tags.includes("default")) {
+                        if (this.state.tags.includes(post.tag[i])) {
                             filteredPosts.push(<Post key={Math.random()*100000} data={post} theme={theme}/>);
                             console.log(post)
                             break;
@@ -118,11 +135,6 @@ export default class TagSearch extends Component {
                 console.error(error);
                 alert('An error occurred');
             });
-        })
-        .catch((error) => {
-            console.error(error);
-            alert('An error occurred');
-        });
     }
 
 
@@ -143,8 +155,38 @@ export default class TagSearch extends Component {
                   justify="space-around"
                   alignItems="center" >
                    <Grid item >
+                        <div style={{ width: 300 }}>
+                            <Autocomplete
+                                multiple
+                                id="tags-standard"
+                                options={this.state.all}
+
+                                onChange={this.handleChangeTags}
+                                freeSolo
+                                // defaultValue={this.state.tags}
+                                renderInput={params => (
+                                <TextField
+                                    {...params}
+                                    variant="standard"
+                                    label="Tags"
+                                   // placeholder="Favorites"
+                                    margin ="normal"
+                                    fullWidth
+                                />
+                                )}
+                            />
+                        </div>
                        
                   </Grid> 
+                  <Grid item>
+                  <Button 
+                    color="secondary"
+                    variant="contained"
+                    type="button"
+                    onClick={() => {this.getPosts()}} >
+                    Search based on Tags
+                  </Button>
+                  </Grid>
                   <Grid 
                       container
                       wrap="nowrap" 
