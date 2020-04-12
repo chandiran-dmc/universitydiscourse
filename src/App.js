@@ -38,6 +38,7 @@ export default function App() {
           <Route exact path="/course/:id" component={CoursePage} />
           <Route exact path="/post/:id" component={PostPage} />
           
+          
         </Switch>
       </Router>
     );

@@ -5,6 +5,7 @@ const db = require('./db')
 const postRouter = require('./routes/post-router')
 const userRouter = require('./routes/user-router')
 const commentRouter = require('./routes/comment-router')
+const documentRouter = require('./routes/document-router')
 
 const app = express()
 const PORT = 3000;
@@ -22,6 +23,7 @@ app.get('/', (req, res) => {
 app.use('/api', postRouter)
 app.use('/api-user', userRouter);
 app.use('/api-comment', commentRouter);
+app.use('/api-document', documentRouter);
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 });

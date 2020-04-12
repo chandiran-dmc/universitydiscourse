@@ -16,7 +16,7 @@
 import React, { Component } from 'react'
 
 import { Grid } from '@material-ui/core';
-
+const axios = require('axios');
 
 export default class CoursePage extends Component {
 
@@ -52,7 +52,7 @@ export default class CoursePage extends Component {
     onClickHandler = () => {
         const data = new FormData() 
         data.append('file', this.state.selectedFile)
-        axios.post("http://localhost:3001/api/user-profile", data, {
+        axios.post("http://localhost:3000/api-document/document-upload", data, {
         }).then(res => {
             console.log(res)
         })
