@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import TopBar from '../TopBar';
+import { Redirect } from 'react-router-dom';
 //import Footer from '../Footer';
 import ActionBar from './ActionBar';
 import Post from './../Post';
 import SideBar from '../SideBar';
-import { Grid, createMuiTheme } from '@material-ui/core';
+import { Grid, createMuiTheme, Button } from '@material-ui/core';
 import './MainFeedPage.css';
 import sample_tags from '../../mock_data/AllTags.json';
 
@@ -47,7 +48,8 @@ export default class MainFeedPage extends Component {
             filteredPosts: [],
             alert: false,
             alertText: "",
-            alertType: ""
+            alertType: "",
+            toTagSearch: false
         };
         //localStorage.setItem("tags", "CS307");
     }
@@ -63,6 +65,11 @@ export default class MainFeedPage extends Component {
                     {this.state.alertText}
                     </Alert>
                 </Snackbar>
+    }
+    redirectSearch() {
+        this.setState({
+            toTagSearch: true
+        })
     }
         
     
@@ -137,6 +144,11 @@ export default class MainFeedPage extends Component {
     }
 
     render() {
+        if (this.state.toTagSearch === true) {
+            return <Redirect exact from="/" push to={{
+                pathname: "/searchtag",
+            }}/>;
+        }
         
       return (
           
@@ -150,9 +162,16 @@ export default class MainFeedPage extends Component {
                   direction="column"
                   justify="space-around"
                   alignItems="center" >
-                  {/* <Grid item >
-                      <TopBar /> 
-                  </Grid> */}
+                   <Grid item >
+                        <Button 
+                            color="secondary"
+                            variant="contained"
+                            type="button"
+                            onClick={() => {this.redirectSearch()}} >
+                            Search based on Tags
+                        </Button>
+                       
+                  </Grid> 
                   <Grid 
                       container
                       wrap="nowrap" 
