@@ -52,6 +52,10 @@ export default class CoursePage extends Component {
     onClickHandler = () => {
         const data = new FormData() 
         data.append('file', this.state.selectedFile)
+        axios.post("http://localhost:3001/api/user-profile", data, {
+        }).then(res => {
+            console.log(res)
+        })
         console.log(data);
     }   
 
