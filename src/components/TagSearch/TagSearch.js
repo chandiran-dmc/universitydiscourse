@@ -5,6 +5,7 @@ import { Grid, createMuiTheme, Button, TextField } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import Autocomplete from '@material-ui/lab/Autocomplete';
+import TagButton from './TagButton';
 
 
 
@@ -45,7 +46,8 @@ export default class TagSearch extends Component {
             alertType: "",
             toTagSearch: false,
             all: [],
-            tags: []
+            tags: [],
+            tagsDisplay: []
         };
         //localStorage.setItem("tags", "CS307");
         axios({
@@ -81,19 +83,24 @@ export default class TagSearch extends Component {
                     </Alert>
                 </Snackbar>
     }
+
     handleChangeTags(event, values) {
         console.log(event.target.value)
       
       if(event.target.value === 0 || this.state.all.includes(event.target.value) || event.target.value == null) {
+        
           this.setState({
-              tags: values
+              tags: values,
           })
        }
        else if(!this.state.all.includes(event.target.value) && event.target.value != null) {
             alert("Tag doesn't exist")
             values.pop()
         }
+        
+    console.log(this.state.tagsDisplay)
     }
+
     
 
     /**
@@ -102,6 +109,15 @@ export default class TagSearch extends Component {
      * the tags the user follows
      */
     getPosts = async () => {
+        let tagsDisplay = [];
+        this.state.tags.forEach(tag => {
+        tagsDisplay.push(
+            <TagButton name={tag} key={Math.random()*100000} />
+        );
+        })
+        this.setState({
+            tagsDisplay: tagsDisplay,
+        })
 
         // Send request to the database
         axios({
@@ -129,9 +145,9 @@ export default class TagSearch extends Component {
                 this.setState({
                     filteredPosts: filteredPosts
                 });
-
-            })
-            .catch((error) => {
+                
+        })
+        .catch((error) => {
                 console.error(error);
                 alert('An error occurred');
             });
@@ -163,13 +179,11 @@ export default class TagSearch extends Component {
 
                                 onChange={this.handleChangeTags}
                                 freeSolo
-                                // defaultValue={this.state.tags}
                                 renderInput={params => (
                                 <TextField
                                     {...params}
                                     variant="standard"
                                     label="Tags"
-                                   // placeholder="Favorites"
                                     margin ="normal"
                                     fullWidth
                                 />
@@ -186,6 +200,9 @@ export default class TagSearch extends Component {
                     onClick={() => {this.getPosts()}} >
                     Search based on Tags
                   </Button>
+                  </Grid>
+                  <Grid item>
+                      {this.state.tagsDisplay}
                   </Grid>
                   <Grid 
                       container
