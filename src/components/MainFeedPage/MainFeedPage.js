@@ -50,7 +50,7 @@ export default class MainFeedPage extends Component {
             alertText: "",
             alertType: "",
             toTagSearch: false,
-            searchType: ""
+            toTitleSearch: false
         };
         //localStorage.setItem("tags", "CS307");
     }
@@ -70,6 +70,11 @@ export default class MainFeedPage extends Component {
     redirectSearch() {
         this.setState({
             toTagSearch: true
+        })
+    }
+    redirectTitleSearch() {
+        this.setState({
+            toTitleSearch: true
         })
     }
         
@@ -148,9 +153,11 @@ export default class MainFeedPage extends Component {
         if (this.state.toTagSearch === true) {
             return <Redirect exact from="/" push to={{
                 pathname: "/searchtag",
-                state: {
-                    searchType: "Tag"
-                }
+            }}/>;
+        }
+        if (this.state.toTitleSearch === true) {
+            return <Redirect exact from="/" push to={{
+                pathname: "/searchtitle",
             }}/>;
         }
         
@@ -173,6 +180,16 @@ export default class MainFeedPage extends Component {
                             type="button"
                             onClick={() => {this.redirectSearch()}} >
                             Search based on Tags
+                        </Button>
+                       
+                  </Grid> 
+                  <Grid item >
+                        <Button 
+                            color="secondary"
+                            variant="contained"
+                            type="button"
+                            onClick={() => {this.redirectTitleSearch()}} >
+                            Search based on Title
                         </Button>
                        
                   </Grid> 
