@@ -50,15 +50,12 @@ export default class MainFeedPage extends Component {
             alert: false,
             alertText: "",
             alertType: "",
-            redirect2: false,
+           
         };
         //localStorage.setItem("tags", "CS307");
     }
 
-    onSubmit2 = (event) => {
-        this.setState({redirect2: true});
-    } 
-
+   
     
     renderSet(text, alertType) {
         this.setState({alert: true, alertText: text, alertType: alertType});
@@ -112,14 +109,18 @@ export default class MainFeedPage extends Component {
                 let filteredPosts = [];
 
                 posts.forEach((post) => {
-                    
-                    for (let i = 0; i < post.tag.length; i++) {
-                        if (tags.includes(post.tag[i]) || tags.includes("default")) {
-                            filteredPosts.push(<Post key={Math.random()*100000} data={post} theme={theme}/>);
-                            console.log(post)
-                            break;
-                        }
+
+                    if (post.likeCount +post.upvoteCount - post.downvoteCount >= 2 && filteredPosts.length < 10) {
+                        filteredPosts.push(<Post key={Math.random()*100000} data={post} theme={theme}/>);
                     }
+
+                    // for (let i = 0; i < post.tag.length; i++) {
+                    //     if (tags.includes(post.tag[i]) || tags.includes("default")) {
+                    //         filteredPosts.push(<Post key={Math.random()*100000} data={post} theme={theme}/>);
+                    //         console.log(post)
+                    //         break;
+                    //     }
+                    // }
                 });
                 
                 this.setState({
@@ -145,13 +146,7 @@ export default class MainFeedPage extends Component {
 
     render() {
 
-        if (this.state.redirect2 === true) {
-    
-            return <Redirect exact from="/" push to={{
-                pathname: "/tfp",
-                
-            }}/>;
-        }
+       
         
       return (
           
@@ -180,21 +175,10 @@ export default class MainFeedPage extends Component {
                               wrap="nowrap"
                               spacing={2}
                               direction="column">
-                            <form onSubmit={this.onSubmit2}>
-                            <ThemeProvider theme={theme}>
-                            <Button 
-                                className  = "TopFeedPageButton" 
-                                variant = "contained"
-                                color = "primary" 
-                                type = "submit"
-                                >
-                                Top Feed Page
-                            </Button> 
-                            </ThemeProvider>
-                            </form>
-                              <Grid item>
+                        
+                              {/* <Grid item>
                                   <ActionBar theme={theme}/>
-                              </Grid>
+                              </Grid> */}
                               <Grid item>
                                   {this.state.filteredPosts === null ? <p>Fetching data</p> : this.state.filteredPosts}
                               </Grid>
