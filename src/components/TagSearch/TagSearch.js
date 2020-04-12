@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import Post from './../Post';
-import { Grid, createMuiTheme, Button, TextField } from '@material-ui/core';
+import { Grid, createMuiTheme, Button, TextField, Typography } from '@material-ui/core';
 // import './MainFeedPage.css';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TagButton from './TagButton';
+import SearchIcon from '@material-ui/icons/Search';
+import SelectInput from '@material-ui/core/Select/SelectInput';
 
 
 
@@ -47,7 +49,8 @@ export default class TagSearch extends Component {
             toTagSearch: false,
             all: [],
             tags: [],
-            tagsDisplay: []
+            tagsDisplay: [],
+            check: false
         };
         //localStorage.setItem("tags", "CS307");
         axios({
@@ -83,6 +86,11 @@ export default class TagSearch extends Component {
                     </Alert>
                 </Snackbar>
     }
+    handleCheck() {
+        if(this.state.check == false) {
+            setTimeout(() => {  this.state.check = true; }, 2000);
+        }
+    }
 
     handleChangeTags(event, values) {
         console.log(event.target.value)
@@ -92,13 +100,14 @@ export default class TagSearch extends Component {
           this.setState({
               tags: values,
           })
+          console.log(this.state.tags)
        }
        else if(!this.state.all.includes(event.target.value) && event.target.value != null) {
             alert("Tag doesn't exist")
             values.pop()
-        }
+        } 
         
-    console.log(this.state.tagsDisplay)
+    
     }
 
     
@@ -159,6 +168,8 @@ export default class TagSearch extends Component {
     }
 
     render() {
+        this.handleCheck()
+        console.log(this.state.filteredPosts)
       return (
           
           <div className="MainFeedPage">
@@ -166,10 +177,13 @@ export default class TagSearch extends Component {
 
               <Grid 
                   container
-                  spacing={3}
+                  spacing={2}
                   direction="column"
                   justify="space-around"
                   alignItems="center" >
+                      <Grid item>
+                            <Typography variant="h6">Search for Tags</Typography>
+                      </Grid>
                    <Grid item >
                         <div style={{ width: 300 }}>
                             <Autocomplete
@@ -183,7 +197,7 @@ export default class TagSearch extends Component {
                                 <TextField
                                     {...params}
                                     variant="standard"
-                                    label="Tags"
+                                    label="Select Tags"
                                     margin ="normal"
                                     fullWidth
                                 />
@@ -198,12 +212,21 @@ export default class TagSearch extends Component {
                     variant="contained"
                     type="button"
                     onClick={() => {this.getPosts()}} >
-                    Search based on Tags
+                        <SearchIcon />
+                    Search
                   </Button>
                   </Grid>
-                  <Grid item>
-                      {this.state.tagsDisplay}
-                  </Grid>
+                  <Grid
+                        item
+                        container
+                        justify="center"
+                        alignItems="center"
+                        direction="row">
+                            {this.state.tagsDisplay}
+                        
+
+
+                    </Grid>
                   <Grid 
                       container
                       wrap="nowrap" 
@@ -219,7 +242,7 @@ export default class TagSearch extends Component {
                               <Grid item>
                               </Grid>
                               <Grid item>
-                                  {this.state.filteredPosts === null ? <p>Fetching data</p> : this.state.filteredPosts}
+                                  {!this.state.check ? <p> </p> : this.state.filteredPosts.length != 0 ? this.state.filteredPosts : this.state.tags.length != 0 ? <p> </p> : <p>No posts with matching tags</p>}
                               </Grid>
                           </Grid>
                       </Grid>

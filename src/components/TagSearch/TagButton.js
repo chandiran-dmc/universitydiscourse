@@ -28,7 +28,7 @@ export default class TagButton extends Component {
         }
 
         return (
-            <div>
+            <div style={{padding: 5}}>
                 <Button
                     color="secondary"
                     variant="contained"
@@ -36,8 +36,6 @@ export default class TagButton extends Component {
                     onClick={() => {this.redirectCoursePage()}} >
                     {this.state.name}
                 </Button>
-                <br />
-                <br />
             </div>
         );
     }
