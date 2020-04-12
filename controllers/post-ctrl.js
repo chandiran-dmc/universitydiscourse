@@ -264,6 +264,9 @@ reportPost = async (req, res) => {
 
 }
 
+
+
+
 likePost = async (req, res) => {
 
  
@@ -326,10 +329,12 @@ likePost = async (req, res) => {
         }
 
         if (flag === -100) {
+            post.likeArray.remove(body.like_user);
+            post.likeCount=body.likeCount-2;
             return res.status(200).json({
                
                 err,
-                message: 'User has already liked the post',
+                message: 'You have Unliked the post!',
                 likeCount: post.likeCount,
                 likeArray: post.likeArray,
             });
@@ -352,7 +357,7 @@ likePost = async (req, res) => {
                     id: post._id,
                     likeCount: post.likeCount,
                     likeArray: post.likeArray,
-                    message: 'You have liked the post!',
+                    message: 'You have Liked the post!',
                 });
             })
             .catch(error => {
@@ -427,10 +432,12 @@ upvotePost = async (req, res) => {
         }
 
         if (flag === -100) {
+            post.upvoteArray.remove(body.like_user);
+            post.upvoteCount=body.upvoteCount-2;
             return res.status(200).json({
                
                 err,
-                message: 'User has already Upvoted the post',
+                message: 'You have removed the Upvote on the post!',
                 upvoteCount: post.upvoteCount,
                 upvoteArray: post.upvoteArray,
             });
@@ -466,6 +473,10 @@ upvotePost = async (req, res) => {
     });
 
 }
+
+
+
+
 downvotePost = async (req, res) => {
 
     const body = req.body;
@@ -527,10 +538,12 @@ downvotePost = async (req, res) => {
         }
 
         if (flag === -100) {
+            post.downvoteArray.remove(body.like_user);
+            post.downvoteCount=body.downvoteCount-2;
             return res.status(200).json({
                
                 err,
-                message: 'User has already Downvoted the post',
+                message: 'You have removed the Downvote on the post!',
                 downvoteCount: post.downvoteCount,
                 downvoteArray: post.downvoteArray,
             });
@@ -566,6 +579,9 @@ downvotePost = async (req, res) => {
     });
 
 }
+
+
+
 
 getPostById = async (req, res) => {
     
@@ -606,8 +622,11 @@ getPosts = async (req, res) => {
 module.exports = {
     reportPost,
     likePost,
+    
     upvotePost,
+    
     downvotePost,
+   
     createPost,
     updatePost,
     removeAllPosts,

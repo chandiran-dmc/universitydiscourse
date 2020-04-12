@@ -88,6 +88,8 @@ export default class Comment extends Component {
         
     }    
 
+    
+
     onSubmitUpVote = (event) => {
         // alert("YOU UPVOTED THE POST");
         // alert(this.state.upvoteCount);
@@ -122,6 +124,8 @@ export default class Comment extends Component {
         });
         
     } 
+
+    
 
     onSubmitDownVote = (event) => {
         // alert("YOU DOWNVOTED THE POST");
@@ -161,6 +165,8 @@ export default class Comment extends Component {
         });
        
     }    
+
+    
 
 
 
@@ -346,8 +352,9 @@ export default class Comment extends Component {
                         <Grid item>
                             <IconButton 
                                 type="button"
+                                //onClick={() => (this.state.likeArrayComment.includes(localStorage.getItem('username')))?this.onSubmitUnlike():this.onSubmitLike()} 
                                 onClick={this.onSubmitLike} 
-                                >
+                                    >
                                 <i class="fa fa-heart"></i>
                             </IconButton>
                         </Grid>
@@ -362,7 +369,8 @@ export default class Comment extends Component {
                         <Grid item>
                             <IconButton 
                                 type="button"
-                                onClick={this.onSubmitUpVote}
+                                //onClick={() => (this.state.upvoteArrayComment.includes(localStorage.getItem('username')))?this.onSubmitCancelUpVote():this.onSubmitUpVote()} 
+                                        onClick={this.onSubmitUpVote} 
                                     >
                                 <i class="fa fa-thumbs-up"></i>
                             </IconButton>
@@ -378,8 +386,9 @@ export default class Comment extends Component {
                         <Grid item>
                             <IconButton 
                                 type="button"
-                                onClick={this.onSubmitDownVote} 
-                                >
+                                //onClick={() => (this.state.downvoteArrayComment.includes(localStorage.getItem('username')))?this.onSubmitCancelDownVote():this.onSubmitDownVote()} 
+                                        onClick={this.onSubmitDownVote} 
+                                    >
                                 <i class="fa fa-thumbs-down"></i>
                             </IconButton>
                         </Grid>

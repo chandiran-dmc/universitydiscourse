@@ -13,8 +13,11 @@ router.post('/createcourse', CourseCtrl.createCourse);
 router.put('/updatepost', PostCtrl.updatePost);
 router.post('/report', PostCtrl.reportPost);
 router.post('/like', PostCtrl.likePost);
+
 router.post('/upvote', PostCtrl.upvotePost);
+
 router.post('/downvote', PostCtrl.downvotePost);
+
 router.delete('/removeallposts', PostCtrl.removeAllPosts);
 router.get('/getPostById', PostCtrl.getPostById)
 router.get('/getposts', PostCtrl.getPosts);

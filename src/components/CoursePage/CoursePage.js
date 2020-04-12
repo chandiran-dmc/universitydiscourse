@@ -75,7 +75,6 @@ export default class CoursePage extends Component {
     
     }
     
-<<<<<<< HEAD
     /**
      * This method checks the local storage to see if the user follows the current course
      * and handles the result
@@ -312,7 +311,6 @@ export default class CoursePage extends Component {
                 />,
         });
     }
-=======
     onClickHandler = () => {
         const data = new FormData() 
         data.append('file', this.state.selectedFile)
@@ -322,7 +320,6 @@ export default class CoursePage extends Component {
         })
         console.log(data);
     }   
->>>>>>> c9ee79a065e8420ef89d6b727b46da11e1bd9595
 
     render() {
         return (
@@ -389,21 +386,8 @@ export default class CoursePage extends Component {
                         {this.state.graph}
                     </Grid>
                 </Grid>
-<<<<<<< HEAD
             </ThemeProvider>
             
-=======
-                <Grid item>
-                    
-                    <input type="file" name="file" onChange={this.onChangeHandler}/>
-                    
-                </Grid>
-                <Grid item>
-                    
-                    <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>                     
-                </Grid>
-            </Grid>
->>>>>>> c9ee79a065e8420ef89d6b727b46da11e1bd9595
         )
     }
  }

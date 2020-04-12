@@ -236,6 +236,8 @@ export default class Post extends Component {
             //alert(response.data.data.likeArray);
             this.setState({likeCount: response.data.likeCount})
             this.setState({likeArray: response.data.likeArray})
+            console.log(response.data.likeArray);
+            console.log(this.state.likeArray);
             
         })
         .catch((error) => {
@@ -248,6 +250,8 @@ export default class Post extends Component {
         });
         
     }    
+
+    
 
     onSubmitUpVote = (event) => {
         // alert("YOU UPVOTED THE POST");
@@ -284,6 +288,7 @@ export default class Post extends Component {
         
     } 
 
+    
     onSubmitDownVote = (event) => {
         // alert("YOU DOWNVOTED THE POST");
         // alert(this.state.downvoteCount);
@@ -322,6 +327,9 @@ export default class Post extends Component {
         });
        
     }    
+
+   
+
 
 
     handleRedirect = (mode) => {
@@ -563,10 +571,11 @@ export default class Post extends Component {
                                 <Grid item>
                                     <IconButton 
                                         type="button"
+                                       // onClick={() => (this.state.likeArray.includes(localStorage.getItem('username')))?this.onSubmitUnlike():this.onSubmitLike()} 
                                         onClick={this.onSubmitLike} 
-                                        >
+                                    >
                                         <i class="fa fa-heart"></i>
-                                    </IconButton>
+                                    </IconButton> 
                                 </Grid>
 
                                 <Grid item>
@@ -579,8 +588,9 @@ export default class Post extends Component {
                                 <Grid item>
                                     <IconButton 
                                         type="button"
-                                        onClick={this.onSubmitUpVote}
-                                         >
+                                        //onClick={() => (this.state.upvoteArray.includes(localStorage.getItem('username')))?this.onSubmitCancelUpVote():this.onSubmitUpVote()} 
+                                        onClick={this.onSubmitUpVote} 
+                                        >
                                         <i class="fa fa-thumbs-up"></i>
                                     </IconButton>
                                 </Grid>
@@ -595,8 +605,8 @@ export default class Post extends Component {
                                 <Grid item>
                                     <IconButton 
                                         type="button"
-                                        onClick={this.onSubmitDownVote} 
-                                        >
+                                        //onClick={() => (this.state.downvoteArray.includes(localStorage.getItem('username')))?this.onSubmitCancelDownVote():this.onSubmitDownVote()} 
+                                        onClick={this.onSubmitDownVote}  >
                                         <i class="fa fa-thumbs-down"></i>
                                     </IconButton>
                                 </Grid>

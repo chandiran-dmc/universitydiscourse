@@ -241,10 +241,13 @@ likeComment = async (req, res) => {
         }
 
         if (flag === -100) {
+            comment.likeArrayComment.remove(body.like_user);
+            comment.likeCountComment=body.likeCountComment-2;
+
             return res.status(200).json({
                
                 err,
-                message: 'User has already liked the comment',
+                message: 'You have Unliked the comment!',
                 likeCountComment: comment.likeCountComment,
                 likeArrayComment: comment.likeArrayComment,
             });
@@ -267,7 +270,7 @@ likeComment = async (req, res) => {
                     id: comment._id,
                     likeCountComment: comment.likeCountComment,
                     likeArrayComment: comment.likeArrayComment,
-                    message: 'You have liked the comment!',
+                    message: 'You have Liked the comment!',
                 });
             })
             .catch(error => {
@@ -280,6 +283,8 @@ likeComment = async (req, res) => {
     });
 
 }
+
+
 
 upvoteComment = async (req, res) => {
 
@@ -343,10 +348,13 @@ upvoteComment = async (req, res) => {
         }
 
         if (flag === -100) {
+            comment.upvoteArrayComment.remove(body.like_user);
+            comment.upvoteCountComment=body.upvoteCountComment-2;
+
             return res.status(200).json({
                
                 err,
-                message: 'User has already upvoted the comment',
+                message: 'You have removed the Upvote on the comment!',
                 upvoteCountComment: comment.upvoteCountComment,
                 upvoteArrayComment: comment.upvoteArrayComment,
             });
@@ -369,7 +377,7 @@ upvoteComment = async (req, res) => {
                     id: comment._id,
                     upvoteCountComment: comment.upvoteCountComment,
                     upvoteArrayComment: comment.upvoteArrayComment,
-                    message: 'You have upvoted the comment!',
+                    message: 'You have Upvoted the comment!',
                 });
             })
             .catch(error => {
@@ -382,6 +390,8 @@ upvoteComment = async (req, res) => {
     });
 
 }
+
+
 
 downvoteComment = async (req, res) => {
 
@@ -445,10 +455,12 @@ downvoteComment = async (req, res) => {
         }
 
         if (flag === -100) {
+            comment.downvoteArrayComment.remove(body.like_user);
+            comment.downvoteCountComment=body.downvoteCountComment-2;
             return res.status(200).json({
                
                 err,
-                message: 'User has already downvoted the comment',
+                message: 'You have removed the Downvote on the comment!',
                 downvoteCountComment: comment.downvoteCountComment,
                 downvoteArrayComment: comment.downvoteArrayComment,
             });
@@ -471,7 +483,7 @@ downvoteComment = async (req, res) => {
                     id: comment._id,
                     downvoteCountComment: comment.downvoteCountComment,
                     downvoteArrayComment: comment.downvoteArrayComment,
-                    message: 'You have downvoted the comment!',
+                    message: 'You have Downvoted the comment!',
                 });
             })
             .catch(error => {
@@ -488,9 +500,6 @@ downvoteComment = async (req, res) => {
 
 
 
-
-
-
 module.exports = {
     createComment,
     getComments,
@@ -498,5 +507,5 @@ module.exports = {
     deleteComment,
     likeComment,
     upvoteComment,
-    downvoteComment
+    downvoteComment,
 }
