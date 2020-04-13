@@ -4,7 +4,6 @@ import { Grid, createMuiTheme, Button, TextField, Typography } from '@material-u
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import TagButton from './TagButton';
 import SearchIcon from '@material-ui/icons/Search';
 
 
@@ -44,32 +43,11 @@ export default class TagSearch extends Component {
             alert: false,
             alertText: "",
             alertType: "",
-            toTagSearch: false,
-            all: [],
-            tags: [],
-            tagsDisplay: [],
             check: true,
+            title: ""
         };
-        console.log(this.state.searchType)
-        axios({
-            method: 'get',
-            url: 'http://localhost:3000/api/getcourses'
-          })
-          .then((response) => {
-            let all = []
-            for(let i = 0; i < response.data.data.length; i++) {
-                all.push(response.data.data[i].name)
-            }
-            this.setState({
-                all: all
-            })        
-          })
-          .catch((error) => {
-              console.error(error);
-              alert('An error occurred');
-          });
-
-          this.handleChangeTags = this.handleChangeTags.bind(this);
+        this.handleChangeTitle = this.handleChangeTitle.bind(this);
+        
     }
 
     
@@ -84,27 +62,13 @@ export default class TagSearch extends Component {
                     </Alert>
                 </Snackbar>
     }
-
-    handleChangeTags(event, values) {
-        console.log(event.target.value)
-        event.preventDefault()
-      
-      if(event.target.value === 0 || this.state.all.includes(event.target.value) || event.target.value == null) {
-        
-          this.setState({
-              tags: values,
-          })
-          console.log(this.state.tags)
-       }
-       else if(!this.state.all.includes(event.target.value) && event.target.value != null) {
-            alert("Tag doesn't exist")
-            values.pop()
-        } 
-        
-    
-    }
-
-    
+    handleChangeTitle(event) {
+        this.setState(
+            {
+                title: event.target.value,
+            }
+        );
+    } 
 
     /**
      * Helper function to get the posts for the user
@@ -112,18 +76,19 @@ export default class TagSearch extends Component {
      * the tags the user follows
      */
     getPosts = async () => {
-        let tagsDisplay = [];
-        this.state.tags.forEach(tag => {
-        tagsDisplay.push(
-            <TagButton name={tag} key={Math.random()*100000} />
-        );
-        })
+        console.log(this.state.title)
+        if(this.state.title == "") {
+            this.setState({
+                filteredPosts: []
+            })
+            alert("Search field is empty")
+           // this.renderAlert("Search field is empty")
+            return
+        }
+        // Send request to the database
         this.setState({
-            tagsDisplay: tagsDisplay,
             check: false
         })
-
-        // Send request to the database
         axios({
                 method: 'get',
                 url: 'http://localhost:3000/api/getposts'
@@ -136,14 +101,12 @@ export default class TagSearch extends Component {
                 let filteredPosts = [];
 
                 posts.forEach((post) => {
-
-                    for (let i = 0; i < post.tag.length; i++) {
-                        if (this.state.tags.includes(post.tag[i])) {
+                    console.log(post.title)
+                        if (post.title.toLocaleLowerCase().includes(this.state.title.toLocaleLowerCase())) {
                             filteredPosts.push(<Post key={Math.random()*100000} data={post} theme={theme}/>);
                             console.log(post)
-                            break;
                         }
-                    }
+                    
                 });
                 
                 this.setState({
@@ -158,8 +121,6 @@ export default class TagSearch extends Component {
     }
 
     render() {
-        console.log(this.state.filteredPosts)
-        console.log(this.state.check)
       return (
           
           <div className="MainFeedPage">
@@ -172,29 +133,10 @@ export default class TagSearch extends Component {
                   justify="space-around"
                   alignItems="center" >
                       <Grid item>
-                            <Typography variant="h6">Search for Tags</Typography>
+                            <Typography variant="h6">Search for Title</Typography>
                       </Grid>
                    <Grid item >
-                        <div style={{ width: 300 }}>
-                            <Autocomplete
-                                multiple
-                                id="tags-standard"
-                                options={this.state.all}
-
-                                onChange={this.handleChangeTags}
-                                freeSolo
-                                renderInput={params => (
-                                <TextField
-                                    {...params}
-                                    variant="standard"
-                                    label="Select Tags"
-                                    margin ="normal"
-                                    fullWidth
-                                />
-                                )}
-                            />
-                        </div>
-                       
+                        <TextField id="filled-basic" label="Search Title" variant="filled" size="medium" onChange={this.handleChangeTitle} defaultValue={this.state.title}/>                      
                   </Grid> 
                   <Grid item>
                   <Button 
@@ -206,17 +148,6 @@ export default class TagSearch extends Component {
                     Search
                   </Button>
                   </Grid>
-                  <Grid
-                        item
-                        container
-                        justify="center"
-                        alignItems="center"
-                        direction="row">
-                            {this.state.tagsDisplay}
-                        
-
-
-                    </Grid>
                   <Grid 
                       container
                       wrap="nowrap" 
@@ -232,7 +163,7 @@ export default class TagSearch extends Component {
                               <Grid item>
                               </Grid>
                               <Grid item>
-                                  {this.state.filteredPosts.length != 0 ? this.state.filteredPosts : this.state.check ? <p> </p>: <p>No posts matching the current search. Add tags or search for different ones</p>}
+                                  {this.state.filteredPosts.length != 0 ? this.state.filteredPosts : this.state.check ? <p> </p>: <p>No posts matching the current search.</p>}
                               </Grid>
                           </Grid>
                       </Grid>
