@@ -14,7 +14,7 @@
  */
 
 import React, { Component } from 'react'
-import { Grid, Card, CardMedia, CardContent, Typography, CardActions, Button, createMuiTheme, ThemeProvider, Divider } from '@material-ui/core';
+import { Grid, Card, CardMedia, CardContent, Typography, CardActions, Button, createMuiTheme, ThemeProvider, Divider, Paper } from '@material-ui/core';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 
@@ -475,20 +475,79 @@ export default class CoursePage extends Component {
                     </Grid>
                     <Grid
                         item
-                        style={{width: "80%", marginTop: "3%"}}
+                        style={{
+                            width: "80%",
+                            marginTop: "20px"
+                        }}
                     >
-                        <Typography
-                            variant="h5"
-                            align="center"
+                        <Paper
+                            variant="elevation"
+                            elevation={2}
+                            style={{
+                                background: "#F2F2F2"
+                            }}
                         >
-                            Grade Distribution Graph
-                        </Typography>
+                            <Typography
+                                variant="h5"
+                                align="center"
+                                style={{
+                                    paddingTop: "20px"
+                                }}
+                            >
+                                Ratings
+                            </Typography>
+                        </Paper>
                     </Grid>
                     <Grid
                         item
-                        style={{width: "80%"}}
+                        style={{
+                            width: "80%",
+                            marginTop: "20px",
+                        }}
                     >
-                        {this.state.graph}
+                        <Paper
+                            variant="elevation"
+                            elevation={2}
+                            style={{
+                                background: "#F2F2F2"
+                            }}
+                        >
+                            <Typography
+                                variant="h5"
+                                align="center"
+                                style={{
+                                    paddingTop: "20px"
+                                }}
+                            >
+                                Grade Distribution Graph
+                            </Typography>
+                            {this.state.graph}
+                        </Paper>
+                    </Grid>
+                    <Grid
+                        item
+                        style={{
+                            width: "80%",
+                            marginTop: "20px"
+                        }}
+                    >
+                        <Paper
+                            variant="elevation"
+                            elevation={2}
+                            style={{
+                                background: "#F2F2F2"
+                            }}
+                        >
+                            <Typography
+                                variant="h5"
+                                align="center"
+                                style={{
+                                    paddingTop: "20px"
+                                }}
+                            >
+                                Documents
+                            </Typography>
+                        </Paper>
                     </Grid>
                 </Grid>
             </ThemeProvider>
