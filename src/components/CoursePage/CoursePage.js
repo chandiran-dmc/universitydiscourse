@@ -15,6 +15,7 @@
 
 import React, { Component } from 'react'
 import { Grid, Card, CardMedia, CardContent, Typography, CardActions, Button, createMuiTheme, ThemeProvider, Divider, Paper } from '@material-ui/core';
+import { Rating } from '@material-ui/lab';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 
@@ -50,7 +51,8 @@ export default class CoursePage extends Component {
             title: "Defualt course title",
             description: "No course description available",
             credit: 0,
-            followButton: <div/>
+            followButton: <div/>,
+            courseRating: 0.5
         };
     }
 
@@ -64,12 +66,43 @@ export default class CoursePage extends Component {
         // Get the course information through purdue io api
         this.getCourseInfo(this.state.id);
 
+        // Get course ratings
+        this.getRatingsAverage();
+
         // Check if the user is currently following this tag (course)
         // if so, change to unfollow button
         // if not, enable the follow button with correct callback function
         this.checkFollowing(this.state.id);
     }
     
+    /**
+     * This method retrieves the ratings for this course and displays the average
+     */
+    getRatingsAverage = () => {
+
+        // Send request to the database
+        axios({
+            method: 'get',
+            url: 'http://localhost:3000/api/getratings'
+        })
+        .then((response) => {
+            
+            let posts = [];
+            posts = response.data.data;
+
+            // get the ratings for this course
+            let ratings = [];
+            for (let i = 0; i < posts.length; i++) {
+                
+                
+            }
+        })
+        .catch((error) => {
+            console.error(error);
+            alert('An error occurred');
+        });
+    }
+
     /**
      * This method checks the local storage to see if the user follows the current course
      * and handles the result
@@ -496,6 +529,46 @@ export default class CoursePage extends Component {
                             >
                                 Ratings
                             </Typography>
+                            <Grid
+                                container
+                                justify="center"
+                                alignItems="center"
+                                direction="row"
+                            >
+                                <Grid 
+                                    item
+                                    style={{
+                                        width: "40%",
+                                        marginTop: "20px"
+                                    }}
+                                >
+                                    <Typography
+                                        variant="body1"
+                                        align="center"
+                                    >
+                                        Overall
+                                    </Typography>
+                                    <Rating 
+                                        readOnly
+                                        value={this.state.courseRating}
+                                        precision={0.5}
+                                    />
+                                </Grid>
+                                <Grid 
+                                    item 
+                                    style={{
+                                        width: "40%",
+                                        marginTop: "20px"
+                                    }}
+                                >
+                                    <Typography
+                                        variant="body1"
+                                        align="center"
+                                    >
+                                        Your
+                                    </Typography>
+                                </Grid>
+                            </Grid>
                         </Paper>
                     </Grid>
                     <Grid
