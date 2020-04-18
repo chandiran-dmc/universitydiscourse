@@ -22,8 +22,14 @@ export default class CourseRatings extends Component {
 
     /**
      * Check if the user has already submitted a rating for this course
+     * we use the componentWillReceiveProps to only update on props change
+     * https://stackoverflow.com/a/39155790
      */
-    componentDidUpdate() {
+    componentWillReceiveProps(nextProps) {
+        // update ratings
+        this.setState({
+            ratings: nextProps.ratings
+        });
 
         let username = localStorage.getItem("username");
         let ratings = this.state.ratings;
@@ -41,8 +47,6 @@ export default class CourseRatings extends Component {
                 break;
             }
         }
-
-        console.log(this.state.ratings);
     }
 
     /**
