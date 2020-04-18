@@ -41,7 +41,7 @@ const theme = createMuiTheme({
     }
 });
 
-export default class MainFeedPage extends Component {
+export default class TopFeedPage extends Component {
 
     constructor(props) {
         super(props);
@@ -50,10 +50,17 @@ export default class MainFeedPage extends Component {
             alert: false,
             alertText: "",
             alertType: "",
+            redirect2: false,
+
            
         };
         //localStorage.setItem("tags", "CS307");
     }
+
+    onSubmit2 = (event) => {
+        this.setState({redirect2: true});
+    } 
+
 
    
     
@@ -110,18 +117,33 @@ export default class MainFeedPage extends Component {
 
                 posts.forEach((post) => {
 
-                    if (post.likeCount +post.upvoteCount - post.downvoteCount >= 2 && filteredPosts.length < 10) {
+                    if (post.likeCount  > 0 && filteredPosts.length < 10) {
                         filteredPosts.push(<Post key={Math.random()*100000} data={post} theme={theme}/>);
                     }
 
-                    // for (let i = 0; i < post.tag.length; i++) {
-                    //     if (tags.includes(post.tag[i]) || tags.includes("default")) {
-                    //         filteredPosts.push(<Post key={Math.random()*100000} data={post} theme={theme}/>);
-                    //         console.log(post)
-                    //         break;
-                    //     }
-                    // }
                 });
+
+                
+                filteredPosts.sort(function compare_item(a, b){
+                    // a should come before b in the sorted order
+                    //console.log( a.props.data.likeCount);
+                    //console.log(b);
+                    if(a.props.data.likeCount > b.props.data.likeCount){
+                        
+                        console.log("more likes");
+                            return -1;
+                    // a should come after b in the sorted order
+                    }else if(a.props.data.likeCount < b.props.data.likeCount){
+                        console.log("less likes");
+                            return 1;
+                    // and and b are the same
+                    }else{
+                        console.log("same likes");
+                            return 0;
+                    }
+                });
+
+                console.log(filteredPosts);
                 
                 this.setState({
                     filteredPosts: filteredPosts
@@ -146,6 +168,14 @@ export default class MainFeedPage extends Component {
 
     render() {
 
+        if (this.state.redirect2 === true) {
+    
+            return <Redirect exact from="/" push to={{
+                pathname: "/mp",
+                
+            }}/>;
+        }
+
        
         
       return (
@@ -160,6 +190,18 @@ export default class MainFeedPage extends Component {
                   direction="column"
                   justify="space-around"
                   alignItems="center" >
+                  <form onSubmit={this.onSubmit2}>
+                    <ThemeProvider theme={theme}>
+                    <Button 
+                        className  = "TopFeedPageButton" 
+                        variant = "contained"
+                        color = "primary" 
+                        type = "submit"
+                        >
+                        Main Feed Page
+                        </Button> 
+                        </ThemeProvider>
+                   </form>
                   {/* <Grid item >
                       <TopBar /> 
                   </Grid> */}
