@@ -23,7 +23,7 @@ export default class CourseRatings extends Component {
     /**
      * Check if the user has already submitted a rating for this course
      */
-    componentDidMount() {
+    componentDidUpdate() {
 
         let username = localStorage.getItem("username");
         let ratings = this.state.ratings;
@@ -41,6 +41,8 @@ export default class CourseRatings extends Component {
                 break;
             }
         }
+
+        console.log(this.state.ratings);
     }
 
     /**
@@ -93,6 +95,7 @@ export default class CourseRatings extends Component {
                         />
                         :
                         <Rating 
+                            name="your rating"
                             precision={0.5}
                             value={this.state.value}
                             onChange={(event, value) => {

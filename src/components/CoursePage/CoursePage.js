@@ -94,18 +94,20 @@ export default class CoursePage extends Component {
 
             // get the ratings for this course
             let ratings = [];
+            let total = 0;
             for (let i = 0; i < posts.length; i++) {
-                console.log(posts[i]);
+                if (posts[i].course === this.state.id) {
+                    ratings.push(posts[i]);
+                    total += posts[i].rating;
+                }
             }
 
             // put the ratings for this course in the ratings
-            this.setState({
-                courseRatings: ratings
-            });
-
             // update the ratings average
-            
-            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            this.setState({
+                courseRatings: ratings,
+                courseRating: total / ratings.length
+            });
         })
         .catch((error) => {
             console.error(error);
