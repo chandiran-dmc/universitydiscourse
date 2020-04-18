@@ -3,9 +3,9 @@ const Schema = mongoose.Schema;
 
 const Rating = new Schema(
     {
-        course: { type: String, require: true },
-        username : { type: String, require: true },
-        rating: { type: Number, require: true}
+        course: { type: String, required: true },
+        username : { type: String, required: true },
+        rating: { type: Number, required: true}
     },
     {
         collection: 'ratings'

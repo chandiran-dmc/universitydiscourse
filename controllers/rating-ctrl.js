@@ -17,7 +17,7 @@ createRating = (req, res) => {
 
     let rating_data = {
         course: body.course,
-        username: body.user,
+        username: body.username,
         rating: body.rating
     };
 
@@ -58,6 +58,9 @@ getRatings = async (req, res) => {
         // error handling
         if (err) {
             return res.status(400).json({ success: false, error: err });
+        }
+        if (ratings.length === 0) {
+            console.log("Ratings is empty");
         }
         // return curves
         return res.status(200).json({ success: true, data: ratings });

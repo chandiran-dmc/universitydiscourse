@@ -3,7 +3,7 @@ const Schema = mongoose.Schema;
 
 const Post = new Schema(
     {
-        title: { type: String, require: true},
+        title: { type: String, required: true},
         user: { type: String, required: true },
         type: { type: String, required: true },
         tag: { type: [String], required: true },

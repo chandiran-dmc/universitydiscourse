@@ -18,6 +18,7 @@ import { Grid, Card, CardMedia, CardContent, Typography, CardActions, Button, cr
 import { Rating } from '@material-ui/lab';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
+import CourseRatings from './CourseRatings';
 
 const theme = createMuiTheme({
     palette: {
@@ -52,7 +53,8 @@ export default class CoursePage extends Component {
             description: "No course description available",
             credit: 0,
             followButton: <div/>,
-            courseRating: 0.5
+            courseRatings: [],
+            courseRating: 0.0
         };
     }
 
@@ -93,9 +95,17 @@ export default class CoursePage extends Component {
             // get the ratings for this course
             let ratings = [];
             for (let i = 0; i < posts.length; i++) {
-                
-                
+                console.log(posts[i]);
             }
+
+            // put the ratings for this course in the ratings
+            this.setState({
+                courseRatings: ratings
+            });
+
+            // update the ratings average
+            
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         })
         .catch((error) => {
             console.error(error);
@@ -546,7 +556,7 @@ export default class CoursePage extends Component {
                                         variant="body1"
                                         align="center"
                                     >
-                                        Overall
+                                        Overall Rating
                                     </Typography>
                                     <Rating 
                                         readOnly
@@ -565,8 +575,13 @@ export default class CoursePage extends Component {
                                         variant="body1"
                                         align="center"
                                     >
-                                        Your
+                                        Your Rating
                                     </Typography>
+                                    <CourseRatings 
+                                        coursename={this.state.id}
+                                        update={this.getRatingsAverage}
+                                        ratings={this.state.courseRatings}
+                                    />
                                 </Grid>
                             </Grid>
                         </Paper>
