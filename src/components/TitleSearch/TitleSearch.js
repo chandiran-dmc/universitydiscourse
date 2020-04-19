@@ -3,7 +3,6 @@ import Post from './../Post';
 import { Grid, createMuiTheme, Button, TextField, Typography } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import Autocomplete from '@material-ui/lab/Autocomplete';
 import SearchIcon from '@material-ui/icons/Search';
 
 
