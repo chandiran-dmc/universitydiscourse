@@ -24,6 +24,7 @@ app.use('/api', postRouter)
 app.use('/api-user', userRouter);
 app.use('/api-comment', commentRouter);
 app.use('/api-document', documentRouter);
+
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`)
 });
