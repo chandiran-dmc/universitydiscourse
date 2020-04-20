@@ -13,6 +13,7 @@ import RegisterPage from './components/RegisterPage'
 import SendLink from './components/SendLink'
 import MainFeedPage from './components/MainFeedPage';
 import TopFeedPage from './components/TopFeedPage';
+import FilterFeedPage from './components/FilterFeedPage';
 import PostPage from './components/PostPage';
 import EntryPage from './components/EntryPage/EntryPage';
 import CoursePage from './components/CoursePage';
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/rp" component={RegisterPage} />
           <Route exact path="/mp" component={MainFeedPage}/>
           <Route exact path="/tfp" component={TopFeedPage}/>
+          <Route exact path="/ffp" component={FilterFeedPage}/>
           <Route exact path="/" component = {EntryPage} />
           <Route exact path="/sendlink" component={SendLink} />
           <Route exact path="/changeemail" component={ChangeEmail} />

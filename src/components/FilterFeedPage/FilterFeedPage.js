@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import TopBar from '../TopBar';
+//import TopBar from '../TopBar';
 //import Footer from '../Footer';
-import ActionBar from './ActionBar';
+//import ActionBar from './ActionBar';
 import Post from './../Post';
 import SideBar from '../SideBar';
 import { Grid, createMuiTheme } from '@material-ui/core';
 import './MainFeedPage.css';
-import sample_tags from '../../mock_data/AllTags.json';
+//import sample_tags from '../../mock_data/AllTags.json';
 import Button from '@material-ui/core/Button';
 import { Redirect } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
@@ -41,7 +41,7 @@ const theme = createMuiTheme({
     }
 });
 
-export default class MainFeedPage extends Component {
+export default class FilterFeedPage extends Component {
 
     constructor(props) {
         super(props);
@@ -51,7 +51,8 @@ export default class MainFeedPage extends Component {
             alertText: "",
             alertType: "",
             redirect2: false,
-            redirect3: false,
+
+           
         };
         //localStorage.setItem("tags", "CS307");
     }
@@ -59,10 +60,9 @@ export default class MainFeedPage extends Component {
     onSubmit2 = (event) => {
         this.setState({redirect2: true});
     } 
-    onSubmit3 = (event) => {
-        this.setState({redirect3: true});
-    } 
 
+
+   
     
     renderSet(text, alertType) {
         this.setState({alert: true, alertText: text, alertType: alertType});
@@ -116,15 +116,34 @@ export default class MainFeedPage extends Component {
                 let filteredPosts = [];
 
                 posts.forEach((post) => {
-                    
-                    for (let i = 0; i < post.tag.length; i++) {
-                        if (tags.includes(post.tag[i]) || tags.includes("default")) {
-                            filteredPosts.push(<Post key={Math.random()*100000} data={post} theme={theme}/>);
-                            console.log(post)
-                            break;
-                        }
+
+                    if (post.likeCount  > 0 && filteredPosts.length < 10) {
+                        filteredPosts.push(<Post key={Math.random()*100000} data={post} theme={theme}/>);
+                    }
+
+                });
+
+                
+                filteredPosts.sort(function compare_item(a, b){
+                    // a should come before b in the sorted order
+                    //console.log( a.props.data.likeCount);
+                    //console.log(b);
+                    if(a.props.data.likeCount > b.props.data.likeCount){
+                        
+                        console.log("more likes");
+                            return -1;
+                    // a should come after b in the sorted order
+                    }else if(a.props.data.likeCount < b.props.data.likeCount){
+                        console.log("less likes");
+                            return 1;
+                    // and and b are the same
+                    }else{
+                        console.log("same likes");
+                            return 0;
                     }
                 });
+
+                console.log(filteredPosts);
                 
                 this.setState({
                     filteredPosts: filteredPosts
@@ -152,19 +171,12 @@ export default class MainFeedPage extends Component {
         if (this.state.redirect2 === true) {
     
             return <Redirect exact from="/" push to={{
-                pathname: "/tfp",
+                pathname: "/mp",
                 
             }}/>;
         }
 
-        if (this.state.redirect3 === true) {
-    
-            return <Redirect exact from="/" push to={{
-                pathname: "/ffp",
-                
-            }}/>;
-        }
-        
+       
         
       return (
           
@@ -178,6 +190,18 @@ export default class MainFeedPage extends Component {
                   direction="column"
                   justify="space-around"
                   alignItems="center" >
+                  <form onSubmit={this.onSubmit2}>
+                    <ThemeProvider theme={theme}>
+                    <Button 
+                        className  = "TopFeedPageButton" 
+                        variant = "contained"
+                        color = "primary" 
+                        type = "submit"
+                        >
+                        Main Feed Page
+                        </Button> 
+                        </ThemeProvider>
+                   </form>
                   {/* <Grid item >
                       <TopBar /> 
                   </Grid> */}
@@ -189,51 +213,14 @@ export default class MainFeedPage extends Component {
                       justify="center"
                       alignItems="flex-start" >
                       <Grid item>
-                          <Grid 
-                              container
+                          <Grid container
                               wrap="nowrap"
                               spacing={2}
                               direction="column">
-                              <Grid item>
-                                <Grid 
-                                    container
-                                    //wrap="nowrap"
-                                    spacing={2}
-                                    direction="row"
-                                    >
-                                    <Grid item>
-                                    <form onSubmit={this.onSubmit2}>
-                                    <ThemeProvider theme={theme}>
-                                    <Button 
-                                        className  = "TopFeedPageButton" 
-                                        variant = "contained"
-                                        color = "primary" 
-                                        type = "submit"
-                                        >
-                                        Top Feed Page
-                                    </Button> 
-                                    </ThemeProvider>
-                                    </form>
-                                    </Grid>
-                                    <Grid item>
-                                    <form onSubmit={this.onSubmit3}>
-                                    <ThemeProvider theme={theme}>
-                                    <Button 
-                                        className  = "TopFeedPageButton" 
-                                        variant = "contained"
-                                        color = "primary" 
-                                        type = "submit"
-                                        >
-                                        Filter Page
-                                    </Button> 
-                                    </ThemeProvider>
-                                    </form>
-                                    </Grid>
-                                </Grid>
-                              </Grid>
-                              <Grid item>
+                        
+                              {/* <Grid item>
                                   <ActionBar theme={theme}/>
-                              </Grid>
+                              </Grid> */}
                               <Grid item>
                                   {this.state.filteredPosts === null ? <p>Fetching data</p> : this.state.filteredPosts}
                               </Grid>
