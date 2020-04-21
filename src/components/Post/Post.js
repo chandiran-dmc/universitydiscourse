@@ -3,6 +3,7 @@ import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, TextF
 import InsertCommentIcon from '@material-ui/icons/InsertComment';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { ReactTinyLink } from "react-tiny-link";
 
 import InboxIcon from '../../customeIcons/menuIcon';
 import MenuIcon from '../../customeIcons/menuIcon';
@@ -377,62 +378,14 @@ export default class Post extends Component {
                 content = <img src={this.state.content} alt={"The Image URL is invalid"} width="600"/>
                 break;
             case "link":
-                axios({
-                    method: 'get',
-                    url: 'https://cors-anywhere.herokuapp.com/'  + this.state.content,
-                })
-                .then((response) => {
-                    console.log(response);
-                   // console.log(response.data)
-                    let html = response.data;
-
-                  //  var meta = response.data.filter('meta[name="apple-itunes-app"]').attr("content");
-                   // var doc = new DOMParser().parseFromString(response.data, "text/html");
-                   var el = document.createElement( 'html' );
-                   console.log(el)
-                   el.innerHTML = html
-                    const metas = el.getElementsByTagName('meta');
-                    console.log(metas)
-                    for (let i = 0; i < metas.length; i++) {
-                        if (metas[i].getAttribute('property') === "og:title") {
-                          console.log(metas[i].getAttribute('content'));
-                        }
-                      }
-                    
-                    // let description = html.filter(
-                    //     (index, tag) => tag && tag.name && tag.name == "description").attr('content');
-                    // console.log(description);
-
-
-                
-                })
-                .catch((error) => {
-                
-                   console.log(error);
-                    return;
-                    
-        
-                });
-
-                // console.log(this.state.content);
-                // urlMetadata('https://cors-anywhere.herokuapp.com/' + this.state.content).then(
-                //     function (metadata) { // success handler
-                //         console.log("hello");
-                //         console.log(metadata)
-                //     },
-                //     function (error) { // failure handler
-                //         console.log("bye");
-                //         console.log(error)
-                //     })
-                //     .catch((error) => {
-                //         console.log(error)
-
-                //     })
-                content = <Typography variant="h6">{this.state.content}</Typography>;
-                break;
-
-            
-        
+               content =  <ReactTinyLink
+                            cardSize="small"
+                            showGraphic={true}
+                            maxLine={2}
+                            minLine={1}
+                            url={this.state.content}
+                          /> 
+               break;
             case "calendar":
                     var content2 = []
                     for (let i = 0; i < this.state.tags.length; i++) {
@@ -495,7 +448,7 @@ export default class Post extends Component {
                    user: this.state.user,
                    time: this.state.time,
                    tags: this.state.tags,
-                    type: this.state.type,
+                   type: this.state.type,
                    mode: this.state.mode
                 }
             }}/>;
