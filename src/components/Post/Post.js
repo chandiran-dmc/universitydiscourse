@@ -3,6 +3,9 @@ import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, TextF
 import InsertCommentIcon from '@material-ui/icons/InsertComment';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { ReactTinyLink } from "react-tiny-link";
+
+import InboxIcon from '../../customeIcons/menuIcon';
 import MenuIcon from '../../customeIcons/menuIcon';
 //import Warning from '../../customeIcons/Warning';
 import {FacebookShareButton} from "react-share"
@@ -14,6 +17,9 @@ import Comment from './../Comment';
 import SchoolIcon from '@material-ui/icons/School';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+
+const urlMetadata = require('url-metadata')
+const validUrl = require('valid-url');
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -177,7 +183,7 @@ export default class Post extends Component {
             seeallcomments: true
         })
         console.log(this.state._id);
-        // TODO: request the database for the comments
+        // request the database for the comments
         let commentlist = []
         // Send request to the database
         axios({
@@ -361,14 +367,31 @@ export default class Post extends Component {
     renderContent = () => {
 
         let content = <p>error</p>;
+        
 
         switch (this.state.type) {
             case "text":
                 content = <Typography variant="h6">{this.state.content}</Typography>;
                 break;
-
-            
-        
+            case "image":
+                content = <img src={this.state.content} alt={"The Image URL is invalid"} width="600"/>
+                break;
+            case "link":
+                if (validUrl.isUri(this.state.content)){
+                    content =  <ReactTinyLink
+                    cardSize="small"
+                    showGraphic={true}
+                    maxLine={2}
+                    minLine={1}
+                    url={this.state.content}
+                  /> 
+                    
+                } else {
+                    content = "Not a valid URL"
+                }
+              
+                          
+               break;
             case "calendar":
                     var content2 = []
                     for (let i = 0; i < this.state.tags.length; i++) {
@@ -426,15 +449,14 @@ export default class Post extends Component {
             return <Redirect exact from="/" push to={{
                 pathname: "/editpost",
                 state: { 
-                    title: this.state.title,
-                    content: this.state.content,
-                    user: this.state.user,
-                    time: this.state.time,
-                    tags: this.state.tags,
-                    //comments: this.state.comments,
-                    type: this.state.type,
-                    //count: this.state.count,
-                    mode: this.state.mode
+                //    title: this.state.title,
+                //    content: this.state.content,
+                //    user: this.state.user,
+                //    time: this.state.time,
+                //    tags: this.state.tags,
+                   id: this.state.id,
+                   type: this.state.type,
+                   mode: this.state.mode
                 }
             }}/>;
         }

@@ -21,7 +21,6 @@ import { Button, Box, Grid, TextField, InputAdornment } from '@material-ui/core'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -60,6 +59,7 @@ export default class CreatePostPage extends Component {
         super(props);
         console.log(localStorage.getItem("username"))
         this.state = {
+            id: this.props.location.state.id,
             type: this.props.location.state.type,
             mode: this.props.location.state.mode,
             title: (this.props.location.state.title === undefined ? "" : this.props.location.state.title),
@@ -86,7 +86,34 @@ export default class CreatePostPage extends Component {
             followTags: localStorage.getItem("tags").split(","),
             all: []
         };
-
+        console.log(this.state.mode)
+        if(this.state.mode == "editpost") {
+            console.log(this.state.mode)
+            axios({
+                method: 'get',
+                url: "http://localhost:3000/api/getPostByID",
+                params: {
+                    id: this.state.id,   
+                }
+            })
+            .then((response) => {
+                console.log(response);
+                this.setState({
+                    title: response.data.data.title,
+                    content: response.data.data.content,
+                    user: response.data.data.user,
+                    time: response.data.data.time,
+                    tags: response.data.data.tag,   
+                })
+                console.log(this.state.title)
+                console.log(this.state.content)
+                console.log(this.state.tags)         
+            })
+            .catch((error) => {
+                    console.log(error);
+            });
+        }
+        
         axios({
             method: 'get',
             url: 'http://localhost:3000/api/getcourses'
@@ -112,11 +139,9 @@ export default class CreatePostPage extends Component {
         this.handleCreatePost = this.handleCreatePost.bind(this);
         this.handleUpdatePost = this.handleUpdatePost.bind(this);
         this.handleCurveChange = this.handleCurveChange.bind(this);
-        
         this.handleChangeTae = this.handleChangeTae.bind(this);
     }
 
-    
     handleChangeContent(event) {
         this.setState(
             {
@@ -430,13 +455,13 @@ export default class CreatePostPage extends Component {
                                         Post Title
                                     </h3>
                                     <br/>
-                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} defaultValue={this.state.title}/>
+                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} value={this.state.title}/>
                                     <br />
                                     <h3 style={{ color: '#023373' }}>
                                         Post Content
                                     </h3>
                                     
-                                    <TextField id="filled-basic" label="Post Content" variant="filled" onChange={this.handleChangeContent} defaultValue={this.state.content}/>
+                                    <TextField id="filled-basic" label="Post Content" variant="filled" onChange={this.handleChangeContent} value={this.state.content}/>
                                     <h3 style={{ color: '#023373' }}>
                                         Tags
                                     </h3>
@@ -449,7 +474,7 @@ export default class CreatePostPage extends Component {
 
                                             onChange={this.handleChangeTags}
                                             freeSolo
-                                            defaultValue={this.state.tags}
+                                            value={this.state.tags}
                                             renderInput={params => (
                                             <TextField
                                                 {...params}
@@ -474,7 +499,7 @@ export default class CreatePostPage extends Component {
                                                 style={{ justifyContent: 'center' }}
                                                 disableElevation
                                                 type="button"
-                                                onClick={this.state.mode === "edit post" ? this.handleUpdatePost : this.handleCreatePost} >
+                                                onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
                                                 MAKE POST
                                             </Button>
                                     </Grid>
@@ -555,7 +580,7 @@ export default class CreatePostPage extends Component {
                                                 style={{ justifyContent: 'center' }}
                                                 disableElevation
                                                 type="button"
-                                                onClick={this.state.mode === "edit post" ? this.handleUpdatePost : this.handleCreatePost} >
+                                                onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
                                                 MAKE POST
                                             </Button>
                                     </Grid>
@@ -619,7 +644,7 @@ export default class CreatePostPage extends Component {
                                                 style={{ justifyContent: 'center' }}
                                                 disableElevation
                                                 type="button"
-                                                onClick={this.state.mode === "edit post" ? this.handleUpdatePost : this.handleCreatePost} >
+                                                onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
                                                 MAKE POST
                                             </Button>
                                     </Grid>
@@ -694,7 +719,7 @@ export default class CreatePostPage extends Component {
                                                 style={{ justifyContent: 'center' }}
                                                 disableElevation
                                                 type="button"
-                                                onClick={this.state.mode === "edit post" ? this.handleUpdatePost : this.handleCreatePost} >
+                                                onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
                                                 MAKE POST
                                             </Button>
                                     </Grid>
@@ -776,7 +801,88 @@ export default class CreatePostPage extends Component {
                                                 style={{ justifyContent: 'center' }}
                                                 disableElevation
                                                 type="button"
-                                                onClick={this.state.mode === "edit post" ? this.handleUpdatePost : this.handleCreatePost} >
+                                                onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
+                                                MAKE POST
+                                            </Button>
+                                    </Grid>
+                                </ThemeProvider>
+                            </Box>
+                        </Grid>
+                    </form>
+                </div>
+            </div>
+        );
+    }
+
+    getLinkPage = () => {
+        return (
+            <div>
+                <TopBar />
+                <Footer />
+
+                <div className="CreatePostPage">
+                    <form
+                        onSubmit={this.handleCreatePost}>
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center" >
+                            <Box
+                                boxShadow={0}
+                                margin={1}
+                                width="50%"
+                                mt={20} >
+                                <ThemeProvider theme={theme}>
+                                    <h3 style={{ color: '#023373' }}>
+                                        Post Title
+                                    </h3>
+                                    <br/>
+                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} defaultValue={this.state.title}/>
+                                    <br />
+                                    <h3 style={{ color: '#023373' }}>
+                                        Link
+                                    </h3>
+                                    
+                                    <TextField id="filled-basic" label="Post Content" variant="filled" onChange={this.handleChangeContent} defaultValue={this.state.content}/>
+                                    <h3 style={{ color: '#023373' }}>
+                                        Tags
+                                    </h3>
+                    
+                                    <div style={{ width: 300 }}>
+                                        <Autocomplete
+                                            multiple
+                                            id="tags-standard"
+                                            options={this.state.followTags}
+
+                                            onChange={this.handleChangeTags}
+                                            freeSolo
+                                            defaultValue={this.state.tags}
+                                            renderInput={params => (
+                                            <TextField
+                                                {...params}
+                                                variant="standard"
+                                                label="Tags"
+                                                // placeholder="Favorites"
+                                                margin ="normal"
+                                                fullWidth
+                                            />
+                                            )}
+                                        />
+                                    </div>
+                                    {/* <TextField id="filled-basic" label="Tags" variant="filled" onChange={this.handleChangeTags} defaultValue={this.state.tags.toString()} /> */}
+                                    <Grid
+                                        container
+                                        direction="row"
+                                        justify="center"
+                                        alignItems="center" >
+                                            <Button
+                                                color="secondary"
+                                                variant="contained"
+                                                style={{ justifyContent: 'center' }}
+                                                disableElevation
+                                                type="button"
+                                                onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
                                                 MAKE POST
                                             </Button>
                                     </Grid>
@@ -826,6 +932,9 @@ export default class CreatePostPage extends Component {
         }
         if (this.state.type === "calendar") {
             return this.getCalendarPage();
+        }
+        if (this.state.type === "link") {
+            return this.getLinkPage();
         }
     }
 }

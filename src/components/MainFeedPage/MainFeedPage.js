@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import TopBar from '../TopBar';
+import { Redirect } from 'react-router-dom';
 //import Footer from '../Footer';
 import ActionBar from './ActionBar';
 import Post from './../Post';
 import SideBar from '../SideBar';
-import { Grid, createMuiTheme } from '@material-ui/core';
+import { Grid, createMuiTheme, Button } from '@material-ui/core';
 import './MainFeedPage.css';
 
 import Snackbar from '@material-ui/core/Snackbar';
@@ -46,7 +47,9 @@ export default class MainFeedPage extends Component {
             filteredPosts: [],
             alert: false,
             alertText: "",
-            alertType: ""
+            alertType: "",
+            toTagSearch: false,
+            toTitleSearch: false
         };
     }
 
@@ -61,6 +64,16 @@ export default class MainFeedPage extends Component {
                     {this.state.alertText}
                     </Alert>
                 </Snackbar>
+    }
+    redirectSearch() {
+        this.setState({
+            toTagSearch: true
+        })
+    }
+    redirectTitleSearch() {
+        this.setState({
+            toTitleSearch: true
+        })
     }
         
     
@@ -135,6 +148,16 @@ export default class MainFeedPage extends Component {
     }
 
     render() {
+        if (this.state.toTagSearch === true) {
+            return <Redirect exact from="/" push to={{
+                pathname: "/searchtag",
+            }}/>;
+        }
+        if (this.state.toTitleSearch === true) {
+            return <Redirect exact from="/" push to={{
+                pathname: "/searchtitle",
+            }}/>;
+        }
         
       return (
           
@@ -148,9 +171,26 @@ export default class MainFeedPage extends Component {
                   direction="column"
                   justify="space-around"
                   alignItems="center" >
-                  {/* <Grid item >
-                      <TopBar /> 
-                  </Grid> */}
+                   <Grid item >
+                        <Button 
+                            color="secondary"
+                            variant="contained"
+                            type="button"
+                            onClick={() => {this.redirectSearch()}} >
+                            Search based on Tags
+                        </Button>
+                       
+                  </Grid> 
+                  <Grid item >
+                        <Button 
+                            color="secondary"
+                            variant="contained"
+                            type="button"
+                            onClick={() => {this.redirectTitleSearch()}} >
+                            Search based on Title
+                        </Button>
+                       
+                  </Grid> 
                   <Grid 
                       container
                       wrap="nowrap" 
