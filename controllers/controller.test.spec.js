@@ -3,16 +3,34 @@ const expect = chai.expect;
 const chaiHttp = require("chai-http");
 chai.use(chaiHttp);
 
+const host = "http://localhost:3000";
+const dummy_user = {
+    email: "dummy@dummy.dummy",
+    username: "mrdummy",
+    password: "dumdum1234",
+    tags: "CS30700",
+};
+
+let dummy_post = {
+    title: "dummy",
+    user: dummy_user.username,
+    type: "",
+    tag: [dummy_user.tags],
+    count: 0,
+    comments: [""],
+    content: "placeholder content",
+    time: 0,
+    reportArray: [""],
+    likeArray: [""],
+    upvoteArray: [""],
+    downvoteArray: [""],
+    reportCount: 0,
+    likeCount: 0,
+    upvoteCount: 0,
+    downvoteCount: 0,
+}
+
 describe("User controller functions", function () {
-
-    const host = "http://localhost:3000";
-
-    const dummy_user = {
-        email: "dummy@dummy.dummy",
-        username: "mrdummy",
-        password: "dumdum1234",
-        tags: "CS307",
-    };
 
     it("Should register a new user", function (done) {
         var path = "/api-user/register";
@@ -127,32 +145,151 @@ describe("User controller functions", function () {
     });
 });
 
-// describe("Post controller functions", function()  {
-//   it('Check if post exists using post id', function() {
-//       var host = "http://localhost:3000";
-//       var path = "/api/getPostById";
-//       chai
-//       .request(host)
-//       .post(path)
-//       .send({id: "abcdefhigklmn"})
-//       .end(function(error, response, body) {
-//           if (error) {
-//               expect(response.body.success).to.be.false;
-//           }
-//       });
-//   })
-//   it('Post should not be created if all tags are not followed by the user', function() {
-//       var host = "http://localhost:3000";
-//       var path1 = "/api/createpost";
-//       var path2 = "/api/getcourses"
-//       chai
-//       .request(host)
-//       .post(path1)
-//       .send({title:})
-//       .end(function(error, response, body) {
-//           if (error) {
-//               expect(response.body.success).to.be.false;
-//           }
-//       });
-//   });
-// });
+describe("Post controller functions", function()  {
+
+    it('Should not create the post with missing information', function(done) {
+        var path1 = "/api/createpost";
+        var empty_post = {title: "only title is given"}
+        chai
+        .request(host)
+        .post(path1)
+        .send(empty_post)
+        .end(function(error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.false;
+                done();
+            }
+        });
+    });
+
+    it('Should create the post of type text', function(done) {
+        var path1 = "/api/createpost";
+        dummy_post.type = "text";
+        chai
+        .request(host)
+        .post(path1)
+        .send(dummy_post)
+        .end(function(error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.true;
+                done();
+            }
+        });
+    });
+
+    it('Should create the post of type image', function(done) {
+        var path1 = "/api/createpost";
+        dummy_post.type = "image";
+        chai
+        .request(host)
+        .post(path1)
+        .send(dummy_post)
+        .end(function(error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.true;
+                done();
+            }
+        });
+    });
+
+    it('Should create the post of type link', function(done) {
+        var path1 = "/api/createpost";
+        dummy_post.type = "link";
+        chai
+        .request(host)
+        .post(path1)
+        .send(dummy_post)
+        .end(function(error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.true;
+                done();
+            }
+        });
+    });
+
+    it('Should create the post of type calendar', function(done) {
+        var path1 = "/api/createpost";
+        dummy_post.type = "calendar";
+        chai
+        .request(host)
+        .post(path1)
+        .send(dummy_post)
+        .end(function(error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.true;
+                done();
+            }
+        });
+    });
+
+    // it('Should create the post of type grade', function(done) {
+    //     var path1 = "/api/createpost";
+    //     chai
+    //     .request(host)
+    //     .post(path1)
+    //     .send({title: "", tags: })
+    //     .end(function(error, response, body) {
+    //         if (error) {
+    //             done(error);
+    //         } else {
+    //             expect(response.body.success).to.be.false;
+    //             done();
+    //         }
+    //     });
+    // });
+
+    // it('Should create the post of type curve', function(done) {
+    //     var path1 = "/api/createpost";
+    //     chai
+    //     .request(host)
+    //     .post(path1)
+    //     .send({title: "", tags: })
+    //     .end(function(error, response, body) {
+    //         if (error) {
+    //             done(error);
+    //         } else {
+    //             expect(response.body.success).to.be.false;
+    //             done();
+    //         }
+    //     });
+    // });
+
+    // it('Check if post exists using post id', function() {
+    //     var path = "/api/getPostById";
+    //     chai
+    //     .request(host)
+    //     .post(path)
+    //     .send({id: "abcdefhigklmn"})
+    //     .end(function(error, response, body) {
+    //         if (error) {
+    //             expect(response.body.success).to.be.false;
+    //         }
+    //     });
+    // })
+
+    it('Should remove all the posts made by the test case', function(done) {
+        var path1 = "/api/removeallposts";
+        chai
+        .request(host)
+        .delete(path1)
+        .send(dummy_post)
+        .end(function(error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.true;
+                done();
+            }
+        });
+    });
+});

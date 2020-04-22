@@ -4,11 +4,9 @@ const Post = require('../models/post-model');
  * Function to create a post on the database
  */
 createPost = (req, res) => {
-    console.log("createPost function called");
 
     // parsing body
     const body = req.body;
-    console.log(body);
     // error checking
     if (!body) {
         
@@ -23,7 +21,6 @@ createPost = (req, res) => {
 
     // error checking if post model was successfully created
     if (!post) {
-        console.log("baby tae tae");
         return res.status(400).json({ success: false, error: err });
     }
 
@@ -38,9 +35,9 @@ createPost = (req, res) => {
             });
         })
         .catch((error) => {
-            console.log(error);
             return res.status(400).json({
-                error,
+                success: false,
+                error: error,
                 message: 'Post not created!',
             });
         });
