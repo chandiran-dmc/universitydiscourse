@@ -3,21 +3,24 @@ import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, TextF
 import InsertCommentIcon from '@material-ui/icons/InsertComment';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-
-import InboxIcon from '../../customeIcons/menuIcon';
+import { red, blue, grey } from '@material-ui/core/colors';
 import MenuIcon from '../../customeIcons/menuIcon';
 //import Warning from '../../customeIcons/Warning';
-import {FacebookShareButton} from "react-share"
+import {FacebookShareButton, TelegramIcon} from "react-share"
 import FacebookIcon from '@material-ui/icons/Facebook';
 import Tag from './Tag';
+import ReportIcon from '@material-ui/icons/Report';
 
 import { Redirect } from 'react-router-dom';
 import Comment from './../Comment';
 import SchoolIcon from '@material-ui/icons/School';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import { makeStyles } from '@material-ui/core/styles';
-import { borderRight } from '@material-ui/system';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import Paper from '@material-ui/core/Paper';
+import EditIcon from '@material-ui/icons/Edit';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -477,13 +480,15 @@ export default class Post extends Component {
 
         return (
             
-            <ThemeProvider theme={this.state.theme} >
+            <ThemeProvider theme={theme} >
                 {this.renderAlert()}
+                <Paper elevation={10}>
                 <Box
                     boxShadow={2}
                     margin={1}
                     padding={2}
                     bgcolor="post_primary.main" >
+                        
                     
                     <Grid container 
                         wrap="nowrap" 
@@ -495,17 +500,19 @@ export default class Post extends Component {
                         <Grid item xs zeroMinWidth>
                             
                             <Grid item>
-                            <Button 
-                                    variant="body1"
-                                    color="textPrimary" 
-                                    onClick={() => this.handleRedirectPost("Post Redirect")} >
-                                    {this.state.title}
+                                <Button 
+                                        variant="body1"
+                                        style={{ color: grey[900] }} 
+                                        onClick={() => this.handleRedirectPost("Post Redirect")} >
+                                            <Typography>{this.state.title}</Typography>
+                                            {/* <TelegramIcon /> */}
+                                        
                                 </Button>
                             </Grid>
                             <Grid item>
                                 <Typography 
                                     variant="caption"
-                                    color="textSecondary" >
+                                    style={{ color: grey[900] }} >
                                     {new Date(this.state.time).toTimeString()}
                                 </Typography>
                             </Grid>
@@ -514,7 +521,7 @@ export default class Post extends Component {
                             <IconButton 
                                 type="button">
                             <FacebookShareButton url={url} quote={this.state.title} hashtag= {"#" + this.state.rawTags}>
-                            <FacebookIcon  fontSize="medium"/>
+                            <FacebookIcon  fontSize="medium" style={{ color: blue[800] }}/>
                             <meta property = "og:title" content={this.state.title} />
                             </FacebookShareButton>
                             </IconButton>
@@ -524,7 +531,7 @@ export default class Post extends Component {
                             <IconButton 
                                 type="button"
                                 onClick={() => (this.state.reportArray.includes(localStorage.getItem('username')))?this.renderSet("You cannot report a post twice!", "error"):(this.state.user === localStorage.getItem('username'))?this.renderSet("You cannot report your own post!", "error"):this.handleRedirect("reportpost")} >
-                                <i className="fa fa-bullhorn"></i>
+                                <ReportIcon style={{ color: red[800] }}/>
                             </IconButton>
                         </Grid>
                         
@@ -532,7 +539,7 @@ export default class Post extends Component {
                             <IconButton 
                                 type="button"
                                 onClick={() => this.handleRedirect("editpost")} >
-                                <MenuIcon />
+                                <EditIcon style={{ color: grey[900] }}/>
                             </IconButton>
                         </Grid>
                     </Grid>
@@ -565,7 +572,7 @@ export default class Post extends Component {
                                         type="button"
                                         onClick={this.onSubmitLike} 
                                         >
-                                        <i class="fa fa-heart"></i>
+                                        <FavoriteIcon style={{ color: red[300] }}/>
                                     </IconButton>
                                 </Grid>
 
@@ -581,7 +588,7 @@ export default class Post extends Component {
                                         type="button"
                                         onClick={this.onSubmitUpVote}
                                          >
-                                        <i class="fa fa-thumbs-up"></i>
+                                        <ThumbUpIcon style={{ color: blue[600] }}/>
                                     </IconButton>
                                 </Grid>
 
@@ -597,7 +604,7 @@ export default class Post extends Component {
                                         type="button"
                                         onClick={this.onSubmitDownVote} 
                                         >
-                                        <i class="fa fa-thumbs-down"></i>
+                                        <ThumbDownIcon style={{ color: blue[800] }}/>
                                     </IconButton>
                                 </Grid>
                                 
@@ -698,6 +705,7 @@ export default class Post extends Component {
                         
 
                     </Grid>
+                    <br />
                     <Grid
                         item
                         container
@@ -706,11 +714,11 @@ export default class Post extends Component {
                         direction="row">
                             {this.state.tags}
                         
-
-
                     </Grid>
+                    
 
                 </Box>
+                </Paper>
             </ThemeProvider>
         )
     }

@@ -7,13 +7,14 @@ import React, { Component } from 'react';
 import { Grid, IconButton, createMuiTheme, ThemeProvider, Typography } from '@material-ui/core';
 import MenuIcon from '../../customeIcons/menuIcon';
 import axios from 'axios';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 
 
 
 const theme = createMuiTheme({
     palette: {
         primary: {
-            main: "#F2F2F2"
+            main: "#F2B705"
         },
         secondary: {
             main: "#757575"
@@ -86,14 +87,14 @@ export default class FollowingTags extends Component {
                         alignItems="center" >
                         <Grid item >
                             <Typography variant="button">
-                                {this.state.tags[i]}
+                            <h3 style={{ color: '#023373' }}>{this.state.tags[i]}</h3>
                             </Typography>
                         </Grid>
                         <Grid item >
                             <IconButton 
                                 type="button"
                                 onClick={() => {this.handleRemoveTag(this.state.tags[i])}} >
-                                <MenuIcon />
+                                <RemoveCircleOutlineIcon color="primary"/>
                             </IconButton>
                         </Grid>
                     </Grid>

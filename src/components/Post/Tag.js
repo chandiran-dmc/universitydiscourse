@@ -9,6 +9,9 @@ import { Line } from 'react-chartjs-2';
 
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import Chip from '@material-ui/core/Chip';
+import LabelIcon from '@material-ui/icons/Label';
+import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 
 
 
@@ -236,12 +239,13 @@ export default class Tag extends Component {
         return (
             <div>
                 {this.renderAlert()}
-                <Button
+                {/* <Button
                     onClick={this.toggleOpen}
                     disableElevation
                     size="small" >
                     #{this.state.name}
-                </Button>
+                </Button> */}
+                <Chip label={this.state.name} onDelete={this.toggleOpen} deleteIcon={<CheckCircleIcon />}/>
                 <Dialog
                 open={this.state.open}
                 onClose={this.closeDialog}

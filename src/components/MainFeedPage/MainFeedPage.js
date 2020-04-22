@@ -6,12 +6,12 @@ import Post from './../Post';
 import SideBar from '../SideBar';
 import { Grid, createMuiTheme } from '@material-ui/core';
 import './MainFeedPage.css';
-import sample_tags from '../../mock_data/AllTags.json';
-
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-
-
+import ButtonAppBar from './AppBar'
+import {ThemeProvider} from '@material-ui/styles'
+import ResponsiveDrawer from './Drawer'
+import CssBaseline from "@material-ui/core/CssBaseline";
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -20,6 +20,9 @@ const axios = require('axios');
 
 const theme = createMuiTheme({
     palette: {
+        background: {
+            default: "#00305A"
+        },
         primary: {
             main: "#F2B705"
         },
@@ -40,7 +43,7 @@ const theme = createMuiTheme({
 });
 
 export default class MainFeedPage extends Component {
-
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -139,43 +142,42 @@ export default class MainFeedPage extends Component {
     render() {
         
       return (
-          
-          <div className="MainFeedPage">
+        <ThemeProvider theme={theme}>
+        <CssBaseline />
+          <div>
+             
             {this.renderAlert()}
-              <SideBar />
-
-              <Grid 
-                  container
-                  spacing={3}
-                  direction="column"
-                  justify="space-around"
-                  alignItems="center" >
-                  {/* <Grid item >
-                      <TopBar /> 
-                  </Grid> */}
-                  <Grid 
-                      container
-                      wrap="nowrap" 
-                      spacing={3}
-                      direction="row"
-                      justify="center"
-                      alignItems="flex-start" >
-                      <Grid item>
-                          <Grid container
-                              wrap="nowrap"
-                              spacing={2}
-                              direction="column">
-                              <Grid item>
-                                  <ActionBar theme={theme}/>
-                              </Grid>
-                              <Grid item>
-                                  {this.state.filteredPosts === null ? <p>Fetching data</p> : this.state.filteredPosts}
-                              </Grid>
-                          </Grid>
-                      </Grid>
-                  </Grid>
-              </Grid>                
+            
+            <Grid 
+                container
+                justify="center"
+                alignItems="center"
+                direction="row">
+                <Grid item>
+                    <ResponsiveDrawer />
+                </Grid>
+                <Grid item>
+                    <Grid container
+                        wrap="nowrap"
+                        spacing={30}
+                        direction="column">
+                        <Grid item>
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
+                            <ActionBar theme={theme}/>
+                        </Grid>
+                        <Grid item>
+                            {this.state.filteredPosts === null ? <p>Fetching data</p> : this.state.filteredPosts}
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>            
           </div>
+          </ThemeProvider>
       );
     }
 }

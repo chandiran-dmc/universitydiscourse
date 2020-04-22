@@ -21,7 +21,7 @@ import { Button, Box, Grid, TextField, InputAdornment } from '@material-ui/core'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-
+import FooterPage from './FooterPage'
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -423,7 +423,7 @@ export default class CreatePostPage extends Component {
             <div>
                 {this.renderAlert()}
                 <TopBar />
-                <Footer />
+                {/* <FooterPage /> */}
 
                 <div className="CreatePostPage">
                     <form
@@ -496,6 +496,8 @@ export default class CreatePostPage extends Component {
                         </Grid>
                     </form>
                 </div>
+                
+                <FooterPage />
             </div>
         );
     }

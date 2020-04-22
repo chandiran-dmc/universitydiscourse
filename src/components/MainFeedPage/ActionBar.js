@@ -57,11 +57,13 @@ export default class ActionBar extends Component {
                 <Box 
                     boxShadow={2}
                     margin={1}
-                    padding={2} >
+                    padding={2}
+                    bgcolor="post_primary.main" >
                     <Grid
                         container
                         direction="row"
-                        justify="center"
+                        wrap="wrap" 
+                        justify="space-evenly"
                         alignItems="center"
                         spacing={1}>
                         <Grid item >
