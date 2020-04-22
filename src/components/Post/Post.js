@@ -21,6 +21,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { borderRight } from '@material-ui/system';
 
 const urlMetadata = require('url-metadata')
+const validUrl = require('valid-url');
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -378,13 +379,20 @@ export default class Post extends Component {
                 content = <img src={this.state.content} alt={"The Image URL is invalid"} width="600"/>
                 break;
             case "link":
-               content =  <ReactTinyLink
-                            cardSize="small"
-                            showGraphic={true}
-                            maxLine={2}
-                            minLine={1}
-                            url={this.state.content}
-                          /> 
+                if (validUrl.isUri(this.state.content)){
+                    content =  <ReactTinyLink
+                    cardSize="small"
+                    showGraphic={true}
+                    maxLine={2}
+                    minLine={1}
+                    url={this.state.content}
+                  /> 
+                    
+                } else {
+                    content = "Not a valid URL"
+                }
+              
+                          
                break;
             case "calendar":
                     var content2 = []
@@ -443,11 +451,12 @@ export default class Post extends Component {
             return <Redirect exact from="/" push to={{
                 pathname: "/editpost",
                 state: { 
-                   title: this.state.title,
-                   content: this.state.content,
-                   user: this.state.user,
-                   time: this.state.time,
-                   tags: this.state.tags,
+                //    title: this.state.title,
+                //    content: this.state.content,
+                //    user: this.state.user,
+                //    time: this.state.time,
+                //    tags: this.state.tags,
+                   id: this.state.id,
                    type: this.state.type,
                    mode: this.state.mode
                 }
