@@ -232,50 +232,206 @@ describe("Post controller functions", function()  {
         });
     });
 
-    // it('Should create the post of type grade', function(done) {
-    //     var path1 = "/api/createpost";
-    //     chai
-    //     .request(host)
-    //     .post(path1)
-    //     .send({title: "", tags: })
-    //     .end(function(error, response, body) {
-    //         if (error) {
-    //             done(error);
-    //         } else {
-    //             expect(response.body.success).to.be.false;
-    //             done();
-    //         }
-    //     });
-    // });
+    it('Should create the post of type grade', function(done) {
+        var path1 = "/api/creategrade";
+        const dummy_grade = {
+            title: "CS29100",
+            user: dummy_user.username,
+            content: "90",
+            tag: ["A"],
+            time: 0
+        };
+        chai
+        .request(host)
+        .post(path1)
+        .send(dummy_grade)
+        .end(function(error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.true;
+                done();
+            }
+        });
+    });
 
-    // it('Should create the post of type curve', function(done) {
-    //     var path1 = "/api/createpost";
-    //     chai
-    //     .request(host)
-    //     .post(path1)
-    //     .send({title: "", tags: })
-    //     .end(function(error, response, body) {
-    //         if (error) {
-    //             done(error);
-    //         } else {
-    //             expect(response.body.success).to.be.false;
-    //             done();
-    //         }
-    //     });
-    // });
+    it('Should create the post of type curve', function(done) {
+        var path1 = "/api/createcurve";
+        const dummy_curve = {
+            title: "CS29100",
+            user: dummy_user.username,
+            tag: ["90", "80", "70", "60"],
+            time: 0
+        };
+        
+        chai
+        .request(host)
+        .post(path1)
+        .send(dummy_curve)
+        .end(function(error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.true;
+                done();
+            }
+        });
+    });
 
-    // it('Check if post exists using post id', function() {
-    //     var path = "/api/getPostById";
-    //     chai
-    //     .request(host)
-    //     .post(path)
-    //     .send({id: "abcdefhigklmn"})
-    //     .end(function(error, response, body) {
-    //         if (error) {
-    //             expect(response.body.success).to.be.false;
-    //         }
-    //     });
-    // })
+    it('Should check if post exists using post id', function(done) {
+        var path = "/api/getPostById";
+        chai
+        .request(host)
+        .get(path)
+        .send({id: "abcdefhigklmn"})
+        .end(function(error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.false;
+                done();
+            }
+        });
+    })
+
+    it('Should retrieve all the posts in the database', function(done) {
+        var path1 = "/api/getposts";
+        chai
+        .request(host)
+        .get(path1)
+        .end(function(error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.true;
+                done();
+            }
+        });
+    });
+
+    it('Should get courses from the database', function(done) {
+        var path1 = "/api/getcourses";
+        chai
+        .request(host)
+        .get(path1)
+        .end(function(error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.true;
+                done();
+            }
+        });
+    });
+
+    it('Should get grades from the database', function(done) {
+        var path1 = "/api/getgrades";
+        chai
+        .request(host)
+        .get(path1)
+        .end(function(error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.true;
+                done();
+            }
+        });
+    });
+
+    it('Should get curves from the database', function(done) {
+        var path1 = "/api/getcurves";
+        chai
+        .request(host)
+        .get(path1)
+        .end(function(error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.true;
+                done();
+            }
+        });
+    });
+
+    it('Should get ratings from the database', function(done) {
+        var path1 = "/api/getratings";
+        chai
+        .request(host)
+        .get(path1)
+        .end(function(error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.true;
+                done();
+            }
+        });
+    });
+
+    it('Should report the appropriate post', function(done) {
+        var path = "/api/report";
+        chai
+        .request(host)
+        .post(path)
+        .send(dummy_post)
+        .end(function(error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.true;
+                done();
+            }
+        });
+    })
+
+    it('Should like the appropriate post', function(done) {
+        var path = "/api/like";
+        chai
+        .request(host)
+        .post(path)
+        .send(dummy_post)
+        .end(function(error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.true;
+                done();
+            }
+        });
+    })
+
+    it('Should upvote the appropriate post', function(done) {
+        var path = "/api/upvote";
+        chai
+        .request(host)
+        .post(path)
+        .send(dummy_post)
+        .end(function(error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.true;
+                done();
+            }
+        });
+    })
+
+    it('Should downvote the appropriate post', function(done) {
+        var path = "/api/downvote";
+        chai
+        .request(host)
+        .post(path)
+        .send(dummy_post)
+        .end(function(error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.true;
+                done();
+            }
+        });
+    })
 
     it('Should remove all the posts made by the test case', function(done) {
         var path1 = "/api/removeallposts";

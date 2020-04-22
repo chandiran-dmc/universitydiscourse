@@ -45,7 +45,7 @@ createGrade = (req, res) => {
             console.log('Grade not created!');
             console.error(error);
             return res.status(400).json({
-                error,
+                success: false,
                 message: 'Grade not created!',
             });
         });
