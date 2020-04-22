@@ -286,7 +286,7 @@ export default class CreatePostPage extends Component {
         }
         // request for curve inputs
         else if (this.state.type === "curve") {
-            // TODO: error checking for curve input
+            // error checking for curve input
             if (this.state.title.length === 0) {
                 alert('Course name cannot be empty');
                 return;
@@ -487,7 +487,6 @@ export default class CreatePostPage extends Component {
                                             )}
                                         />
                                     </div>
-                                    {/* <TextField id="filled-basic" label="Tags" variant="filled" onChange={this.handleChangeTags} defaultValue={this.state.tags.toString()} /> */}
                                     <Grid
                                         container
                                         direction="row"
@@ -536,13 +535,13 @@ export default class CreatePostPage extends Component {
                                         Post Title
                                     </h3>
                                     <br/>
-                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle}  defaultValue={this.state.title}/>
+                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle}  value={this.state.title}/>
                                     <br />
                                     <h3 style={{ color: '#023373' }}>
                                         Post Image URL
                                     </h3>
                                     <br />
-                                    <TextField id="filled-basic" label="Post Image URL" variant="filled" onChange={this.handleChangeContent}  defaultValue={this.state.content}/>
+                                    <TextField id="filled-basic" label="Post Image URL" variant="filled" onChange={this.handleChangeContent}  value={this.state.content}/>
                                     <br />
                                     <h3 style={{ color: '#023373' }}>
                                         Tags
@@ -556,7 +555,7 @@ export default class CreatePostPage extends Component {
 
                                             onChange={this.handleChangeTags}
                                             freeSolo
-                                            defaultValue={this.state.tags}
+                                            value={this.state.tags}
                                             renderInput={params => (
                                             <TextField
                                                 {...params}
@@ -616,13 +615,13 @@ export default class CreatePostPage extends Component {
                                         Course Name
                                     </h3>
                                     <br/>
-                                    <TextField id="filled-basic" label="" variant="filled" size="medium" onChange={this.handleChangeTitle}  defaultValue={this.state.title}/>
+                                    <TextField id="filled-basic" label="" variant="filled" size="medium" onChange={this.handleChangeTitle}  value={this.state.title}/>
                                     <br />
                                     <h3 style={{ color: '#023373' }}>
                                         Score (in percentage)
                                     </h3>
                                     <br />
-                                    <TextField id="filled-basic" label="" variant="outlined" onChange={this.handleChangeContent}  defaultValue={this.state.content}
+                                    <TextField id="filled-basic" label="" variant="outlined" onChange={this.handleChangeContent}  value={this.state.content}
                                     InputProps={{
                                         startAdornment: <InputAdornment position="start">%</InputAdornment>
                                     }}
@@ -632,7 +631,7 @@ export default class CreatePostPage extends Component {
                                         Grade (A ~ F)
                                     </h3>
                                     <br />
-                                    <TextField id="filled-basic" label="" variant="filled" onChange={this.handleChangeTae} defaultValue={this.state.tags.toString()} />
+                                    <TextField id="filled-basic" label="" variant="filled" onChange={this.handleChangeTae} value={this.state.tags.toString()} />
                                     <Grid
                                         container
                                         direction="row"
@@ -679,31 +678,31 @@ export default class CreatePostPage extends Component {
                                         Course Name
                                     </h3>
                                     <br/>
-                                    <TextField id="filled-basic" label="" variant="filled" size="medium" onChange={this.handleChangeTitle}  defaultValue={this.state.title}/>
+                                    <TextField id="filled-basic" label="" variant="filled" size="medium" onChange={this.handleChangeTitle}  value={this.state.title}/>
                                     <br />
                                     <h3 style={{ color: '#023373' }}>
                                         Curve (lower bound)
                                     </h3>
                                     <br />
-                                    <TextField name="bound_A" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  defaultValue={this.state.content}
+                                    <TextField name="bound_A" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
                                     InputProps={{
                                         startAdornment: <InputAdornment position="start">A%</InputAdornment>
                                     }}
                                     />
                                     <br />
-                                    <TextField name="bound_B" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  defaultValue={this.state.content}
+                                    <TextField name="bound_B" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
                                     InputProps={{
                                         startAdornment: <InputAdornment position="start">B%</InputAdornment>
                                     }}
                                     />
                                     <br />
-                                    <TextField name="bound_C" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  defaultValue={this.state.content}
+                                    <TextField name="bound_C" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
                                     InputProps={{
                                         startAdornment: <InputAdornment position="start">C%</InputAdornment>
                                     }}
                                     />
                                     <br />
-                                    <TextField name="bound_D" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  defaultValue={this.state.content}
+                                    <TextField name="bound_D" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
                                     InputProps={{
                                         startAdornment: <InputAdornment position="start">D%</InputAdornment>
                                     }}
@@ -757,13 +756,13 @@ export default class CreatePostPage extends Component {
                                         Post Title
                                     </h3>
                                     <br/>
-                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} defaultValue={this.state.title}/>
+                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} value={this.state.title}/>
                                     <br />
                                     <h3 style={{ color: '#023373' }}>
                                         Post Content
                                     </h3>
                                     
-                                    <TextField id="filled-basic" label="Ask for feedback" variant="filled" onChange={this.handleChangeContent} defaultValue={this.state.content}/>
+                                    <TextField id="filled-basic" label="Ask for feedback" variant="filled" onChange={this.handleChangeContent} value={this.state.content}/>
                                     <h3 style={{ color: '#023373' }}>
                                         COURSES
                                     </h3>
@@ -776,7 +775,7 @@ export default class CreatePostPage extends Component {
 
                                             onChange={this.handleChangeTags}
                                             freeSolo
-                                            defaultValue={this.state.tags}
+                                            value={this.state.tags}
                                             renderInput={params => (
                                             <TextField
                                                 {...params}
@@ -789,7 +788,6 @@ export default class CreatePostPage extends Component {
                                             )}
                                         />
                                     </div>
-                                    {/* <TextField id="filled-basic" label="Tags" variant="filled" onChange={this.handleChangeTags} defaultValue={this.state.tags.toString()} /> */}
                                     <Grid
                                         container
                                         direction="row"
@@ -838,13 +836,13 @@ export default class CreatePostPage extends Component {
                                         Post Title
                                     </h3>
                                     <br/>
-                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} defaultValue={this.state.title}/>
+                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} value={this.state.title}/>
                                     <br />
                                     <h3 style={{ color: '#023373' }}>
                                         Link
                                     </h3>
                                     
-                                    <TextField id="filled-basic" label="Post Content" variant="filled" onChange={this.handleChangeContent} defaultValue={this.state.content}/>
+                                    <TextField id="filled-basic" label="Post Content" variant="filled" onChange={this.handleChangeContent} value={this.state.content}/>
                                     <h3 style={{ color: '#023373' }}>
                                         Tags
                                     </h3>
@@ -857,7 +855,7 @@ export default class CreatePostPage extends Component {
 
                                             onChange={this.handleChangeTags}
                                             freeSolo
-                                            defaultValue={this.state.tags}
+                                            value={this.state.tags}
                                             renderInput={params => (
                                             <TextField
                                                 {...params}
@@ -870,7 +868,6 @@ export default class CreatePostPage extends Component {
                                             )}
                                         />
                                     </div>
-                                    {/* <TextField id="filled-basic" label="Tags" variant="filled" onChange={this.handleChangeTags} defaultValue={this.state.tags.toString()} /> */}
                                     <Grid
                                         container
                                         direction="row"
