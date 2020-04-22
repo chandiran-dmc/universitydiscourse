@@ -78,7 +78,23 @@ describe("User controller functions", function () {
         });
     });
 
-    it("Trying to delete non existing user", function (done) {
+    it("Should update user tags", function (done) {
+        var path = "/api-user/updateusertags";
+        chai
+        .request(host)
+        .post(path)
+        .send({email: dummy_user.email, newtags: "CS252"})
+        .end(function (error, response, body) {
+            if (error) {
+                done(error);
+            } else {
+                expect(response.body.success).to.be.true;
+                done();
+            }
+        });
+    });
+
+    it("Should delete non existing user", function (done) {
         var path = "/api-user/deleteuser";
         chai
         .request(host)
@@ -94,7 +110,7 @@ describe("User controller functions", function () {
         });
     });
 
-    it("Trying to delete existing user", function (done) {
+    it("Should delete existing user", function (done) {
         var path = "/api-user/deleteuser";
         chai
         .request(host)

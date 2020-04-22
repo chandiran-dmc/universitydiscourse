@@ -411,7 +411,8 @@ UpdateUserTags = (req, res) => {
             })
             .catch(error => {
                 return res.status(404).json({
-                    error,
+                    success: false,
+                    error: error,
                     message: 'Tags not updated!',
                 })
             });
