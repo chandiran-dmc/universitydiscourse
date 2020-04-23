@@ -180,6 +180,7 @@ export default class TagSearch extends Component {
                                 multiple
                                 id="tags-standard"
                                 options={this.state.all}
+                                data-testid="tag-search"
 
                                 onChange={this.handleChangeTags}
                                 freeSolo
@@ -198,6 +199,7 @@ export default class TagSearch extends Component {
                   </Grid> 
                   <Grid item>
                   <Button 
+                    data-testid="search-button"
                     color="secondary"
                     variant="contained"
                     type="button"

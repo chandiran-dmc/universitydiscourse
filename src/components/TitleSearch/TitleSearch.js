@@ -135,11 +135,12 @@ export default class TagSearch extends Component {
                             <Typography variant="h6">Search for Title</Typography>
                       </Grid>
                    <Grid item >
-                        <TextField id="filled-basic" label="Search Title" variant="filled" size="medium" onChange={this.handleChangeTitle} defaultValue={this.state.title}/>                      
+                        <TextField data-testid="title-search" id="filled-basic" label="Search Title" variant="filled" size="medium" onChange={this.handleChangeTitle} defaultValue={this.state.title}/>                      
                   </Grid> 
                   <Grid item>
                   <Button 
                     color="secondary"
+                    data-testid="search-button"
                     variant="contained"
                     type="button"
                     onClick={() => {this.getPosts()}} >
