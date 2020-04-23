@@ -12,6 +12,12 @@ import ButtonAppBar from './AppBar'
 import {ThemeProvider} from '@material-ui/styles'
 import ResponsiveDrawer from './Drawer'
 import CssBaseline from "@material-ui/core/CssBaseline";
+import sample_tags from '../../mock_data/AllTags.json';
+import Button from '@material-ui/core/Button';
+import { Redirect } from 'react-router-dom';
+
+
+
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -49,10 +55,23 @@ export default class MainFeedPage extends Component {
             filteredPosts: [],
             alert: false,
             alertText: "",
-            alertType: ""
+            alertType: "",
+            redirect2: false,
+            redirect3: false,
+            redirect4: false,
         };
         //localStorage.setItem("tags", "CS307");
     }
+
+    onSubmit2 = (event) => {
+        this.setState({redirect2: true});
+    } 
+    onSubmit3 = (event) => {
+        this.setState({redirect3: true});
+    } 
+    onSubmit4 = (event) => {
+        this.setState({redirect4: true});
+    } 
 
     
     renderSet(text, alertType) {
@@ -107,7 +126,7 @@ export default class MainFeedPage extends Component {
                 let filteredPosts = [];
 
                 posts.forEach((post) => {
-
+                    
                     for (let i = 0; i < post.tag.length; i++) {
                         if (tags.includes(post.tag[i]) || tags.includes("default")) {
                             filteredPosts.push(<Post key={Math.random()*100000} data={post} theme={theme}/>);
@@ -139,10 +158,34 @@ export default class MainFeedPage extends Component {
     }
 
     render() {
+
+        if (this.state.redirect2 === true) {
+    
+            return <Redirect exact from="/" push to={{
+                pathname: "/tfp",
+                
+            }}/>;
+        }
+
+        if (this.state.redirect3 === true) {
+    
+            return <Redirect exact from="/" push to={{
+                pathname: "/ffp",
+                
+            }}/>;
+        }
+        if (this.state.redirect4 === true) {
+    
+            return <Redirect exact from="/" push to={{
+                pathname: "/ffp",
+                
+            }}/>;
+        }
+        
         
       return (
         <ThemeProvider theme={theme}>
-        <CssBaseline />
+        {/* <CssBaseline /> */}
           <div>
              
             {this.renderAlert()}
@@ -156,10 +199,65 @@ export default class MainFeedPage extends Component {
                     <ResponsiveDrawer />
                 </Grid>
                 <Grid item>
+                <Grid 
+                    container
+                    //wrap="nowrap"
+                    spacing={2}
+                    direction="row"
+                    >
+                    <Grid item>
+                    <form onSubmit={this.onSubmit2}>
+                    <ThemeProvider theme={theme}>
+                    <Button 
+                        className  = "TopFeedPageButton" 
+                        variant = "contained"
+                        color = "primary" 
+                        type = "submit"
+                        >
+                        Top Feed Page
+                    </Button> 
+                    </ThemeProvider>
+                    </form>
+                    </Grid>
+                    <Grid item>
+                    <form onSubmit={this.onSubmit3}>
+                    <ThemeProvider theme={theme}>
+                    <Button 
+                        className  = "TopFeedPageButton" 
+                        variant = "contained"
+                        color = "primary" 
+                        type = "submit"
+                        >
+                        Filter Page
+                    </Button> 
+                    </ThemeProvider>
+                    </form>
+                    </Grid>
+                    <Grid item>
+                    <form onSubmit={this.onSubmit4}>
+                    <ThemeProvider theme={theme}>
+                    <Button 
+                        className  = "TopFeedPageButton" 
+                        variant = "contained"
+                        color = "primary" 
+                        type = "submit"
+                        >
+                        Saved Posts
+                    </Button> 
+                    </ThemeProvider>
+                    </form>
+                    </Grid>
+                </Grid>
+                </Grid>
+                
+                <Grid item>
+                    
                     <Grid container
                         wrap="nowrap"
                         spacing={30}
                         direction="column">
+                            
+                        
                         <Grid item>
                             <br />
                             <br />

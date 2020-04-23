@@ -85,6 +85,7 @@ export default class Post extends Component {
             );
         });
         this.state = {
+        
             id: props.data._id,
             title: props.data.title,
             content: props.data.content,
@@ -239,6 +240,8 @@ export default class Post extends Component {
             //alert(response.data.data.likeArray);
             this.setState({likeCount: response.data.likeCount})
             this.setState({likeArray: response.data.likeArray})
+            console.log(response.data.likeArray);
+            console.log(this.state.likeArray);
             
         })
         .catch((error) => {
@@ -251,6 +254,8 @@ export default class Post extends Component {
         });
         
     }    
+
+    
 
     onSubmitUpVote = (event) => {
         // alert("YOU UPVOTED THE POST");
@@ -287,6 +292,7 @@ export default class Post extends Component {
         
     } 
 
+    
     onSubmitDownVote = (event) => {
         // alert("YOU DOWNVOTED THE POST");
         // alert(this.state.downvoteCount);
@@ -325,6 +331,40 @@ export default class Post extends Component {
         });
        
     }    
+
+    // onSubmitSave = (event) => {
+    //     // alert("YOU UPVOTED THE POST");
+    //     // alert(this.state.upvoteCount);
+    //     //console.log(this.state.upvoteCount)
+    //     axios({
+    //         method: 'post',
+    //         url: 'http://localhost:3000/api/save',
+    //         data: {
+    //             postid: this.state._id,
+
+    //         }
+    //     })
+    //     .then((response) => {
+    //         this.renderSet(response.data.message, "info");
+    //         //alert(response.data.likeCount);
+    //         //alert(response.data.data.likeArray);
+    //         this.setState({upvoteCount: response.data.upvoteCount})
+    //         this.setState({upvoteArray: response.data.upvoteArray})
+            
+    //     })
+    //     .catch((error) => {
+        
+    //         console.log("THIS IS THE ERROR");
+    //         console.log(error);
+    //         return;
+            
+
+    //     });
+        
+    // } 
+
+   
+
 
 
     handleRedirect = (mode) => {
@@ -570,6 +610,7 @@ export default class Post extends Component {
                                 <Grid item>
                                     <IconButton 
                                         type="button"
+                                       // onClick={() => (this.state.likeArray.includes(localStorage.getItem('username')))?this.onSubmitUnlike():this.onSubmitLike()} 
                                         onClick={this.onSubmitLike} 
                                         >
                                         <FavoriteIcon style={{ color: red[300] }}/>
@@ -599,6 +640,8 @@ export default class Post extends Component {
                                 </Grid>
                                 
                                 
+                                
+                                
                                 <Grid item>
                                     <IconButton 
                                         type="button"
@@ -613,6 +656,15 @@ export default class Post extends Component {
                                         {this.state.downvoteCount}
                                     </Typography>
                                 </Grid>
+
+                                {/* <Grid item>
+                                    <IconButton 
+                                        type="button"
+                                        onClick={this.onSubmitSave}  >
+                                    </IconButton>
+                                    <i class="fa fa-star"></i>
+                                </Grid> */}
+
                                 
                             </Grid>
                                                         

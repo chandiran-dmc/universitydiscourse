@@ -207,31 +207,31 @@ reportPost = async (req, res) => {
         // Set new information for the post
         
         var i = 0;
-        var flag;
+        //var flag;
         
         console.log(i);
         
-        for (i = 0; i < body.reportCount - 1; i++) {
-            console.log("CURRENT USER");
-            console.log(body.report_user);
-            console.log("EARLIER USER");
-            console.log(body.reportArray[i]);
-            if (body.reportArray[i].localeCompare(body.report_user) === 0) {
-                console.log("COMES HERE");
-                flag = -100; // user already found
+        // for (i = 0; i < body.reportCount - 1; i++) {
+        //     console.log("CURRENT USER");
+        //     console.log(body.report_user);
+        //     console.log("EARLIER USER");
+        //     console.log(body.reportArray[i]);
+        //     if (body.reportArray[i].localeCompare(body.report_user) === 0) {
+        //         console.log("COMES HERE");
+        //         flag = -100; // user already found
 
-            }
-        }
-        if (flag === -100) {
-                return res.status(200).json({
+        //     }
+        // }
+        // if (flag === -100) {
+        //         return res.status(200).json({
                    
-                    err,
-                    reportArray: post.reportArray,
-                    reportCount: post.reportCount,
-                    message: 'User has already reported the post earlier, it is under review',
-                });
+        //             err,
+        //             reportArray: post.reportArray,
+        //             reportCount: post.reportCount,
+        //             message: 'User has already reported the post earlier, it is under review',
+        //         });
    
-        }
+        // }
         post.reportCount=body.reportCount;
         //post.reportArrayindex=body.reportArrayindex;
         post.reportArray.push(body.report_user);
@@ -263,6 +263,9 @@ reportPost = async (req, res) => {
 
 
 }
+
+
+
 
 likePost = async (req, res) => {
 
@@ -310,6 +313,7 @@ likePost = async (req, res) => {
 
         var i = 0;
         var flag;
+        var mess;
         
         console.log(i);
         
@@ -320,27 +324,22 @@ likePost = async (req, res) => {
             console.log(body.likeArray[i]);
             if (body.likeArray[i].localeCompare(body.like_user) === 0) {
                 console.log("COMES HERE");
-                flag = -100; // user already found
+                flag = -100; 
 
             }
         }
 
         if (flag === -100) {
-            return res.status(200).json({
-               
-                err,
-                message: 'User has already liked the post',
-                likeCount: post.likeCount,
-                likeArray: post.likeArray,
-            });
-
+            post.likeArray.remove(body.like_user);
+            post.likeCount=body.likeCount-2;
+            mess ="You have Unliked the post!";
+    
+        } else {
+            mess = 'You have Liked the post!';
+            post.likeCount=body.likeCount;
+            console.log(body.like_user);
+            post.likeArray.push(body.like_user);
         }
-
-        // Set new information for the post
-        post.likeCount=body.likeCount;
-        //post.reportArrayindex=body.reportArrayindex;
-        console.log(body.like_user);
-        post.likeArray.push(body.like_user);
         
         post.save()
             .then(() => {
@@ -352,7 +351,7 @@ likePost = async (req, res) => {
                     id: post._id,
                     likeCount: post.likeCount,
                     likeArray: post.likeArray,
-                    message: 'You have liked the post!',
+                    message: mess,
                 });
             })
             .catch(error => {
@@ -411,6 +410,7 @@ upvotePost = async (req, res) => {
 
         var i = 0;
         var flag;
+        var mess;
         
         console.log(i);
         
@@ -427,21 +427,18 @@ upvotePost = async (req, res) => {
         }
 
         if (flag === -100) {
-            return res.status(200).json({
-               
-                err,
-                message: 'User has already Upvoted the post',
-                upvoteCount: post.upvoteCount,
-                upvoteArray: post.upvoteArray,
-            });
+            post.upvoteArray.remove(body.like_user);
+            post.upvoteCount=body.upvoteCount-2;
+            mess = 'You have removed the Upvote on the post!';
 
+        } else {
+           post.upvoteCount=body.upvoteCount;
+           console.log(body.like_user);
+           post.upvoteArray.push(body.like_user);
+           mess = 'You have Upvoted the post!';
         }
 
-        // Set new information for the post
-        post.upvoteCount=body.upvoteCount;
-        //post.reportArrayindex=body.reportArrayindex;
-        console.log(body.like_user);
-        post.upvoteArray.push(body.like_user);
+        
         
         post.save()
             .then(() => {
@@ -453,7 +450,7 @@ upvotePost = async (req, res) => {
                     id: post._id,
                     upvoteCount: post.upvoteCount,
                     upvoteArray: post.upvoteArray,
-                    message: 'You have Upvoted the post!',
+                    message: mess
                 });
             })
             .catch(error => {
@@ -466,6 +463,10 @@ upvotePost = async (req, res) => {
     });
 
 }
+
+
+
+
 downvotePost = async (req, res) => {
 
     const body = req.body;
@@ -511,6 +512,7 @@ downvotePost = async (req, res) => {
 
         var i = 0;
         var flag;
+        var mess;
         
         console.log(i);
         
@@ -527,21 +529,19 @@ downvotePost = async (req, res) => {
         }
 
         if (flag === -100) {
-            return res.status(200).json({
-               
-                err,
-                message: 'User has already Downvoted the post',
-                downvoteCount: post.downvoteCount,
-                downvoteArray: post.downvoteArray,
-            });
+            post.downvoteArray.remove(body.like_user);
+            post.downvoteCount=body.downvoteCount-2;
+            mess = 'You have removed the Downvote on the post!';
+        } else {
+           
+            post.downvoteCount=body.downvoteCount;
+            mess = 'You have Downvoted the post!';
+            console.log(body.like_user);
+            post.downvoteArray.push(body.like_user);
 
         }
 
-        // Set new information for the post
-        post.downvoteCount=body.downvoteCount;
-        //post.reportArrayindex=body.reportArrayindex;
-        console.log(body.like_user);
-        post.downvoteArray.push(body.like_user);
+        
         
         post.save()
             .then(() => {
@@ -553,7 +553,7 @@ downvotePost = async (req, res) => {
                     id: post._id,
                     downvoteCount: post.downvoteCount,
                     downvoteArray: post.downvoteArray,
-                    message: 'You have Downvoted the post!',
+                    message: mess
                 });
             })
             .catch(error => {
@@ -566,6 +566,9 @@ downvotePost = async (req, res) => {
     });
 
 }
+
+
+
 
 getPostById = async (req, res) => {
     
@@ -602,6 +605,8 @@ getPosts = async (req, res) => {
 
     }).catch(err => console.log(err));
 }
+
+
 
 module.exports = {
     reportPost,
