@@ -13,7 +13,9 @@ createComment = (req, res) => {
         return res.status(400).json({
             success: false,
             error: 'You must provide a comment',
+            
         });
+        
     }
 
     // create comment model

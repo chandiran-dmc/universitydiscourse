@@ -14,8 +14,6 @@ import {ThemeProvider} from '@material-ui/styles'
 import ResponsiveDrawer from './Drawer'
 import CssBaseline from "@material-ui/core/CssBaseline";
 import sample_tags from '../../mock_data/AllTags.json';
-import Button from '@material-ui/core/Button';
-import { Redirect } from 'react-router-dom';
 
 
 
@@ -220,7 +218,22 @@ export default class MainFeedPage extends Component {
                 <Grid item>
                     <ResponsiveDrawer />
                 </Grid>
+                
+                
                 <Grid item>
+                    
+                    <Grid container
+                        wrap="nowrap"
+                        spacing={30}
+                        direction="column">
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+
+
+
+                        <Grid item>
                 <Grid 
                     container
                     //wrap="nowrap"
@@ -255,7 +268,7 @@ export default class MainFeedPage extends Component {
                     </ThemeProvider>
                     </form>
                     </Grid>
-                    <Grid item>
+                    {/* <Grid item>
                     <form onSubmit={this.onSubmit4}>
                     <ThemeProvider theme={theme}>
                     <Button 
@@ -268,44 +281,39 @@ export default class MainFeedPage extends Component {
                     </Button> 
                     </ThemeProvider>
                     </form>
-                    </Grid>
+                    </Grid> */}
                     <Grid item >
                         <Button 
+                            className  = "TopFeedPageButton" 
                             color="secondary"
                             variant="contained"
                             type="button"
-                            onClick={() => {this.redirectSearch()}} >
+                            onClick = {() => {this.redirectSearch()}}
+                            >
                             Search based on Tags
                         </Button>
                        
                   </Grid> 
                   <Grid item >
                         <Button 
+                            className  = "TopFeedPageButton" 
                             color="secondary"
                             variant="contained"
-                            type="button"
-                            onClick={() => {this.redirectTitleSearch()}} >
+                            type="submit"
+                            onClick = {() => {this.redirectTitleSearch()}}
+                            >
                             Search based on Title
                         </Button>
-                       
                   </Grid> 
                 </Grid>
-                </Grid>
-                
-                <Grid item>
-                    
-                    <Grid container
-                        wrap="nowrap"
-                        spacing={30}
-                        direction="column">
-                            
+                </Grid>    
                         
                         <Grid item>
+                            {/* <br />
                             <br />
                             <br />
                             <br />
-                            <br />
-                            <br />
+                            <br /> */}
                             <br />
                             <ActionBar theme={theme}/>
                         </Grid>
