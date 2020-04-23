@@ -73,8 +73,6 @@ export default class Post extends Component {
 
     constructor(props) {
         super(props);
-        console.log('props -----',props);
-        
 
         // button tags
         let tags = [];
@@ -147,7 +145,6 @@ export default class Post extends Component {
         //event.preventDefault();
         
         let username = localStorage.getItem("username");
-        //console.log(this.state.title);
         axios({
             method: 'post',
             url: 'http://localhost:3000/api-comment/comment',
@@ -165,7 +162,6 @@ export default class Post extends Component {
             }
         })
         .then((response) => {
-            console.log(response);
             this.setState({
                 commentContent: ""
             })
@@ -182,7 +178,6 @@ export default class Post extends Component {
         this.setState({
             seeallcomments: true
         })
-        console.log(this.state._id);
         // request the database for the comments
         let commentlist = []
         // Send request to the database
@@ -195,7 +190,6 @@ export default class Post extends Component {
         })
         .then((response) => {
                 commentlist = response.data.data;
-                console.log(response.data.data);
                 let comments = []
                 commentlist.forEach((comment) => {
                     if (comment.postid == this.state._id) {
@@ -216,9 +210,6 @@ export default class Post extends Component {
 
     
     onSubmitLike = (event) => {
-        // alert("YOU LIKED THE POST");
-        // alert(this.state.likeCount);
-        console.log(this.state.likeCount)
         axios({
             method: 'post',
             url: 'http://localhost:3000/api/like',
@@ -241,20 +232,13 @@ export default class Post extends Component {
             
         })
         .catch((error) => {
-        
             alert("THIS IS THE ERROR");
-            console.log(error);
             return;
-            
-
         });
         
     }    
 
     onSubmitUpVote = (event) => {
-        // alert("YOU UPVOTED THE POST");
-        // alert(this.state.upvoteCount);
-        console.log(this.state.upvoteCount)
         axios({
             method: 'post',
             url: 'http://localhost:3000/api/upvote',
@@ -276,9 +260,6 @@ export default class Post extends Component {
             
         })
         .catch((error) => {
-        
-            console.log("THIS IS THE ERROR");
-            console.log(error);
             return;
             
 
@@ -287,9 +268,6 @@ export default class Post extends Component {
     } 
 
     onSubmitDownVote = (event) => {
-        // alert("YOU DOWNVOTED THE POST");
-        // alert(this.state.downvoteCount);
-        console.log(this.state.downvoteCount)
         axios({
             method: 'post',
             url: 'http://localhost:3000/api/downvote',
@@ -315,9 +293,6 @@ export default class Post extends Component {
         
         })
         .catch((error) => {
-        
-            //console.log("THIS IS THE ERROR");
-            //console.log(error);
             return;
             
 
@@ -349,7 +324,6 @@ export default class Post extends Component {
     }
 
     handleButton = (re) => {
-        console.log(re);
         this.setState({
             uniquecourse: true,
             coursename: this.state.rawTags[re]
@@ -441,10 +415,8 @@ export default class Post extends Component {
 
 
     render() {
-        console.log(this.state.tags.toString)
         var url = `universitydiscourse.herokuapp.com/post/${this.state.id}`
         if (this.state.isEditPost === true) {
-            console.log(this.state.isEditPost)
 
             return <Redirect exact from="/" push to={{
                 pathname: "/editpost",
@@ -461,7 +433,6 @@ export default class Post extends Component {
             }}/>;
         }
         if (this.state.isRedirectPost === true) {
-            console.log(this.state.id);
 
             return <Redirect exact from="/" push to={{
                 pathname: "/post/" + `${this.state.id}`,

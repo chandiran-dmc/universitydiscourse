@@ -54,6 +54,10 @@ function getRandomPostData(type) {
     }
     data.type = type;
     data.count = Math.random()*randomLength%randomLength;
+    data.reportCount = Math.random()*randomLength%randomLength;
+    data.likeCount = Math.random()*randomLength%randomLength;
+    data.upvoteCount = Math.random()*randomLength%randomLength;
+    data.downvoteCount = Math.random()*randomLength%randomLength;
     return data;
 }
 
@@ -102,20 +106,29 @@ test('should render correct number of upvotes', () => {
     const mockPostData = getRandomPostData("text");
 
     const { findByText } = render(<Post data={mockPostData} theme={theme}/>);
-    expect(findByText(mockPostData.count)).toBeTruthy();
+    expect(findByText(mockPostData.upvoteCount)).toBeTruthy();
 });
-/* test('should render correct number of downvotes', () => {
+
+test('should render correct number of downvotes', () => {
     
     const mockPostData = getRandomPostData("text");
 
     const { findByText } = render(<Post data={mockPostData} theme={theme}/>);
-    expect(findByText(mockPostData.count)).toBeTruthy();
-});*/
+    expect(findByText(mockPostData.downvoteCount)).toBeTruthy();
+});
 
-/*test('should render correct number of likes', () => {
+test('should render correct number of likes', () => {
     
     const mockPostData = getRandomPostData("text");
 
     const { findByText } = render(<Post data={mockPostData} theme={theme}/>);
-    expect(findByText(mockPostData.count)).toBeTruthy();
-});*/
+    expect(findByText(mockPostData.likeCount)).toBeTruthy();
+});
+
+test('should render correct number of reports', () => {
+    
+    const mockPostData = getRandomPostData("text");
+
+    const { findByText } = render(<Post data={mockPostData} theme={theme}/>);
+    expect(findByText(mockPostData.reportCount)).toBeTruthy();
+});
