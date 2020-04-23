@@ -606,14 +606,13 @@ getPosts = async (req, res) => {
     }).catch(err => console.log(err));
 }
 
+
+
 module.exports = {
     reportPost,
     likePost,
-    
     upvotePost,
-    
     downvotePost,
-   
     createPost,
     updatePost,
     removeAllPosts,

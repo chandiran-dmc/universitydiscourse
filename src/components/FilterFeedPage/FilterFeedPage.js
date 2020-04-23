@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
-//import TopBar from '../TopBar';
-//import Footer from '../Footer';
-//import ActionBar from './ActionBar';
 import Post from './../Post';
-import SideBar from '../SideBar';
-import { Grid, createMuiTheme } from '@material-ui/core';
-import './MainFeedPage.css';
-//import sample_tags from '../../mock_data/AllTags.json';
-import Button from '@material-ui/core/Button';
-import { Redirect } from 'react-router-dom';
+import { Grid, createMuiTheme, Button, TextField, Typography } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+import TagButton from './TagButton';
+import SearchIcon from '@material-ui/icons/Search';
+import SideBar from '../SideBar';
 import {ThemeProvider} from '@material-ui/styles'
 
 
@@ -19,6 +15,8 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 const axios = require('axios');
+
+
 
 const theme = createMuiTheme({
     palette: {
@@ -50,19 +48,35 @@ export default class FilterFeedPage extends Component {
             alert: false,
             alertText: "",
             alertType: "",
-            redirect2: false,
-
-           
+            toTagSearch: false,
+            all: [],
+            followTags: localStorage.getItem("tags").split(","),
+            tags: [],
+            tagsDisplay: [],
+            check: true,
         };
-        //localStorage.setItem("tags", "CS307");
+        console.log(this.state.searchType)
+        axios({
+            method: 'get',
+            url: 'http://localhost:3000/api/getcourses'
+          })
+          .then((response) => {
+            let all = []
+            for(let i = 0; i < response.data.data.length; i++) {
+                all.push(response.data.data[i].name)
+            }
+            this.setState({
+                all: all
+            })        
+          })
+          .catch((error) => {
+              console.error(error);
+              alert('An error occurred');
+          });
+
+          this.handleChangeTags = this.handleChangeTags.bind(this);
     }
 
-    onSubmit2 = (event) => {
-        this.setState({redirect2: true});
-    } 
-
-
-   
     
     renderSet(text, alertType) {
         this.setState({alert: true, alertText: text, alertType: alertType});
@@ -75,7 +89,26 @@ export default class FilterFeedPage extends Component {
                     </Alert>
                 </Snackbar>
     }
+
+    handleChangeTags(event, values) {
+        console.log(event.target.value)
+        event.preventDefault()
+      
+      if(event.target.value === 0 || this.state.all.includes(event.target.value) || event.target.value == null) {
         
+          this.setState({
+              tags: values,
+          })
+          console.log(this.state.tags)
+       }
+       else if(!this.state.all.includes(event.target.value) && event.target.value != null) {
+            alert("Tag doesn't exist")
+            values.pop()
+        } 
+        
+    
+    }
+
     
 
     /**
@@ -84,6 +117,16 @@ export default class FilterFeedPage extends Component {
      * the tags the user follows
      */
     getPosts = async () => {
+        let tagsDisplay = [];
+        this.state.tags.forEach(tag => {
+        tagsDisplay.push(
+            <TagButton name={tag} key={Math.random()*100000} />
+        );
+        })
+        this.setState({
+            tagsDisplay: tagsDisplay,
+            check: false
+        })
 
         // Send request to the database
         axios({
@@ -95,116 +138,102 @@ export default class FilterFeedPage extends Component {
             let posts = [];
             posts = response.data.data;
 
-            // request user data for the tags
-            axios({
-                method: 'post',
-                url: 'http://localhost:3000/api-user/getuser',
-                data: {
-                    email: localStorage.getItem("email"),
-                    username: localStorage.getItem("username")
-                }
-            })
-            .then((response) => {
-                console.log(response.data.data)
-
-                // Filter the posts based on the tags the user follows
-                let tags =  response.data.data.tags.split(",");
-
-                // save the tags to the local storage
-                localStorage.setItem("tags", tags.toString());
-
                 let filteredPosts = [];
 
                 posts.forEach((post) => {
 
-                    if (post.likeCount  > 0 && filteredPosts.length < 10) {
-                        filteredPosts.push(<Post key={Math.random()*100000} data={post} theme={theme}/>);
-                    }
-
-                });
-
-                
-                filteredPosts.sort(function compare_item(a, b){
-                    // a should come before b in the sorted order
-                    //console.log( a.props.data.likeCount);
-                    //console.log(b);
-                    if(a.props.data.likeCount > b.props.data.likeCount){
-                        
-                        console.log("more likes");
-                            return -1;
-                    // a should come after b in the sorted order
-                    }else if(a.props.data.likeCount < b.props.data.likeCount){
-                        console.log("less likes");
-                            return 1;
-                    // and and b are the same
-                    }else{
-                        console.log("same likes");
-                            return 0;
+                    for (let i = 0; i < post.tag.length; i++) {
+                        if (this.state.tags.includes(post.tag[i])) {
+                            filteredPosts.push(<Post key={Math.random()*100000} data={post} theme={theme}/>);
+                            console.log(post)
+                            break;
+                        }
                     }
                 });
-
-                console.log(filteredPosts);
                 
                 this.setState({
                     filteredPosts: filteredPosts
                 });
-
-            })
-            .catch((error) => {
+                
+        })
+        .catch((error) => {
                 console.error(error);
                 alert('An error occurred');
             });
-        })
-        .catch((error) => {
-            console.error(error);
-            alert('An error occurred');
-        });
-    }
-
-
-    componentDidMount() {
-        this.getPosts();
     }
 
     render() {
-
-        if (this.state.redirect2 === true) {
-    
-            return <Redirect exact from="/" push to={{
-                pathname: "/mp",
-                
-            }}/>;
-        }
-
-       
-        
+        console.log(this.state.filteredPosts)
+        console.log(this.state.check)
       return (
           
           <div className="MainFeedPage">
             {this.renderAlert()}
-              <SideBar />
+            <SideBar />
 
               <Grid 
                   container
-                  spacing={3}
+                  spacing={2}
                   direction="column"
                   justify="space-around"
                   alignItems="center" >
-                  <form onSubmit={this.onSubmit2}>
-                    <ThemeProvider theme={theme}>
+                      <Grid item>
+                      <h3 style={{ color: '#023373' }}>
+                                        Filter based on Tags
+                        </h3>
+                    
+                      </Grid>
+                   <Grid item >
+                        <div style={{ width: 300 }}>
+                            <Autocomplete
+                                multiple
+                                id="tags-standard"
+                                options={this.state.followTags}
+
+                                onChange={this.handleChangeTags}
+                                freeSolo
+                                defaultValue={this.state.tags}
+                                renderInput={params => (
+                                <TextField
+                                    {...params}
+                                    variant="standard"
+                                    label="Tags"
+                                    margin ="normal"
+                                    fullWidth
+                                    />
+                                    )}
+                                />
+                        </div>
+                       
+                  </Grid> 
+                  <br></br>
+                  
+                  <Grid item>
+                  <ThemeProvider theme={theme}>
                     <Button 
-                        className  = "TopFeedPageButton" 
                         variant = "contained"
                         color = "primary" 
-                        type = "submit"
-                        >
-                        Main Feed Page
-                        </Button> 
-                        </ThemeProvider>
-                   </form>
-                  {/* <Grid item >
-                      <TopBar /> 
-                  </Grid> */}
+                        type = "button"
+                        onClick={() => {this.getPosts()}} >
+                        <i class="fa fa-filter"></i>
+                  
+                         Filter
+                    </Button> 
+                    </ThemeProvider>
+                  </Grid>
+                  <ThemeProvider theme={theme}>
+                  <Grid item
+                        container
+                        justify="center"
+                        color = "primary" 
+                        alignItems="center"
+                        direction="row">
+                            {this.state.tagsDisplay}
+                        
+
+
+                    </Grid>
+                    </ThemeProvider>
                   <Grid 
                       container
                       wrap="nowrap" 
@@ -217,12 +246,12 @@ export default class FilterFeedPage extends Component {
                               wrap="nowrap"
                               spacing={2}
                               direction="column">
-                        
-                              {/* <Grid item>
-                                  <ActionBar theme={theme}/>
-                              </Grid> */}
                               <Grid item>
-                                  {this.state.filteredPosts === null ? <p>Fetching data</p> : this.state.filteredPosts}
+                              </Grid>
+                              <Grid item>
+                                  {this.state.filteredPosts.length != 0 ? this.state.filteredPosts : this.state.check ? <p> </p>: <h3 style={{ color: '#023373' }}>
+                                  No posts matching the current search. Add tags or search for different ones
+                                    </h3>}
                               </Grid>
                           </Grid>
                       </Grid>

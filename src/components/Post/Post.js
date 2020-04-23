@@ -82,6 +82,7 @@ export default class Post extends Component {
             );
         });
         this.state = {
+        
             id: props.data._id,
             title: props.data.title,
             content: props.data.content,
@@ -327,6 +328,37 @@ export default class Post extends Component {
         });
        
     }    
+
+    // onSubmitSave = (event) => {
+    //     // alert("YOU UPVOTED THE POST");
+    //     // alert(this.state.upvoteCount);
+    //     //console.log(this.state.upvoteCount)
+    //     axios({
+    //         method: 'post',
+    //         url: 'http://localhost:3000/api/save',
+    //         data: {
+    //             postid: this.state._id,
+
+    //         }
+    //     })
+    //     .then((response) => {
+    //         this.renderSet(response.data.message, "info");
+    //         //alert(response.data.likeCount);
+    //         //alert(response.data.data.likeArray);
+    //         this.setState({upvoteCount: response.data.upvoteCount})
+    //         this.setState({upvoteArray: response.data.upvoteArray})
+            
+    //     })
+    //     .catch((error) => {
+        
+    //         console.log("THIS IS THE ERROR");
+    //         console.log(error);
+    //         return;
+            
+
+    //     });
+        
+    // } 
 
    
 
@@ -602,6 +634,8 @@ export default class Post extends Component {
                                 </Grid>
                                 
                                 
+                                
+                                
                                 <Grid item>
                                     <IconButton 
                                         type="button"
@@ -616,6 +650,15 @@ export default class Post extends Component {
                                         {this.state.downvoteCount}
                                     </Typography>
                                 </Grid>
+
+                                {/* <Grid item>
+                                    <IconButton 
+                                        type="button"
+                                        onClick={this.onSubmitSave}  >
+                                    </IconButton>
+                                    <i class="fa fa-star"></i>
+                                </Grid> */}
+
                                 
                             </Grid>
                                                         

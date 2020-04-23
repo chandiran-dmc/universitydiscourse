@@ -52,6 +52,7 @@ export default class MainFeedPage extends Component {
             alertType: "",
             redirect2: false,
             redirect3: false,
+            redirect4: false,
         };
         //localStorage.setItem("tags", "CS307");
     }
@@ -61,6 +62,9 @@ export default class MainFeedPage extends Component {
     } 
     onSubmit3 = (event) => {
         this.setState({redirect3: true});
+    } 
+    onSubmit4 = (event) => {
+        this.setState({redirect4: true});
     } 
 
     
@@ -164,6 +168,13 @@ export default class MainFeedPage extends Component {
                 
             }}/>;
         }
+        if (this.state.redirect4 === true) {
+    
+            return <Redirect exact from="/" push to={{
+                pathname: "/ffp",
+                
+            }}/>;
+        }
         
         
       return (
@@ -225,6 +236,20 @@ export default class MainFeedPage extends Component {
                                         type = "submit"
                                         >
                                         Filter Page
+                                    </Button> 
+                                    </ThemeProvider>
+                                    </form>
+                                    </Grid>
+                                    <Grid item>
+                                    <form onSubmit={this.onSubmit4}>
+                                    <ThemeProvider theme={theme}>
+                                    <Button 
+                                        className  = "TopFeedPageButton" 
+                                        variant = "contained"
+                                        color = "primary" 
+                                        type = "submit"
+                                        >
+                                        Saved Posts
                                     </Button> 
                                     </ThemeProvider>
                                     </form>
