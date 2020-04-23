@@ -57,11 +57,13 @@ export default class ActionBar extends Component {
                 <Box 
                     boxShadow={2}
                     margin={1}
-                    padding={2} >
+                    padding={2}
+                    bgcolor="post_primary.main" >
                     <Grid
                         container
                         direction="row"
-                        justify="center"
+                        wrap="wrap" 
+                        justify="space-evenly"
                         alignItems="center"
                         spacing={1}>
                         <Grid item >
@@ -89,7 +91,7 @@ export default class ActionBar extends Component {
                                 IMAGE
                             </Button>
                         </Grid>
-                        <Grid item >
+                        {/* <Grid item >
                             <Button 
                                 color="secondary"
                                 variant="contained"
@@ -98,7 +100,7 @@ export default class ActionBar extends Component {
                                 onClick={() => {this.handleCreatePost("document")}} >
                                 DOCUMENT
                             </Button>
-                        </Grid>
+                        </Grid> */}
                         <Grid item >
                             <Button 
                                 color="primary"
