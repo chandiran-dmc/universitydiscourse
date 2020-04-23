@@ -18,7 +18,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import {Redirect} from 'react-router-dom';
-import Button from '@material-ui/core/Button';
+import TemporaryDrawer from './TemporaryDrawer';
 import EmailIcon from '@material-ui/icons/Email';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FollowingTags from '../SideBar/FollowingTags';
@@ -232,8 +232,9 @@ const getFollowingTags = () => {
                                     </Typography>
           <div className = {classes.grow} />
           <div className = {classes.logoutButton}>
-        <IconButton type="button"><ExitToAppIcon color="post_primary"/></IconButton>
+          <TemporaryDrawer/>
           </div>
+
         </Toolbar>
       </AppBar>
       <nav className={classes.drawer} aria-label="mailbox folders">

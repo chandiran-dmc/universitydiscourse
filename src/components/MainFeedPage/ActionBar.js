@@ -91,7 +91,7 @@ export default class ActionBar extends Component {
                                 IMAGE
                             </Button>
                         </Grid>
-                        <Grid item >
+                        {/* <Grid item >
                             <Button 
                                 color="secondary"
                                 variant="contained"
@@ -100,7 +100,7 @@ export default class ActionBar extends Component {
                                 onClick={() => {this.handleCreatePost("document")}} >
                                 DOCUMENT
                             </Button>
-                        </Grid>
+                        </Grid> */}
                         <Grid item >
                             <Button 
                                 color="primary"

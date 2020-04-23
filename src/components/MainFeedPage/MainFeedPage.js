@@ -12,7 +12,6 @@ import ButtonAppBar from './AppBar'
 import {ThemeProvider} from '@material-ui/styles'
 import ResponsiveDrawer from './Drawer'
 import CssBaseline from "@material-ui/core/CssBaseline";
-
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -174,6 +173,8 @@ export default class MainFeedPage extends Component {
                             {this.state.filteredPosts === null ? <p>Fetching data</p> : this.state.filteredPosts}
                         </Grid>
                     </Grid>
+                    
+                
                 </Grid>
             </Grid>            
           </div>
