@@ -3,9 +3,7 @@ const Schema = mongoose.Schema;
  
 const documentSchema = new Schema({
   _id: mongoose.Schema.Types.ObjectId,
-  image: {
-    type: String
-  }
+  name: String,
 }, {
 collection: 'documents'
 })

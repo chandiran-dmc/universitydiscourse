@@ -14,7 +14,7 @@ import {ThemeProvider} from '@material-ui/styles'
 const theme = createMuiTheme ({
   palette: {
       primary: {
-          main:'#023373',
+          main:'#F2B705',
       }
   }
 
@@ -84,18 +84,18 @@ export default function SearchAppBar() {
     <div className={classes.root}>
       <AppBar position="static">
         <Toolbar>
-          <IconButton
+          {/* <IconButton
             edge="start"
             className={classes.menuButton}
             color='inherit'
             aria-label="open drawer"
           >
             <MenuIcon />
-          </IconButton>
-          <Typography className={classes.title} variant="h6" noWrap>
-            University Discourse
+          </IconButton> */}
+          <Typography noWrap>
+          <h3 style={{ color: '#023373' }}>University Discourse</h3>
           </Typography>
-          <div className={classes.search}>
+          {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -107,7 +107,7 @@ export default function SearchAppBar() {
               }}
               inputProps={{ 'aria-label': 'search' }}
             />
-          </div>
+          </div> */}
         </Toolbar>
       </AppBar>
     </div>

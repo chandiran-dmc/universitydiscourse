@@ -19,7 +19,7 @@ import logoName from '../../images/ImageName.png';
 import './LoginPage.css'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-
+import {Grid} from '@material-ui/core'
 import { Redirect } from 'react-router-dom';
 
 import {createMuiTheme } from '@material-ui/core/styles';
@@ -108,16 +108,8 @@ export default class LoginPage extends Component {
 
         return (
             <div>
-                
-                <Footer />
                 <TopBar/>
-                
-                <head>
-                   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-                   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-                   <meta name="HandheldFriendly" content="true" />
-                </head>
-                <div className="LoginPage">
+                {/* <div className="LoginPage">
                 
                     
                     
@@ -196,7 +188,79 @@ export default class LoginPage extends Component {
                             </div>
                         </div>
                         </div>
-                </div>
+                </div> */}
+
+            <Grid
+                container
+                direction="column"
+                justify="space-evenly"
+                alignItems="center"
+                spacing={1}>
+                <Grid item>
+                    <br />
+                    <img 
+                    width = {200}
+                    src={logo}
+                    alt="logo" />
+                </Grid>
+                <Grid item>
+                    <h2 style={{ color: '#023373' }}>Login</h2>
+                </Grid>
+                <Grid item>
+                    <TextField
+                        required
+                        id="filled-required"
+                        label="Email"
+                        variant="filled"
+                        name = "email"
+                        value={this.state.email}
+                        onChange={this.handleEmailChange}
+                            />
+                </Grid>
+                <Grid item>
+                    <TextField
+                        required
+                        id="filled-password-input"
+                        label="Password"
+                        name = "Password"
+                        value={this.state.password}
+                        onChange={this.handlePasswordChange}
+                        type="password"
+                        autoComplete="current-password"
+                        variant="filled" />
+                </Grid>
+                <Grid item>
+                    <br />
+                    <form onSubmit={this.onSubmit1}>
+                        <ThemeProvider theme={theme}>
+                        <Button 
+                            className  = "LOGINButtonTwo" 
+                            variant = "contained"
+                            color = "primary" 
+                            type = "submit"
+                            >
+                            Log In
+                        </Button> 
+                        </ThemeProvider>
+                    </form>
+                </Grid>
+                <Grid item>
+                    <br />
+                    <form onSubmit={this.onSubmit2}>
+                        <ThemeProvider theme={theme}>
+                        <Button 
+                            className  = "LOGINButtonTwo" 
+                            variant = "contained"
+                            color = "primary" 
+                            type = "submit"
+                            >
+                            RESET PASSWORD
+                        </Button> 
+                        </ThemeProvider>
+                    </form>
+                </Grid>                
+            </Grid>
+            <Footer />
             </div>
         );
     }

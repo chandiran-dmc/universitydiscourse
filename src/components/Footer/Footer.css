@@ -1,12 +1,35 @@
 /* use top:0 and position:fixed to fix at top */
 .Footer {
     bottom: 0;
-    height: 250px;
+    height: 180px;
     position: fixed;
     width: 100%;
-    overflow: auto;
+    /* flex-shrink: 0; */
+    /* min-height: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr auto; */
+    /* overflow: auto; */
     background-color: #f2f2f2;
 }
+
+.footer {
+    bottom: 0;
+    height: 180px;
+    position: fixed;
+    width: 100%;
+    background-color: #f2f2f2;
+},
+.push {
+  height: 50px;
+}
+
+.wrapper {
+    min-height: 100%;
+  
+    /* Equal to height of footer */
+    /* But also accounting for potential margin-bottom of last child */
+    margin-bottom: -180px;
+  }
 
 .lowerFooter2 {
     bottom: 0;
@@ -14,11 +37,11 @@
 
     position: fixed;
     width: 100%;
-    overflow: auto;
-    background-color: #023373;
+    /* overflow: auto; */
+    background-color: #F2B705;
 }
 
-.Logo {
+/* .Logo {
     max-width: 5%;
     margin-top: 20px;
     margin-left: 100px;
@@ -64,6 +87,6 @@
     margin-top: -40px;
     margin-left: 1005px; 
     
- }
+ } */
  
 

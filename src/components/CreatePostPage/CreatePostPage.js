@@ -423,7 +423,7 @@ export default class CreatePostPage extends Component {
             <div>
                 {this.renderAlert()}
                 <TopBar />
-                {/* <FooterPage /> */}
+                <Footer />
 
                 <div className="CreatePostPage">
                     <form
@@ -497,7 +497,7 @@ export default class CreatePostPage extends Component {
                     </form>
                 </div>
                 
-                <FooterPage />
+                {/* <FooterPage /> */}
             </div>
         );
     }

@@ -90,6 +90,24 @@ const handleRequest_email = () => {
     setisRedirect(!isRedirect);
 }
 
+const handleRequest_logout = () => {
+
+  // Clear local storage
+  localStorage.removeItem("email");
+  localStorage.removeItem("username");
+  localStorage.removeItem("tags");
+
+  setPath("/");
+  setisRedirect(!isRedirect);
+
+  // this.setState({
+  //     username: this.state.username,
+  //     isRedirect: true,
+  //     to: "/",
+  //     tags: this.state.tags
+  // });
+}
+
 const handleRequest_remove = async () => {
 
     axios({
@@ -168,6 +186,10 @@ const getFollowingTags = () => {
       <ListItem button key={"text"} onClick={handleRequest_remove}>
             <ListItemIcon><DeleteIcon color="primary"/></ListItemIcon>
           <h3 style={{ color: '#023373' }}>Remove Account</h3>
+      </ListItem>
+      <ListItem button key={"text"} onClick={handleRequest_logout}>
+            <ListItemIcon><DeleteIcon color="primary"/></ListItemIcon>
+          <h3 style={{ color: '#023373' }}>Log Out</h3>
       </ListItem>
       {/* <Button onClick={handleRequest_email}><h3 style={{ color: '#023373' }}>Change Email</h3></Button> */}
       {/* <Button onClick={handleRequest_remove}><h3 style={{ color: '#023373' }}>Remove Account</h3></Button> */}

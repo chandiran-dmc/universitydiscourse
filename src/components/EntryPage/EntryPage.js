@@ -16,15 +16,18 @@ import TopBar from '../TopBar/TopBar';
 import Footer from '../Footer/Footer';
 import logo from '../../images/image1.png';
 import logoName from '../../images/ImageName.png';
-import './EntryPage.css'
+import '../LoginPage/LoginPage.css'
 import Button from '@material-ui/core/Button';
-import {Grid} from '@material-ui/core';
+import {Grid, CssBaseline, Typography} from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import {createMuiTheme } from '@material-ui/core/styles';
 import {ThemeProvider} from '@material-ui/styles'
 
 const theme = createMuiTheme ({
     palette: {
+        background: {
+            default: "#00305A"
+        },
         primary: {
             main:'#F2B705',
         }
@@ -67,45 +70,16 @@ export default class EntryPage extends Component {
 
 
         return (
-            // <form onSubmit={this.onSubmit1}>
             <div>
-                
-                <Footer />
                 <TopBar/>
                 
-                <head>
-                   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-                   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-                   <meta name="HandheldFriendly" content="true" />
-                </head>
+                {/* <Grid container 
+                    direction="column"
+                    alignItems="center"
+                    spacing={2}>
                 <div className="EntryPage">
-                    {/* <Grid 
-                        container
-                        direction="column"
-                        justify="center"
-                        alignItems="center">
-                        <Grid item >
-                            <img 
-                                className="LoginLogo"
-                                src={logo}
-                                alt="logo" /> 
-                        </Grid>
-                        <br />
-                        <Grid item >
-                            <img 
-                                className="LogoName2"
-                                src={logoName}
-                                alt="logoName"/>
-                        </Grid>
-                    </Grid> */}
                     <div class="grid-containerEP" >
-                    <div class="grid-item1">
-                        <img 
-                            className="LoginLogo"
-                            src={logo}
-                            alt="logo" /> 
-                        <br />
-                    </div>
+                    
                     <div class="grid-item2">
                         <img 
                             className="LogoName2"
@@ -145,6 +119,65 @@ export default class EntryPage extends Component {
                         </div>
                     </div>
                 </div>
+                </Grid> */}
+                <Grid
+                    container
+                    direction="column"
+                    justify="space-evenly"
+                    alignItems="center"
+                    spacing={1}>
+                    <Grid item>
+                        <br />
+                        <img 
+                            // className="LoginLogo"
+                            width={200}
+                            src={logo}
+                            alt="logo" /> 
+                        <br />
+                    </Grid>
+                    {/* <Grid item>
+                        <img 
+                            // className="LogoName2"
+                            width={400}
+                            src={logoName}
+                            alt="logoName"/>
+                    </Grid> */}
+                    <Grid item>
+                        <br />
+                        <br />
+                        <form onSubmit={this.onSubmit1}>
+                            <ThemeProvider theme={theme}>
+                            <Button 
+                                className  = "LOGINButtonTwo" 
+                                variant = "contained"
+                                color = "primary" 
+                                type = "submit"
+                                size = "large"
+                                >
+                                Log In
+                            </Button> 
+                            </ThemeProvider>
+                        </form>
+                    </Grid>
+                    <Grid item>
+                        <br />
+                        <br />
+                        <form onSubmit={this.onSubmit2}>
+                            <ThemeProvider theme={theme}>
+                            <Button 
+                                className  = "LOGINButtonTwo" 
+                                variant = "contained"
+                                color = "primary" 
+                                type = "submit"
+                                size = "large"
+                                >
+                                Register
+                            </Button> 
+                            </ThemeProvider>
+                            </form>
+                    </Grid>
+                </Grid>
+                <Footer />
             </div>
         );
     }

@@ -51,7 +51,7 @@ img { max-width: 100%; height: auto; }
 
 .LoginLogo {
     
-    max-width: 10%;
+    max-width: 50%;
     height: auto;
     padding-left: 680px;
     padding-top: 35px;
@@ -59,7 +59,7 @@ img { max-width: 100%; height: auto; }
 }
 .LogoName2 {
     max-width: 30%;
-    padding-left: 570px;
+    padding-left: 570px; 
     /* margin-top: 8px; 
     margin-bottom: 10px;
     margin-left: 8px;

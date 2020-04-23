@@ -15,11 +15,11 @@ import React, { Component } from 'react'
 import TopBar from '../TopBar/TopBar';
 import Footer from '../Footer/Footer';
 import logo from '../../images/image1.png';
-import './RegisterPage.css'
+import '../LoginPage/LoginPage.css'
 import logoName from '../../images/ImageName.png';
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
-
+import {Grid } from '@material-ui/core'
 import {createMuiTheme } from '@material-ui/core/styles';
 import {ThemeProvider} from '@material-ui/styles'
 import {Redirect} from 'react-router-dom';
@@ -112,32 +112,9 @@ export default class RegisterPage extends Component {
         }
         return (
             <form onSubmit={this.onSubmit}>
-            <div>
                 <TopBar />
-                <Footer />
-                {/* <div className="LoginPage">
-                <form>
-                <div className="Form">
-                <img 
-                        className="LoginLogo"
-                        src={logo}
-                        alt="logo"
-                    />
-                <h1 className="LoginText">Register</h1>
-                    <input type="text"
-                    placeholder="the_jane@gmail.com"/>
-                    <br />
-                    <input 
-                        className="NEXTButton"
-                        type="submit" 
-                        value="NEXT" 
-                    />
-                </div>
-                </form>
+            {/* <div>
                 
-
-                    
-                </div> */}
                 <div class="grid-container1" >
                         <div class="grid-item1">
                             <img 
@@ -208,7 +185,76 @@ export default class RegisterPage extends Component {
                             </div>
                         </div>
                         </div>
-            </div>
+            </div> */}
+            <Grid
+                container
+                direction="column"
+                justify="space-evenly"
+                alignItems="center"
+                spacing={1}>
+                
+                <Grid item>
+                    <br />
+                    <img 
+                    width = {200}
+                    src={logo}
+                    alt="logo" />
+                </Grid>
+                <Grid item>
+                    <h2 style={{ color: '#023373' }}>Register</h2>
+                </Grid>
+                <Grid item>
+                    <TextField
+                        required
+                        id="filled-required"
+                        label="email"
+                        value={this.state.email}
+                        onChange={this.handleEmailChange}
+                        variant="filled" />
+                </Grid>
+                <Grid item>
+                    <TextField
+                        required
+                        id="filled-required"
+                        label="Username"
+                        variant="filled"
+                        //name = "email"
+                        value={this.state.username}
+                        onChange={this.handleUsernameChange}
+                            />
+                </Grid>
+                <Grid item>
+                    <TextField
+                        required
+                        id="filled-password-input"
+                        label="Password"
+                        name = "Password"
+                        value={this.state.password}
+                        onChange={this.handlePasswordChange}
+                        // value={this.state.password}
+                        // onChange={this.handlePasswordChange}
+                        type="password"
+                        autoComplete="current-password"
+                        variant="filled" />
+                </Grid>
+                <Grid item>
+                    <br />
+                    <ThemeProvider theme={theme}>
+                    <Button 
+                        className  = "LOGINButtonTwo" 
+                        variant = "contained"
+                        color = "primary"
+                        type = "submit" >
+                        SIGN UP
+                    </Button> 
+                    </ThemeProvider>
+                </Grid>
+
+
+
+
+            </Grid>            
+            <Footer />
             </form>
             
         )
