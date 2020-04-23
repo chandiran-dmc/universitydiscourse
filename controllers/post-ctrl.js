@@ -4,11 +4,9 @@ const Post = require('../models/post-model');
  * Function to create a post on the database
  */
 createPost = (req, res) => {
-    console.log("createPost function called");
 
     // parsing body
     const body = req.body;
-    console.log(body);
     // error checking
     if (!body) {
         
@@ -23,7 +21,6 @@ createPost = (req, res) => {
 
     // error checking if post model was successfully created
     if (!post) {
-        console.log("baby tae tae");
         return res.status(400).json({ success: false, error: err });
     }
 
@@ -38,9 +35,9 @@ createPost = (req, res) => {
             });
         })
         .catch((error) => {
-            console.log(error);
             return res.status(400).json({
-                error,
+                success: false,
+                error: error,
                 message: 'Post not created!',
             });
         });
@@ -137,21 +134,13 @@ reportPost = async (req, res) => {
  
     // Parse body from the request
     const body = req.body;
-
-    console.log(body);
-    
-
-   
     
     if (!body) {
-        console.log("NOOOO");
         return res.status(400).json({
             success: false,
             error: 'You must provide a body to update',
         });
     }
-
-    
 
     const query = {
         $and: [
@@ -167,7 +156,7 @@ reportPost = async (req, res) => {
         if (err) {
             console.log(err);
             return res.status(404).json({
-                err,
+                success: false,
                 message: 'Error occurred!',
             });
         }
@@ -176,12 +165,10 @@ reportPost = async (req, res) => {
         if (!post) {
             console.log(err);
             return res.status(401).json({
-                
-                err,
+                success: false,
                 message: 'Post not found',
             });
         }
-
 
         // deleting the post 
         if (reportArraylimit === body.reportCount) {
@@ -200,9 +187,6 @@ reportPost = async (req, res) => {
             console.log("DELETING");    
         } else {
          console.group("REACHES HERE");
-
-
-
 
         // Set new information for the post
         
@@ -236,8 +220,6 @@ reportPost = async (req, res) => {
         //post.reportArrayindex=body.reportArrayindex;
         post.reportArray.push(body.report_user);
         
-        
-        
         post.save()
             .then(() => {
                 console.log("SUCCESS");
@@ -254,7 +236,7 @@ reportPost = async (req, res) => {
             .catch(error => {
                 console.log(error);
                 return res.status(405).json({
-                    error,
+                    success: false,
                     message: 'Report not registered!',
                 });
             });
@@ -271,12 +253,9 @@ likePost = async (req, res) => {
 
  
     const body = req.body;
-
     console.log(body);
     
-    
     if (!body) {
-        console.log("NOOOO");
         return res.status(400).json({
             success: false,
             error: 'You must provide a body to update',
@@ -294,9 +273,8 @@ likePost = async (req, res) => {
 
         // Post not found
         if (err) {
-            console.log(err);
             return res.status(404).json({
-                err,
+                success: false,
                 message: 'Error occurred!',
             });
         }
@@ -305,8 +283,7 @@ likePost = async (req, res) => {
         if (!post) {
             console.log(err);
             return res.status(401).json({
-                
-                err,
+                success: false,
                 message: 'Post not found',
             });
         }
@@ -318,10 +295,6 @@ likePost = async (req, res) => {
         console.log(i);
         
         for (i = 0; i < body.likeCount - 1; i++) {
-            console.log("CURRENT USER");
-            console.log(body.like_user);
-            console.log("EARLIER USER");
-            console.log(body.likeArray[i]);
             if (body.likeArray[i].localeCompare(body.like_user) === 0) {
                 console.log("COMES HERE");
                 flag = -100; 
@@ -357,7 +330,7 @@ likePost = async (req, res) => {
             .catch(error => {
                 console.log(error);
                 return res.status(405).json({
-                    error,
+                    success: false,
                     message: 'Like not registered!',
                 });
             });

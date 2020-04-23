@@ -25,15 +25,17 @@ AuthenticateUser = (req, res) => {
             user
             .isCorrectPassword(password, function(err, same) {
                 if (err) {
+                    
                     res.status(500)
                     .json({error: 'Internal error please try again'});
                 } else if (!same) {
-                    res.status(401)
-                    .json({error: 'Incorrect email or password'});
+                    return res
+                    .status(401)
+                    .json({ success: false, error: 'Incorrect email or password'});
                 }
                 else {
                     return res
-                    .json({ success: false, error: `Password was correct` })
+                    .json({ success: true, error: `Password was correct` })
                 }
             })                         
         }
@@ -277,7 +279,8 @@ RegisterUser = (req, res) => {
         .catch(error => {
             console.log(error);
             return res.status(405).json({
-                error,
+                success: false,
+                error: error,
                 message: 'User not registered!',
             })
         })
@@ -408,7 +411,8 @@ UpdateUserTags = (req, res) => {
             })
             .catch(error => {
                 return res.status(404).json({
-                    error,
+                    success: false,
+                    error: error,
                     message: 'Tags not updated!',
                 })
             });

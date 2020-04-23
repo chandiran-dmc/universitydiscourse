@@ -14,7 +14,8 @@
  */
 
 import React, { Component } from 'react'
-import { Grid, Card, CardMedia, CardContent, Typography, CardActions, Button, createMuiTheme, ThemeProvider, Divider } from '@material-ui/core';
+import { Grid, Card, CardMedia, CardContent, Typography, CardActions, Button, createMuiTheme, ThemeProvider, Divider, Paper } from '@material-ui/core';
+import { Rating } from '@material-ui/lab';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import Doc from './Document'
@@ -22,6 +23,7 @@ import sample from './sample.pdf'
 import { Page } from 'react-pdf';
 import { Document } from 'react-pdf/dist/entry.webpack';
 // const axios = require('axios');
+import CourseRatings from './CourseRatings';
 
 const theme = createMuiTheme({
     palette: {
@@ -54,6 +56,13 @@ export default class CoursePage extends Component {
             selectedFile: null, 
             documentlist: [],
            
+            graph: <div/>,
+            title: "Defualt course title",
+            description: "No course description available",
+            credit: 0,
+            followButton: <div/>,
+            courseRatings: [],
+            courseRating: 0.0
         };
     }
 
@@ -65,6 +74,10 @@ export default class CoursePage extends Component {
         this.showGraph(this.state.id);
         this.fetchDocuments();
         // Get the course information through purdue io api
+        this.getCourseInfo(this.state.id);
+
+        // Get course ratings
+        this.getRatingsAverage();
 
         // Check if the user is currently following this tag (course)
         // if so, change to unfollow button
@@ -118,8 +131,48 @@ export default class CoursePage extends Component {
     } 
     
     /**
+     * This method retrieves the ratings for this course and displays the average
+     */
+    getRatingsAverage = () => {
+
+        // Send request to the database
+        axios({
+            method: 'get',
+            url: 'http://localhost:3000/api/getratings'
+        })
+        .then((response) => {
+            
+            let posts = [];
+            posts = response.data.data;
+
+            // get the ratings for this course
+            let ratings = [];
+            let total = 0;
+            for (let i = 0; i < posts.length; i++) {
+                if (posts[i].course === this.state.id) {
+                    ratings.push(posts[i]);
+                    total += posts[i].rating;
+                }
+            }
+
+            // put the ratings for this course in the ratings
+            // update the ratings average
+            this.setState({
+                courseRatings: ratings,
+                courseRating: total / ratings.length
+            });
+        })
+        .catch((error) => {
+            console.error(error);
+            alert('An error occurred');
+        });
+    }
+
+    /**
      * This method checks the local storage to see if the user follows the current course
      * and handles the result
+     * 
+     * @param  tag  the course name
      */
     checkFollowing = (tag) => { 
         let followingTags = localStorage.getItem("tags");
@@ -164,64 +217,180 @@ export default class CoursePage extends Component {
      * This method is called when the user clicks an unfollow tag button
      */
     unfollowTag = () => {
-        let tag = this.state.id;
+        let tagName = this.state.id;
 
-        // request server for update on user
+        if (window.confirm('Remove tag ' + tagName + ' ?')) {
 
-        // update local storage
+            // cannot remove default tag manually
+            if (tagName === "default") {
+                alert('Cannot remove default tag');
+                return;
+            }
 
-        // change button to follow
-        this.setState({
-            followButton: 
-            <Button
-                variant="contained"
-                color="primary"
-                style={{width : "100%"}}
-                onClick={this.followTag}
-            >
-                Follow
-            </Button>
-        });        
+            let tags = localStorage.getItem("tags").split(",");
+            // remove the tag from the local storage
+            tags = tags.filter((value, index, arr) => {return value !== tagName});
+            if (tags.length === 0) {
+                localStorage.removeItem("tags");
+            }
+            else {
+                // update the local storage
+                localStorage.setItem("tags", tags.toString());
+            }
 
-        // show alert to the user to notify that the process is done
+            // update database
+            axios({
+                method: 'post',
+                url: 'http://localhost:3000/api-user/updateusertags',
+                data: {
+                    email: localStorage.getItem("email"),
+                    newtags: (tags.length === 0 ? "default" : tags.toString())
+                }
+            })
+            .then((response) => {
+                console.log("Tags updated");
+                // change button to follow
+                this.setState({
+                    followButton: 
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        style={{width : "100%"}}
+                        onClick={this.followTag}
+                    >
+                        Follow
+                    </Button>
+                });   
+            })
+            .catch((error) => {
+                console.error(error.response);
+                if (error.response.data.message) {
+                    alert(error.response.data.message);
+                }
+            });
+        }
     }
-
 
     /**
      * This method is called when the user clicks an enabled follow tag button
      */
     followTag = () => {
         let tag = this.state.id;
-        
-        // request server for update on user
-
+        let tags = [];
+        if (localStorage.getItem("tags") != null) {
+            tags = localStorage.getItem("tags").split(",");
+            // Remove default tag
+            tags = tags.filter((value, index, arr) => {return value !== "default"});
+        }
         // update local storage
+        // handling duplicate tags
+        if (tags.includes(tag)) {
+            alert(`Tag ${tag} is already being followed.`);
+            return;
+        } else {
+            tags.push(tag);
+        }
+        localStorage.setItem("tags", tags.toString());
 
-        // change button to unfollow
-        this.setState({
-            followButton: 
-            <Button
-                variant="contained"
-                color="primary"
-                style={{width : "100%"}}
-                onClick={this.unfollowTag}
-            >
-                Unfollow
-            </Button>
+        // update database
+        axios({
+            method: 'post',
+            url: 'http://localhost:3000/api-user/updateusertags',
+            data: {
+                email: localStorage.getItem("email"),
+                newtags: tags.toString()
+            }
+        })
+        .then((response) => {
+            console.log("Tags updated");
+            // change button to unfollow
+            this.setState({
+                followButton: 
+                <Button
+                    variant="contained"
+                    color="primary"
+                    style={{width : "100%"}}
+                    onClick={this.unfollowTag}
+                >
+                    Unfollow
+                </Button>
+            });
+        })
+        .catch((error) => {
+            console.error(error.response);
+            if (error.response.data.message) {
+                alert(error.response.data.message);
+            }
         });
-        
-        // show alert to the user to notify that the process is done
     }
 
     /**
      * This method gets data using the purdue.io API for course information
+     * For more information, check https://github.com/Purdue-io/PurdueApi 
+     * 
+     * @param  tag  course name
      */
     getCourseInfo = async (tag) => {
 
+        // the 'CS' part of the course name
+        let result = this.getAbbrevAndNum(tag);
+        let abbreviation = result.abbreviation;
+        let number = result.number;
+
+        // make the request to Purdue.io with the following url
+        let url = "http://api.purdue.io/odata/Courses?%24filter=Subject/Abbreviation eq '" 
+                    + abbreviation + "' and Number eq '" + number + "'";
+
+        // request
+        await axios({
+            method: 'get',
+            url: url
+        }).then((response) => {
+            let queryResult = response.data.value[0];
+            this.setState({
+                title: queryResult.Title,
+                description: (queryResult.Description === "" ? "No course description available" : queryResult.Description),
+                credit: queryResult.CreditHours,
+            });
+        }).catch((error) => {
+            console.error(error);
+            alert("error while fetching course information");
+        });
+    }
+
+    /**
+     * This is a helper function to extract the abbreviation (ex: 'CS')
+     * and the course number (ex: '18000') from the given course name
+     * 
+     * @param  tag  the course name (ex: CS307)
+     * @returns an object with abbreviation and number extracted from the tag
+     */
+    getAbbrevAndNum = (tag) => {
+
+        // get abbreviation by matching with regex
+        let found = tag.match(/[A-Za-z]+/g);
+        found = found[0];
+
+        // get course number
+        let number = tag.match(/[0-9]+/g);
+        number = number[0] + "";
+        // add additional 0s to the number for correct querying
+        let numLength = 5 - number.length;
+        for (let i = 0; i < numLength; i++) {
+            number += "0";
+        }
+
+        return {
+            abbreviation: found,
+            number: number
+        };
     }
 
     /**
      * This method pulls data from the server and displays the grade
+     * by updating the state of graph with a react-chart-js component
+     * 
+     * @param  tag  the course name
      */
     showGraph = async (tag) => {
 
@@ -363,6 +532,7 @@ export default class CoursePage extends Component {
         console.log(data);
     }   
 
+
     render() {
         const { pageNumber, numPages } = this.state;
         return (
@@ -434,25 +604,129 @@ export default class CoursePage extends Component {
                     </Grid>
                     <Grid
                         item
-                        style={{width: "80%", marginTop: "3%"}}
+                        style={{
+                            width: "80%",
+                            marginTop: "20px"
+                        }}
                     >
-                        <Typography
-                            variant="h5"
-                            align="center"
+                        <Paper
+                            variant="elevation"
+                            elevation={2}
+                            style={{
+                                background: "#F2F2F2"
+                            }}
                         >
-                            Grade Distribution Graph
-                        </Typography>
+                            <Typography
+                                variant="h5"
+                                align="center"
+                                style={{
+                                    paddingTop: "20px"
+                                }}
+                            >
+                                Ratings
+                            </Typography>
+                            <Grid
+                                container
+                                justify="center"
+                                alignItems="center"
+                                direction="row"
+                            >
+                                <Grid 
+                                    item
+                                    style={{
+                                        width: "40%",
+                                        marginTop: "20px"
+                                    }}
+                                >
+                                    <Typography
+                                        variant="body1"
+                                        align="center"
+                                    >
+                                        Overall Rating
+                                    </Typography>
+                                    <Rating 
+                                        readOnly
+                                        value={this.state.courseRating}
+                                        precision={0.5}
+                                    />
+                                </Grid>
+                                <Grid 
+                                    item 
+                                    style={{
+                                        width: "40%",
+                                        marginTop: "20px"
+                                    }}
+                                >
+                                    <Typography
+                                        variant="body1"
+                                        align="center"
+                                    >
+                                        Your Rating
+                                    </Typography>
+                                    <CourseRatings 
+                                        coursename={this.state.id}
+                                        update={this.getRatingsAverage}
+                                        ratings={this.state.courseRatings}
+                                    />
+                                </Grid>
+                            </Grid>
+                        </Paper>
                     </Grid>
                     <Grid
                         item
-                        style={{width: "80%"}}
+                        style={{
+                            width: "80%",
+                            marginTop: "20px",
+                        }}
                     >
-                        {this.state.graph}
+                        <Paper
+                            variant="elevation"
+                            elevation={2}
+                            style={{
+                                background: "#F2F2F2"
+                            }}
+                        >
+                            <Typography
+                                variant="h5"
+                                align="center"
+                                style={{
+                                    paddingTop: "20px"
+                                }}
+                            >
+                                Grade Distribution Graph
+                            </Typography>
+                            {this.state.graph}
+                        </Paper>
+                    </Grid>
+                    <Grid
+                        item
+                        style={{
+                            width: "80%",
+                            marginTop: "20px"
+                        }}
+                    >
+                        <Paper
+                            variant="elevation"
+                            elevation={2}
+                            style={{
+                                background: "#F2F2F2"
+                            }}
+                        >
+                            <Typography
+                                variant="h5"
+                                align="center"
+                                style={{
+                                    paddingTop: "20px"
+                                }}
+                            >
+                                Documents
+                            </Typography>
+                        </Paper>
                     </Grid>
                 </Grid>
             </ThemeProvider>
             
-        )
+        );
     }
 }
 

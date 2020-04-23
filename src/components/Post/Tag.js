@@ -3,10 +3,9 @@
  */
 
 import React, { Component } from 'react';
-import { Button, Dialog, DialogTitle, DialogActions, DialogContent } from '@material-ui/core';
+import { Button, Dialog, DialogTitle, DialogActions } from '@material-ui/core';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import { Line } from 'react-chartjs-2';
 
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';

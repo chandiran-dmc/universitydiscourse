@@ -47,7 +47,7 @@ createCurve = (req, res) => {
             console.log('Curve not created!');
             console.error(error);
             return res.status(400).json({
-                error,
+                success: false,
                 message: 'Curve not created!',
             });
         });

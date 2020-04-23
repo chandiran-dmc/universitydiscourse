@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import TopBar from '../TopBar';
+import { Redirect } from 'react-router-dom';
 //import Footer from '../Footer';
 import ActionBar from './ActionBar';
 import Post from './../Post';
 import SideBar from '../SideBar';
-import { Grid, createMuiTheme } from '@material-ui/core';
+import { Grid, createMuiTheme, Button } from '@material-ui/core';
 import './MainFeedPage.css';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -59,8 +60,9 @@ export default class MainFeedPage extends Component {
             redirect2: false,
             redirect3: false,
             redirect4: false,
+            toTagSearch: false,
+            toTitleSearch: false
         };
-        //localStorage.setItem("tags", "CS307");
     }
 
     onSubmit2 = (event) => {
@@ -84,6 +86,16 @@ export default class MainFeedPage extends Component {
                     {this.state.alertText}
                     </Alert>
                 </Snackbar>
+    }
+    redirectSearch() {
+        this.setState({
+            toTagSearch: true
+        })
+    }
+    redirectTitleSearch() {
+        this.setState({
+            toTitleSearch: true
+        })
     }
         
     
@@ -182,6 +194,16 @@ export default class MainFeedPage extends Component {
             }}/>;
         }
         
+        if (this.state.toTagSearch === true) {
+            return <Redirect exact from="/" push to={{
+                pathname: "/searchtag",
+            }}/>;
+        }
+        if (this.state.toTitleSearch === true) {
+            return <Redirect exact from="/" push to={{
+                pathname: "/searchtitle",
+            }}/>;
+        }
         
       return (
         <ThemeProvider theme={theme}>
@@ -247,6 +269,26 @@ export default class MainFeedPage extends Component {
                     </ThemeProvider>
                     </form>
                     </Grid>
+                    <Grid item >
+                        <Button 
+                            color="secondary"
+                            variant="contained"
+                            type="button"
+                            onClick={() => {this.redirectSearch()}} >
+                            Search based on Tags
+                        </Button>
+                       
+                  </Grid> 
+                  <Grid item >
+                        <Button 
+                            color="secondary"
+                            variant="contained"
+                            type="button"
+                            onClick={() => {this.redirectTitleSearch()}} >
+                            Search based on Title
+                        </Button>
+                       
+                  </Grid> 
                 </Grid>
                 </Grid>
                 

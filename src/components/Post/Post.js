@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
-import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, TextField, Dialog, DialogActions, DialogTitle, createMuiTheme, List, ListItem, ListItemIcon, Divider, ListItemText } from '@material-ui/core';
+import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, TextField, createMuiTheme, List, ListItem, ListItemIcon, Divider, ListItemText } from '@material-ui/core';
 import InsertCommentIcon from '@material-ui/icons/InsertComment';
 import ExpandLessIcon from '@material-ui/icons/ExpandLess';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { red, blue, grey } from '@material-ui/core/colors';
+import { ReactTinyLink } from "react-tiny-link";
+
+import InboxIcon from '../../customeIcons/menuIcon';
 import MenuIcon from '../../customeIcons/menuIcon';
 //import Warning from '../../customeIcons/Warning';
 import {FacebookShareButton, TelegramIcon} from "react-share"
@@ -21,6 +24,9 @@ import ThumbUpIcon from '@material-ui/icons/ThumbUp';
 import ThumbDownIcon from '@material-ui/icons/ThumbDown';
 import Paper from '@material-ui/core/Paper';
 import EditIcon from '@material-ui/icons/Edit';
+
+const urlMetadata = require('url-metadata')
+const validUrl = require('valid-url');
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -74,8 +80,6 @@ export default class Post extends Component {
 
     constructor(props) {
         super(props);
-        console.log('props -----',props);
-        
 
         // button tags
         let tags = [];
@@ -149,7 +153,6 @@ export default class Post extends Component {
         //event.preventDefault();
         
         let username = localStorage.getItem("username");
-        //console.log(this.state.title);
         axios({
             method: 'post',
             url: 'http://localhost:3000/api-comment/comment',
@@ -167,7 +170,6 @@ export default class Post extends Component {
             }
         })
         .then((response) => {
-            console.log(response);
             this.setState({
                 commentContent: ""
             })
@@ -184,8 +186,7 @@ export default class Post extends Component {
         this.setState({
             seeallcomments: true
         })
-        console.log(this.state._id);
-        // TODO: request the database for the comments
+        // request the database for the comments
         let commentlist = []
         // Send request to the database
         axios({
@@ -197,7 +198,6 @@ export default class Post extends Component {
         })
         .then((response) => {
                 commentlist = response.data.data;
-                console.log(response.data.data);
                 let comments = []
                 commentlist.forEach((comment) => {
                     if (comment.postid == this.state._id) {
@@ -218,9 +218,6 @@ export default class Post extends Component {
 
     
     onSubmitLike = (event) => {
-        // alert("YOU LIKED THE POST");
-        // alert(this.state.likeCount);
-        console.log(this.state.likeCount)
         axios({
             method: 'post',
             url: 'http://localhost:3000/api/like',
@@ -245,12 +242,8 @@ export default class Post extends Component {
             
         })
         .catch((error) => {
-        
             alert("THIS IS THE ERROR");
-            console.log(error);
             return;
-            
-
         });
         
     }    
@@ -258,9 +251,6 @@ export default class Post extends Component {
     
 
     onSubmitUpVote = (event) => {
-        // alert("YOU UPVOTED THE POST");
-        // alert(this.state.upvoteCount);
-        console.log(this.state.upvoteCount)
         axios({
             method: 'post',
             url: 'http://localhost:3000/api/upvote',
@@ -282,9 +272,6 @@ export default class Post extends Component {
             
         })
         .catch((error) => {
-        
-            console.log("THIS IS THE ERROR");
-            console.log(error);
             return;
             
 
@@ -294,9 +281,6 @@ export default class Post extends Component {
 
     
     onSubmitDownVote = (event) => {
-        // alert("YOU DOWNVOTED THE POST");
-        // alert(this.state.downvoteCount);
-        console.log(this.state.downvoteCount)
         axios({
             method: 'post',
             url: 'http://localhost:3000/api/downvote',
@@ -322,9 +306,6 @@ export default class Post extends Component {
         
         })
         .catch((error) => {
-        
-            //console.log("THIS IS THE ERROR");
-            //console.log(error);
             return;
             
 
@@ -390,7 +371,6 @@ export default class Post extends Component {
     }
 
     handleButton = (re) => {
-        console.log(re);
         this.setState({
             uniquecourse: true,
             coursename: this.state.rawTags[re]
@@ -408,6 +388,7 @@ export default class Post extends Component {
     renderContent = () => {
 
         let content = <p>error</p>;
+        
 
         switch (this.state.type) {
             case "text":
@@ -415,8 +396,23 @@ export default class Post extends Component {
                 break;
             case "image":
                 content = <img src={this.state.content} alt={"The Image URL is invalid"} width="600"/>
-                break;            
-        
+                break;
+            case "link":
+                if (validUrl.isUri(this.state.content)){
+                    content =  <ReactTinyLink
+                    cardSize="small"
+                    showGraphic={true}
+                    maxLine={2}
+                    minLine={1}
+                    url={this.state.content}
+                  /> 
+                    
+                } else {
+                    content = "Not a valid URL"
+                }
+              
+                          
+               break;
             case "calendar":
                     var content2 = []
                     for (let i = 0; i < this.state.tags.length; i++) {
@@ -466,28 +462,24 @@ export default class Post extends Component {
 
 
     render() {
-        console.log(this.state.tags.toString)
         var url = `universitydiscourse.herokuapp.com/post/${this.state.id}`
         if (this.state.isEditPost === true) {
-            console.log(this.state.isEditPost)
 
             return <Redirect exact from="/" push to={{
                 pathname: "/editpost",
                 state: { 
-                    title: this.state.title,
-                    content: this.state.content,
-                    user: this.state.user,
-                    time: this.state.time,
-                    tags: this.state.tags,
-                    //comments: this.state.comments,
-                    type: this.state.type,
-                    //count: this.state.count,
-                    mode: this.state.mode
+                //    title: this.state.title,
+                //    content: this.state.content,
+                //    user: this.state.user,
+                //    time: this.state.time,
+                //    tags: this.state.tags,
+                   id: this.state.id,
+                   type: this.state.type,
+                   mode: this.state.mode
                 }
             }}/>;
         }
         if (this.state.isRedirectPost === true) {
-            console.log(this.state.id);
 
             return <Redirect exact from="/" push to={{
                 pathname: "/post/" + `${this.state.id}`,
