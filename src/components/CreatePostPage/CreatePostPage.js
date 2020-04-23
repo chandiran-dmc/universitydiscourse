@@ -57,7 +57,6 @@ export default class CreatePostPage extends Component {
 
     constructor(props) {
         super(props);
-        console.log(localStorage.getItem("username"))
         this.state = {
             id: this.props.location.state.id,
             type: this.props.location.state.type,
@@ -82,11 +81,10 @@ export default class CreatePostPage extends Component {
             //reportArraylimit: this.props.location.state.reportArraylimit,
 
             //CHANGE THIS
-            //followTags: (localStorage.getItem("tags") === undefined)?localStorage.getItem("tags").split(","):"",
-            followTags: localStorage.getItem("tags").split(","),
+            followTags: (localStorage.getItem("tags") !== null) ? localStorage.getItem("tags").split(",") : [],
+            //followTags: localStorage.getItem("tags").split(","),
             all: []
         };
-        console.log(this.state.mode)
         if(this.state.mode == "editpost") {
             console.log(this.state.mode)
             axios({
@@ -455,13 +453,13 @@ export default class CreatePostPage extends Component {
                                         Post Title
                                     </h3>
                                     <br/>
-                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} value={this.state.title}/>
+                                    <TextField data-testid="post-title" id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} value={this.state.title}/>
                                     <br />
                                     <h3 style={{ color: '#023373' }}>
                                         Post Content
                                     </h3>
                                     
-                                    <TextField id="filled-basic" label="Post Content" variant="filled" onChange={this.handleChangeContent} value={this.state.content}/>
+                                    <TextField data-testid="post-content" id="filled-basic" label="Post Content" variant="filled" onChange={this.handleChangeContent} value={this.state.content}/>
                                     <h3 style={{ color: '#023373' }}>
                                         Tags
                                     </h3>
@@ -471,7 +469,7 @@ export default class CreatePostPage extends Component {
                                             multiple
                                             id="tags-standard"
                                             options={this.state.followTags}
-
+                                            data-testid="post-tags"
                                             onChange={this.handleChangeTags}
                                             freeSolo
                                             value={this.state.tags}
@@ -493,6 +491,7 @@ export default class CreatePostPage extends Component {
                                         justify="center"
                                         alignItems="center" >
                                             <Button
+                                                data-testid="post-submit"
                                                 color="secondary"
                                                 variant="contained"
                                                 style={{ justifyContent: 'center' }}
@@ -535,13 +534,13 @@ export default class CreatePostPage extends Component {
                                         Post Title
                                     </h3>
                                     <br/>
-                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle}  value={this.state.title}/>
+                                    <TextField data-testid="post-title" id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle}  value={this.state.title}/>
                                     <br />
                                     <h3 style={{ color: '#023373' }}>
                                         Post Image URL
                                     </h3>
                                     <br />
-                                    <TextField id="filled-basic" label="Post Image URL" variant="filled" onChange={this.handleChangeContent}  value={this.state.content}/>
+                                    <TextField data-testid="post-image" id="filled-basic" label="Post Image URL" variant="filled" onChange={this.handleChangeContent}  value={this.state.content}/>
                                     <br />
                                     <h3 style={{ color: '#023373' }}>
                                         Tags
@@ -552,7 +551,7 @@ export default class CreatePostPage extends Component {
                                             multiple
                                             id="tags-standard"
                                             options={this.state.followTags}
-
+                                            data-testid="post-tags"
                                             onChange={this.handleChangeTags}
                                             freeSolo
                                             value={this.state.tags}
@@ -578,6 +577,7 @@ export default class CreatePostPage extends Component {
                                                 variant="contained"
                                                 style={{ justifyContent: 'center' }}
                                                 disableElevation
+                                                data-testid="post-submit"
                                                 type="button"
                                                 onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
                                                 MAKE POST
@@ -615,13 +615,13 @@ export default class CreatePostPage extends Component {
                                         Course Name
                                     </h3>
                                     <br/>
-                                    <TextField id="filled-basic" label="" variant="filled" size="medium" onChange={this.handleChangeTitle}  value={this.state.title}/>
+                                    <TextField data-testid="post-coursename" id="filled-basic" label="" variant="filled" size="medium" onChange={this.handleChangeTitle}  value={this.state.title}/>
                                     <br />
                                     <h3 style={{ color: '#023373' }}>
                                         Score (in percentage)
                                     </h3>
                                     <br />
-                                    <TextField id="filled-basic" label="" variant="outlined" onChange={this.handleChangeContent}  value={this.state.content}
+                                    <TextField data-testid="post-coursescore" id="filled-basic" label="" variant="outlined" onChange={this.handleChangeContent}  value={this.state.content}
                                     InputProps={{
                                         startAdornment: <InputAdornment position="start">%</InputAdornment>
                                     }}
@@ -631,13 +631,14 @@ export default class CreatePostPage extends Component {
                                         Grade (A ~ F)
                                     </h3>
                                     <br />
-                                    <TextField id="filled-basic" label="" variant="filled" onChange={this.handleChangeTae} value={this.state.tags.toString()} />
+                                    <TextField data-testid="post-coursegrade" id="filled-basic" label="" variant="filled" onChange={this.handleChangeTae} value={this.state.tags.toString()} />
                                     <Grid
                                         container
                                         direction="row"
                                         justify="center"
                                         alignItems="center" >
                                             <Button
+                                                data-testid="post-submit"
                                                 color="secondary"
                                                 variant="contained"
                                                 style={{ justifyContent: 'center' }}
@@ -678,31 +679,31 @@ export default class CreatePostPage extends Component {
                                         Course Name
                                     </h3>
                                     <br/>
-                                    <TextField id="filled-basic" label="" variant="filled" size="medium" onChange={this.handleChangeTitle}  value={this.state.title}/>
+                                    <TextField data-testid="post-coursename" id="filled-basic" label="" variant="filled" size="medium" onChange={this.handleChangeTitle}  value={this.state.title}/>
                                     <br />
                                     <h3 style={{ color: '#023373' }}>
                                         Curve (lower bound)
                                     </h3>
                                     <br />
-                                    <TextField name="bound_A" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
+                                    <TextField data-testid="post-bound-A" name="bound_A" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
                                     InputProps={{
                                         startAdornment: <InputAdornment position="start">A%</InputAdornment>
                                     }}
                                     />
                                     <br />
-                                    <TextField name="bound_B" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
+                                    <TextField data-testid="post-bound-B" name="bound_B" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
                                     InputProps={{
                                         startAdornment: <InputAdornment position="start">B%</InputAdornment>
                                     }}
                                     />
                                     <br />
-                                    <TextField name="bound_C" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
+                                    <TextField data-testid="post-bound-C" name="bound_C" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
                                     InputProps={{
                                         startAdornment: <InputAdornment position="start">C%</InputAdornment>
                                     }}
                                     />
                                     <br />
-                                    <TextField name="bound_D" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
+                                    <TextField data-testid="post-bound-D" name="bound_D" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
                                     InputProps={{
                                         startAdornment: <InputAdornment position="start">D%</InputAdornment>
                                     }}
@@ -715,6 +716,7 @@ export default class CreatePostPage extends Component {
                                             <Button
                                                 color="secondary"
                                                 variant="contained"
+                                                data-testid="post-submit"
                                                 style={{ justifyContent: 'center' }}
                                                 disableElevation
                                                 type="button"
@@ -906,8 +908,6 @@ export default class CreatePostPage extends Component {
     }
 
     render() {
-
-        console.log(this.state.followTags)
 
         if (this.state.isRedirect) {
             return <Redirect exact from="/createpost" push to={{
