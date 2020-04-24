@@ -19,9 +19,6 @@ import { Rating } from '@material-ui/lab';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import Doc from './Document'
-import sample from './sample.pdf'
-import { Page } from 'react-pdf';
-import { Document } from 'react-pdf/dist/entry.webpack';
 // const axios = require('axios');
 import CourseRatings from './CourseRatings';
 
@@ -98,7 +95,8 @@ export default class CoursePage extends Component {
 
     onClickHandler = () => {
         const data = new FormData() 	       
-        data.append('doc', this.state.selectedFile)	     
+        data.append('doc', this.state.selectedFile)	
+    
         axios.post("http://localhost:3000/api-document/document-upload", data, {	        
         }).then(res => {	     
             console.log(res)	       

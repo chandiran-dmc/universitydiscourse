@@ -18,7 +18,7 @@ export default class Footer extends Component {
 
      render() {
         return (
-            <div className="footer">
+            <div className="Footer">
             {/* <Box
                 boxShadow={2}
                 margin={1}
@@ -29,7 +29,8 @@ export default class Footer extends Component {
                     direction="row"
                     justify="space-around"
                     alignItems="flex-end"
-                    spacing={1}>
+                    spacing={1}
+                    >
                     <Grid item>
                         <Grid
                         container
@@ -60,7 +61,7 @@ export default class Footer extends Component {
                     <h3 style={{ color: '#023373' }}>Contact</h3>
                     <h3 style={{ color: '#023373' }}>Explore Links</h3>
                     </Grid>
-                    <div className="lowerFooter2" />        
+                    {/* <div className="lowerFooter2" />         */}
 
                 </Grid>
             {/* </Box> */}

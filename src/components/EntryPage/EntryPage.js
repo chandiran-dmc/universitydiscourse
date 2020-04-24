@@ -71,6 +71,7 @@ export default class EntryPage extends Component {
 
         return (
             <div>
+                <div className = "lowerFooter">
                 <TopBar/>
                 
                 {/* <Grid container 
@@ -177,6 +178,7 @@ export default class EntryPage extends Component {
                             </form>
                     </Grid>
                 </Grid>
+                </div>
                 <Footer />
             </div>
         );

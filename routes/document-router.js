@@ -37,6 +37,7 @@ router.get('/download', function (req, res, next) {
 });
 
 router.post('/document-upload', upload.single('doc'), (req, res, next) => {
+    fileNameUnique  = Math.random()*100000;
     console.log(req.file.originalname);
     const document = new Document({
         _id: new mongoose.Types.ObjectId(),

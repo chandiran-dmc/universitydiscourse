@@ -15,11 +15,10 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import CalIcon from '../../customeIcons/calIcon';
 import ImageIcon from '../../customeIcons/imageIcon';
-import DocIcon from '../../customeIcons/docIcon';
 import LinkIcon from '../../customeIcons/linkIcon';
 import TextIcon from '../../customeIcons/textIcon';
 import GradeIcon from '../../customeIcons/gradeIcon';
-import { Button, Box, ThemeProvider, Grid, Typography } from '@material-ui/core';
+import { Button, Box, ThemeProvider, Container, Grid, Typography } from '@material-ui/core';
 
 export default class ActionBar extends Component {
 
@@ -59,13 +58,7 @@ export default class ActionBar extends Component {
                     margin={1}
                     padding={2}
                     bgcolor="post_primary.main" >
-                    <Grid
-                        container
-                        direction="row"
-                        wrap="wrap" 
-                        justify="space-evenly"
-                        alignItems="center"
-                        spacing={1}>
+                    <Grid>
                         <Grid item >
                             <Typography variant="h6">
                                 Create A Post : 
@@ -91,16 +84,6 @@ export default class ActionBar extends Component {
                                 IMAGE
                             </Button>
                         </Grid>
-                        {/* <Grid item >
-                            <Button 
-                                color="secondary"
-                                variant="contained"
-                                startIcon={<DocIcon />}
-                                type="button"
-                                onClick={() => {this.handleCreatePost("document")}} >
-                                DOCUMENT
-                            </Button>
-                        </Grid> */}
                         <Grid item >
                             <Button 
                                 color="primary"
