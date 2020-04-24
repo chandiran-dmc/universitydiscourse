@@ -63,8 +63,12 @@ export default class Doc extends Component {
     render() {	 
         const { pageNumber, numPages } = this.state;
         return ( 
-            <div>   
-            <Button onClick={this.handleClickOpen} ><h3>{this.state.name}</h3></Button> 
+            <Grid item>
+            <Button onClick={this.handleClickOpen} style={{width: "100%"}} >
+                <h3>
+                    {this.state.name}
+                </h3>
+            </Button> 
             <Dialog fullScreen open={this.state.open} onClose={this.handleClose} TransitionComponent={Transition}>
                 <AppBar className={useStyles.appBar}>
                 <Toolbar>
@@ -103,6 +107,6 @@ export default class Doc extends Component {
                 </List>
                 </Grid>
           </Dialog>
-          </div>
+          </Grid>
         )}
 }
