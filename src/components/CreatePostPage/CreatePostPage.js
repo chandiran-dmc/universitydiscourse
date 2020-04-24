@@ -15,13 +15,11 @@
 
 import React, { Component } from 'react'
 import TopBar from '../TopBar/TopBar';
-import Footer from '../Footer/Footer';
 import './CreatePostPage.css'
 import { Button, Box, Grid, TextField, InputAdornment } from '@material-ui/core';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { Redirect } from 'react-router-dom';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-import FooterPage from './FooterPage'
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -447,7 +445,6 @@ export default class CreatePostPage extends Component {
             <div>
                 {this.renderAlert()}
                 <TopBar />
-                <Footer />
 
                 <div className="CreatePostPage">
                     <form
@@ -521,7 +518,6 @@ export default class CreatePostPage extends Component {
                     </form>
                 </div>
                 
-                {/* <FooterPage /> */}
             </div>
         );
     }
@@ -531,7 +527,6 @@ export default class CreatePostPage extends Component {
             <div>
                 {this.renderAlert()}
                 <TopBar />
-                <Footer />
 
                 <div className="CreatePostPage">
                     <form
@@ -757,7 +752,6 @@ export default class CreatePostPage extends Component {
             <div>
                 {this.renderAlert()}
                 <TopBar />
-                <Footer />
 
                 <div className="CreatePostPage">
                     <form
@@ -837,7 +831,6 @@ export default class CreatePostPage extends Component {
         return (
             <div>
                 <TopBar />
-                <Footer />
 
                 <div className="CreatePostPage">
                     <form
