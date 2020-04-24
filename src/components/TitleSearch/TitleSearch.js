@@ -89,9 +89,9 @@ export default class TagSearch extends Component {
             return
         }
         // Send request to the database
-        this.setState({
-            check: false
-        })
+        // this.setState({
+        //     check: false
+        // })
         axios({
                 method: 'get',
                 url: 'http://localhost:3000/api/getposts'
@@ -113,7 +113,8 @@ export default class TagSearch extends Component {
                 });
                 
                 this.setState({
-                    filteredPosts: filteredPosts
+                    filteredPosts: filteredPosts,
+                    check: false
                 });
                 
         })
