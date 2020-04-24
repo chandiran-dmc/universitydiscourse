@@ -291,7 +291,7 @@ export default class Comment extends Component {
                         </Grid>
                         <Grid container justify="flex-end">
                             <IconButton type="button" onClick={() => (localStorage.getItem("username") === this.state.user)?this.setState({editDialog: true}):this.renderSet("You cannot edit this comment", "error")}>
-                                <EditIcon />
+                            <EditIcon style={{ color: grey[900] }}/>
                             </IconButton>
                         </Grid>
                     </Grid>

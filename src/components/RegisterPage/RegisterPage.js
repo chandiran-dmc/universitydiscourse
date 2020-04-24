@@ -254,7 +254,7 @@ export default class RegisterPage extends Component {
 
 
             </Grid>            
-            <Footer />
+            {/* <Footer /> */}
             </form>
             
         )

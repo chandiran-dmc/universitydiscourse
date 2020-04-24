@@ -225,7 +225,7 @@ export default class TagSearch extends Component {
                         justify="center"
                         alignItems="center"
                         direction="row">
-                            {this.state.tagsDisplay}
+                            {this.state.tags.includes("default")? "":this.state.tagsDisplay}
                         
 
 
@@ -245,9 +245,9 @@ export default class TagSearch extends Component {
                               <Grid item>
                               </Grid>
                               <Grid item>
-                                  {this.state.filteredPosts.length != 0 ? this.state.filteredPosts : this.state.check ? <p> </p>: <h3 style={{ color: '#F2B705' }}>
+                                  {this.state.filteredPosts.length != 0 ? this.state.filteredPosts : this.state.check ? <p> </p>: setTimeout(<h3 style={{ color: '#F2B705' }}>
                                   No posts matching the current search. Add tags or search for different ones.
-                                    </h3>}
+                                    </h3>, 5000)}
                               </Grid>
                           </Grid>
                       </Grid>
