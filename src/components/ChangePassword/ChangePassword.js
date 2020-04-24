@@ -25,13 +25,29 @@ import {ThemeProvider} from '@material-ui/styles';
 import {Grid} from '@material-ui/core'
 const axios = require('axios');
 
-const theme = createMuiTheme ({
+const theme = createMuiTheme({
     palette: {
-        primary: {
-            main:'#F2B705',
-        }
-    }
-});
+      background: {
+        default: "#00305A",
+      },
+      primary: {
+        main: "#F2B705",
+      },
+      secondary: {
+        main: "#F2C94C",
+      },
+      post_primary: {
+        main: "#F2F2F2",
+      },
+      post_secondary: {
+        main: "#757575",
+      },
+      text: {
+        main: "#000000",
+        sub: "#9B9B9B",
+      },
+    },
+  });
 
 export default class ChangePassword extends Component {
 
@@ -122,6 +138,7 @@ export default class ChangePassword extends Component {
         }
 
         return (
+            <ThemeProvider theme={theme}>
             
             
             <div>
@@ -193,9 +210,10 @@ export default class ChangePassword extends Component {
                         </ThemeProvider>
                     </form>
                 </Grid>
-                <Footer />
+               
             </Grid>
             </div>
+            </ThemeProvider>
         );
     }
 }

@@ -147,7 +147,8 @@ export default class EntryPage extends Component {
                         <form onSubmit={this.onSubmit1}>
                             <ThemeProvider theme={theme}>
                             <Button 
-                                className  = "LOGINButtonTwo" 
+                                className  = "LOGINButtonTwo"
+                                data-testid="Login-button" 
                                 variant = "contained"
                                 color = "primary" 
                                 type = "submit"
@@ -164,6 +165,7 @@ export default class EntryPage extends Component {
                         <form onSubmit={this.onSubmit2}>
                             <ThemeProvider theme={theme}>
                             <Button 
+                                data-testid="Register-button"
                                 className  = "LOGINButtonTwo" 
                                 variant = "contained"
                                 color = "primary" 
