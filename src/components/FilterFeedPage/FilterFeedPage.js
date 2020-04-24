@@ -8,6 +8,7 @@ import TagButton from './TagButton';
 import SearchIcon from '@material-ui/icons/Search';
 import SideBar from '../SideBar';
 import {ThemeProvider} from '@material-ui/styles'
+import ResponsiveDrawer from '../MainFeedPage/Drawer';
 
 
 
@@ -20,6 +21,9 @@ const axios = require('axios');
 
 const theme = createMuiTheme({
     palette: {
+        background: {
+            default: "#00305A"
+        },
         primary: {
             main: "#F2B705"
         },
@@ -166,10 +170,10 @@ export default class FilterFeedPage extends Component {
         console.log(this.state.filteredPosts)
         console.log(this.state.check)
       return (
-          
+        <ThemeProvider theme={theme}>
           <div className="MainFeedPage">
             {this.renderAlert()}
-            <SideBar />
+            {/* <SideBar /> */}
 
               <Grid 
                   container
@@ -177,13 +181,15 @@ export default class FilterFeedPage extends Component {
                   direction="column"
                   justify="space-around"
                   alignItems="center" >
-                      <Grid item>
-                      <h3 style={{ color: '#023373' }}>
+                    <Grid item>
+                        <ResponsiveDrawer />
+                    </Grid>
+                    <Grid item>
+                       <h3 style={{ color: '#F2B705' }}>
                                         Filter based on Tags
                         </h3>
-                    
-                      </Grid>
-                   <Grid item >
+                    </Grid>
+                    <Grid item >
                         <div style={{ width: 300 }}>
                             <Autocomplete
                                 multiple
@@ -249,7 +255,7 @@ export default class FilterFeedPage extends Component {
                               <Grid item>
                               </Grid>
                               <Grid item>
-                                  {this.state.filteredPosts.length != 0 ? this.state.filteredPosts : this.state.check ? <p> </p>: <h3 style={{ color: '#023373' }}>
+                                  {this.state.filteredPosts.length != 0 ? this.state.filteredPosts : this.state.check ? <p> </p>: <h3 style={{ color: '#F2B705' }}>
                                   No posts matching the current search. Add tags or search for different ones
                                     </h3>}
                               </Grid>
@@ -258,6 +264,7 @@ export default class FilterFeedPage extends Component {
                   </Grid>
               </Grid>                
           </div>
+          </ ThemeProvider >
       );
     }
 }

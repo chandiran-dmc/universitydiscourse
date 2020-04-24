@@ -22,6 +22,7 @@ import TextField from '@material-ui/core/TextField';
 import { Redirect } from 'react-router-dom';
 import {createMuiTheme } from '@material-ui/core/styles';
 import {ThemeProvider} from '@material-ui/styles';
+import {Grid} from '@material-ui/core'
 
 const axios = require('axios');
 
@@ -118,75 +119,65 @@ export default class ChangeEmail extends Component {
         }
 
         return (
-            <div>
-                <Footer />
+        
+          <div>
                 <TopBar/>
-                <head>
-                   <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
-                   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-                   <meta name="HandheldFriendly" content="true" />
-                </head>
-                <div className="LoginPage">                    
-                    <div class="grid-container1" >
-                    <div class="grid-item1">
-                        <img 
-                            className="LoginLogo"
-                            src={logo}
-                            alt="logo" /> 
-                        <br />
-                    </div>
-                    <div class="grid-item2">
-                        <img 
-                            className="LogoName2"
-                            src={logoName}
-                            alt="logoName"/>
-                    </div>
-                    </div>
-                    <div className="gridcontainerfinal3">
-                    <h1 className="ChangeEmailText">Change Email</h1>
-                    <div class="grid-containerChange" >
-                        <div class="grid-item">
-                            <TextField
-                                required
-                                id="filled-required"
-                                label="Old-email"
-                                variant="filled"
-                                name = "email"
-                                value={this.state.oldemail}
-                                onChange={this.handleOldEmailChange}
-                                    />
-                        </div>
-                        <br />
-                        <div class="grid-item">
-                            <TextField
-                                required
-                                id="filled-required"
-                                label="New-email"
-                                variant="filled"
-                                name = "email"
-                                value={this.state.newemail}
-                                onChange={this.handleNewEmailChange} 
-                                />
-                        </div>
-                        <br />
-                        <div class="grid-item">
-                        <form onSubmit={this.onSubmit}>
-                            <ThemeProvider theme={theme}>
-                            <Button 
-                                className  = "Done" 
-                                variant = "contained"
-                                color = "primary" 
-                                type = "submit"
-                                >
-                                Done
-                            </Button> 
-                            </ThemeProvider>
-                        </form>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
-        );
+
+            <Grid
+                container
+                direction="column"
+                justify="space-evenly"
+                alignItems="center"
+                spacing={1}>
+                <Grid item>
+                    <br />
+                    <img 
+                    width = {200}
+                    src={logo}
+                    alt="logo" />
+                </Grid>
+                <Grid item>
+                    <h2 style={{ color: '#023373' }}>Change Email</h2>
+                </Grid>
+                <Grid item>
+                    <TextField
+                        required
+                        id="filled-required"
+                        label="Old-email"
+                        variant="filled"
+                        name = "email"
+                        value={this.state.oldemail}
+                        onChange={this.handleOldEmailChange}
+                    />
+                </Grid>
+                <Grid item>
+                    <TextField
+                        required
+                        id="filled-required"
+                        label="New-email"
+                        variant="filled"
+                        name = "email"
+                        value={this.state.newemail}
+                        onChange={this.handleNewEmailChange} 
+                    />
+                </Grid>
+                <Grid item>
+                    <br />
+                    <form onSubmit={this.onSubmit}>
+                        <ThemeProvider theme={theme}>
+                        <Button 
+                            className  = "Done" 
+                            variant = "contained"
+                            color = "primary" 
+                            type = "submit"
+                            >
+                        Done
+                        </Button> 
+                        </ThemeProvider>
+                    </form>
+                </Grid>
+            </Grid>
+            </ div>
+         );
     }
 }

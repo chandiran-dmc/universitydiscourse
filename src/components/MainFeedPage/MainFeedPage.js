@@ -5,13 +5,14 @@ import { Redirect } from "react-router-dom";
 import ActionBar from "./ActionBar";
 import Post from "./../Post";
 import SideBar from "../SideBar";
-import { Grid, createMuiTheme, Button } from "@material-ui/core";
+import { Grid, createMuiTheme, Button, Drawer } from "@material-ui/core";
 import "./MainFeedPage.css";
 import Snackbar from "@material-ui/core/Snackbar";
 import MuiAlert from "@material-ui/lab/Alert";
 import ButtonAppBar from "./AppBar";
 import { ThemeProvider } from "@material-ui/styles";
 import ResponsiveDrawer from "./Drawer";
+// import ResponsiveDrawer from "./Drawer2";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import sample_tags from "../../mock_data/AllTags.json";
 
@@ -189,9 +190,13 @@ export default class MainFeedPage extends Component {
     });
 }
 
+
+
+
   componentDidMount() {
     this.getPosts();
     this.getUserName();
+    // setInterval(ResponsiveDrawer.forceUpdate(), 1000);
   }
 
   render() {
@@ -278,7 +283,7 @@ export default class MainFeedPage extends Component {
                     spacing={2}
                     direction="row"
                   >
-                    <Grid item>
+                    {/* <Grid item>
                       <form onSubmit={this.onSubmit2}>
                         <ThemeProvider theme={theme}>
                           <Button
@@ -305,7 +310,7 @@ export default class MainFeedPage extends Component {
                           </Button>
                         </ThemeProvider>
                       </form>
-                    </Grid>
+                    </Grid> */}
                     {/* <Grid item>
                     <form onSubmit={this.onSubmit4}>
                     <ThemeProvider theme={theme}>
@@ -320,7 +325,7 @@ export default class MainFeedPage extends Component {
                     </ThemeProvider>
                     </form>
                     </Grid> */}
-                    <Grid item>
+                    {/* <Grid item>
                       <Button
                         className="TopFeedPageButton"
                         color="secondary"
@@ -345,7 +350,7 @@ export default class MainFeedPage extends Component {
                       >
                         Search based on Title
                       </Button>
-                    </Grid>
+                    </Grid> */}
                   </Grid>
                 </Grid>
 

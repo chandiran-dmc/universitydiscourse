@@ -24,6 +24,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FollowingTags from '../SideBar/FollowingTags';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import SimpleDialogDemo from './SimpleDialog'
+
 
 import { Grid } from '@material-ui/core';
 
@@ -80,6 +83,10 @@ function ResponsiveDrawer(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  const handleUserToggle = () => {
+    setMobileOpen(!mobileOpen);
+  };
+
   const handleRequest_password = () => {
     setPath("/changepassword");
     setisRedirect(!isRedirect);
@@ -99,13 +106,6 @@ const handleRequest_logout = () => {
 
   setPath("/");
   setisRedirect(!isRedirect);
-
-  // this.setState({
-  //     username: this.state.username,
-  //     isRedirect: true,
-  //     to: "/",
-  //     tags: this.state.tags
-  // });
 }
 
 const handleRequest_remove = async () => {
@@ -149,7 +149,7 @@ const handleRequest_remove = async () => {
 }
 
 const getFollowingTags = () => {
-        
+        //console.log(props);
     // Filter the posts based on the tags the user follows
     if (localStorage.getItem("tags") != null) {
         let tagsList =  localStorage.getItem("tags").split(",");
@@ -158,9 +158,11 @@ const getFollowingTags = () => {
         // });
         
         setTags(<FollowingTags tags={tagsList}/>);
-    } 
+    }
+    // setInterval(getFollowingTags, 10000); 
 }
 
+// setTimeout(getFollowingTags, 1000);
 
 if (isRedirect) {
   return <Redirect exact from="/mp" push to={{
@@ -188,7 +190,7 @@ if (isRedirect) {
           <h3 style={{ color: '#023373' }}>Remove Account</h3>
       </ListItem>
       <ListItem button key={"text"} onClick={handleRequest_logout}>
-            <ListItemIcon><DeleteIcon color="primary"/></ListItemIcon>
+            <ListItemIcon><ExitToAppIcon color="primary"/></ListItemIcon>
           <h3 style={{ color: '#023373' }}>Log Out</h3>
       </ListItem>
       {/* <Button onClick={handleRequest_email}><h3 style={{ color: '#023373' }}>Change Email</h3></Button> */}
@@ -202,9 +204,6 @@ if (isRedirect) {
       </ListItem>
       {tags}
       <Divider />
-
-
-
     </div>
   );
 
@@ -231,9 +230,18 @@ if (isRedirect) {
                                     </h3>
                                     </Typography>
           <div className = {classes.grow} />
+
+          <div className = {classes.logoutButton}>
+          <h3 style={{ color: '#023373' }}>{localStorage.getItem("username")}</h3>
+          </div>
+
+          <div className = {classes.logoutButton}>
+            <SimpleDialogDemo />
+          </div>
+
           <div className = {classes.logoutButton}>
           <TemporaryDrawer/>
-          </div>
+          </div>          
 
         </Toolbar>
       </AppBar>

@@ -4,7 +4,8 @@ import { Grid, createMuiTheme, Button, TextField, Typography } from '@material-u
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import SearchIcon from '@material-ui/icons/Search';
-
+import ResponsiveDrawer from '../MainFeedPage/Drawer';
+import {ThemeProvider} from '@material-ui/styles'
 
 
 function Alert(props) {
@@ -14,6 +15,9 @@ const axios = require('axios');
 
 const theme = createMuiTheme({
     palette: {
+        background: {
+            default: "#00305A"
+        },
         primary: {
             main: "#F2B705"
         },
@@ -121,19 +125,24 @@ export default class TagSearch extends Component {
 
     render() {
       return (
-          
+        <ThemeProvider theme={theme}>
           <div className="MainFeedPage">
             {this.renderAlert()}
 
-              <Grid 
-                  container
-                  spacing={2}
-                  direction="column"
-                  justify="space-around"
-                  alignItems="center" >
-                      <Grid item>
-                            <Typography variant="h6">Search for Title</Typography>
-                      </Grid>
+                <Grid 
+                    container
+                    spacing={2}
+                    direction="column"
+                    justify="space-around"
+                    alignItems="center" >
+                    <Grid item>
+                        <ResponsiveDrawer />
+                    </Grid>
+                    <Grid item>
+                       <h3 style={{ color: '#F2B705' }}>
+                                        Search based on Title
+                        </h3>
+                    </Grid>
                    <Grid item >
                         <TextField data-testid="title-search" id="filled-basic" label="Search Title" variant="filled" size="medium" onChange={this.handleChangeTitle} defaultValue={this.state.title}/>                      
                   </Grid> 
@@ -163,13 +172,16 @@ export default class TagSearch extends Component {
                               <Grid item>
                               </Grid>
                               <Grid item>
-                                  {this.state.filteredPosts.length != 0 ? this.state.filteredPosts : this.state.check ? <p> </p>: <p>No posts matching the current search.</p>}
+                                  {this.state.filteredPosts.length != 0 ? this.state.filteredPosts : this.state.check ? <p> </p>: <h3 style={{ color: '#F2B705' }}>
+                                  No posts matching the current search. Search for different title.
+                                    </h3>}
                               </Grid>
                           </Grid>
                       </Grid>
                   </Grid>
               </Grid>                
           </div>
+          </ThemeProvider>
       );
     }
 }

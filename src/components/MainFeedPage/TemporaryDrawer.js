@@ -8,8 +8,12 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import {Redirect} from 'react-router-dom';
+
+import TrendingUpIcon from '@material-ui/icons/TrendingUp';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import SearchIcon from '@material-ui/icons/Search';
+import FindInPageIcon from '@material-ui/icons/FindInPage';
 
 const useStyles = makeStyles({
   list: {
@@ -27,7 +31,10 @@ export default function TemporaryDrawer() {
     left: false,
     bottom: false,
     right: false,
+    
   });
+  const [isRedirect, setisRedirect] = React.useState(false);
+  const [path, setPath] = React.useState("");
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -36,6 +43,31 @@ export default function TemporaryDrawer() {
 
     setState({ ...state, [anchor]: open });
   };
+
+  const onSubmit2 = (event) => {
+    setPath("/tfp");
+    setisRedirect(!isRedirect);
+} 
+ const onSubmit3 = (event) => {
+    setPath("/ffp");
+    setisRedirect(!isRedirect);
+} 
+
+const redirectSearch = (event) => {
+    setPath("/searchtag");
+    setisRedirect(!isRedirect);
+}
+
+const redirectTitleSearch = (event) =>{
+    setPath("/searchtitle");
+    setisRedirect(!isRedirect);
+}
+
+  if (isRedirect) {
+    return <Redirect exact from="/mp" push to={{
+        pathname: path,
+    }}/>;
+}
 
   const list = (anchor) => (
     <div
@@ -47,21 +79,23 @@ export default function TemporaryDrawer() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {['All mail', 'Trash', 'Spam'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        
+         <ListItem button key={"text"} onClick={onSubmit2}>
+            <ListItemIcon><TrendingUpIcon color="primary"/></ListItemIcon>
+          <h3 style={{ color: '#023373' }}>Top Feed Page</h3>
+        </ListItem>
+         <ListItem button key={"text"} onClick={onSubmit3}>
+            <ListItemIcon><FilterListIcon color="primary"/></ListItemIcon>
+          <h3 style={{ color: '#023373' }}>Filter Page</h3>
+        </ListItem>
+         <ListItem button key={"text"} onClick={redirectSearch}>
+            <ListItemIcon><SearchIcon color="primary"/></ListItemIcon>
+          <h3 style={{ color: '#023373' }}>Search based on Tag</h3>
+        </ListItem>
+        <ListItem button key={"text"} onClick={redirectTitleSearch}>
+            <ListItemIcon><FindInPageIcon color="primary"/></ListItemIcon>
+          <h3 style={{ color: '#023373' }}>Search based on Title</h3>
+        </ListItem> 
       </List>
     </div>
   );
@@ -70,7 +104,7 @@ export default function TemporaryDrawer() {
     <div>
       {['right'].map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
+          <Button onClick={toggleDrawer(anchor, true)}><h3 style={{ color: '#023373' }}>OPTIONS</h3></Button>
           <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
             {list(anchor)}
           </Drawer>

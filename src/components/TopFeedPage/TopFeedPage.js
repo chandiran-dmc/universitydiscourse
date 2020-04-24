@@ -11,7 +11,10 @@ import Button from '@material-ui/core/Button';
 import { Redirect } from 'react-router-dom';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
-import {ThemeProvider} from '@material-ui/styles'
+import {ThemeProvider} from '@material-ui/styles';
+import ResponsiveDrawer from '../MainFeedPage/Drawer';
+
+
 
 
 
@@ -22,6 +25,9 @@ const axios = require('axios');
 
 const theme = createMuiTheme({
     palette: {
+        background: {
+            default: "#00305A"
+        },
         primary: {
             main: "#F2B705"
         },
@@ -40,6 +46,7 @@ const theme = createMuiTheme({
         }
     }
 });
+
 
 export default class TopFeedPage extends Component {
 
@@ -180,55 +187,73 @@ export default class TopFeedPage extends Component {
         
       return (
           
-          <div className="MainFeedPage">
+        <ThemeProvider theme={theme}>
+         {/* <CssBaseline />  */}
+          <div>
+             
             {this.renderAlert()}
-              <SideBar />
-
-              <Grid 
-                  container
-                  spacing={3}
-                  direction="column"
-                  justify="space-around"
-                  alignItems="center" >
-                  <form onSubmit={this.onSubmit2}>
-                    <ThemeProvider theme={theme}>
-                    <Button 
-                        className  = "TopFeedPageButton" 
-                        variant = "contained"
-                        color = "primary" 
-                        type = "submit"
-                        >
-                        Main Feed Page
-                        </Button> 
-                        </ThemeProvider>
-                   </form>
-                  {/* <Grid item >
-                      <TopBar /> 
-                  </Grid> */}
-                  <Grid 
-                      container
-                      wrap="nowrap" 
-                      spacing={3}
-                      direction="row"
-                      justify="center"
-                      alignItems="flex-start" >
-                      <Grid item>
-                          <Grid container
-                              wrap="nowrap"
-                              spacing={2}
-                              direction="column">
+            
+            <Grid 
+                container
+                justify="center"
+                alignItems="center"
+                direction="row">
+                <Grid item>
+                    <ResponsiveDrawer />
+                </Grid>
+                
+                <Grid item>
+                    <Grid container
+                        wrap="nowrap"
+                        spacing={30}
+                        direction="column">
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <Grid item>
+                            <Grid container
+                                //wrap="nowrap"
+                                spacing={2}
+                                direction="row"
+                                justify="center"
+                            >
+                                <Grid item>
+                                    <br/>
+                                <form onSubmit={this.onSubmit2}>
+                                <ThemeProvider theme={theme}>
+                                <Button 
+                                    className  = "TopFeedPageButton" 
+                                    variant = "contained"
+                                    color = "primary" 
+                                    type = "submit"
+                                    >
+                                    Main Feed Page
+                                </Button> 
+                                </ThemeProvider>
+                                </form>
+                                </Grid>
+                            </Grid>    
                         
-                              {/* <Grid item>
-                                  <ActionBar theme={theme}/>
-                              </Grid> */}
-                              <Grid item>
-                                  {this.state.filteredPosts === null ? <p>Fetching data</p> : this.state.filteredPosts}
-                              </Grid>
-                          </Grid>
-                      </Grid>
-                  </Grid>
-              </Grid>                
+                            <Grid item>
+                                <br />
+                                <ActionBar theme={theme}/>
+                            </Grid>
+                        
+                            <Grid item>
+                                {this.state.filteredPosts === null ? <p>Fetching data</p> : this.state.filteredPosts}
+                            </Grid>
+                    
+                        </Grid>
+                    
+                    </Grid>
+            
+                </Grid>   
+
+            </Grid>         
           </div>
+          
+        </ThemeProvider>
       );
     }
 }

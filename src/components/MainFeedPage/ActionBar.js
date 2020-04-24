@@ -19,6 +19,8 @@ import LinkIcon from '../../customeIcons/linkIcon';
 import TextIcon from '../../customeIcons/textIcon';
 import GradeIcon from '../../customeIcons/gradeIcon';
 import { Button, Box, ThemeProvider, Container, Grid, Typography } from '@material-ui/core';
+import Hidden from '@material-ui/core/Hidden';
+import CustomizedMenus from './CustomizedMenus'
 
 export default class ActionBar extends Component {
 
@@ -53,12 +55,14 @@ export default class ActionBar extends Component {
 
         return (
             <ThemeProvider theme={this.state.theme}>
+                <Hidden xsDown implementation="css">
                 <Box 
                     boxShadow={2}
                     margin={1}
                     padding={2}
                     bgcolor="post_primary.main" >
-                    <Grid>
+                    <Grid container direction = "row" spacing = {1} fixed = "true">
+                        
                         <Grid item >
                             <Typography variant="h6">
                                 Create A Post : 
@@ -126,6 +130,12 @@ export default class ActionBar extends Component {
                         </Grid>
                     </Grid>
                 </Box>
+                </Hidden>
+                <Hidden smUp implementation="css">
+                <Grid container direction="row" justify="center">
+                    <CustomizedMenus />
+                    </Grid>
+                </Hidden>
             </ThemeProvider>
         )
     }

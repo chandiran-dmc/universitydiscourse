@@ -104,6 +104,10 @@ export default class FollowingTags extends Component {
         return tags;
     }
 
+    // componentDidMount() {
+    //     setInterval(this.renderTags(), 1000);
+    // }
+
 
     render() {
 
