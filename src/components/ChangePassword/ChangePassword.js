@@ -153,6 +153,7 @@ export default class ChangePassword extends Component {
                             <TextField
                                 required
                                 id="filled-required"
+                                data-testid="Email"
                                 label="Email"
                                 variant="filled"
                                 name = "email"
@@ -165,6 +166,7 @@ export default class ChangePassword extends Component {
                             <TextField
                                     id="filled-password-input"
                                     label="Old-Password"
+                                    data-testid="Old-password"
                                     name = "oldpassword"
                                     value={this.state.oldpassword}
                                     onChange={this.handleOldPasswordChange}
@@ -178,6 +180,7 @@ export default class ChangePassword extends Component {
                             <TextField
                                 id="filled-password-input"
                                 label="New-Password"
+                                data-testid="New-password"
                                 name = "newpassword"
                                 value={this.state.newpassword}
                                 onChange={this.handleNewPasswordChange}
@@ -192,6 +195,7 @@ export default class ChangePassword extends Component {
                             <ThemeProvider theme={theme}>
                             <Button 
                                 className  = "Done" 
+                                data-testid="Done-button"
                                 variant = "contained"
                                 color = "primary" 
                                 type = "submit"
