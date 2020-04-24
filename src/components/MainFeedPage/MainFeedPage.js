@@ -162,8 +162,36 @@ export default class MainFeedPage extends Component {
       });
   };
 
+  getUserName = async () => {
+
+    await axios({
+        method: 'post',
+        url: 'http://localhost:3000/api-user/getuser',
+        data: {
+            email: localStorage.getItem("email")
+        }
+    })
+    .then((response) => {
+        let username = response.data.data.username;
+        localStorage.setItem('username', username);
+
+        this.setState({
+            username: username,
+            isRedirect: false,
+            to: "",
+            tags: this.state.tags
+        });
+        
+    })
+    .catch((error) => {
+        console.error(error);
+        alert('An error occurred');
+    });
+}
+
   componentDidMount() {
     this.getPosts();
+    this.getUserName();
   }
 
   render() {

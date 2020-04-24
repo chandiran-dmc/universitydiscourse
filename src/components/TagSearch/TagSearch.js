@@ -6,6 +6,7 @@ import MuiAlert from '@material-ui/lab/Alert';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import TagButton from './TagButton';
 import SearchIcon from '@material-ui/icons/Search';
+import { wait } from '@testing-library/react';
 
 
 
@@ -120,7 +121,7 @@ export default class TagSearch extends Component {
         })
         this.setState({
             tagsDisplay: tagsDisplay,
-            check: false
+            
         })
 
         // Send request to the database
@@ -147,7 +148,8 @@ export default class TagSearch extends Component {
                 });
                 
                 this.setState({
-                    filteredPosts: filteredPosts
+                    filteredPosts: filteredPosts,
+                    check: false
                 });
                 
         })
@@ -157,9 +159,10 @@ export default class TagSearch extends Component {
             });
     }
 
-    render() {
+   render() {
         console.log(this.state.filteredPosts)
         console.log(this.state.check)
+        
       return (
           
           <div className="MainFeedPage">

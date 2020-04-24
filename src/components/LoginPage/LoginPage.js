@@ -74,8 +74,8 @@ export default class LoginPage extends Component {
             this.setState({redirect1: true});
         })
         .catch((error) => {
-            console.error(error.response.data.error);
-            alert(error.response.data.error);
+            // console.error(error.response.data.error);
+            // alert(error.response.data.error);
         });
         
     }    
@@ -260,7 +260,6 @@ export default class LoginPage extends Component {
                     </form>
                 </Grid>                
             </Grid>
-            <Footer />
             </div>
         );
     }

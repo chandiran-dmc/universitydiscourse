@@ -125,7 +125,7 @@ export default class FilterFeedPage extends Component {
         })
         this.setState({
             tagsDisplay: tagsDisplay,
-            check: false
+            
         })
 
         // Send request to the database
@@ -152,7 +152,8 @@ export default class FilterFeedPage extends Component {
                 });
                 
                 this.setState({
-                    filteredPosts: filteredPosts
+                    filteredPosts: filteredPosts,
+                    check: false
                 });
                 
         })

@@ -19,9 +19,6 @@ import { Rating } from '@material-ui/lab';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import Doc from './Document'
-import sample from './sample.pdf'
-import { Page } from 'react-pdf';
-import { Document } from 'react-pdf/dist/entry.webpack';
 // const axios = require('axios');
 import CourseRatings from './CourseRatings';
 

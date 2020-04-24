@@ -162,10 +162,10 @@ const getFollowingTags = () => {
 }
 
 
-  if (isRedirect) {
-    return <Redirect exact from="/mp" push to={{
-        pathname: path,
-    }}/>;
+if (isRedirect) {
+  return <Redirect exact from="/mp" push to={{
+      pathname: path,
+  }}/>;
 }
 
   const drawer = (

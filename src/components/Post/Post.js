@@ -242,9 +242,8 @@ export default class Post extends Component {
             
         })
         .catch((error) => {
-            console.log(error);
+            console.error(error);
             alert("THIS IS THE ERROR");
-            return;
         });
         
     }    

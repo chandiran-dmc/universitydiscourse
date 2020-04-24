@@ -16,22 +16,25 @@ img { max-width: 100%; height: auto; }
 
 /* code till here */
 
-/* .lowerFooter {
-    top: 0;
+.lowerFooter {
+    /* top: 0;
     height: 40px;
 
     position: fixed;
     width: 100%;
     overflow: auto;
-    background-color: #023373;
+    background-color: #023373; */
+    padding-bottom: 180px;
+    position: relative;
 }
 
-.Logo2 {
-    max-width: 3%;
+.lowerLowerFooter {
+    /* max-width: 3%;
     margin-top: 20px;
     margin-left: 100px;
-    height: auto;
-} */
+    height: auto; */
+    position: absolute;
+}
 
 .lowerFooter2 {
     bottom: 0;
