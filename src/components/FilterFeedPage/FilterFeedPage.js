@@ -181,16 +181,15 @@ export default class FilterFeedPage extends Component {
                   direction="column"
                   justify="space-around"
                   alignItems="center" >
-                      <Grid item>
-                    <ResponsiveDrawer />
-                </Grid>
-                      <Grid item>
-                      <h3 style={{ color: '#F2B705' }}>
+                    <Grid item>
+                        <ResponsiveDrawer />
+                    </Grid>
+                    <Grid item>
+                       <h3 style={{ color: '#F2B705' }}>
                                         Filter based on Tags
                         </h3>
-                    
-                      </Grid>
-                   <Grid item >
+                    </Grid>
+                    <Grid item >
                         <div style={{ width: 300 }}>
                             <Autocomplete
                                 multiple
