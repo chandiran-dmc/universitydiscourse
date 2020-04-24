@@ -14,6 +14,9 @@ import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import SearchIcon from '@material-ui/icons/Search';
 import FindInPageIcon from '@material-ui/icons/FindInPage';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import HomeIcon from '@material-ui/icons/Home';
+const axios = require('axios');
 
 const useStyles = makeStyles({
   list: {
@@ -35,7 +38,7 @@ export default function TemporaryDrawer() {
   });
   const [isRedirect, setisRedirect] = React.useState(false);
   const [path, setPath] = React.useState("");
-
+  // const [username, setUsername] = React.useState("");
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
@@ -43,6 +46,37 @@ export default function TemporaryDrawer() {
 
     setState({ ...state, [anchor]: open });
   };
+
+
+//   const getUserName = async () => {
+
+//     await axios({
+//         method: 'post',
+//         url: 'http://localhost:3000/api-user/getuser',
+//         data: {
+//             email: localStorage.getItem("email")
+//         }
+//     })
+//     .then((response) => {
+//         let username = response.data.data.username;
+//         localStorage.setItem('username', username);
+//         setUsername(username);
+
+//         this.setState({
+//             username: username,
+//             isRedirect: false,
+//             to: "",
+//             tags: this.state.tags
+//         });
+        
+//     })
+//     .catch((error) => {
+//         console.error(error);
+//         alert('An error occurred');
+//     });
+    
+// }
+
 
   const onSubmit2 = (event) => {
     setPath("/tfp");
@@ -62,6 +96,10 @@ const redirectTitleSearch = (event) =>{
     setPath("/searchtitle");
     setisRedirect(!isRedirect);
 }
+const onSubmit5 = (event) => {
+    setPath("/mp");
+    setisRedirect(!isRedirect);
+} 
 
   if (isRedirect) {
     return <Redirect exact from="/mp" push to={{
@@ -79,7 +117,15 @@ const redirectTitleSearch = (event) =>{
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
+          {/* <ListItem button key={"text"} onClick={onSubmit2}>
+            <ListItemIcon><AccountCircleIcon color="primary"/></ListItemIcon>
+          <h3 style={{ color: '#023373' }}>{username}</h3>
+          </ListItem> */}
         
+        <ListItem button key={"text"} onClick={onSubmit5}>
+            <ListItemIcon><HomeIcon color="primary"/></ListItemIcon>
+          <h3 style={{ color: '#023373' }}>Main Feed Page</h3>
+        </ListItem>
          <ListItem button key={"text"} onClick={onSubmit2}>
             <ListItemIcon><TrendingUpIcon color="primary"/></ListItemIcon>
           <h3 style={{ color: '#023373' }}>Top Feed Page</h3>

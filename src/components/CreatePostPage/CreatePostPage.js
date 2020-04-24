@@ -22,6 +22,7 @@ import { Redirect } from 'react-router-dom';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import ResponsiveDrawer from '../MainFeedPage/Drawer';
 
 
 
@@ -32,21 +33,27 @@ function Alert(props) {
 const axios = require('axios');
 
 const theme = createMuiTheme({
-    palette: {
-        primary: {
-            main: "#F2B705"
-        },
-        secondary: {
-            main: "#F2C94C"
-        },
-        typography: {
-
-            subtitle1: {
-                fontSize: 48
-            }
-
-        }
-    }
+  palette: {
+    background: {
+      default: "#00305A",
+    },
+    primary: {
+      main: "#F2B705",
+    },
+    secondary: {
+      main: "#F2C94C",
+    },
+    post_primary: {
+      main: "#F2F2F2",
+    },
+    post_secondary: {
+      main: "#757575",
+    },
+    text: {
+      main: "#000000",
+      sub: "#9B9B9B",
+    },
+  },
 });
 
 
@@ -225,16 +232,16 @@ export default class CreatePostPage extends Component {
         // Check if input is empty
         if (this.state.type !== "grade" && this.state.type !== "curve") {
             if (this.state.title.length === 0) {
-                //alert('Title cannot be empty');
-                this.renderSet("Title cannot be empty!", "error");
+                alert('Title cannot be empty');
+                //this.renderSet("Title cannot be empty!", "error");
                 return;
             } else if (this.state.content.length === 0) {
-                //alert('Content cannot be empty');
-                this.renderSet("Content cannot be empty!", "error");
+                alert('Content cannot be empty');
+                //this.renderSet("Content cannot be empty!", "error");
                 return;
             } else if (this.state.tags.length === 0 || this.state.tags[0] === "") {
-                //alert('Tags cannot be empty');
-                this.renderSet("Tags cannot be empty!", "error");
+                alert('Tags cannot be empty');
+                //this.renderSet("Tags cannot be empty!", "error");
                 return;
             }
         }
@@ -246,8 +253,8 @@ export default class CreatePostPage extends Component {
             }
         }
         if(count == 0 && (this.state.type !== "grade" && this.state.type !== "curve")) {
-            //alert('You must include atleast one tag that you follow');
-            this.renderSet("You must include atleast one tag that you follow!", "error");
+            alert('You must include atleast one tag that you follow');
+            //this.renderSet("You must include atleast one tag that you follow!", "error");
             return;
         }
         
@@ -442,6 +449,7 @@ export default class CreatePostPage extends Component {
 
     getTextPage = () => {
         return (
+            <ThemeProvider theme={theme}>
             <div>
                 {this.renderAlert()}
                 <TopBar />
@@ -454,76 +462,100 @@ export default class CreatePostPage extends Component {
                             direction="column"
                             justify="center"
                             alignItems="center" >
+                            <Grid item>
+                                <ResponsiveDrawer />
+                            </Grid>
                             <Box
                                 boxShadow={0}
                                 margin={1}
                                 width="50%"
                                 mt={20} >
-                                <ThemeProvider theme={theme}>
-                                    <h3 style={{ color: '#023373' }}>
-                                        Post Title
-                                    </h3>
-                                    <br/>
-                                    <TextField data-testid="post-title" id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} value={this.state.title}/>
-                                    <br />
-                                    <h3 style={{ color: '#023373' }}>
-                                        Post Content
-                                    </h3>
-                                    
-                                    <TextField data-testid="post-content" id="filled-basic" label="Post Content" variant="filled" onChange={this.handleChangeContent} value={this.state.content}/>
-                                    <h3 style={{ color: '#023373' }}>
-                                        Tags
-                                    </h3>
-                    
-                                    <div style={{ width: 300 }}>
-                                        <Autocomplete
-                                            multiple
-                                            id="tags-standard"
-                                            options={this.state.followTags}
-                                            data-testid="post-tags"
-                                            onChange={this.handleChangeTags}
-                                            freeSolo
-                                            value={this.state.tags}
-                                            renderInput={params => (
-                                            <TextField
-                                                {...params}
-                                                variant="standard"
-                                                label="Tags"
-                                                // placeholder="Favorites"
-                                                margin ="normal"
-                                                fullWidth
-                                            />
-                                            )}
-                                        />
-                                    </div>
                                     <Grid
                                         container
-                                        direction="row"
+                                        direction="column"
                                         justify="center"
                                         alignItems="center" >
-                                            <Button
-                                                data-testid="post-submit"
-                                                color="secondary"
-                                                variant="contained"
-                                                style={{ justifyContent: 'center' }}
-                                                disableElevation
-                                                type="button"
-                                                onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
-                                                MAKE POST
-                                            </Button>
-                                    </Grid>
-                                </ThemeProvider>
+                                        <ThemeProvider theme={theme}>
+                                            
+                                                <h3 style={{ color: '#F2B705' }}>
+                                                    Post Title
+                                                </h3>
+                                           
+                                            
+                                            <br/>
+                                                <TextField data-testid="post-title" id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} value={this.state.title}/>
+                                            
+                                            
+                                                <br />
+                                                <h3 style={{ color: '#F2B705' }}>
+                                                    Post Content
+                                                </h3>
+                                            
+                                                <TextField data-testid="post-content" id="filled-basic" label="Post Content" variant="filled" onChange={this.handleChangeContent} value={this.state.content}/>
+                                            
+                                                <h3 style={{ color: '#F2B705' }}>
+                                                    Tags
+                                                </h3>
+                                           
+                            
+                                            <div style={{ width: 300 }}>
+                                                
+                                                <Autocomplete
+                                                    multiple
+                                                    id="tags-standard"
+                                                    options={this.state.followTags}
+                                                    data-testid="post-tags"
+                                                    onChange={this.handleChangeTags}
+                                                    freeSolo
+                                                    value={this.state.tags}
+                                                    renderInput={params => (
+                                                    <TextField
+                                                        {...params}
+                                                        variant="standard"
+                                                        label="Tags"
+                                                        // placeholder="Favorites"
+                                                        margin ="normal"
+                                                        fullWidth
+                                                    />
+                                                    )}
+                                                />
+                                            </div>
+                                            
+                                            <br/>
+                                            <Grid
+                                            
+                                                container
+                                                direction="row"
+                                                justify="center"
+                                                alignItems="center" >
+                                                    <Button
+
+                                                        data-testid="post-submit"
+                                                        color="secondary"
+                                                        variant="contained"
+                                                        style={{ justifyContent: 'center' }}
+                                                        disableElevation
+                                                        type="button"
+                                                        onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
+                                                        MAKE POST
+                                                    </Button>
+                                            </Grid>
+                                            
+                                        </ThemeProvider>
+                                </Grid>
                             </Box>
                         </Grid>
                     </form>
                 </div>
                 
             </div>
+            </ThemeProvider>
         );
     }
 
     getImagePage = () => {
         return (
+            <ThemeProvider theme={theme}>
             <div>
                 {this.renderAlert()}
                 <TopBar />
@@ -536,77 +568,92 @@ export default class CreatePostPage extends Component {
                             direction="column"
                             justify="center"
                             alignItems="center" >
+                                <Grid item>
+                                <ResponsiveDrawer />
+                            </Grid>
                             <Box
                                 boxShadow={30}
                                 margin={1}
                                 width="50%"
                                 mt={20} >
-                                <ThemeProvider theme={theme}>
-                                    <h3 style={{ color: '#023373' }}>
-                                        Post Title
-                                    </h3>
-                                    <br/>
-                                    <TextField data-testid="post-title" id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle}  value={this.state.title}/>
-                                    <br />
-                                    <h3 style={{ color: '#023373' }}>
-                                        Post Image URL
-                                    </h3>
-                                    <br />
-                                    <TextField data-testid="post-image" id="filled-basic" label="Post Image URL" variant="filled" onChange={this.handleChangeContent}  value={this.state.content}/>
-                                    <br />
-                                    <h3 style={{ color: '#023373' }}>
-                                        Tags
-                                    </h3>
-                                    <br />
-                                    <div style={{ width: 300 }}>
-                                        <Autocomplete
-                                            multiple
-                                            id="tags-standard"
-                                            options={this.state.followTags}
-                                            data-testid="post-tags"
-                                            onChange={this.handleChangeTags}
-                                            freeSolo
-                                            value={this.state.tags}
-                                            renderInput={params => (
-                                            <TextField
-                                                {...params}
-                                                variant="standard"
-                                                label="Tags"
-                                                // placeholder="Favorites"
-                                                margin ="normal"
-                                                fullWidth
-                                            />
-                                            )}
-                                        />
-                                    </div>
                                     <Grid
                                         container
-                                        direction="row"
+                                        direction="column"
                                         justify="center"
                                         alignItems="center" >
-                                            <Button
-                                                color="secondary"
-                                                variant="contained"
-                                                style={{ justifyContent: 'center' }}
-                                                disableElevation
-                                                data-testid="post-submit"
-                                                type="button"
-                                                onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
-                                                MAKE POST
-                                            </Button>
-                                    </Grid>
-                                </ThemeProvider>
+                                        <ThemeProvider theme={theme}>
+                                           
+                                                <h3 style={{ color: '#F2B705' }}>
+                                                    Post Title
+                                                </h3>
+                                                <br/>
+                                                <TextField data-testid="post-title" id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle}  value={this.state.title}/>
+                                        
+                                            <br />
+                                            <h3 style={{ color: '#F2B705' }}>
+                                                Post Image URL
+                                            </h3>
+                                            <br />
+                                            <TextField data-testid="post-image" id="filled-basic" label="Post Image URL" variant="filled" onChange={this.handleChangeContent}  value={this.state.content}/>
+                                            <br />
+                                            <h3 style={{ color: '#F2B705' }}>
+                                                Tags
+                                            </h3>
+                                            
+                                            <div style={{ width: 300 }}>
+                                                <Autocomplete
+                                                    multiple
+                                                    id="tags-standard"
+                                                    options={this.state.followTags}
+                                                    data-testid="post-tags"
+                                                    onChange={this.handleChangeTags}
+                                                    freeSolo
+                                                    value={this.state.tags}
+                                                    renderInput={params => (
+                                                    <TextField
+                                                        {...params}
+                                                        variant="standard"
+                                                        label="Tags"
+                                                        // placeholder="Favorites"
+                                                        margin ="normal"
+                                                        fullWidth
+                                                    />
+                                                    )}
+                                                />
+                                                <br/>
+                                            </div>
+                                            <Grid
+                                                
+                                                container
+                                                direction="row"
+                                                justify="center"
+                                                alignItems="center" >
+                                                    <Button
+                                                        color="secondary"
+                                                        variant="contained"
+                                                        style={{ justifyContent: 'center' }}
+                                                        disableElevation
+                                                        data-testid="post-submit"
+                                                        type="button"
+                                                        onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
+                                                        MAKE POST
+                                                    </Button>
+                                            </Grid>
+                                        </ThemeProvider>
+                                </Grid>
                             </Box>
                         </Grid>
                     </form>
                 </div>
             </div>
+            </ThemeProvider>
         );
     }
 
    
     getGradeInputPage = () => {
         return (
+            <ThemeProvider theme={theme}>
             <div>
                 {this.renderAlert()}
                 <TopBar />
@@ -618,60 +665,71 @@ export default class CreatePostPage extends Component {
                             direction="column"
                             justify="center"
                             alignItems="center" >
+                                <Grid item>
+                                <ResponsiveDrawer />
+                            </Grid>
                             <Box
                                 boxShadow={30}
                                 margin={1}
                                 width="50%"
                                 mt={20} >
-                                <ThemeProvider theme={theme}>
-                                    <h3 style={{ color: '#023373' }}>
-                                        Course Name
-                                    </h3>
-                                    <br/>
-                                    <TextField data-testid="post-coursename" id="filled-basic" label="" variant="filled" size="medium" onChange={this.handleChangeTitle}  value={this.state.title}/>
-                                    <br />
-                                    <h3 style={{ color: '#023373' }}>
-                                        Score (in percentage)
-                                    </h3>
-                                    <br />
-                                    <TextField data-testid="post-coursescore" id="filled-basic" label="" variant="outlined" onChange={this.handleChangeContent}  value={this.state.content}
-                                    InputProps={{
-                                        startAdornment: <InputAdornment position="start">%</InputAdornment>
-                                    }}
-                                    />
-                                    <br />
-                                    <h3 style={{ color: '#023373' }}>
-                                        Grade (A ~ F)
-                                    </h3>
-                                    <br />
-                                    <TextField data-testid="post-coursegrade" id="filled-basic" label="" variant="filled" onChange={this.handleChangeTae} value={this.state.tags.toString()} />
                                     <Grid
                                         container
-                                        direction="row"
+                                        direction="column"
                                         justify="center"
                                         alignItems="center" >
-                                            <Button
-                                                data-testid="post-submit"
-                                                color="secondary"
-                                                variant="contained"
-                                                style={{ justifyContent: 'center' }}
-                                                disableElevation
-                                                type="button"
-                                                onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
-                                                MAKE POST
-                                            </Button>
-                                    </Grid>
-                                </ThemeProvider>
+                                        <ThemeProvider theme={theme}>
+                                            <h3 style={{ color: '#F2B705' }}>
+                                                Course Name
+                                            </h3>
+                                            <br/>
+                                            <TextField data-testid="post-coursename" id="filled-basic" label="" variant="filled" size="medium" onChange={this.handleChangeTitle}  value={this.state.title}/>
+                                            <br />
+                                            <h3 style={{ color: '#F2B705' }}>
+                                                Score (in percentage)
+                                            </h3>
+                                            <br />
+                                            <TextField data-testid="post-coursescore" id="filled-basic" label="" variant="outlined" onChange={this.handleChangeContent}  value={this.state.content}
+                                            InputProps={{
+                                                startAdornment: <InputAdornment position="start">%</InputAdornment>
+                                            }}
+                                            />
+                                            <br />
+                                            <h3 style={{ color: '#F2B705' }}>
+                                                Grade (A ~ F)
+                                            </h3>
+                                            <br />
+                                            <TextField data-testid="post-coursegrade" id="filled-basic" label="" variant="filled" onChange={this.handleChangeTae} value={this.state.tags.toString()} />
+                                            <Grid
+                                                container
+                                                direction="row"
+                                                justify="center"
+                                                alignItems="center" >
+                                                    <Button
+                                                        data-testid="post-submit"
+                                                        color="secondary"
+                                                        variant="contained"
+                                                        style={{ justifyContent: 'center' }}
+                                                        disableElevation
+                                                        type="button"
+                                                        onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
+                                                        MAKE POST
+                                                    </Button>
+                                            </Grid>
+                                        </ThemeProvider>
+                                </Grid>
                             </Box>
                         </Grid>
                     </form>
                 </div>
             </div>
+            </ThemeProvider>
         );
     }
 
     getCurveInputPage = () => {
         return (
+            <ThemeProvider theme={theme}>
             <div>
                 {this.renderAlert()}
                 <TopBar />
@@ -683,72 +741,84 @@ export default class CreatePostPage extends Component {
                             direction="column"
                             justify="center"
                             alignItems="center" >
+                            <Grid item>
+                                <ResponsiveDrawer />
+                            </Grid>
                             <Box
                                 boxShadow={30}
                                 margin={1}
                                 width="50%"
                                 mt={20} >
-                                <ThemeProvider theme={theme}>
-                                    <h3 style={{ color: '#023373' }}>
-                                        Course Name
-                                    </h3>
-                                    <br/>
-                                    <TextField data-testid="post-coursename" id="filled-basic" label="" variant="filled" size="medium" onChange={this.handleChangeTitle}  value={this.state.title}/>
-                                    <br />
-                                    <h3 style={{ color: '#023373' }}>
-                                        Curve (lower bound)
-                                    </h3>
-                                    <br />
-                                    <TextField data-testid="post-bound-A" name="bound_A" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
-                                    InputProps={{
-                                        startAdornment: <InputAdornment position="start">A%</InputAdornment>
-                                    }}
-                                    />
-                                    <br />
-                                    <TextField data-testid="post-bound-B" name="bound_B" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
-                                    InputProps={{
-                                        startAdornment: <InputAdornment position="start">B%</InputAdornment>
-                                    }}
-                                    />
-                                    <br />
-                                    <TextField data-testid="post-bound-C" name="bound_C" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
-                                    InputProps={{
-                                        startAdornment: <InputAdornment position="start">C%</InputAdornment>
-                                    }}
-                                    />
-                                    <br />
-                                    <TextField data-testid="post-bound-D" name="bound_D" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
-                                    InputProps={{
-                                        startAdornment: <InputAdornment position="start">D%</InputAdornment>
-                                    }}
-                                    />
-                                    <Grid
+                                     <Grid
                                         container
-                                        direction="row"
+                                        direction="column"
                                         justify="center"
                                         alignItems="center" >
-                                            <Button
-                                                color="secondary"
-                                                variant="contained"
-                                                data-testid="post-submit"
-                                                style={{ justifyContent: 'center' }}
-                                                disableElevation
-                                                type="button"
-                                                onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
-                                                MAKE POST
-                                            </Button>
-                                    </Grid>
-                                </ThemeProvider>
+                                        <ThemeProvider theme={theme}>
+                                            <h3 style={{ color: '#F2B705' }}>
+                                                Course Name
+                                            </h3>
+                                            <br/>
+                                            <TextField data-testid="post-coursename" id="filled-basic" label="" variant="filled" size="medium" onChange={this.handleChangeTitle}  value={this.state.title}/>
+                                            <br />
+                                            <h3 style={{ color: '#F2B705' }}>
+                                                Curve (lower bound)
+                                            </h3>
+                                            <br />
+                                            <TextField data-testid="post-bound-A" name="bound_A" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
+                                            InputProps={{
+                                                startAdornment: <InputAdornment position="start">A%</InputAdornment>
+                                            }}
+                                            />
+                                            <br />
+                                            <TextField data-testid="post-bound-B" name="bound_B" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
+                                            InputProps={{
+                                                startAdornment: <InputAdornment position="start">B%</InputAdornment>
+                                            }}
+                                            />
+                                            <br />
+                                            <TextField data-testid="post-bound-C" name="bound_C" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
+                                            InputProps={{
+                                                startAdornment: <InputAdornment position="start">C%</InputAdornment>
+                                            }}
+                                            />
+                                            <br />
+                                            <TextField data-testid="post-bound-D" name="bound_D" id="filled-basic" label="" variant="outlined" onChange={this.handleCurveChange}  value={this.state.content}
+                                            InputProps={{
+                                                startAdornment: <InputAdornment position="start">D%</InputAdornment>
+                                            }}
+                                            />
+                                            <br/>
+                                            <Grid
+                                                container
+                                                direction="row"
+                                                justify="center"
+                                                alignItems="center" >
+                                                    <Button
+                                                        color="secondary"
+                                                        variant="contained"
+                                                        data-testid="post-submit"
+                                                        style={{ justifyContent: 'center' }}
+                                                        disableElevation
+                                                        type="button"
+                                                        onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
+                                                        MAKE POST
+                                                    </Button>
+                                            </Grid>
+                                        </ThemeProvider>
+                                </Grid>
                             </Box>
                         </Grid>
                     </form>
                 </div>
             </div>
+            </ThemeProvider>
         );
     }
 
     getCalendarPage = () => {
         return (
+            <ThemeProvider theme={theme}>
             <div>
                 {this.renderAlert()}
                 <TopBar />
@@ -761,74 +831,86 @@ export default class CreatePostPage extends Component {
                             direction="column"
                             justify="center"
                             alignItems="center" >
+                            <Grid item>
+                                <ResponsiveDrawer />
+                            </Grid>
                             <Box
                                 boxShadow={0}
                                 margin={1}
                                 width="50%"
                                 mt={20} >
-                                <ThemeProvider theme={theme}>
-                                    <h3 style={{ color: '#023373' }}>
-                                        Post Title
-                                    </h3>
-                                    <br/>
-                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} value={this.state.title}/>
-                                    <br />
-                                    <h3 style={{ color: '#023373' }}>
-                                        Post Content
-                                    </h3>
-                                    
-                                    <TextField id="filled-basic" label="Ask for feedback" variant="filled" onChange={this.handleChangeContent} value={this.state.content}/>
-                                    <h3 style={{ color: '#023373' }}>
-                                        COURSES
-                                    </h3>
-                    
-                                    <div style={{ width: 300 }}>
-                                        <Autocomplete
-                                            multiple
-                                            id="tags-standard"
-                                            options={this.state.all}
-
-                                            onChange={this.handleChangeTags}
-                                            freeSolo
-                                            value={this.state.tags}
-                                            renderInput={params => (
-                                            <TextField
-                                                {...params}
-                                                variant="standard"
-                                                label="Courses"
-                                                // placeholder="Favorites"
-                                                margin ="normal"
-                                                fullWidth
-                                            />
-                                            )}
-                                        />
-                                    </div>
-                                    <Grid
+                                <Grid
                                         container
-                                        direction="row"
+                                        direction="column"
                                         justify="center"
                                         alignItems="center" >
-                                            <Button
-                                                color="secondary"
-                                                variant="contained"
-                                                style={{ justifyContent: 'center' }}
-                                                disableElevation
-                                                type="button"
-                                                onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
-                                                MAKE POST
-                                            </Button>
-                                    </Grid>
-                                </ThemeProvider>
+                                        <ThemeProvider theme={theme}>
+                                            <h3 style={{ color: '#F2B705' }}>
+                                                Post Title
+                                            </h3>
+                                            <br/>
+                                            <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} value={this.state.title}/>
+                                            <br />
+                                            <h3 style={{ color: '#F2B705' }}>
+                                                Post Content
+                                            </h3>
+                                            
+                                            <TextField id="filled-basic" label="Ask for feedback" variant="filled" onChange={this.handleChangeContent} value={this.state.content}/>
+                                            <h3 style={{ color: '#F2B705' }}>
+                                                COURSES
+                                            </h3>
+                            
+                                            <div style={{ width: 300 }}>
+                                                <Autocomplete
+                                                    multiple
+                                                    id="tags-standard"
+                                                    options={this.state.all}
+
+                                                    onChange={this.handleChangeTags}
+                                                    freeSolo
+                                                    value={this.state.tags}
+                                                    renderInput={params => (
+                                                    <TextField
+                                                        {...params}
+                                                        variant="standard"
+                                                        label="Courses"
+                                                        // placeholder="Favorites"
+                                                        margin ="normal"
+                                                        fullWidth
+                                                    />
+                                                    )}
+                                                />
+                                            </div>
+                                            <br/>
+                                            <Grid
+                                                container
+                                                direction="row"
+                                                justify="center"
+                                                alignItems="center" >
+                                                    <Button
+                                                        color="secondary"
+                                                        variant="contained"
+                                                        style={{ justifyContent: 'center' }}
+                                                        disableElevation
+                                                        type="button"
+                                                        onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
+                                                        MAKE POST
+                                                    </Button>
+                                            </Grid>
+                                        </ThemeProvider>
+                                </Grid>
                             </Box>
                         </Grid>
                     </form>
                 </div>
             </div>
+            </ThemeProvider>
         );
     }
 
     getLinkPage = () => {
         return (
+            <ThemeProvider theme={theme}>
             <div>
                 {this.renderAlert()}
                 <TopBar />
@@ -841,69 +923,80 @@ export default class CreatePostPage extends Component {
                             direction="column"
                             justify="center"
                             alignItems="center" >
+                            <Grid item>
+                                <ResponsiveDrawer />
+                            </Grid>
                             <Box
                                 boxShadow={0}
                                 margin={1}
                                 width="50%"
                                 mt={20} >
-                                <ThemeProvider theme={theme}>
-                                    <h3 style={{ color: '#023373' }}>
-                                        Post Title
-                                    </h3>
-                                    <br/>
-                                    <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} value={this.state.title}/>
-                                    <br />
-                                    <h3 style={{ color: '#023373' }}>
-                                        Link
-                                    </h3>
-                                    
-                                    <TextField id="filled-basic" label="Post Content" variant="filled" onChange={this.handleChangeContent} value={this.state.content}/>
-                                    <h3 style={{ color: '#023373' }}>
-                                        Tags
-                                    </h3>
-                    
-                                    <div style={{ width: 300 }}>
-                                        <Autocomplete
-                                            multiple
-                                            id="tags-standard"
-                                            options={this.state.followTags}
-
-                                            onChange={this.handleChangeTags}
-                                            freeSolo
-                                            value={this.state.tags}
-                                            renderInput={params => (
-                                            <TextField
-                                                {...params}
-                                                variant="standard"
-                                                label="Tags"
-                                                // placeholder="Favorites"
-                                                margin ="normal"
-                                                fullWidth
-                                            />
-                                            )}
-                                        />
-                                    </div>
-                                    <Grid
+                                <Grid
                                         container
-                                        direction="row"
+                                        direction="column"
                                         justify="center"
                                         alignItems="center" >
-                                            <Button
-                                                color="secondary"
-                                                variant="contained"
-                                                style={{ justifyContent: 'center' }}
-                                                disableElevation
-                                                type="button"
-                                                onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
-                                                MAKE POST
-                                            </Button>
-                                    </Grid>
-                                </ThemeProvider>
+                                        <ThemeProvider theme={theme}>
+                                            <h3 style={{ color: '#F2B705' }}>
+                                                Post Title
+                                            </h3>
+                                            <br/>
+                                            <TextField id="filled-basic" label="Post Title" variant="filled" size="medium" onChange={this.handleChangeTitle} value={this.state.title}/>
+                                            <br />
+                                            <h3 style={{ color: '#F2B705' }}>
+                                                Link
+                                            </h3>
+                                            
+                                            <TextField id="filled-basic" label="Post Content" variant="filled" onChange={this.handleChangeContent} value={this.state.content}/>
+                                            <h3 style={{ color: '#F2B705' }}>
+                                                Tags
+                                            </h3>
+                            
+                                            <div style={{ width: 300 }}>
+                                                <Autocomplete
+                                                    multiple
+                                                    id="tags-standard"
+                                                    options={this.state.followTags}
+
+                                                    onChange={this.handleChangeTags}
+                                                    freeSolo
+                                                    value={this.state.tags}
+                                                    renderInput={params => (
+                                                    <TextField
+                                                        {...params}
+                                                        variant="standard"
+                                                        label="Tags"
+                                                        // placeholder="Favorites"
+                                                        margin ="normal"
+                                                        fullWidth
+                                                    />
+                                                    )}
+                                                />
+                                            </div>
+                                            <br/>
+                                            <Grid
+                                                container
+                                                direction="row"
+                                                justify="center"
+                                                alignItems="center" >
+                                                    <Button
+                                                        color="secondary"
+                                                        variant="contained"
+                                                        style={{ justifyContent: 'center' }}
+                                                        disableElevation
+                                                        type="button"
+                                                        onClick={this.state.mode === "editpost" ? this.handleUpdatePost : this.handleCreatePost} >
+                                                        MAKE POST
+                                                    </Button>
+                                            </Grid>
+                                        </ThemeProvider>
+                                </Grid>
                             </Box>
                         </Grid>
                     </form>
                 </div>
             </div>
+            </ThemeProvider>
         );
     }
 

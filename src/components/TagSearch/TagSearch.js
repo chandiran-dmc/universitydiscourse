@@ -228,7 +228,7 @@ export default class TagSearch extends Component {
                         justify="center"
                         alignItems="center"
                         direction="row">
-                            {this.state.tagsDisplay}
+                            {this.state.tags.includes("default")? "":this.state.tagsDisplay}
                         
 
 

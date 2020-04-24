@@ -19,6 +19,7 @@ import { Rating } from '@material-ui/lab';
 import axios from 'axios';
 import { Line } from 'react-chartjs-2';
 import Doc from './Document'
+import ResponsiveDrawer from '../MainFeedPage/Drawer'
 // const axios = require('axios');
 import CourseRatings from './CourseRatings';
 
@@ -52,7 +53,6 @@ export default class CoursePage extends Component {
             id: result,
             selectedFile: null, 
             documentlist: [],
-           
             graph: <div/>,
             title: "Defualt course title",
             description: "No course description available",
@@ -557,6 +557,7 @@ export default class CoursePage extends Component {
                     alignItems="center"
                     direction="column"
                 >
+                    
                     <Grid
                         item
                         style={{width : "80%"}}
@@ -762,6 +763,7 @@ export default class CoursePage extends Component {
                         </Paper>
                     </Grid>
                 </Grid>
+
             </ThemeProvider>
         );
     }

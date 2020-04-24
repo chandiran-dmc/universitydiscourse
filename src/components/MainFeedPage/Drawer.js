@@ -24,11 +24,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import FollowingTags from '../SideBar/FollowingTags';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import SimpleDialogDemo from './SimpleDialog'
 
-
-import { Grid } from '@material-ui/core';
+import { Grid, Dialog, DialogTitle, DialogActions, Button } from '@material-ui/core';
 
 import { createMuiTheme } from '@material-ui/core';
 const axios = require('axios');
@@ -78,6 +76,7 @@ function ResponsiveDrawer(props) {
   const [isRedirect, setisRedirect] = React.useState(false);
   const [path, setPath] = React.useState("");
   const [tags, setTags] = React.useState();
+  const [removeDialog, setRemoveDialog] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -162,6 +161,13 @@ const getFollowingTags = () => {
     // setInterval(getFollowingTags, 10000); 
 }
 
+const onRemoveDialogOpen = () => {
+  setRemoveDialog(!removeDialog);
+}
+
+const onRemoveDialogClose = () => {
+  setRemoveDialog(!removeDialog);
+}
 // setTimeout(getFollowingTags, 1000);
 
 if (isRedirect) {
@@ -185,7 +191,7 @@ if (isRedirect) {
             <ListItemIcon><EmailIcon color="primary"/></ListItemIcon>
           <h3 style={{ color: '#023373' }}>Change Email</h3>
       </ListItem>
-      <ListItem button key={"text"} onClick={handleRequest_remove}>
+      <ListItem button key={"text"} onClick={onRemoveDialogOpen}>
             <ListItemIcon><DeleteIcon color="primary"/></ListItemIcon>
           <h3 style={{ color: '#023373' }}>Remove Account</h3>
       </ListItem>
@@ -210,6 +216,7 @@ if (isRedirect) {
   return (
     <div className={classes.root}>
       <CssBaseline />
+      
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <IconButton
@@ -230,14 +237,15 @@ if (isRedirect) {
                                     </h3>
                                     </Typography>
           <div className = {classes.grow} />
-
           <div className = {classes.logoutButton}>
-          <h3 style={{ color: '#023373' }}>{localStorage.getItem("username")}</h3>
-          </div>
-
-          <div className = {classes.logoutButton}>
+          {/* <AccountCircleIcon /> */}
             <SimpleDialogDemo />
           </div>
+          {/* <div className = {classes.logoutButton}>
+          <h3 style={{ color: '#023373' }}>{localStorage.getItem("username")}</h3>
+          </div> */}
+
+          
 
           <div className = {classes.logoutButton}>
           <TemporaryDrawer/>
@@ -276,6 +284,28 @@ if (isRedirect) {
           </Drawer>
         </Hidden>
       </nav>
+
+
+
+
+      <Dialog open={removeDialog} aria-labelledby="form-dialog-title">
+                        <DialogTitle id="form-dialog-title">Are you sure you want to remove your account?</DialogTitle>
+                        
+                        <DialogActions>
+                        <Button onClick={() => handleRequest_remove()} color="primary">
+                            Yes
+                        </Button>                       
+                         
+                        </DialogActions>
+                        <DialogActions>
+                        <Button onClick={() => onRemoveDialogClose()} color="primary">
+                            No
+                        </Button>                       
+                         
+                        </DialogActions>
+                    </Dialog>
+
+
     </div>
   );
 }

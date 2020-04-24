@@ -3,6 +3,10 @@ import { Box, ThemeProvider, Grid, Avatar, Typography, Button, IconButton, TextF
 import EditIcon from '@material-ui/icons/Edit';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ThumbUpIcon from '@material-ui/icons/ThumbUp';
+import ThumbDownIcon from '@material-ui/icons/ThumbDown';
+import { red, blue, grey } from '@material-ui/core/colors';
 const axios = require('axios');
 
 
@@ -287,7 +291,7 @@ export default class Comment extends Component {
                         </Grid>
                         <Grid container justify="flex-end">
                             <IconButton type="button" onClick={() => (localStorage.getItem("username") === this.state.user)?this.setState({editDialog: true}):this.renderSet("You cannot edit this comment", "error")}>
-                                <EditIcon />
+                            <EditIcon style={{ color: grey[900] }}/>
                             </IconButton>
                         </Grid>
                     </Grid>
@@ -355,7 +359,7 @@ export default class Comment extends Component {
                                 //onClick={() => (this.state.likeArrayComment.includes(localStorage.getItem('username')))?this.onSubmitUnlike():this.onSubmitLike()} 
                                 onClick={this.onSubmitLike} 
                                     >
-                                <i class="fa fa-heart"></i>
+                                <FavoriteIcon style={{ color: red[300] }}/>
                             </IconButton>
                         </Grid>
 
@@ -372,7 +376,7 @@ export default class Comment extends Component {
                                 //onClick={() => (this.state.upvoteArrayComment.includes(localStorage.getItem('username')))?this.onSubmitCancelUpVote():this.onSubmitUpVote()} 
                                         onClick={this.onSubmitUpVote} 
                                     >
-                                <i class="fa fa-thumbs-up"></i>
+                                <ThumbUpIcon style={{ color: blue[600] }}/>
                             </IconButton>
                         </Grid>
 
@@ -389,7 +393,7 @@ export default class Comment extends Component {
                                 //onClick={() => (this.state.downvoteArrayComment.includes(localStorage.getItem('username')))?this.onSubmitCancelDownVote():this.onSubmitDownVote()} 
                                         onClick={this.onSubmitDownVote} 
                                     >
-                                <i class="fa fa-thumbs-down"></i>
+                                 <ThumbDownIcon style={{ color: blue[800] }}/>
                             </IconButton>
                         </Grid>
                         

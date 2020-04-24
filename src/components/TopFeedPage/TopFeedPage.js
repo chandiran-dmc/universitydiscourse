@@ -124,7 +124,7 @@ export default class TopFeedPage extends Component {
 
                 posts.forEach((post) => {
 
-                    if (post.likeCount  > 0 && filteredPosts.length < 10) {
+                    if (post.likeCount  > 1 && filteredPosts.length < 10) {
                         filteredPosts.push(<Post key={Math.random()*100000} data={post} theme={theme}/>);
                     }
 
@@ -220,7 +220,7 @@ export default class TopFeedPage extends Component {
                             >
                                 <Grid item>
                                     <br/>
-                                <form onSubmit={this.onSubmit2}>
+                                {/* <form onSubmit={this.onSubmit2}> */}
                                 <ThemeProvider theme={theme}>
                                 <Button 
                                     className  = "TopFeedPageButton" 
@@ -228,17 +228,17 @@ export default class TopFeedPage extends Component {
                                     color = "primary" 
                                     type = "submit"
                                     >
-                                    Main Feed Page
+                                    Trending
                                 </Button> 
                                 </ThemeProvider>
-                                </form>
+                                {/* </form> */}
                                 </Grid>
                             </Grid>    
                         
-                            <Grid item>
+                            {/* <Grid item>
                                 <br />
                                 <ActionBar theme={theme}/>
-                            </Grid>
+                            </Grid> */}
                         
                             <Grid item>
                                 {this.state.filteredPosts === null ? <p>Fetching data</p> : this.state.filteredPosts}

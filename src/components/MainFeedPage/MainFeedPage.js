@@ -78,6 +78,7 @@ export default class MainFeedPage extends Component {
   renderAlert(text) {
     return (
       <Snackbar
+        anchorOrigin={"top", "right"}
         open={this.state.alert}
         autoHideDuration={2000}
         onClose={() => this.setState({ alert: false })}
@@ -282,87 +283,14 @@ export default class MainFeedPage extends Component {
                     //wrap="nowrap"
                     spacing={2}
                     direction="row"
-                  >
-                    {/* <Grid item>
-                      <form onSubmit={this.onSubmit2}>
-                        <ThemeProvider theme={theme}>
-                          <Button
-                            className="TopFeedPageButton"
-                            variant="contained"
-                            color="primary"
-                            type="submit"
-                          >
-                            Top Feed Page
-                          </Button>
-                        </ThemeProvider>
-                      </form>
-                    </Grid>
-                    <Grid item>
-                      <form onSubmit={this.onSubmit3}>
-                        <ThemeProvider theme={theme}>
-                          <Button
-                            className="TopFeedPageButton"
-                            variant="contained"
-                            color="primary"
-                            type="submit"
-                          >
-                            Filter Page
-                          </Button>
-                        </ThemeProvider>
-                      </form>
-                    </Grid> */}
-                    {/* <Grid item>
-                    <form onSubmit={this.onSubmit4}>
-                    <ThemeProvider theme={theme}>
-                    <Button 
-                        className  = "TopFeedPageButton" 
-                        variant = "contained"
-                        color = "primary" 
-                        type = "submit"
-                        >
-                        Saved Posts
-                    </Button> 
-                    </ThemeProvider>
-                    </form>
-                    </Grid> */}
-                    {/* <Grid item>
-                      <Button
-                        className="TopFeedPageButton"
-                        color="secondary"
-                        variant="contained"
-                        type="button"
-                        onClick={() => {
-                          this.redirectSearch();
-                        }}
-                      >
-                        Search based on Tags
-                      </Button>
-                    </Grid>
-                    <Grid item>
-                      <Button
-                        className="TopFeedPageButton"
-                        color="secondary"
-                        variant="contained"
-                        type="submit"
-                        onClick={() => {
-                          this.redirectTitleSearch();
-                        }}
-                      >
-                        Search based on Title
-                      </Button>
-                    </Grid> */}
+                    >
                   </Grid>
-                </Grid>
 
                 <Grid item>
-                  {/* <br />
-                            <br />
-                            <br />
-                            <br />
-                            <br /> */}
                   <br />
                   <ActionBar theme={theme} />
                 </Grid>
+
                 <Grid item>
                   {this.state.filteredPosts === null ? (
                     <p>Fetching data</p>
@@ -373,6 +301,19 @@ export default class MainFeedPage extends Component {
               </Grid>
             </Grid>
           </Grid>
+          </Grid>
+
+
+
+      
+
+
+
+
+
+
+
+
         </div>
       </ThemeProvider>
     );

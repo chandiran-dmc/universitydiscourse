@@ -273,7 +273,7 @@ export default class Post extends Component {
             
         })
         .catch((error) => {
-            return;
+            //return;
             
 
         });
@@ -307,7 +307,7 @@ export default class Post extends Component {
         
         })
         .catch((error) => {
-            return;
+            //return;
             
 
         });

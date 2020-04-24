@@ -11,7 +11,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import {Grid} from '@material-ui/core';
+import {Grid, DialogTitle, DialogContent, DialogActions} from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
     appBar: {
@@ -35,7 +35,8 @@ export default class Doc extends Component {
             open: false,
             numPages: null,
             pageNumber: 1,
-            sample: null
+            sample: null,
+            downloadDialog: false
         };	        	       	               
     }
 
@@ -43,7 +44,18 @@ export default class Doc extends Component {
         this.setState({ numPages });
     }
 
-    onClickDownload = () => {	 
+    onDocumentDialogClose = () => {
+        this.setState({downloadDialog: false});
+    }
+
+    onDocumentDialogOpen = () => {
+        this.setState({downloadDialog: true});
+    }
+
+
+
+    onClickDownload = () => {	
+        this.setState({downloadDialog: false}); 
         setTimeout(() => {
             const response = {
               file: 'http://localhost:3000/api-document/download?' + this.state.name,
@@ -54,6 +66,7 @@ export default class Doc extends Component {
 
     handleClickOpen = () => {
         this.setState({open: true});
+        
     };
 
     handleClose = () => {
@@ -84,7 +97,7 @@ export default class Doc extends Component {
                     <Button autoFocus color="inherit" onClick={() =>this.setState({pageNumber: (this.state.pageNumber - 1 >= 1)?this.state.pageNumber - 1:this.state.pageNumber})}>
                         Previous Page
                     </Button> 
-                    <Button autoFocus color="inherit" onClick={this.onClickDownload}>
+                    <Button autoFocus color="inherit" onClick={this.onDocumentDialogOpen}>
                     Download
                     </Button>
                 </Toolbar>
@@ -107,6 +120,28 @@ export default class Doc extends Component {
                 </List>
                 </Grid>
           </Dialog>
+
+
+
+
+          <Dialog open={this.state.downloadDialog} aria-labelledby="form-dialog-title">
+                        <DialogTitle id="form-dialog-title">Are you sure you want to download this document?</DialogTitle>
+                        
+                        <DialogActions>
+                        <Button onClick={() => this.onClickDownload()} color="primary">
+                            Yes
+                        </Button>                       
+                         
+                        </DialogActions>
+                        <DialogActions>
+                        <Button onClick={() => this.onDocumentDialogClose()} color="primary">
+                            No
+                        </Button>                       
+                         
+                        </DialogActions>
+                    </Dialog>
+
+
           </Grid>
         )}
 }

@@ -235,7 +235,8 @@ export default class FilterFeedPage extends Component {
                         color = "primary" 
                         alignItems="center"
                         direction="row">
-                            {this.state.tagsDisplay}
+                            {this.state.tags.includes("default")? "":this.state.tagsDisplay}
+                            
                         
 
 
