@@ -69,7 +69,10 @@ export default class CoursePage extends Component {
     componentDidMount() {
         // Get grade graph and display it
         this.showGraph(this.state.id);
+
+        // Get documents related to the course
         this.fetchDocuments();
+
         // Get the course information through purdue io api
         this.getCourseInfo(this.state.id);
 
@@ -93,14 +96,21 @@ export default class CoursePage extends Component {
         })
     }
 
-    onClickHandler = () => {
-        const data = new FormData() 	       
-        data.append('doc', this.state.selectedFile)	
-    
+    onUploadClickHandler = () => {
+        if (this.state.selectedFile == null) {
+            alert('Please select a document pdf to upload');
+            return;
+        }
+
+        const data = new FormData()
+        data.append('doc', this.state.selectedFile)
         axios.post("http://localhost:3000/api-document/document-upload", data, {	        
         }).then(res => {	     
-            console.log(res)	       
-        })	   
+            console.log(res)
+            this.setState({
+                selectedFile: null
+            });
+        })	    
         .catch((error) => {
             console.error(error);
             alert('You can only attach pdf\'s');
@@ -116,7 +126,12 @@ export default class CoursePage extends Component {
             documents = response.data.data;
             console.log(response.data.data);
             documents.forEach((document) => {
-                documentlist.push(<Doc key={Math.random()*100000} data={document}/>);
+                documentlist.push(
+                    <div>
+                        <Divider variant="fullWidth" />
+                        <Doc key={Math.random()*100000} data={document}/>
+                    </div>                    
+                );
             });
             this.setState({
                 documentlist: documentlist
@@ -508,7 +523,7 @@ export default class CoursePage extends Component {
             legend: {
                 display: false
             },
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
         };
         // set grade graph
         this.setState({
@@ -516,7 +531,8 @@ export default class CoursePage extends Component {
                 <Line
                     data={state}
                     options={option}
-                    height={200}
+                    height={100}
+
                 />,
         });
     }
@@ -535,27 +551,6 @@ export default class CoursePage extends Component {
         const { pageNumber, numPages } = this.state;
         return (
             <ThemeProvider theme={theme}>
-                                <Grid>	       
-                                <Grid item>	         
-                                    {this.state.id}	                 
-                                </Grid>	            
-                                <Grid item>	        
-                                                            
-                                    <input type="file" name="file" onChange={this.onChangeHandler}/>	                 
-                                                            
-                                </Grid>	              
-                                <Grid item>	             
-                                                            
-                                    <button type="button" class="btn btn-success btn-block" onClick={this.onClickHandler}>Upload</button>                     	                
-                                </Grid>	        
-                                <Grid item>	             
-                                                            
-                                    <button type="button" class="btn btn-success btn-block" onClick={this.onClickDownload}>Download</button>                     	                
-                                </Grid>	       
-                                <Grid item>	             	                    
-                                    {this.state.documentlist}            	                
-                                </Grid>    
-                            </Grid>	
                 <Grid
                     container
                     justify="center"
@@ -628,25 +623,36 @@ export default class CoursePage extends Component {
                                 justify="center"
                                 alignItems="center"
                                 direction="row"
+                                style={{
+                                    paddingBottom: "20px"
+                                }}
                             >
                                 <Grid 
                                     item
+                                    container
+                                    justify="center"
+                                    alignItems="center"
+                                    direction="column"
                                     style={{
                                         width: "40%",
-                                        marginTop: "20px"
+                                        marginTop: "20px",
                                     }}
                                 >
-                                    <Typography
-                                        variant="body1"
-                                        align="center"
-                                    >
-                                        Overall Rating
-                                    </Typography>
-                                    <Rating 
-                                        readOnly
-                                        value={this.state.courseRating}
-                                        precision={0.5}
-                                    />
+                                    <Grid item>
+                                        <Typography
+                                            variant="body1"
+                                            align="center"
+                                        >
+                                            Overall Rating
+                                        </Typography>
+                                    </Grid>
+                                    <Grid item>
+                                        <Rating 
+                                            readOnly
+                                            value={this.state.courseRating}
+                                            precision={0.5}
+                                        />
+                                    </Grid>
                                 </Grid>
                                 <Grid 
                                     item 
@@ -700,7 +706,9 @@ export default class CoursePage extends Component {
                         item
                         style={{
                             width: "80%",
-                            marginTop: "20px"
+                            marginTop: "20px",
+                            paddingBottom: "20px",
+                            marginBottom: "20px"
                         }}
                     >
                         <Paper
@@ -714,16 +722,47 @@ export default class CoursePage extends Component {
                                 variant="h5"
                                 align="center"
                                 style={{
-                                    paddingTop: "20px"
+                                    paddingTop: "20px",
+                                    paddingBottom: "20px"
                                 }}
                             >
                                 Documents
                             </Typography>
+                            <Grid
+                                container
+                                justify="flex-start"
+                                alignItems="stretch"
+                                direction="column"
+                            >          
+                                <Grid
+                                    container
+                                    justify="center"
+                                    alignItems="center"
+                                    direction="row"
+                                    style={{paddingBottom: "20px"}}
+                                >
+                                    <Grid item>              
+                                        <input type="file" name="file" onChange={this.onChangeHandler} />        
+                                    </Grid>	              
+                                    <Grid item>
+                                        <Button
+                                            variant="contained"
+                                            color="primary"
+                                            onClick={this.onUploadClickHandler}
+                                            style={{marginLeft: "10px"}}
+                                        >
+                                            Upload
+                                        </Button>
+                                        {/* <button type="button" class="btn btn-success btn-block" onClick={this.onUploadClickHandler}>Upload</button>                     	                 */}
+                                    </Grid>	 
+                                </Grid>
+                                <Divider variant="fullWidth"  />
+                                {this.state.documentlist}
+                            </Grid>	
                         </Paper>
                     </Grid>
                 </Grid>
             </ThemeProvider>
-            
         );
     }
 }

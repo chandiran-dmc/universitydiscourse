@@ -13,7 +13,6 @@
 
 import React, { Component } from 'react'
 import TopBar from '../TopBar/TopBar';
-import Footer from '../Footer/Footer';
 import logo from '../../images/image1.png';
 import logoName from '../../images/ImageName.png';
 import '../LoginPage/LoginPage.css'
@@ -71,7 +70,6 @@ export default class EntryPage extends Component {
 
         return (
             <div>
-                <div className = "lowerFooter">
                 <TopBar/>
                 
                 {/* <Grid container 
@@ -178,8 +176,6 @@ export default class EntryPage extends Component {
                             </form>
                     </Grid>
                 </Grid>
-                </div>
-                <Footer />
             </div>
         );
     }

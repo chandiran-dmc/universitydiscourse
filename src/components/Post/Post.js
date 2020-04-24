@@ -544,8 +544,10 @@ export default class Post extends Component {
                             <Grid item>
                                 <Typography 
                                     variant="caption"
-                                    style={{ color: grey[900] }} >
-                                    {new Date(this.state.time).toTimeString()}
+                                    style={{ color: grey[900] }} 
+
+                                >
+                                    {new Date(this.state.time).toLocaleTimeString()}
                                 </Typography>
                             </Grid>
                         </Grid>

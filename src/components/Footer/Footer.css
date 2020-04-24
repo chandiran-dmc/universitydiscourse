@@ -14,6 +14,7 @@
     display: grid;
     grid-template-rows: auto 1fr auto; */
     /* overflow: auto; */
+    margin-top: -50px;
     background-color: #f2f2f2;
 }
 

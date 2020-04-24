@@ -1,3 +1,18 @@
+.Site {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+.Site-Content {
+    flex: 1;
+    z-index: 0;
+}
+
+.Site-Footer {
+    z-index: 1;
+}
+
 .App {
   text-align: center;
 }

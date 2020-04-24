@@ -1,49 +1,47 @@
-import React from 'react';
-import { render } from '@testing-library/react';
-import CoursePage from '../CoursePage';
-import { unmountComponentAtNode } from "react-dom";
-import { act } from 'react-dom/test-utils';
+// import React from 'react';
+// import { render, cleanup } from '@testing-library/react';
+// import CoursePage from '../CoursePage';
+// import Document from '../Document';
 
-let container = null;
-beforeEach(() => {
-  // setup a DOM element as a render target
-  container = document.createElement("div");
-  document.body.appendChild(container);
-});
+// afterEach(cleanup);
 
-afterEach(() => {
-  // cleanup on exiting
-  unmountComponentAtNode(container);
-  container.remove();
-  container = null;
-});
+// test('should render with appropriate course page url', () => {
 
-// component render testing
-it ("Should render coursepage with the appropriate contents", () => {
-    act(() => {
-        render(<CoursePage />, container);
-    });
-    expect(container.textContent).toBe("bullshit");
-});
+//     // // setup
+//     // const mockedReplace = jest.fn();
+//     // // without making a copy you will have a circular dependency problem during mocking
+//     // const originalWindow = { ...window };
+//     // const windowSpy = jest.spyOn(global, "window", "get");
+//     // windowSpy.mockImplementation(() => ({
+//     // ...originalWindow,
+//     // location: {
+//     //     ...originalWindow.location,
+//     //     href: "http://localhost:3001/course/CS307",
+//     //     replace: mockedReplace,
+//     // },
+//     // }));
 
+//     // global.window = Object.create(window);
+//     // const url = "http://localhost:3001/course/CS307";
+//     // Object.defineProperty(window, 'location', {
+//     //     value: {
+//     //         href: url
+//     //     }
+//     // });
+//     // expect(window.location.href).toEqual(url);
 
+//     test('should render "post title" text field', () => {
+    
+//         const { findByText } = render(<CoursePage/>);
+//         expect(findByText("Post Title")).toBeTruthy();
+//     });
 
-// test('should render course number', () => {
-//     const { findByText } = render(<CoursePage />);
-//     expect(findByText("number")).toBeTruthy();
 // });
 
-// test('should render course title', () => {
-//   const { findByText } = render(<CoursePage />);
-//   expect(findByText("title")).toBeTruthy();
-// });
+// // test('should render "make post" button', () => {
 
-// test('should render course description', () => {
-//   const { findByText } = render(<CoursePage />);
-//   expect(findByText("description")).toBeTruthy();
-// });
+// //     const { getByTestId } = render(<CoursePage />);
+// //     expect(getByTestId("post-submit")).toHaveTextContent("MAKE POST");
+// // });
 
-// test('should render course number', () => {
-//   const { findByText } = render(<CoursePage />);
-//   expect(findByText("course number")).toBeTruthy();
-// });
+// // 
