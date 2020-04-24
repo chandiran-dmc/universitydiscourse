@@ -240,7 +240,7 @@ export default class MainFeedPage extends Component {
                     spacing={2}
                     direction="row"
                     >
-                    <Grid item>
+                    {/* <Grid item>
                     <form onSubmit={this.onSubmit2}>
                     <ThemeProvider theme={theme}>
                     <Button 
@@ -267,7 +267,7 @@ export default class MainFeedPage extends Component {
                     </Button> 
                     </ThemeProvider>
                     </form>
-                    </Grid>
+                    </Grid> */}
                     {/* <Grid item>
                     <form onSubmit={this.onSubmit4}>
                     <ThemeProvider theme={theme}>
@@ -282,7 +282,7 @@ export default class MainFeedPage extends Component {
                     </ThemeProvider>
                     </form>
                     </Grid> */}
-                    <Grid item >
+                    {/* <Grid item >
                         <Button 
                             className  = "TopFeedPageButton" 
                             color="secondary"
@@ -304,7 +304,7 @@ export default class MainFeedPage extends Component {
                             >
                             Search based on Title
                         </Button>
-                  </Grid> 
+                  </Grid>  */}
                 </Grid>
                 </Grid>    
                         
