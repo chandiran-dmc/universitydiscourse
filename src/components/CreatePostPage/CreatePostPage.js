@@ -830,6 +830,7 @@ export default class CreatePostPage extends Component {
     getLinkPage = () => {
         return (
             <div>
+                {this.renderAlert()}
                 <TopBar />
 
                 <div className="CreatePostPage">

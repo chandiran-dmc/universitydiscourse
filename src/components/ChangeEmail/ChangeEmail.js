@@ -149,6 +149,7 @@ export default class ChangeEmail extends Component {
                             <TextField
                                 required
                                 id="filled-required"
+                                data-testid="Old-email"
                                 label="Old-email"
                                 variant="filled"
                                 name = "email"
@@ -161,6 +162,7 @@ export default class ChangeEmail extends Component {
                             <TextField
                                 required
                                 id="filled-required"
+                                data-testid="New-email"
                                 label="New-email"
                                 variant="filled"
                                 name = "email"
@@ -173,6 +175,7 @@ export default class ChangeEmail extends Component {
                         <form onSubmit={this.onSubmit}>
                             <ThemeProvider theme={theme}>
                             <Button 
+                                data-testid="Done-button"
                                 className  = "Done" 
                                 variant = "contained"
                                 color = "primary" 
