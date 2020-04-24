@@ -9,7 +9,8 @@ let Document = require('../models/document-model');
  
 //const DIR = '../public/images';
 let fileNameUnique = Math.random()*100000;
- 
+
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
       cb(null, "./src/components/CoursePage/Documents");
@@ -17,7 +18,8 @@ const storage = multer.diskStorage({
     filename: (req, file, cb) => {
       cb(null, `${fileNameUnique}_${file.originalname}`);
     }
-  });
+});
+
  
 var upload = multer({
     storage: storage,
@@ -30,6 +32,7 @@ var upload = multer({
   },
 });
 
+
 router.get('/download', function (req, res, next) {
     var fileName = req._parsedUrl.query.replace("%20", " ");
     console.log(fileName);
@@ -38,11 +41,13 @@ router.get('/download', function (req, res, next) {
 
 router.post('/document-upload', upload.single('doc'), (req, res, next) => {
     console.log(req.file.originalname);
+
     const document = new Document({
         _id: new mongoose.Types.ObjectId(),
         name: fileNameUnique+"_"+req.file.originalname,
     });
     document.save()
+    fileNameUnique = Math.random()*100000;
 })
 
 router.post('/getDocuments', function (req, res, next) {
@@ -52,12 +57,7 @@ router.post('/getDocuments', function (req, res, next) {
       if (err) {
           return res.status(400).json({ success: false, error: err });
       }
-      // result checking
-      if (!documents.length) {
-          return res
-              .status(402)
-              .json({ success: false, error: `Documents not found` });
-      }
+
       // return posts
       return res.status(200).json({ success: true, data: documents });
 

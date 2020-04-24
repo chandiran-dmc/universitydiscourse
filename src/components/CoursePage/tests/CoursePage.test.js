@@ -16,3 +16,5 @@ test('should render "make post" button', () => {
     const { getByTestId } = render(<CoursePage />);
     expect(getByTestId("post-submit")).toHaveTextContent("MAKE POST");
 });
+
+// 

@@ -105,15 +105,15 @@ export default class CoursePage extends Component {
             return;
         }
 
-        const data = new FormData() 	       
-        data.append('doc', this.state.selectedFile)	     
+        const data = new FormData()
+        data.append('doc', this.state.selectedFile)
         axios.post("http://localhost:3000/api-document/document-upload", data, {	        
         }).then(res => {	     
             console.log(res)
             this.setState({
                 selectedFile: null
-            })
-        })	   
+            });
+        })	    
         .catch((error) => {
             console.error(error);
             alert('You can only attach pdf\'s');
@@ -709,7 +709,9 @@ export default class CoursePage extends Component {
                         item
                         style={{
                             width: "80%",
-                            marginTop: "20px"
+                            marginTop: "20px",
+                            paddingBottom: "20px",
+                            marginBottom: "20px"
                         }}
                     >
                         <Paper
@@ -743,13 +745,14 @@ export default class CoursePage extends Component {
                                     style={{paddingBottom: "20px"}}
                                 >
                                     <Grid item>              
-                                        <input type="file" name="file" onChange={this.onChangeHandler}/>        
+                                        <input type="file" name="file" onChange={this.onChangeHandler} />        
                                     </Grid>	              
                                     <Grid item>
                                         <Button
                                             variant="contained"
                                             color="primary"
                                             onClick={this.onUploadClickHandler}
+                                            style={{marginLeft: "10px"}}
                                         >
                                             Upload
                                         </Button>
