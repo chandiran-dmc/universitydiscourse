@@ -286,7 +286,7 @@ export default class Comment extends Component {
                             <Typography 
                                 variant="caption"
                                 color="textSecondary" >
-                                {new Date(this.state.time).toTimeString()}
+                                {new Date(this.state.time).toLocaleTimeString()}
                             </Typography>
                         </Grid>
                         <Grid container justify="flex-end">

@@ -421,7 +421,11 @@ export default class Post extends Component {
                         content2.push( <div>
                         <List component="nav" aria-label="main mailbox folders"> 
                         
-                        <ThemeProvider theme={theme}>                 
+                        <ThemeProvider theme={theme}>
+                            {i==0?<ListItem>
+                                {this.state.content}
+                            </ListItem> :""}
+                                            
                             <ListItem button onClick={() => this.handleButton(i)}>
                                 <ListItemIcon>
                                 <SchoolIcon />

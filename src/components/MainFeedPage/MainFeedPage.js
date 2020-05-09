@@ -278,27 +278,18 @@ export default class MainFeedPage extends Component {
             <Grid item>
               <Grid container wrap="nowrap" spacing={30} direction="column">
                 <Grid item style={{marginTop: "100px"}}>
-                  <Grid
-                    container
-                    //wrap="nowrap"
-                    spacing={2}
-                    direction="row"
-                    >
+                  <Grid item>
+                    <br />
+                    <ActionBar theme={theme} />
                   </Grid>
-
-                <Grid item>
-                  <br />
-                  <ActionBar theme={theme} />
-                </Grid>
-
-                <Grid item>
-                  {this.state.filteredPosts === null ? (
-                    <p>Fetching data</p>
-                  ) : (
-                    this.state.filteredPosts
-                  )}
-                </Grid>
-              </Grid>
+                  <Grid item>
+                    {this.state.filteredPosts === null ? (
+                      <p>Fetching data</p>
+                    ) : (
+                      this.state.filteredPosts.reverse()
+                    )}
+                  </Grid>
+               </Grid>
             </Grid>
           </Grid>
           </Grid>

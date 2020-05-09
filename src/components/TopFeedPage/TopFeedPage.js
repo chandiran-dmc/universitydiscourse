@@ -124,7 +124,7 @@ export default class TopFeedPage extends Component {
 
                 posts.forEach((post) => {
 
-                    if (post.likeCount  > 1 && filteredPosts.length < 10) {
+                    if (post.likeCount  > 0 && filteredPosts.length < 10) {
                         filteredPosts.push(<Post key={Math.random()*100000} data={post} theme={theme}/>);
                     }
 
